@@ -82,10 +82,13 @@
   height: auto;
 }
 
+// Full Redacto KMS logo on the login and error pages (507:143 aspect ratio).
 .brand-icon-large,
-.brand-icon-large span {
-  width: 124px;
-  height: 62px;
+.brand-icon-large span,
+.brand-icon-large svg {
+  width: 280px;
+  height: 79px;
+  max-width: 100%;
   margin: 0;
 }
 
