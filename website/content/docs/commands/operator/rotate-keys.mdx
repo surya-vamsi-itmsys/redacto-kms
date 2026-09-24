@@ -4,7 +4,7 @@ description: |-
   The "operator rotate-keys" command generates a new set of unseal keys.
   This can optionally change the total number of key shares or the required
   threshold to reconstruct the root key. The rotation does not introduce
-  downtime, but it requires the OpenBao instance to be unsealed and a quorum
+  downtime, but it requires the Redacto KMS instance to be unsealed and a quorum
   of existing unseal keys to be provided.
 ---
 
@@ -19,7 +19,7 @@ The `operator rotate-keys` command is available from version `v2.4.0`.
 The `operator rotate-keys` command generates a new set of unseal keys.
 This can optionally change the total number of key shares or the required
 threshold to reconstruct the root key. The rotation does not introduce
-downtime, but it requires the OpenBao instance to be unsealed and a quorum
+downtime, but it requires the Redacto KMS instance to be unsealed and a quorum
 of existing unseal keys to be provided.
 
 An unseal key may be provided directly on the command line as an argument to the
@@ -31,16 +31,16 @@ is available, the command will prompt for text.
 Initialize a rotation:
 
 ```shell-session
-$ bao operator rotate-keys \
+$ redacto-kms operator rotate-keys \
     -init \
     -key-shares=15 \
     -key-threshold=9
 ```
 
-Initialize a rotation when Auto Unseal is used for the OpenBao cluster:
+Initialize a rotation when Auto Unseal is used for the Redacto KMS cluster:
 
 ```shell-session
-$ bao operator rotate-keys \
+$ redacto-kms operator rotate-keys \
     -target=recovery \
     -init \
     -key-shares=15 \
@@ -50,7 +50,7 @@ $ bao operator rotate-keys \
 Initialize a rotation and activate the verification process:
 
 ```shell-session
-$ bao operator rotate-keys \
+$ redacto-kms operator rotate-keys \
     -init \
     -key-shares=15 \
     -key-threshold=9 \
@@ -60,17 +60,17 @@ $ bao operator rotate-keys \
 Rotate and encrypt the resulting unseal keys with PGP:
 
 ```shell-session
-$ bao operator rotate-keys \
+$ redacto-kms operator rotate-keys \
     -init \
     -key-shares=3 \
     -key-threshold=2 \
     -pgp-keys="keybase:openbao,keybase:jefferai,keybase:sethvargo"
 ```
 
-Rotate an Auto Unseal OpenBao and encrypt the resulting recovery keys with PGP:
+Rotate an Auto Unseal Redacto KMS and encrypt the resulting recovery keys with PGP:
 
 ```shell-session
-$ bao operator rotate-keys \
+$ redacto-kms operator rotate-keys \
     -target=recovery \
     -init \
     -key-shares=1 \
@@ -78,10 +78,10 @@ $ bao operator rotate-keys \
     -pgp-keys=keybase:grahamopenbao
 ```
 
-Store encrypted PGP keys in OpenBao's core:
+Store encrypted PGP keys in Redacto KMS's core:
 
 ```shell-session
-$ bao operator rotate-keys \
+$ redacto-kms operator rotate-keys \
     -init \
     -pgp-keys="..." \
     -backup
@@ -90,25 +90,25 @@ $ bao operator rotate-keys \
 Retrieve backed-up unseal keys:
 
 ```shell-session
-$ bao operator rotate-keys -backup-retrieve
+$ redacto-kms operator rotate-keys -backup-retrieve
 ```
 
 Delete backed-up unseal keys:
 
 ```shell-session
-$ bao operator rotate-keys -backup-delete
+$ redacto-kms operator rotate-keys -backup-delete
 ```
 
 Perform the verification of the rotation using the verification nonce:
 
 ```shell-session
-$ bao operator rotate-keys -verify -nonce="..."
+$ redacto-kms operator rotate-keys -verify -nonce="..."
 ```
 
 Perform a rotation on a sealable namespace:
 
 ```shell-session
-$ bao operator rotate-keys -ns=tenants/my-tenant -init
+$ redacto-kms operator rotate-keys -ns=tenants/my-tenant -init
 ```
 
 ## Usage
@@ -120,7 +120,7 @@ flags](../index.mdx) included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### Command options
 
@@ -162,7 +162,7 @@ flags](../index.mdx) included on all commands.
 ### Backup options
 
 - `-backup` `(bool: false)` - Store a backup of the current PGP encrypted unseal
-  keys in OpenBao's core. The encrypted values can be recovered in the event of
+  keys in Redacto KMS's core. The encrypted values can be recovered in the event of
   failure or discarded after success. See the -backup-delete and
   \-backup-retrieve options for more information. This option only applies when
   the existing unseal keys were PGP encrypted.

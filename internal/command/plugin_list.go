@@ -29,7 +29,7 @@ func (c *PluginListCommand) Synopsis() string {
 
 func (c *PluginListCommand) Help() string {
 	helpText := `
-Usage: bao plugin list [options] [TYPE]
+Usage: redacto-kms plugin list [options] [TYPE]
 
   Lists available plugins registered in the catalog. This does not list whether
   plugins are in use, but rather just their availability. The last argument of
@@ -37,15 +37,15 @@ Usage: bao plugin list [options] [TYPE]
 
   List all available plugins in the catalog:
 
-      $ bao plugin list
+      $ redacto-kms plugin list
 
   List all available database plugins in the catalog:
 
-      $ bao plugin list database
+      $ redacto-kms plugin list database
 
   List all available plugins with detailed output:
 
-      $ bao plugin list -detailed
+      $ redacto-kms plugin list -detailed
 
 ` + c.Flags().Help()
 

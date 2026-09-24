@@ -12,7 +12,7 @@ The device does not currently assist with any log rotation. There are very
 stable and feature-filled log rotation tools already, so we recommend using
 existing tools.
 
-Sending a `SIGHUP` to the OpenBao process will cause `file` audit devices to close
+Sending a `SIGHUP` to the Redacto KMS process will cause `file` audit devices to close
 and re-open their underlying file, which can assist with log rotation needs.
 
 :::warning
@@ -31,26 +31,26 @@ instead.
 Enable at the default path:
 
 ```shell-session
-$ bao audit enable file file_path=/var/log/openbao_audit.log
+$ redacto-kms audit enable file file_path=/var/log/openbao_audit.log
 ```
 
 Enable at a different path. It is possible to enable multiple copies of an audit
 device:
 
 ```shell-session
-$ bao audit enable -path="openbao_audit_1" file file_path=/home/user/openbao_audit.log
+$ redacto-kms audit enable -path="openbao_audit_1" file file_path=/home/user/openbao_audit.log
 ```
 
 Enable logs on stdout. This is useful when running in a container:
 
 ```shell-session
-$ bao audit enable file file_path=stdout
+$ redacto-kms audit enable file file_path=stdout
 ```
 
 ## Configuration
 
 Note the difference between `audit enable` command options and the `file` backend
-configuration options. Use `bao audit enable -help` to see the command options.
+configuration options. Use `redacto-kms audit enable -help` to see the command options.
 
 The `file` audit device supports the common configuration options documented on
 the [main Audit Devices page](index.mdx#common-configuration-options), and
@@ -66,11 +66,11 @@ these device-specific options:
 
 - `mode` `(string: "0600")` - A string containing an octal number representing
   the bit pattern for the file mode, similar to `chmod`. Set to `"0000"` to
-  prevent OpenBao from modifying the file mode.
+  prevent Redacto KMS from modifying the file mode.
 
   :::warning
 
-  Note: Starting with OpenBao v2.4.0, any executable bits set in `mode` are
+  Note: Starting with Redacto KMS v2.4.0, any executable bits set in `mode` are
   zeroed automatically, for security purposes. For example, `mode = 777` will
   convert to `mode = 666`. Furthermore, `mode` values that are
   [irregular](https://pkg.go.dev/io/fs#FileMode.IsRegular) are rejected with an
@@ -80,4 +80,4 @@ these device-specific options:
 
 ## Log file rotation
 
-To properly rotate OpenBao File Audit Device log files on BSD, Darwin, or Linux-based OpenBao servers, it is important that you configure your log rotation software to send the `bao` process a signal hang up / `SIGHUP` after each rotation of the log file.
+To properly rotate Redacto KMS File Audit Device log files on BSD, Darwin, or Linux-based Redacto KMS servers, it is important that you configure your log rotation software to send the `redacto-kms` process a signal hang up / `SIGHUP` after each rotation of the log file.

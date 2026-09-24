@@ -26,7 +26,7 @@ func TestInternalHelperFilePerms(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	helper.tokenPath = filepath.Join(tmpDir, ".vault-token")
+	helper.tokenPath = filepath.Join(tmpDir, ".redacto-kms-token")
 
 	f, err := os.Create(helper.tokenPath)
 	if err != nil {

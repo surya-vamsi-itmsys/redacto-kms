@@ -28,8 +28,8 @@ func DefaultTokenHelper(vaultAddr string) (token.TokenHelper, error) {
 	// If the user specified the address to connect to on the command line instead
 	// of through an environment variable, we propagate the address to the token
 	// helper through an environment variable. Otherwise the token helper may
-	// read BAO_ADDR and assume a different address than the one we are using.
-	env := []string{"BAO_ADDR=" + vaultAddr, "VAULT_ADDR=" + vaultAddr}
+	// read REDACTO_KMS_ADDR and assume a different address than the one we are using.
+	env := []string{"REDACTO_KMS_ADDR=" + vaultAddr}
 
 	return &token.ExternalTokenHelper{BinaryPath: path, Env: env}, nil
 }

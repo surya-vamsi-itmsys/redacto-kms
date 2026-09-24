@@ -1,6 +1,6 @@
 ---
 description: >-
-  The PKCS#11 plugin for OpenBao's External Keys offloads cryptographic
+  The PKCS#11 plugin for Redacto KMS's External Keys offloads cryptographic
   operations to PKCS#11 tokens.
 ---
 
@@ -11,7 +11,7 @@ loading vendor-specific shared libraries.
 
 ## Requirements
 
-This plugin is not built into OpenBao and must be installed externally. It is
+This plugin is not built into Redacto KMS and must be installed externally. It is
 available in [openbao-plugins](https://github.com/openbao/openbao-plugins). A
 minimum plugin version of v0.2.0 is required; prior versions only provided Auto
 Unseal functionality.
@@ -22,7 +22,7 @@ Additionally, the following software packages are required on Linux:
   libraries it requires.
 - A version of libc (likely `glibc` or `musl` with `gcompat`; The plugin as
   released upstream is linked against Glibc but works on Musl with `gcompat`
-  which is pre-installed in Alpine-based OpenBao container images).
+  which is pre-installed in Alpine-based Redacto KMS container images).
 
 The file paths of any PKCS#11 shared libraries to use must additionally be
 registered as [library aliases](#library-aliasing).
@@ -84,7 +84,7 @@ The following parameters are set per-key:
 
 ## Library aliasing
 
-To separate concerns between users of the HTTP API and operators of the OpenBao
+To separate concerns between users of the HTTP API and operators of the Redacto KMS
 server's underlying platform, PKCS#11 shared library paths cannot be set
 arbitrarily via the API. Instead, operators must configure a set of library
 alias mappings that make a set of library paths available as opaque identifiers.
@@ -127,5 +127,5 @@ environment.
 Once set up, reference library aliases via the API:
 
 ```shell-session
-$ bao write sys/external-keys/configs/my-hsm plugin=pkcs11 lib=<alias name> ...
+$ redacto-kms write sys/external-keys/configs/my-hsm plugin=pkcs11 lib=<alias name> ...
 ```

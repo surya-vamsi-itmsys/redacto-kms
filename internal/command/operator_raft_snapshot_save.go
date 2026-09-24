@@ -29,11 +29,11 @@ func (c *OperatorRaftSnapshotSaveCommand) Synopsis() string {
 
 func (c *OperatorRaftSnapshotSaveCommand) Help() string {
 	helpText := `
-Usage: bao operator raft snapshot save <snapshot_file>
+Usage: redacto-kms operator raft snapshot save <snapshot_file>
 
   Saves a snapshot of the current state of the Raft cluster into a file.
 
-	  $ bao operator raft snapshot save raft.snap
+	  $ redacto-kms operator raft snapshot save raft.snap
 
 ` + c.Flags().Help()
 

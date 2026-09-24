@@ -27,7 +27,7 @@ func NewInternalTokenHelper() (*InternalTokenHelper, error) {
 	if tokenPath := api.ReadBaoVariable(api.EnvTokenPath); tokenPath != "" {
 		return &InternalTokenHelper{tokenPath: tokenPath}, nil
 	}
-	tokenPath, err := homedir.Expand("~/.vault-token")
+	tokenPath, err := homedir.Expand("~/.redacto-kms-token")
 	if err != nil {
 		return nil, fmt.Errorf("could not expand home directory: %w", err)
 	}

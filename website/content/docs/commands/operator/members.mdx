@@ -14,7 +14,7 @@ since it became active.
 Get the key status:
 
 ```shell-session
-$ bao operator members
+$ redacto-kms operator members
 Host Name            API Address              Cluster Address           Active Node    Version    Upgrade Version    Redundancy Zone    Last Echo
 ---------            -----------              ---------------           -----------    -------    ---------------    ---------------    ---------
 josh-C02ZT9DYMD6R    http://127.0.0.1:8200    https://127.0.0.1:8201    true           1.11.0     1.11.0             a                  n/a
@@ -34,4 +34,4 @@ flags](../index.mdx) included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.

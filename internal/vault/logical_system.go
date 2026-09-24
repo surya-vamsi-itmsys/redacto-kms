@@ -263,7 +263,7 @@ func (b *SystemBackend) handleTidyLeases(ctx context.Context, req *logical.Reque
 	}()
 
 	resp := &logical.Response{}
-	resp.AddWarning("Tidy operation successfully started. Any information from the operation will be printed to OpenBao's server logs.")
+	resp.AddWarning("Tidy operation successfully started. Any information from the operation will be printed to Redacto KMS's server logs.")
 	return logical.RespondWithStatusCode(resp, req, http.StatusAccepted)
 }
 
@@ -1371,7 +1371,7 @@ func (b *SystemBackend) handleRemount(ctx context.Context, req *logical.Request,
 			"migration_id": migrationID,
 		},
 	}
-	resp.AddWarning("Mount move has been queued. Progress will be reported in OpenBao's server log, tagged with the returned migration_id")
+	resp.AddWarning("Mount move has been queued. Progress will be reported in Redacto KMS's server log, tagged with the returned migration_id")
 	return resp, nil
 }
 
@@ -3403,13 +3403,13 @@ func (b *SystemBackend) responseWrappingUnwrap(ctx context.Context, te *logical.
 		return "", fmt.Errorf("error looking up wrapping information: %w", err)
 	}
 	if cubbyResp == nil {
-		return "no information found; wrapping token may be from a previous OpenBao version", ErrInternalError
+		return "no information found; wrapping token may be from a previous Redacto KMS version", ErrInternalError
 	}
 	if cubbyResp.IsError() {
 		return cubbyResp.Error().Error(), nil
 	}
 	if cubbyResp.Data == nil {
-		return "wrapping information was nil; wrapping token may be from a previous OpenBao version", ErrInternalError
+		return "wrapping information was nil; wrapping token may be from a previous Redacto KMS version", ErrInternalError
 	}
 
 	responseRaw := cubbyResp.Data["response"]
@@ -3648,13 +3648,13 @@ func (b *SystemBackend) handleWrappingLookup(ctx context.Context, req *logical.R
 		return nil, fmt.Errorf("error looking up wrapping information: %w", err)
 	}
 	if cubbyResp == nil {
-		return logical.ErrorResponse("no information found; wrapping token may be from a previous OpenBao version"), nil
+		return logical.ErrorResponse("no information found; wrapping token may be from a previous Redacto KMS version"), nil
 	}
 	if cubbyResp.IsError() {
 		return cubbyResp, nil
 	}
 	if cubbyResp.Data == nil {
-		return logical.ErrorResponse("wrapping information was nil; wrapping token may be from a previous OpenBao version"), nil
+		return logical.ErrorResponse("wrapping information was nil; wrapping token may be from a previous Redacto KMS version"), nil
 	}
 
 	creationTTLRaw := cubbyResp.Data["creation_ttl"]
@@ -3729,13 +3729,13 @@ func (b *SystemBackend) handleWrappingRewrap(ctx context.Context, req *logical.R
 		return nil, fmt.Errorf("error looking up wrapping information: %w", err)
 	}
 	if cubbyResp == nil {
-		return logical.ErrorResponse("no information found; wrapping token may be from a previous OpenBao version"), nil
+		return logical.ErrorResponse("no information found; wrapping token may be from a previous Redacto KMS version"), nil
 	}
 	if cubbyResp.IsError() {
 		return cubbyResp, nil
 	}
 	if cubbyResp.Data == nil {
-		return logical.ErrorResponse("wrapping information was nil; wrapping token may be from a previous OpenBao version"), nil
+		return logical.ErrorResponse("wrapping information was nil; wrapping token may be from a previous Redacto KMS version"), nil
 	}
 
 	// Set the creation TTL on the request
@@ -3767,13 +3767,13 @@ func (b *SystemBackend) handleWrappingRewrap(ctx context.Context, req *logical.R
 		return nil, fmt.Errorf("error looking up response: %w", err)
 	}
 	if cubbyResp == nil {
-		return logical.ErrorResponse("no information found; wrapping token may be from a previous OpenBao version"), nil
+		return logical.ErrorResponse("no information found; wrapping token may be from a previous Redacto KMS version"), nil
 	}
 	if cubbyResp.IsError() {
 		return cubbyResp, nil
 	}
 	if cubbyResp.Data == nil {
-		return logical.ErrorResponse("wrapping information was nil; wrapping token may be from a previous OpenBao version"), nil
+		return logical.ErrorResponse("wrapping information was nil; wrapping token may be from a previous Redacto KMS version"), nil
 	}
 
 	response := cubbyResp.Data["response"]
@@ -4890,8 +4890,8 @@ func checkListingVisibility(visibility routing.ListingVisibilityType) error {
 }
 
 const sysHelpRoot = `
-The system backend is built-in to OpenBao and cannot be remounted or
-unmounted. It contains the paths that are used to configure OpenBao itself
+The system backend is built-in to Redacto KMS and cannot be remounted or
+unmounted. It contains the paths that are used to configure Redacto KMS itself
 as well as perform core operations.
 `
 
@@ -4939,53 +4939,53 @@ This path responds to the following HTTP methods.
         `,
 	},
 	"init": {
-		"Initializes or returns the initialization status of OpenBao.",
+		"Initializes or returns the initialization status of Redacto KMS.",
 		`
 This path responds to the following HTTP methods.
 
     GET /
-        Returns the initialization status of OpenBao.
+        Returns the initialization status of Redacto KMS.
 
     POST /
-        Initializes a new OpenBao instance.
+        Initializes a new Redacto KMS instance.
 		`,
 	},
 	"health": {
-		"Checks the health status of OpenBao.",
+		"Checks the health status of Redacto KMS.",
 		`
 This path responds to the following HTTP methods.
 
 	GET /
-		Returns health information about OpenBao.
+		Returns health information about Redacto KMS.
 		`,
 	},
 
 	"seal-status": {
-		"Returns the seal status of the OpenBao instance.",
+		"Returns the seal status of the Redacto KMS instance.",
 		`
 This path responds to the following HTTP methods.
 
     GET /
-        Returns the seal status of the OpenBao instance. This is an unauthenticated
+        Returns the seal status of the Redacto KMS instance. This is an unauthenticated
         endpoint.
 		`,
 	},
 	"seal": {
-		"Seals the OpenBao instance.",
+		"Seals the Redacto KMS instance.",
 		`
 This path responds to the following HTTP methods.
 
     PUT /
-        Seals the OpenBao instance.
+        Seals the Redacto KMS instance.
 		`,
 	},
 	"unseal": {
-		"Unseals the OpenBao instance.",
+		"Unseals the Redacto KMS instance.",
 		`
 This path responds to the following HTTP methods.
 
     PUT /
-        Unseals the OpenBao instance.
+        Unseals the Redacto KMS instance.
 		`,
 	},
 	"mounts": {
@@ -5059,7 +5059,7 @@ in the plugin catalog.`,
 	},
 
 	"external_entropy_access": {
-		`Whether to give the mount access to OpenBao's external entropy.`,
+		`Whether to give the mount access to Redacto KMS's external entropy.`,
 	},
 
 	"tune_default_lease_ttl": {
@@ -5180,7 +5180,7 @@ used to revoke the secret with the given Lease ID.
 		"Whether or not to perform the revocation synchronously",
 		`
 If false, the call will return immediately and revocation will be queued; if it
-fails, OpenBao will keep trying. If true, if the revocation fails, OpenBao will not
+fails, Redacto KMS will keep trying. If true, if the revocation fails, Redacto KMS will not
 automatically try again and will return an error. For revoke-prefix, this
 setting will apply to all leases being revoked. For revoke-force, since errors
 are ignored, this setting is not supported.
@@ -5211,7 +5211,7 @@ See the path help for 'revoke-prefix'; this behaves the same, except that it
 ignores errors encountered during revocation. This can be used in certain
 recovery situations; for instance, when you want to unmount a backend, but it
 is impossible to fix revocation errors and these errors prevent the unmount
-from proceeding. This is a DANGEROUS operation as it removes OpenBao's oversight
+from proceeding. This is a DANGEROUS operation as it removes Redacto KMS's oversight
 of external secrets. Access to this prefix should be tightly controlled.
 		`,
 	},
@@ -5464,7 +5464,7 @@ This path responds to the following HTTP methods.
 		`Returns a list of headers that have been configured to be audited.`,
 	},
 	"plugin-catalog-list-all": {
-		"Lists all the plugins known to OpenBao",
+		"Lists all the plugins known to Redacto KMS",
 		`
 This path responds to the following HTTP methods.
 		LIST /
@@ -5472,7 +5472,7 @@ This path responds to the following HTTP methods.
 		`,
 	},
 	"plugin-catalog": {
-		"Configures the plugins known to OpenBao",
+		"Configures the plugins known to Redacto KMS",
 		`
 This path responds to the following HTTP methods.
 		LIST /
@@ -5503,7 +5503,7 @@ command field. This should be HEX encoded.`,
 	},
 	"plugin-catalog_command": {
 		`The command used to start the plugin. The
-executable defined in this command must exist in OpenBao's
+executable defined in this command must exist in Redacto KMS's
 plugin directory.`,
 		"",
 	},
@@ -5607,16 +5607,16 @@ This path responds to the following HTTP methods.
 		`,
 	},
 	"internal-counters-requests": {
-		"Currently unsupported. Previously, count of requests seen by this OpenBao cluster over time.",
-		"Currently unsupported. Previously, count of requests seen by this OpenBao cluster over time. Not included in count: health checks, UI asset requests, requests forwarded from another cluster.",
+		"Currently unsupported. Previously, count of requests seen by this Redacto KMS cluster over time.",
+		"Currently unsupported. Previously, count of requests seen by this Redacto KMS cluster over time. Not included in count: health checks, UI asset requests, requests forwarded from another cluster.",
 	},
 	"internal-counters-tokens": {
-		"Count of active tokens in this OpenBao cluster.",
-		"Count of active tokens in this OpenBao cluster.",
+		"Count of active tokens in this Redacto KMS cluster.",
+		"Count of active tokens in this Redacto KMS cluster.",
 	},
 	"internal-counters-entities": {
-		"Count of active entities in this OpenBao cluster.",
-		"Count of active entities in this OpenBao cluster.",
+		"Count of active entities in this Redacto KMS cluster.",
+		"Count of active entities in this Redacto KMS cluster.",
 	},
 	"internal-inspect-router": {
 		"Information on the entries in each of the trees in the router. Inspectable trees are uuid, accessor, storage, and root.",
@@ -5636,18 +5636,18 @@ This path responds to the following HTTP methods.
 	},
 
 	"host-info": {
-		"Information about the host instance that this OpenBao server is running on.",
-		`Information about the host instance that this OpenBao server is running on.
+		"Information about the host instance that this Redacto KMS server is running on.",
+		`Information about the host instance that this Redacto KMS server is running on.
 		The information that gets collected includes host hardware information, and CPU,
 		disk, and memory utilization`,
 	},
 	"count-leases": {
-		"Count of leases associated with this OpenBao cluster",
-		"Count of leases associated with this OpenBao cluster",
+		"Count of leases associated with this Redacto KMS cluster",
+		"Count of leases associated with this Redacto KMS cluster",
 	},
 	"list-leases": {
-		"List leases associated with this OpenBao cluster",
-		"Requires sudo capability. List leases associated with this OpenBao cluster",
+		"List leases associated with this Redacto KMS cluster",
+		"Requires sudo capability. List leases associated with this Redacto KMS cluster",
 	},
 	"version-history": {
 		"List historical version changes sorted by installation time in ascending order.",

@@ -1,13 +1,13 @@
 ---
 sidebar_label: deregister
 description: |-
-  The "plugin deregister" command deregisters a new plugin in OpenBao's plugin
+  The "plugin deregister" command deregisters a new plugin in Redacto KMS's plugin
   catalog.
 ---
 
 # plugin deregister
 
-The `plugin deregister` command deregisters an existing plugin from OpenBao's
+The `plugin deregister` command deregisters an existing plugin from Redacto KMS's
 plugin catalog. If the plugin does not exist, no error is returned. The plugin's
 type of "auth", "database", or "secret" must be included.
 
@@ -16,7 +16,7 @@ type of "auth", "database", or "secret" must be included.
 Deregister a plugin:
 
 ```shell-session
-$ bao plugin deregister auth my-custom-plugin
+$ redacto-kms plugin deregister auth my-custom-plugin
 Success! Deregistered plugin (if it was registered): my-custom-plugin
 ```
 

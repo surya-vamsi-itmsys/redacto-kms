@@ -29,11 +29,11 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     steps:
       - name: Refuse nightly release on main repository
-        if: github.repository == 'openbao/openbao' && inputs.nightly
+        if: github.repository == 'surya-vamsi-itmsys/redacto-kms' && inputs.nightly
         run: echo '::error::Refusing to run nightly release on main repo' && exit 1
 
       - name: Refuse regular release on nightly repository
-        if: github.repository == 'openbao/openbao-nightly' && !inputs.nightly
+        if: github.repository == 'surya-vamsi-itmsys/redacto-kms-nightly' && !inputs.nightly
         run: echo '::error::Refusing to run regular release on nightly repo' && exit 1
 
       - name: Checkout
@@ -296,7 +296,7 @@ jobs:
 
       - name: Make distribution source tarball
         run: |
-          tar --exclude .git --exclude '*.gz' --exclude node_modules --exclude .pnpm-store -cJf ../openbao-dist-$VERSION.tar.xz --xform="s,^\.,openbao-dist-$VERSION," .
+          tar --exclude .git --exclude '*.gz' --exclude node_modules --exclude .pnpm-store -cJf ../redacto-kms-dist-$VERSION.tar.xz --xform="s,^\.,redacto-kms-dist-$VERSION," .
           mv ../*.xz .
         env:
           VERSION: ${{ needs.setup.outputs.version }}

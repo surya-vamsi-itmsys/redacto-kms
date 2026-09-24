@@ -1,5 +1,5 @@
 ---
-description: The `/sys/rotate/(root|recovery)/init` endpoints are used to initialize, cancel or retrieve status of the unseal keys rotation for OpenBao.
+description: The `/sys/rotate/(root|recovery)/init` endpoints are used to initialize, cancel or retrieve status of the unseal keys rotation for Redacto KMS.
 ---
 
 # `/sys/rotate/(root|recovery)/init`
@@ -103,7 +103,7 @@ the specified number of recovery key shares.
   array must be the same as `secret_shares`.
 
 - `backup` `(bool: false)` - Specifies if using PGP-encrypted keys, whether
-  OpenBao should also store a plaintext backup of the PGP-encrypted keys at
+  Redacto KMS should also store a plaintext backup of the PGP-encrypted keys at
   `core/unseal-keys-backup` (or `core/recovery-keys-backup`) in the physical
   storage backend. These can then be retrieved and removed via the
   `sys/rotate/root/backup` (or `sys/rotate/recovery/backup`) endpoints.

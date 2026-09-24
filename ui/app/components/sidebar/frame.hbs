@@ -5,10 +5,11 @@
         <Hds::SideNav::Header>
           <:logo>
             <Sidebar::Header::HomeLink
-              @icon="openbao"
+              @icon="redacto-logo-white"
+              @compactIcon="redacto-mark"
               @route={{if this.currentCluster.cluster.name "vault.cluster"}}
               @model={{this.currentCluster.cluster.name}}
-              @ariaLabel="home link"
+              @ariaLabel="Redacto KMS home"
               data-test-sidebar-logo
             />
           </:logo>

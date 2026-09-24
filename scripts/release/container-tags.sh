@@ -7,15 +7,11 @@
 # calculating image names for a new "v2.5.5" backport release:
 #
 # $ VERSION=v2.5.5 ./scripts/release/container-tags.sh
-# registries=["ghcr.io", "quay.io", "docker.io"]
+# registries=["ghcr.io"]
 # tags<<EOF
 # [
-#   "ghcr.io/openbao/openbao:2.5",
-#   "ghcr.io/openbao/openbao:2.5.5",
-#   "quay.io/openbao/openbao:2.5",
-#   "quay.io/openbao/openbao:2.5.5",
-#   "docker.io/openbao/openbao:2.5",
-#   "docker.io/openbao/openbao:2.5.5"
+#   "ghcr.io/surya-vamsi-itmsys/redacto-kms:2.5",
+#   "ghcr.io/surya-vamsi-itmsys/redacto-kms:2.5.5"
 # ]
 # EOF
 #
@@ -24,9 +20,9 @@
 
 set -euo pipefail
 
-IMAGE_NAME=${IMAGE_NAME:-openbao/openbao}
+IMAGE_NAME=${IMAGE_NAME:-surya-vamsi-itmsys/redacto-kms}
 GITHUB_OUTPUT=${GITHUB_OUTPUT:-/dev/stdout}
-GITHUB_REPOSITORY=${GITHUB_REPOSITORY:-openbao/openbao}
+GITHUB_REPOSITORY=${GITHUB_REPOSITORY:-surya-vamsi-itmsys/redacto-kms}
 
 # Check that our version is tagged.
 if [[ -z "$(git tag --list "$VERSION")" ]]; then

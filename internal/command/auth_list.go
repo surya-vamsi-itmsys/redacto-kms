@@ -31,19 +31,19 @@ func (c *AuthListCommand) Synopsis() string {
 
 func (c *AuthListCommand) Help() string {
 	helpText := `
-Usage: bao auth list [options]
+Usage: redacto-kms auth list [options]
 
-  Lists the enabled auth methods on the OpenBao server. This command also outputs
+  Lists the enabled auth methods on the Redacto KMS server. This command also outputs
   information about the method including configuration and human-friendly
   descriptions. A TTL of "system" indicates that the system default is in use.
 
   List all enabled auth methods:
 
-      $ bao auth list
+      $ redacto-kms auth list
 
   List all enabled auth methods with detailed output:
 
-      $ bao auth list -detailed
+      $ redacto-kms auth list -detailed
 
 ` + c.Flags().Help()
 

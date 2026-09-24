@@ -1,14 +1,14 @@
 ---
 sidebar_label: Overview
-description: Audit devices are mountable devices that log requests and responses in OpenBao.
+description: Audit devices are mountable devices that log requests and responses in Redacto KMS.
 ---
 
 # Audit devices
 
-Audit devices are the components in OpenBao that collectively keep a detailed log of all
-requests to OpenBao, and their responses. Because every operation with OpenBao is an API
+Audit devices are the components in Redacto KMS that collectively keep a detailed log of all
+requests to Redacto KMS, and their responses. Because every operation with Redacto KMS is an API
 request/response, when using a single audit device, the audit log contains _every_ interaction with
-the OpenBao API, including errors - except for a few paths which do not go via the audit system.
+the Redacto KMS API, including errors - except for a few paths which do not go via the audit system.
 
 The non-audited paths are:
 
@@ -33,11 +33,11 @@ sys/in-flight-req
 
 ## Enabling multiple devices
 
-When multiple audit devices are enabled, OpenBao will attempt to send the audit
+When multiple audit devices are enabled, Redacto KMS will attempt to send the audit
 logs to all of them. This allows you to not only have redundant copies, but also
 a way to check for data tampering in the logs themselves.
 
-OpenBao considers a request to be successful if it can log to *at least* one
+Redacto KMS considers a request to be successful if it can log to *at least* one
 configured audit device (see: [Blocked Audit
 Devices](index.mdx#blocked-audit-devices) section below).  Therefore in order
 to build a complete picture of all audited actions, use the aggregate/union of
@@ -45,8 +45,8 @@ the logs from each audit device.
 
 :::warning
 
-Note: It is **highly recommended** that you configure OpenBao to use multiple audit
-devices. Audit failures can prevent OpenBao from servicing requests, so it is
+Note: It is **highly recommended** that you configure Redacto KMS to use multiple audit
+devices. Audit failures can prevent Redacto KMS from servicing requests, so it is
 important to provide at least one other device.
 
 :::
@@ -62,7 +62,7 @@ audit logs.
 ## Sensitive information
 
 The audit logs contain the full request and response objects for every
-interaction with OpenBao. The request and response can be matched utilizing a
+interaction with Redacto KMS. The request and response can be matched utilizing a
 unique identifier assigned to each request.
 
 Most strings contained within requests and responses are hashed with a salt using HMAC-SHA256. The purpose of the hash is so that secrets aren't in plaintext within your audit logs. However, you're still able to check the value of secrets by generating HMACs yourself; this can be done with the audit device's hash function and salt by using the `/sys/audit-hash` API endpoint (see the documentation for more details).
@@ -72,11 +72,11 @@ Most strings contained within requests and responses are hashed with a salt usin
 Currently, only strings that come from JSON or returned in JSON are
 HMAC'd. Other data types, like integers, booleans, and so on, are passed
 through in plaintext. We recommend that all sensitive data be provided as string values
-inside all JSON sent to OpenBao (i.e., that integer values are provided in quotes).
+inside all JSON sent to Redacto KMS (i.e., that integer values are provided in quotes).
 
 :::
 
-While most strings are hashed, OpenBao does make some exceptions, such as auth and secrets, and users can enable additional exceptions using the [secrets enable](../commands/secrets/enable.mdx) command, and then tune it afterward.
+While most strings are hashed, Redacto KMS does make some exceptions, such as auth and secrets, and users can enable additional exceptions using the [secrets enable](../commands/secrets/enable.mdx) command, and then tune it afterward.
 
 **See also**:
 
@@ -86,15 +86,15 @@ While most strings are hashed, OpenBao does make some exceptions, such as auth a
 
 ## Enabling/Disabling audit devices
 
-When an OpenBao server is first initialized, no auditing is enabled. Audit
-devices must be enabled by a root user using [`bao audit enable`](../commands/audit/index.mdx)
+When a Redacto KMS server is first initialized, no auditing is enabled. Audit
+devices must be enabled by a root user using [`redacto-kms audit enable`](../commands/audit/index.mdx)
 or using the [`audit` stanza](../configuration/audit.mdx).
 
 When enabling an audit device, options can be passed to it to configure it.
 For example, the command below enables the file audit device:
 
 ```shell-session
-$ bao audit enable file file_path=/var/log/openbao_audit.log
+$ redacto-kms audit enable file file_path=/var/log/openbao_audit.log
 ```
 
 In the command above, we passed the "file_path" parameter to specify the path
@@ -107,7 +107,7 @@ Note: Enabling audit devices using the API (and, by proxy, using the CLI) allows
 the operator to create files at arbitrary locations on the host system or send
 network requests to arbitrary addresses, which may have unwanted effects. As a
 result, the `unsafe_allow_api_audit_creation = true` option must be set in the
-[server configuration](../configuration/index.mdx) starting with OpenBao v2.3.2.
+[server configuration](../configuration/index.mdx) starting with Redacto KMS v2.3.2.
 
 In future releases (v2.4+), we will enable a new model where audit devices are
 managed within the server configuration itself. This will become the
@@ -120,7 +120,7 @@ configuration will be retained via the unsafe flag described above.
 
 Note: Audit device configuration is replicated to all nodes within a cluster
 by default.  Before enabling an audit device, ensure that all nodes within the
-cluster(s) will be able to successfully log to the audit device to avoid OpenBao
+cluster(s) will be able to successfully log to the audit device to avoid Redacto KMS
 being blocked from serving requests.
 
 :::
@@ -138,15 +138,15 @@ the audit device at the same path, as a new salt will be created for hashing.
 
 ## Blocked audit devices
 
-Audit device logs are critically important and ignoring auditing failures opens an avenue for attack. OpenBao will not respond to requests when no enabled audit devices can record them.
+Audit device logs are critically important and ignoring auditing failures opens an avenue for attack. Redacto KMS will not respond to requests when no enabled audit devices can record them.
 
-OpenBao can distinguish between two types of audit device failures.
+Redacto KMS can distinguish between two types of audit device failures.
 
 - A blocking failure is one where an attempt to write to the audit device never completes. This is unlikely with a local disk device, but could occur with a network-based audit device.
 
-- When multiple audit devices are enabled, if any of them fail in a non-blocking fashion, OpenBao requests can still complete successfully provided at least one audit device successfully writes the audit record. If any of the audit devices fail in a blocking fashion however, OpenBao requests will hang until the blocking is resolved.
+- When multiple audit devices are enabled, if any of them fail in a non-blocking fashion, Redacto KMS requests can still complete successfully provided at least one audit device successfully writes the audit record. If any of the audit devices fail in a blocking fashion however, Redacto KMS requests will hang until the blocking is resolved.
 
-In other words, OpenBao will not complete any requests until the blocked audit device can write.
+In other words, Redacto KMS will not complete any requests until the blocked audit device can write.
 
 ## API
 
@@ -171,16 +171,16 @@ docs](../api/system/audit.mdx) for more details.
 - `prefix` `(string: "")` - A customizable string prefix to write before the
   actual log line.
 
-- `skip_test` `(string: "")` When set to `"true"`, OpenBao will not send an
+- `skip_test` `(string: "")` When set to `"true"`, Redacto KMS will not send an
   initial test probe request to the audit log destination when enabling the
-  audit device. By default, OpenBao tests the connection to the destination
+  audit device. By default, Redacto KMS tests the connection to the destination
   server on mount, and if the destination is unreachable, the audit device fails
   to enable which can block unsealing.
 
   :::warning
 
   Note: The `prefix` option lets operators write semi-arbitrary content to the
-  audit log. Starting with OpenBao v2.3.2, enabling new audit devices with this
+  audit log. Starting with Redacto KMS v2.3.2, enabling new audit devices with this
   option is only supported if `allow_audit_log_prefixing = true` is set in the
   [server configuration](../configuration/index.mdx).
 
@@ -188,8 +188,8 @@ docs](../api/system/audit.mdx) for more details.
 
 ## Eliding list response bodies
 
-Some OpenBao responses can be very large. Primarily, this affects list operations -
-as OpenBao lacks pagination in its APIs, listing a very large collection can result
+Some Redacto KMS responses can be very large. Primarily, this affects list operations -
+as Redacto KMS lacks pagination in its APIs, listing a very large collection can result
 in a response that is tens of megabytes long. Some audit backends are unable to
 process individual audit records of larger sizes.
 
@@ -214,7 +214,7 @@ returned by a list operation.
 
 This extra processing only affects the response data fields `keys` and `key_info`,
 and only when they have the expected data types - in the event a list response
-contains data outside of the usual conventions that apply to OpenBao list responses,
+contains data outside of the usual conventions that apply to Redacto KMS list responses,
 it will be left as is by this feature.
 
 Here is an example of an audit record that has been processed by this feature

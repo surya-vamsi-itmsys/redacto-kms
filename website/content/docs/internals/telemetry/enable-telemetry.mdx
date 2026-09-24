@@ -1,16 +1,16 @@
 ---
 sidebar_label: Enable telemetry gathering
 description: >-
-  Step-by-step guide to enabling telemetry gathering with OpenBao
+  Step-by-step guide to enabling telemetry gathering with Redacto KMS
 ---
 
-# Enable OpenBao telemetry gathering
+# Enable Redacto KMS telemetry gathering
 
-Collect telemetry data from your OpenBao installation.
+Collect telemetry data from your Redacto KMS installation.
 
 ## Before you start
 
-- **You must have access to your [OpenBao configuration](../../configuration/index.mdx) file**.
+- **You must have access to your [Redacto KMS configuration](../../configuration/index.mdx) file**.
 
 
 ## Step 1: Choose an aggregation agent
@@ -20,19 +20,19 @@ Collect telemetry data from your OpenBao installation.
 ## Step 2: Enable at least one audit device
 
 To include audit-related metrics, you must enable auditing on at least one device
-with the `bao audit enable` command. For example, to enable auditing for the
+with the `redacto-kms audit enable` command. For example, to enable auditing for the
 `file` device and save the logs to `/var/log/openbao_audit.log`:
 
 ```shell-session
-$ bao audit enable file file_path=/var/log/openbao_audit.log
+$ redacto-kms audit enable file file_path=/var/log/openbao_audit.log
 ```
 
 ## Step 3: Configure telemetry collection
 
-To configure telemetry collection, update the telemetry stanza in your OpenBao
+To configure telemetry collection, update the telemetry stanza in your Redacto KMS
 configuration with your collection preferences and aggregation agent details.
 
-For example, the following `telemetry` stanza configures OpenBao with the standard
+For example, the following `telemetry` stanza configures Redacto KMS with the standard
 telemetry defaults and connects it to a Statsite agent running on the default
 port within a company intranet at `mycompany.statsite`:
 
@@ -72,7 +72,7 @@ for reporting, analysis, and alerting. Which solution you need depends on the
 feature set provided by your aggregation agent and the protocol support of your
 reporting platform.
 
-Popular reporting solutions compatible with OpenBao:
+Popular reporting solutions compatible with Redacto KMS:
 
 - [Grafana](https://grafana.com/grafana)
 - [Graphite](https://www.hostedgraphite.com)

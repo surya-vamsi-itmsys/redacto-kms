@@ -1,16 +1,16 @@
 ---
-description: Learn about the integrated Raft storage in OpenBao.
+description: Learn about the integrated Raft storage in Redacto KMS.
 ---
 
 # Integrated Storage
 
-OpenBao comes integrated with a native storage backend system. This storage backend
+Redacto KMS comes integrated with a native storage backend system. This storage backend
 does not rely on any third party systems; it implements High Availability and
 provides backup/restore workflows.
 
 ## Consensus protocol
 
-OpenBao's Integrated Storage uses a [consensus
+Redacto KMS's Integrated Storage uses a [consensus
 protocol](<https://en.wikipedia.org/wiki/Consensus_(computer_science)>) to provide
 [Consistency](https://en.wikipedia.org/wiki/CAP_theorem) (as defined by CAP).
 The consensus protocol is based on ["Raft: In search of an Understandable
@@ -34,7 +34,7 @@ There are a few key terms to know when discussing Raft:
 
 - **Leader** - At any given time, the peer set elects a single node to be the leader.
 The leader is responsible for ingesting new log entries, replicating to followers,
-and managing when an entry is committed. The leader node is also the active OpenBao node and followers are standby nodes. Refer to the [High Availability](high-availability.mdx#design-overview) document for more information.
+and managing when an entry is committed. The leader node is also the active Redacto KMS node and followers are standby nodes. Refer to the [High Availability](high-availability.mdx#design-overview) document for more information.
 
 - **Log** - An ordered sequence of entries (replicated log) to keep track of any cluster changes. The leader is responsible for _log replication_. When new data is written, for example, a new event creates a log entry. The leader then sends the new log entry to its followers. Any inconsistency within the replicated log entries will indicate an issue.
 
@@ -68,14 +68,14 @@ request that a leader append a new log entry (from Raft's perspective, a log ent
 is an opaque binary blob). The leader then writes the entry to durable storage and
 attempts to replicate to a quorum of followers. Once the log entry is considered
 _committed_, it can be _applied_ to a finite state machine. The finite state machine
-is application specific; in OpenBao's case, we use
-[BoltDB](https://github.com/etcd-io/bbolt) to maintain a cluster state. OpenBao's writes
+is application specific; in Redacto KMS's case, we use
+[BoltDB](https://github.com/etcd-io/bbolt) to maintain a cluster state. Redacto KMS's writes
 are blocked until they are _committed_ and _applied_.
 
 #### Compacting logs
 
 It would be undesirable to allow a replicated log to grow in an unbounded
-fashion. OpenBao periodically truncates old log entries that have already been
+fashion. Redacto KMS periodically truncates old log entries that have already been
 applied to the FSM. Since the data is already persisted to disk in
 BoltDB, old log entries can simply be deleted. This is performed automatically
 without user intervention and prevents unbounded disk usage while also minimizing
@@ -94,8 +94,8 @@ _unavailability_. At this point, manual intervention is required to remove
 either A or B and restart the remaining node in bootstrap mode.
 
 A Raft cluster of 3 nodes can tolerate a single node failure while a cluster of
-5 can tolerate 2 node failures. The recommended OpenBao production deployment is
-to run 5 OpenBao servers per cluster. See the [Minimum &
+5 can tolerate 2 node failures. The recommended Redacto KMS production deployment is
+to run 5 Redacto KMS servers per cluster. See the [Minimum &
 Scaling](#minimums--scaling) and [Deployment Table](#deployment-table) to learn
 more about the failure tolerance using Integrated Storage.
 
@@ -105,15 +105,15 @@ In terms of performance, Raft is comparable to Paxos. Assuming stable leadership
 committing a log entry requires a single round trip to half of the cluster.
 Thus, performance is bound by disk I/O and network latency.
 
-### Raft in OpenBao
+### Raft in Redacto KMS
 
-When getting started, a single OpenBao server is
+When getting started, a single Redacto KMS server is
 [initialized](../commands/operator/init.mdx). At this point, the
 cluster is of size 1, which allows the node to self-elect as a leader. Once a
 leader is elected, other servers can be added to the peer set in a way that
 preserves consistency and safety.
 
-The join process is how new nodes are added to the OpenBao cluster; it uses an
+The join process is how new nodes are added to the Redacto KMS cluster; it uses an
 encrypted challenge/answer workflow. To accomplish this, all nodes in a single
 Raft cluster must share the same seal configuration. If using an Auto Unseal, the
 join process can use the configured seal to automatically decrypt the challenge
@@ -126,7 +126,7 @@ leader. When an API request arrives at a non-leader server, the request is
 forwarded to the leader.
 
 Similar to other storage backends, data that is written to the Raft log and FSM
-will be encrypted by OpenBao's barrier.
+will be encrypted by Redacto KMS's barrier.
 
 ### Quorum management
 
@@ -139,7 +139,7 @@ may be enabled include the ability to remove nodes considered as dead from
 the quorum list after a certain period.
 
 Autopilot is enabled by default and the default configuration values
-should work well for most OpenBao deployments, but they can be changed if needed.
+should work well for most Redacto KMS deployments, but they can be changed if needed.
 
 Autopilot includes stabilization logic for nodes joining the cluster.
 Recently joined nodes are
@@ -175,7 +175,7 @@ quorum.
 
 For this reason, we recommend ensuring new nodes have Raft indexes that are
 close to the leader before adding additional nodes. Raft indexes are visible via
-`bao status`.
+`redacto-kms status`.
 
 ### Deployment table
 
@@ -233,7 +233,7 @@ in a failure scenario.
 
 ### Minimums & scaling
 
-The OpenBao Reference Architecture recommends a 5 node cluster
+The Redacto KMS Reference Architecture recommends a 5 node cluster
 to ensure a minimum failure tolerance of at least 2.
 
 It is good practice, wherever possible, to retain a failure tolerance of 2 or

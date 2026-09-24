@@ -23,7 +23,7 @@ taken.
 Destroy version 11 of the key "creds":
 
 ```shell-session
-$ bao kv destroy -mount=secret -versions=11 creds
+$ redacto-kms kv destroy -mount=secret -versions=11 creds
 Success! Data written to: secret/destroy/creds
 ```
 
@@ -36,7 +36,7 @@ included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### Command options
 

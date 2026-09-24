@@ -57,7 +57,7 @@ func (b *backend) tidySecretID(_ context.Context, req *logical.Request) (*logica
 	go b.tidySecretIDinternal(req.Storage)
 
 	resp := &logical.Response{}
-	resp.AddWarning("Tidy operation successfully started. Any information from the operation will be printed to OpenBao's server logs.")
+	resp.AddWarning("Tidy operation successfully started. Any information from the operation will be printed to Redacto KMS's server logs.")
 	return logical.RespondWithStatusCode(resp, req, http.StatusAccepted)
 }
 

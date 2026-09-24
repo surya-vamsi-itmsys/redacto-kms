@@ -1,71 +1,71 @@
 ---
 sidebar_label: Overview
-description: This section documents the official integration between OpenBao and Kubernetes.
+description: This section documents the official integration between Redacto KMS and Kubernetes.
 ---
 # Kubernetes
 
-OpenBao can be deployed into Kubernetes using the official OpenBao Helm chart.
-The Helm chart allows users to deploy OpenBao in various configurations:
+Redacto KMS can be deployed into Kubernetes using the official Redacto KMS Helm chart.
+The Helm chart allows users to deploy Redacto KMS in various configurations:
 
-- Dev: a single in-memory OpenBao server for testing OpenBao
-- Standalone (default): a single OpenBao server persisting to a volume using the file storage backend
-- High-Availability (HA): a cluster of OpenBao servers that use an HA storage backend
-- External: a OpenBao Agent Injector server that depends on an external OpenBao server
+- Dev: a single in-memory Redacto KMS server for testing Redacto KMS
+- Standalone (default): a single Redacto KMS server persisting to a volume using the file storage backend
+- High-Availability (HA): a cluster of Redacto KMS servers that use an HA storage backend
+- External: a Redacto KMS Agent Injector server that depends on an external Redacto KMS server
 
 ## Use cases
 
-**Running a OpenBao Service:** The OpenBao server cluster can run directly on Kubernetes.
+**Running a Redacto KMS Service:** The Redacto KMS server cluster can run directly on Kubernetes.
 This can be used by applications running within Kubernetes as well as external to
 Kubernetes, as long as they can communicate to the server via the network.
 
-**Accessing and Storing Secrets:** Applications using the OpenBao service running in
-Kubernetes can access and store secrets from OpenBao using a number of different
+**Accessing and Storing Secrets:** Applications using the Redacto KMS service running in
+Kubernetes can access and store secrets from Redacto KMS using a number of different
 [secret engines](../../secrets/index.mdx) and [authentication methods](../../auth/index.mdx).
 
-**Running a Highly Available OpenBao Service:** By using pod affinities, highly available
+**Running a Highly Available Redacto KMS Service:** By using pod affinities, highly available
 backend storage and [auto-unseal](../../concepts/seal.mdx#auto-unseal),
-OpenBao can become a highly available service in Kubernetes.
+Redacto KMS can become a highly available service in Kubernetes.
 
-**Encryption as a Service:** Applications using the OpenBao service running in Kubernetes
+**Encryption as a Service:** Applications using the Redacto KMS service running in Kubernetes
 can leverage the [Transit secret engine](../../secrets/transit/index.mdx)
 as "encryption as a service". This allows applications to offload encryption needs
-to OpenBao before storing data at rest.
+to Redacto KMS before storing data at rest.
 
-**Audit Logs for OpenBao:** Operators can choose to attach a persistent volume
-to the OpenBao cluster which can be used to [store audit logs](../../audit/index.mdx).
+**Audit Logs for Redacto KMS:** Operators can choose to attach a persistent volume
+to the Redacto KMS cluster which can be used to [store audit logs](../../audit/index.mdx).
 
-**And more!** OpenBao can run directly on Kubernetes, so in addition to the
-native integrations provided by OpenBao itself, any other tool built for
-Kubernetes can choose to leverage OpenBao.
+**And more!** Redacto KMS can run directly on Kubernetes, so in addition to the
+native integrations provided by Redacto KMS itself, any other tool built for
+Kubernetes can choose to leverage Redacto KMS.
 
-## Getting started with OpenBao and kubernetes
+## Getting started with Redacto KMS and kubernetes
 
-There are several ways to try OpenBao with Kubernetes in different environments.
+There are several ways to try Redacto KMS with Kubernetes in different environments.
 
 ### High level comparison of integrations
 
 There are currently 2 different integrations to help Kubernetes workloads
-seamlessly consume secrets from OpenBao, without the need to modify the
-application to interact directly with OpenBao. Each integration addresses
+seamlessly consume secrets from Redacto KMS, without the need to modify the
+application to interact directly with Redacto KMS. Each integration addresses
 slightly different use-cases. The following is a brief overview of the strengths
 of each integration.
 
 #### Agent injector
 
-- No durable secret storage outside OpenBao. All secrets written to disk are in ephemeral in-memory volumes.
+- No durable secret storage outside Redacto KMS. All secrets written to disk are in ephemeral in-memory volumes.
 - No highly privileged service accounts required. All secrets are fetched with the pod's own service account without the need for any other service accounts to impersonate it.
 - More mature solution, with proven production record and advanced features like templating,
   wider array of auth methods, etc.
 
 <!-- The secrets operator is not yet working. -->
 <!-- TODO: uncomment once it is -->
-<!-- #### OpenBao Secrets Operator -->
+<!-- #### Redacto KMS Secrets Operator -->
 
-<!-- - More native UX for app developers. Workloads can mount Kubernetes secrets without adding any OpenBao-specific configuration. -->
-<!-- - Reduced load on OpenBao. Secrets are synced per CRD instead of per consuming pod. -->
-<!-- - Better OpenBao secret availability. Kubernetes secrets act as a durable cluster-local cache of OpenBao secrets. -->
+<!-- - More native UX for app developers. Workloads can mount Kubernetes secrets without adding any Redacto KMS-specific configuration. -->
+<!-- - Reduced load on Redacto KMS. Secrets are synced per CRD instead of per consuming pod. -->
+<!-- - Better Redacto KMS secret availability. Kubernetes secrets act as a durable cluster-local cache of Redacto KMS secrets. -->
 
-#### OpenBao CSI provider
+#### Redacto KMS CSI provider
 
-- The CSI driver that the [OpenBao CSI provider](https://github.com/openbao/openbao-csi-provider) is based on is vendor neutral.
-- No durable secret storage outside OpenBao if the secret sync feature isn't used. All secrets written to disk are in ephemeral in-memory volumes.
+- The CSI driver that the [Redacto KMS CSI provider](https://github.com/openbao/openbao-csi-provider) is based on is vendor neutral.
+- No durable secret storage outside Redacto KMS if the secret sync feature isn't used. All secrets written to disk are in ephemeral in-memory volumes.

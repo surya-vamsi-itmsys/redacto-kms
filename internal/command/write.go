@@ -42,31 +42,31 @@ func (c *WriteCommand) Synopsis() string {
 
 func (c *WriteCommand) Help() string {
 	helpText := `
-Usage: bao write [options] PATH [DATA K=V...]
+Usage: redacto-kms write [options] PATH [DATA K=V...]
 
-  Writes data to OpenBao at the given path. The data can be credentials, secrets,
+  Writes data to Redacto KMS at the given path. The data can be credentials, secrets,
   configuration, or arbitrary data. The specific behavior of this command is
   determined at the thing mounted at the path.
 
   Data is specified as "key=value" pairs. If the value begins with an "@", then
-  it is loaded from a file. If the value is "-", OpenBao will read the value from
+  it is loaded from a file. If the value is "-", Redacto KMS will read the value from
   stdin.
 
   Persist data in the generic secrets engine:
 
-      $ bao write secret/my-secret foo=bar
+      $ redacto-kms write secret/my-secret foo=bar
 
   Create a new encryption key in the transit secrets engine:
 
-      $ bao write -f transit/keys/my-key
+      $ redacto-kms write -f transit/keys/my-key
 
   Upload an AWS IAM policy from a file on disk:
 
-      $ bao write aws/roles/ops policy=@policy.json
+      $ redacto-kms write aws/roles/ops policy=@policy.json
 
   Configure access to Consul by providing an access token:
 
-      $ echo $MY_TOKEN | bao write consul/config/access token=-
+      $ echo $MY_TOKEN | redacto-kms write consul/config/access token=-
 
   For a full list of examples and paths, please see the documentation that
   corresponds to the secret engines in use.

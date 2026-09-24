@@ -15,7 +15,7 @@ section](../plugins/index.mdx).
 :::
 
 The `kerberos` auth method provides an automated mechanism to retrieve
-an OpenBao token for Kerberos entities.
+a Redacto KMS token for Kerberos entities.
 
 [Kerberos](https://web.mit.edu/kerberos/) is a network authentication
 protocol invented by MIT in the 1980s. Its name is inspired by Cerberus,
@@ -25,7 +25,7 @@ granting server, and a principals database. Kerberos underlies
 authentication in Active Directory, and its purpose is to _distribute_
 a network's authentication workload.
 
-OpenBao's Kerberos auth method was originally written by the folks at
+Redacto KMS's Kerberos auth method was originally written by the folks at
 [Winton](https://github.com/wintoncode), to whom we owe a special thanks
 for both originally building the plugin, and for collaborating to bring
 it into HashiCorp's maintenance.
@@ -53,20 +53,20 @@ ensure you've gone through the exercise of:
 - Authenticating to your domain server with your `keytab` file using `kinit`
 
 With that knowledge in hand, and with an environment that's already tested
-and confirmed working, you will be ready to use Kerberos with OpenBao.
+and confirmed working, you will be ready to use Kerberos with Redacto KMS.
 
 ## Configuration
 
-- Enable Kerberos authentication in OpenBao:
+- Enable Kerberos authentication in Redacto KMS:
 
 ```shell-session
-$ bao auth enable \
+$ redacto-kms auth enable \
     -passthrough-request-headers=Authorization \
     -allowed-response-headers=www-authenticate \
     kerberos
 ```
 
-- Create a `keytab` for the Kerberos plugin (this keytab is used by the OpenBao server itself, another keytab should be generated for login purposes):
+- Create a `keytab` for the Kerberos plugin (this keytab is used by the Redacto KMS server itself, another keytab should be generated for login purposes):
 
 ```shell-session
 $ ktutil
@@ -79,7 +79,7 @@ slot KVNO Principal
 ktutil:  wkt openbao.keytab
 ```
 
-The KVNO (`-k 1`) should match the KVNO of the service account. An error will show in the OpenBao logs if this is incorrect.
+The KVNO (`-k 1`) should match the KVNO of the service account. An error will show in the Redacto KMS logs if this is incorrect.
 
 Different encryption types can also be added to the `keytab`, for example `-e rc4-hmac` with additional `addent` commands.
 
@@ -94,7 +94,7 @@ $ base64 openbao.keytab > openbao.keytab.base64
   requests:
 
 ```shell-session
-$ bao write auth/kerberos/config \
+$ redacto-kms write auth/kerberos/config \
     keytab=@openbao.keytab.base64 \
     service_account="openbao_svc"
 ```
@@ -102,13 +102,13 @@ $ bao write auth/kerberos/config \
 - Configure the Kerberos auth method to communicate with
   LDAP using the service account configured above. This is
   a sample LDAP configuration. Yours will vary. Ensure you've
-  first tested your configuration from the OpenBao server using
+  first tested your configuration from the Redacto KMS server using
   a tool like `ldapsearch`.
 
 ```shell-session
-$ bao write auth/kerberos/config/ldap \
+$ redacto-kms write auth/kerberos/config/ldap \
     binddn=openbao_svc@MATRIX.LAN \
-    bindpass=$OPENBAO_SVC_PASSWORD \
+    bindpass=$REDACTO_KMS_SVC_PASSWORD \
     groupattr=sAMAccountName \
     groupdn="DC=MATRIX,DC=LAN" \
     groupfilter="(&(objectClass=group)(member:1.2.840.113556.1.4.1941:={{.UserDN}}))" \
@@ -122,7 +122,7 @@ The LDAP above relies upon the same code as the LDAP auth method.
 See [its documentation](ldap.mdx)
 for further discussion of available parameters.
 
-- Configure the OpenBao policies that should be granted to those
+- Configure the Redacto KMS policies that should be granted to those
   who successfully authenticate based on their LDAP group membership.
   Since this is identical to the LDAP auth method, see
   [Group Membership Resolution](ldap.mdx#group-membership-resolution)
@@ -130,7 +130,7 @@ for further discussion of available parameters.
   for further discussion.
 
 ```shell-session
-$ bao write auth/kerberos/groups/engineering-team \
+$ redacto-kms write auth/kerberos/groups/engineering-team \
     policies=engineers
 ```
 
@@ -144,7 +144,7 @@ From a client machine with a valid `krb5.conf` and `keytab`, perform a command
 like the following:
 
 ```shell-session
-$ bao login -method=kerberos \
+$ redacto-kms login -method=kerberos \
     username=grace \
     service=HTTP/my-service \
     realm=MATRIX.LAN \
@@ -156,7 +156,7 @@ $ bao login -method=kerberos \
 - `krb5conf_path` is the path to a valid `krb5.conf` file describing how to
   communicate with the Kerberos environment.
 - `keytab_path` is the path to the `keytab` in which the entry lives for the
-  entity authenticating to OpenBao. Keytab files should be protected from other
+  entity authenticating to Redacto KMS. Keytab files should be protected from other
   users on a shared server using appropriate file permissions.
 - `username` is the username for the entry _within_ the `keytab` to use for
   logging into Kerberos. This username must match a service account in LDAP.
@@ -181,13 +181,13 @@ $ bao login -method=kerberos \
 Once the malfunctioning piece of the journey is identified, you can focus
 your debugging efforts in the most useful direction.
 
-1. Use `ldapsearch` while logged into your machine hosting OpenBao to ensure
+1. Use `ldapsearch` while logged into your machine hosting Redacto KMS to ensure
    your LDAP configuration is functional.
 2. Authenticate to your domain server using `kinit`, your `keytab`, and your
-   `krb5.conf`. Do this with both OpenBao's `keytab`, and any client `keytab` being
+   `krb5.conf`. Do this with both Redacto KMS's `keytab`, and any client `keytab` being
    used for logging in. This ensures your Kerberos network is working.
-3. While logged into your client machine, verify you can reach OpenBao
-   through the following command: `$ curl $BAO_ADDR/v1/sys/health`.
+3. While logged into your client machine, verify you can reach Redacto KMS
+   through the following command: `$ curl $REDACTO_KMS_ADDR/v1/sys/health`.
 
 ### Build clear steps to reproduce the problem
 
@@ -196,7 +196,7 @@ is outside of your company. For instance, if you expect that you should
 be able to login using a command like:
 
 ```shell-session
-$ bao login -method=kerberos \
+$ redacto-kms login -method=kerberos \
     username=my-name \
     service=HTTP/my-service \
     realm=EXAMPLE.COM \
@@ -212,7 +212,7 @@ in the `keytab` file.
 
 - [The plugin's code](https://github.com/hashicorp/vault-plugin-auth-kerberos)
 
-The OpenBao Kerberos library has a working integration test environment that
+The Redacto KMS Kerberos library has a working integration test environment that
 can be referenced as an example of a full Kerberos and LDAP environment.
 It runs through Docker and can be started through either one of the following
 commands:

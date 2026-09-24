@@ -189,7 +189,7 @@ func pathInvalid(b *versionedKVBackend) []*framework.Path {
 			subCommand = "delete"
 		}
 		resp := &logical.Response{}
-		resp.AddWarning(fmt.Sprintf("Invalid path for a versioned K/V secrets engine. See the API docs for the appropriate API endpoints to use. If using the OpenBao CLI, use 'bao kv %s' for this operation.", subCommand))
+		resp.AddWarning(fmt.Sprintf("Invalid path for a versioned K/V secrets engine. See the API docs for the appropriate API endpoints to use. If using the Redacto KMS CLI, use 'redacto-kms kv %s' for this operation.", subCommand))
 		return logical.RespondWithStatusCode(resp, req, http.StatusNotFound)
 	}
 
@@ -445,7 +445,7 @@ func ptypesTimestampToString(t *timestamppb.Timestamp) string {
 var backendHelp string = `
 This backend provides a versioned key-value store. The kv backend reads and
 writes arbitrary secrets to the storage backend. The secrets are
-encrypted/decrypted by Vault: they are never stored unencrypted in the backend
+encrypted/decrypted by Redacto KMS: they are never stored unencrypted in the backend
 and the backend never has an opportunity to see the unencrypted value. Each key
 can have a configured number of versions, and versions can be retrieved based on
 their version numbers.

@@ -245,7 +245,7 @@ func (b *CubbyholeBackend) handleList(ctx context.Context, req *logical.Request,
 
 const cubbyholeHelp = `
 The cubbyhole backend reads and writes arbitrary secrets to the backend.
-The secrets are encrypted/decrypted by Vault: they are never stored
+The secrets are encrypted/decrypted by Redacto KMS: they are never stored
 unencrypted in the backend and the backend never has an opportunity to
 see the unencrypted value.
 

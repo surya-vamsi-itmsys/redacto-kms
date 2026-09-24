@@ -21,18 +21,18 @@ func (c *LeaseCommand) Synopsis() string {
 
 func (c *LeaseCommand) Help() string {
 	helpText := `
-Usage: bao lease <subcommand> [options] [args]
+Usage: redacto-kms lease <subcommand> [options] [args]
 
   This command groups subcommands for interacting with leases. Users can revoke
   or renew leases.
 
   Renew a lease:
 
-      $ bao lease renew database/creds/readonly/2f6a614c...
+      $ redacto-kms lease renew database/creds/readonly/2f6a614c...
 
   Revoke a lease:
 
-      $ bao lease revoke database/creds/readonly/2f6a614c...
+      $ redacto-kms lease revoke database/creds/readonly/2f6a614c...
 `
 
 	return strings.TrimSpace(helpText)

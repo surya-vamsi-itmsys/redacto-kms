@@ -1,14 +1,14 @@
 ---
 sidebar_label: Kubernetes
 description: >-
-  Kubernetes Service Registration labels OpenBao pods with their current status
+  Kubernetes Service Registration labels Redacto KMS pods with their current status
   for use with selectors.
 ---
 
 # Kubernetes service registration
 
-Kubernetes Service Registration tags OpenBao pods with their current status for
-use with selectors. Service registration is only available when OpenBao is running in
+Kubernetes Service Registration tags Redacto KMS pods with their current status for
+use with selectors. Service registration is only available when Redacto KMS is running in
 [High Availability mode](../../concepts/ha.mdx).
 
 ## Configuration
@@ -23,8 +23,8 @@ service_registration "kubernetes" {
 Alternatively, the namespace and pod name can be set through the following
 environment variables:
 
-- `BAO_K8S_NAMESPACE`
-- `BAO_K8S_POD_NAME`
+- `REDACTO_KMS_K8S_NAMESPACE`
+- `REDACTO_KMS_K8S_POD_NAME`
 
 This allows you to set these parameters using
 [the Downward API](https://kubernetes.io/docs/tasks/inject-data-application/downward-api-volume-expose-pod-information/).
@@ -36,9 +36,9 @@ you're using Kubernetes must still exist to indicate your intentions:
 service_registration "kubernetes" {}
 ```
 
-For service registration to succeed, OpenBao must be able to apply labels to pods
+For service registration to succeed, Redacto KMS must be able to apply labels to pods
 in Kubernetes. The following RBAC rules are required to allow the service account
-associated with the OpenBao pods to update its own pod specification:
+associated with the Redacto KMS pods to update its own pod specification:
 
 ```
 kind: Role
@@ -70,7 +70,7 @@ metadata:
     openbao-version: 2.0.1
 ```
 
-After shutdowns, OpenBao pods will bear the following labels:
+After shutdowns, Redacto KMS pods will bear the following labels:
 
 ```
 apiVersion: v1
@@ -87,21 +87,21 @@ metadata:
 
 ## Label definitions
 
-- `openbao-active` `(string: "true"/"false")` – openbao-active is updated dynamically each time OpenBao's active status changes.
-  True indicates that this OpenBao pod is currently the leader. False indicates that this OpenBao pod is currently a standby.
-- `openbao-initialized` `(string: "true"/"false")` – openbao-initialized is updated dynamically each time OpenBao's initialization
-  status changes. True indicates that OpenBao is currently initialized. False indicates the OpenBao is currently uninitialized.
+- `openbao-active` `(string: "true"/"false")` – openbao-active is updated dynamically each time Redacto KMS's active status changes.
+  True indicates that this Redacto KMS pod is currently the leader. False indicates that this Redacto KMS pod is currently a standby.
+- `openbao-initialized` `(string: "true"/"false")` – openbao-initialized is updated dynamically each time Redacto KMS's initialization
+  status changes. True indicates that Redacto KMS is currently initialized. False indicates the Redacto KMS is currently uninitialized.
 - `openbao-sealed` `(string: "true"/"false")` – openbao-sealed is updated dynamically each
-  time OpenBao's sealed/unsealed status changes. True indicates that OpenBao is currently sealed. False indicates that OpenBao
+  time Redacto KMS's sealed/unsealed status changes. True indicates that Redacto KMS is currently sealed. False indicates that Redacto KMS
   is currently unsealed.
-- `openbao-version` `(string: "2.0.1")` – OpenBao version is a string that will not change during a pod's lifecycle.
+- `openbao-version` `(string: "2.0.1")` – Redacto KMS version is a string that will not change during a pod's lifecycle.
 
-## Working with OpenBao's service discovery labels
+## Working with Redacto KMS's service discovery labels
 
 ### Example service
 
-With labels applied to the pod, services can be created using selectors to filter pods with specific OpenBao HA roles,
-effectively allowing direct communication with subsets of OpenBao pods. Note the `openbao-active: "true"` line below.
+With labels applied to the pod, services can be created using selectors to filter pods with specific Redacto KMS HA roles,
+effectively allowing direct communication with subsets of Redacto KMS pods. Note the `openbao-active: "true"` line below.
 
 ```
 apiVersion: v1

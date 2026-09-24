@@ -26,14 +26,14 @@ func (c *PolicyDeleteCommand) Synopsis() string {
 
 func (c *PolicyDeleteCommand) Help() string {
 	helpText := `
-Usage: bao policy delete [options] NAME
+Usage: redacto-kms policy delete [options] NAME
 
-  Deletes the policy named NAME in the OpenBao server. Once the policy is deleted,
+  Deletes the policy named NAME in the Redacto KMS server. Once the policy is deleted,
   all tokens associated with the policy are affected immediately.
 
   Delete the policy named "my-policy":
 
-      $ bao policy delete my-policy
+      $ redacto-kms policy delete my-policy
 
   Note that it is not possible to delete the "default" or "root" policies.
   These are built-in policies.

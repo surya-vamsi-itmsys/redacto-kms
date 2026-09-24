@@ -1,19 +1,19 @@
 ---
 description: |-
 
-  The `/sys/storage/raft` endpoints are used to manage OpenBao's Raft storage
+  The `/sys/storage/raft` endpoints are used to manage Redacto KMS's Raft storage
   backend.
 ---
 
 # `/sys/storage/raft`
 
-The `/sys/storage/raft` endpoints are used to manage OpenBao's Raft storage
+The `/sys/storage/raft` endpoints are used to manage Redacto KMS's Raft storage
 backend.
 
 ## Join a raft cluster
 
 This endpoint joins a new server node to the Raft cluster. When using Shamir
-seal, as soon as the OpenBao server is brought up, this API should be invoked
+seal, as soon as the Redacto KMS server is brought up, this API should be invoked
 instead of `sys/init`. This API completes in 2 phases. Once this is invoked,
 the joining node will receive a challenge from the Raft's leader node. This
 challenge can be answered by the joining node only after a successful unseal.
@@ -45,7 +45,7 @@ leader node.
   Should match one of the names in the DNS SANs of the remote server certificate.
 
 - `auto_join` `(string: "")` - Defines any cloud auto-join metadata. If
-  supplied, OpenBao will attempt to automatically discover peers in addition to what
+  supplied, Redacto KMS will attempt to automatically discover peers in addition to what
   can be provided via 'leader_api_addr'.
 
 - `auto_join_scheme` `(string: "https")` - URI scheme to be used for `auto_join`.

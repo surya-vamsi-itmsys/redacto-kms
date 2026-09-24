@@ -1,12 +1,12 @@
 ---
 sidebar_label: Unix
 description: |-
-  The Unix listener configures OpenBao to listen on the specified Unix domain socket.
+  The Unix listener configures Redacto KMS to listen on the specified Unix domain socket.
 ---
 
 # `unix` listener
 
-The Unix listener configures OpenBao to listen on the specified Unix domain socket.
+The Unix listener configures Redacto KMS to listen on the specified Unix domain socket.
 
 ```hcl
 listener "unix" {
@@ -14,7 +14,7 @@ listener "unix" {
 }
 ```
 
-The `listener` stanza may be specified more than once to make OpenBao listen on
+The `listener` stanza may be specified more than once to make Redacto KMS listen on
 multiple sockets.
 
 ## `unix` listener parameters
@@ -34,7 +34,7 @@ multiple sockets.
 
   :::warning
 
-  **As of OpenBao v2.5.0, this parameter defaults to true, forbidding any calls
+  **As of Redacto KMS v2.5.0, this parameter defaults to true, forbidding any calls
   to the unauthenticated rekey endpoints.**
 
   :::
@@ -47,7 +47,7 @@ multiple sockets.
 
   :::warning
 
-  **As of OpenBao v2.5.3, this parameter defaults to true, forbidding any calls
+  **As of Redacto KMS v2.5.3, this parameter defaults to true, forbidding any calls
   to the unauthenticated generate root endpoints.**
 
   :::
@@ -70,7 +70,7 @@ multiple sockets.
 
 ### Listening on multiple sockets
 
-This example shows OpenBao listening on a specified socket, as well as the default.
+This example shows Redacto KMS listening on a specified socket, as well as the default.
 
 ```hcl
 listener "unix" {}
@@ -82,7 +82,7 @@ listener "unix" {
 
 ### Listening on multiple interfaces
 
-This example shows OpenBao listening on TCP localhost, as well as Unix socket.
+This example shows Redacto KMS listening on TCP localhost, as well as Unix socket.
 
 ```hcl
 listener "unix" {

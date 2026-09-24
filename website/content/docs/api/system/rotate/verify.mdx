@@ -1,5 +1,5 @@
 ---
-description: The `/sys/rotate/(root|recovery)/verify` endpoints are used to read, progress or cancel rotation verification operation for OpenBao.
+description: The `/sys/rotate/(root|recovery)/verify` endpoints are used to read, progress or cancel rotation verification operation for Redacto KMS.
 ---
 
 # `/sys/rotate/(root|recovery)/verify`
@@ -97,7 +97,7 @@ $ curl \
 
 This endpoint is used to enter a single new key share to progress the rotation
 verification operation. If the threshold number of key shares is reached,
-OpenBao will complete the verification. Otherwise, this API call must be
+Redacto KMS will complete the verification. Otherwise, this API call must be
 repeated until threshold is met. The nonce must be provided with each call.
 
 When the operation is complete, response will be returned in the format of the

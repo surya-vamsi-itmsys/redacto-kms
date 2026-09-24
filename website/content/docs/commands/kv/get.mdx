@@ -1,7 +1,7 @@
 ---
 sidebar_label: get
 description: |-
-  The "kv get" command retrieves the value from OpenBao's key-value store at the
+  The "kv get" command retrieves the value from Redacto KMS's key-value store at the
   given key name. If no key exists with that name, an error is returned. If a
   key exists with that name but has no data, nothing is returned.
 ---
@@ -17,7 +17,7 @@ with the name but has no data, nothing is returned.
 Retrieve the data of the key "creds":
 
 ```shell-session
-$ bao kv get -mount=secret creds
+$ redacto-kms kv get -mount=secret creds
 == Secret Path ==
 secret/data/creds
 
@@ -40,7 +40,7 @@ If K/V Version 1 secrets engine is enabled at "secret", the output has no
 metadata since there is no versioning information associated with the data:
 
 ```shell-session
-$ bao kv get -mount=secret creds
+$ redacto-kms kv get -mount=secret creds
 ====== Data ======
 Key         Value
 ---         -----
@@ -50,7 +50,7 @@ passcode    my-long-passcode
 Return only the "creds" "passcode" key:
 
 ```shell-session
-$ bao kv get -mount=secret -field=passcode creds
+$ redacto-kms kv get -mount=secret -field=passcode creds
 my-long-passcode
 ```
 
@@ -65,7 +65,7 @@ my-long-passcode
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### Command options
 

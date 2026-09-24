@@ -563,7 +563,7 @@ func (b *RaftBackend) DisableAutopilot() {
 // it. If autopilot is disabled, this function does nothing.
 func (b *RaftBackend) SetupAutopilot(ctx context.Context, storageConfig *AutopilotConfig, followerStates *FollowerStates, disable bool) {
 	b.l.Lock()
-	if disable || api.ReadBaoVariable("BAO_RAFT_AUTOPILOT_DISABLE") != "" {
+	if disable || api.ReadBaoVariable("REDACTO_KMS_RAFT_AUTOPILOT_DISABLE") != "" {
 		b.disableAutopilot = true
 	}
 

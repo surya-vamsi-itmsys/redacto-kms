@@ -1,14 +1,14 @@
 ---
-description: The `/sys/seal` endpoint seals the OpenBao.
+description: The `/sys/seal` endpoint seals the Redacto KMS.
 ---
 
 # `/sys/seal`
 
-The `/sys/seal` endpoint seals the OpenBao.
+The `/sys/seal` endpoint seals the Redacto KMS.
 
 ## Seal
 
-This endpoint seals the OpenBao. In HA mode, only an active node can be sealed.
+This endpoint seals the Redacto KMS. In HA mode, only an active node can be sealed.
 Standby nodes should be restarted to get the same effect. Requires a token with
 `root` policy or `sudo` capability on the path.
 

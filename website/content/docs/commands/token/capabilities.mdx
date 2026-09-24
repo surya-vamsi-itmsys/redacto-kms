@@ -20,14 +20,14 @@ token.
 List capabilities for the local token on the "secret/foo" path:
 
 ```shell-session
-$ bao token capabilities secret/foo
+$ redacto-kms token capabilities secret/foo
 read
 ```
 
 List capabilities for a token on the "cubbyhole/foo" path:
 
 ```shell-session
-$ bao token capabilities 96ddf4bc-d217-f3ba-f9bd-017055595017 database/creds/readonly
+$ redacto-kms token capabilities 96ddf4bc-d217-f3ba-f9bd-017055595017 database/creds/readonly
 deny
 ```
 
@@ -40,4 +40,4 @@ flags](../index.mdx) included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.

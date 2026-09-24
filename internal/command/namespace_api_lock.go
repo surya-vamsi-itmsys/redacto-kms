@@ -27,15 +27,15 @@ func (c *NamespaceAPILockCommand) Synopsis() string {
 
 func (c *NamespaceAPILockCommand) Help() string {
 	helpText := `
-Usage: bao namespace lock PATH
+Usage: redacto-kms namespace lock PATH
 
 	Lock the current namespace, and all descendants:
 
-		$ bao namespace lock
+		$ redacto-kms namespace lock
 
 	Lock a child namespace, and all of its descendants (e.g. ns1/ns2/):
 
-		$ bao namespace lock ns1/ns2
+		$ redacto-kms namespace lock ns1/ns2
 
 ` + c.Flags().Help()
 

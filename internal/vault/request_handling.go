@@ -48,7 +48,7 @@ import (
 )
 
 const (
-	EnvVaultDisableLocalAuthMountEntities = "BAO_DISABLE_LOCAL_AUTH_MOUNT_ENTITIES"
+	EnvVaultDisableLocalAuthMountEntities = "REDACTO_KMS_DISABLE_LOCAL_AUTH_MOUNT_ENTITIES"
 
 	// coreLockedUsersPath is a base path to store locked users
 	coreLockedUsersPath = "core/login/lockedUsers/"
@@ -2263,7 +2263,7 @@ func (c *Core) isUserLockoutDisabled(mountEntry *routing.MountEntry) (bool, erro
 		var err error
 		disableUserLockout, err := strconv.ParseBool(disableUserLockoutEnv)
 		if err != nil {
-			return false, errors.New("Error parsing the environment variable BAO_DISABLE_USER_LOCKOUT")
+			return false, errors.New("Error parsing the environment variable REDACTO_KMS_DISABLE_USER_LOCKOUT")
 		}
 		if disableUserLockout {
 			return true, nil

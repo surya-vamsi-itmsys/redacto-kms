@@ -163,7 +163,7 @@ func (b *SystemBackend) raftStoragePaths() []*framework.Path {
 			Operations: map[logical.Operation]framework.OperationHandler{
 				logical.ReadOperation: &framework.PathOperation{
 					Callback: b.handleStorageRaftSnapshotRead(),
-					Summary:  "Returns a snapshot of the current state of OpenBao.",
+					Summary:  "Returns a snapshot of the current state of Redacto KMS.",
 				},
 				logical.UpdateOperation: &framework.PathOperation{
 					Callback: b.handleStorageRaftSnapshotWrite(false),

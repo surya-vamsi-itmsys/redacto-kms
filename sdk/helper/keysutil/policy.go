@@ -1921,7 +1921,7 @@ func (p *Policy) Rotate(ctx context.Context, storage logical.Storage, randReader
 	var priorKeys keyEntryMap
 
 	if p.Imported && !p.AllowImportedKeyRotation {
-		return fmt.Errorf("imported key %s does not allow rotation within Vault", p.Name)
+		return fmt.Errorf("imported key %s does not allow rotation within Redacto KMS", p.Name)
 	}
 
 	if p.Keys != nil {

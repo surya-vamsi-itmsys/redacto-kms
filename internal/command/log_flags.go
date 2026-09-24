@@ -63,7 +63,7 @@ func (f *FlagSet) addLogFlags(l *logFlags) {
 	f.StringVar(&StringVar{
 		Name:   flagNameLogFile,
 		Target: &l.flagLogFile,
-		Usage:  "Path to the log file that Vault should use for logging",
+		Usage:  "Path to the log file that Redacto KMS should use for logging",
 	})
 
 	f.IntVar(&IntVar{

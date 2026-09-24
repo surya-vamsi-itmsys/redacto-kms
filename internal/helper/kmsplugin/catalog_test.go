@@ -16,7 +16,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-const TestPluginServerEnv = "BAO_TEST_PLUGIN_SERVER"
+const TestPluginServerEnv = "REDACTO_KMS_TEST_PLUGIN_SERVER"
 
 // TestStaticPluginServer runs a plugin that serves the static wrapper.
 func TestStaticPluginServer(t *testing.T) {

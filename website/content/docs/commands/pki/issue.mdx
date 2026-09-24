@@ -2,7 +2,7 @@
 sidebar_label: issue
 description: |-
   The "pki issue" command issues a new intermediate ("issuer") certificate,
-  using a parent certificate in OpenBao.
+  using a parent certificate in Redacto KMS.
 ---
 
 # pki issue
@@ -13,14 +13,14 @@ on that certificate.
 
 ## Usage
 
-Usage: `bao pki issue [flags] <parent> <child_mount> [options]`
+Usage: `redacto-kms pki issue [flags] <parent> <child_mount> [options]`
 
 - `[flags]` are optional arguments described below
 
-- `<parent>` is the fully qualified path of the Certificate Authority in OpenBao
+- `<parent>` is the fully qualified path of the Certificate Authority in Redacto KMS
   which will issue the new intermediate certificate.
 
-- `<child_mount>` is the path of the mount in OpenBao where the new issuer is saved.
+- `<child_mount>` is the path of the mount in Redacto KMS where the new issuer is saved.
 
 - `[options]` are the superset of the k=v options passed to generate-intermediate-csr
   and sign-intermediate commands.  At least one option must be set.
@@ -30,7 +30,7 @@ Usage: `bao pki issue [flags] <parent> <child_mount> [options]`
 
 - `-type` `(string: "internal")` - This determines the type of key use for the
    newly created certificate.  Valid types are `"existing"` - where we link to
-   a key already present in the OpenBao-backend to be used (and expect option
+   a key already present in the Redacto KMS-backend to be used (and expect option
    arguments `"key_ref"`) - `"internal"` - to generate a new key for this
    certificate - or `"kms"` - to link to an external key.  Exported keys are not
    available through this API.
@@ -63,7 +63,7 @@ following API endpoints, each representing a step in the process:
 ## Examples
 
 ```shell-session
-$ bao pki issue -issuer_name="FirstDepartment" /pki_root/issuer/default /pki_int/ common_name="first-department.example.com"
+$ redacto-kms pki issue -issuer_name="FirstDepartment" /pki_root/issuer/default /pki_int/ common_name="first-department.example.com"
 Key                               Value
 ---                               -----
 ca_chain                          [-----BEGIN CERTIFICATE-----

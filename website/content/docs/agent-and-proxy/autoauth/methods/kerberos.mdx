@@ -2,15 +2,15 @@
 sidebar_label: Kerberos
 sidebar_current: 'docs-agent-and-proxy-autoauth-methods-kerberos'
 description: |-
-  Kerberos Method for OpenBao Auto-Auth
+  Kerberos Method for Redacto KMS Auto-Auth
 ---
 
-# OpenBao Auto-Auth Kerberos method
+# Redacto KMS Auto-Auth Kerberos method
 
 The `kerberos` auto-auth method provides an automated mechanism to retrieve
-an OpenBao token for Kerberos entities. It reads in configuration and
+a Redacto KMS token for Kerberos entities. It reads in configuration and
 identification information from the surrounding environment, and uses
-it to authenticate to OpenBao.
+it to authenticate to Redacto KMS.
 
 For more on this auth method, see the [Kerberos auth method](../../../auth/kerberos.mdx).
 
@@ -19,7 +19,7 @@ For more on this auth method, see the [Kerberos auth method](../../../auth/kerbe
 - `krb5conf_path` `(string: required)` is the path to a valid `krb5.conf` file describing how to
   communicate with the Kerberos environment.
 - `keytab_path` `(string: required)` is the path to the `keytab` in which the entry lives for the
-  entity authenticating to OpenBao. Keytab files should be protected from other
+  entity authenticating to Redacto KMS. Keytab files should be protected from other
   users on a shared server using appropriate file permissions.
 - `username` `(string: required)` is the username for the entry _within_ the `keytab` to use for
   logging into Kerberos. This username must match a service account in LDAP.

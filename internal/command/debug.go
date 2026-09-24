@@ -202,31 +202,31 @@ func (c *DebugCommand) Flags() *FlagSets {
 
 func (c *DebugCommand) Help() string {
 	helpText := `
-Usage: bao debug [options]
+Usage: redacto-kms debug [options]
 
-  Probes a specific OpenBao server node for a specified period of time, recording
+  Probes a specific Redacto KMS server node for a specified period of time, recording
   information about the node, its cluster, and its host environment. The
   information collected is packaged and written to the specified path.
 
   Certain endpoints that this command uses require ACL permissions to access.
   If not permitted, the information from these endpoints will not be part of the
-  output. The command uses the OpenBao address and token as specified via
+  output. The command uses the Redacto KMS address and token as specified via
   the login command, environment variables, or CLI flags.
 
   To create a debug package using default duration and interval values in the
   current directory that captures all applicable targets:
 
-  $ bao debug
+  $ redacto-kms debug
 
   To create a debug package with a specific duration and interval in the current
   directory that capture all applicable targets:
 
-  $ bao debug -duration=10m -interval=1m
+  $ redacto-kms debug -duration=10m -interval=1m
 
   To create a debug package in the current directory with a specific sub-set of
   targets:
 
-  $ bao debug -target=host -target=metrics
+  $ redacto-kms debug -target=host -target=metrics
 
 ` + c.Flags().Help()
 
@@ -259,7 +259,7 @@ func (c *DebugCommand) Run(args []string) int {
 
 	// Print debug information
 	c.UI.Output("==> Starting debug capture...")
-	c.UI.Info(fmt.Sprintf("       OpenBao Address: %s", c.debugIndex.VaultAddress))
+	c.UI.Info(fmt.Sprintf("       Redacto KMS Address: %s", c.debugIndex.VaultAddress))
 	c.UI.Info(fmt.Sprintf("        Client Version: %s", c.debugIndex.ClientVersion))
 	c.UI.Info(fmt.Sprintf("        Server Version: %s", c.debugIndex.ServerVersion))
 	c.UI.Info(fmt.Sprintf("              Duration: %s", c.flagDuration))
@@ -422,7 +422,7 @@ func (c *DebugCommand) preflight(rawArgs []string) (string, error) {
 	// Make sure we can talk to the server
 	client, err := c.Client()
 	if err != nil {
-		return "", fmt.Errorf("unable to create client to connect to OpenBao: %s", err)
+		return "", fmt.Errorf("unable to create client to connect to Redacto KMS: %s", err)
 	}
 	serverHealth, err := client.Sys().Health()
 	if err != nil {
@@ -434,7 +434,7 @@ func (c *DebugCommand) preflight(rawArgs []string) (string, error) {
 	captureTime := time.Now().UTC()
 	if len(c.flagOutput) == 0 {
 		formattedTime := captureTime.Format(fileFriendlyTimeFormat)
-		c.flagOutput = fmt.Sprintf("bao-debug-%s", formattedTime)
+		c.flagOutput = fmt.Sprintf("redacto-kms-debug-%s", formattedTime)
 	}
 
 	// Strip trailing slash before proceeding
@@ -1107,7 +1107,7 @@ func (c *DebugCommand) captureError(target string, err error) {
 }
 
 func (c *DebugCommand) writeLogs(ctx context.Context) {
-	out, err := os.OpenFile(filepath.Join(c.flagOutput, "bao.log"), os.O_CREATE|os.O_WRONLY, 0o600)
+	out, err := os.OpenFile(filepath.Join(c.flagOutput, "redacto-kms.log"), os.O_CREATE|os.O_WRONLY, 0o600)
 	if err != nil {
 		c.captureError("log", err)
 		return

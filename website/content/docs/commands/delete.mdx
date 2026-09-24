@@ -1,13 +1,13 @@
 ---
 description: |-
-  The "delete" command deletes secrets and configuration from OpenBao at the given
+  The "delete" command deletes secrets and configuration from Redacto KMS at the given
   path. The behavior of "delete" is delegated to the backend corresponding to
   the given path.
 ---
 
 # delete
 
-The `delete` command deletes secrets and configuration from OpenBao at the given
+The `delete` command deletes secrets and configuration from Redacto KMS at the given
 path (wrapper command for HTTP DELETE). The behavior of "delete" is delegated to
 the backend corresponding to the given path.
 
@@ -16,13 +16,13 @@ the backend corresponding to the given path.
 Remove data in the static secrets engine:
 
 ```shell-session
-$ bao delete secret/my-secret
+$ redacto-kms delete secret/my-secret
 ```
 
 Uninstall an encryption key in the transit backend:
 
 ```shell-session
-$ bao delete transit/keys/my-key
+$ redacto-kms delete transit/keys/my-key
 ```
 
 Note: changing the `deletion_allowed` parameter to `true` is necessary for the

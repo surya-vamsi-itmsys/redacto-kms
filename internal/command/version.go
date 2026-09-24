@@ -24,19 +24,19 @@ type VersionCommand struct {
 }
 
 func (c *VersionCommand) Synopsis() string {
-	return "Prints the OpenBao CLI version"
+	return "Prints the Redacto KMS CLI version"
 }
 
 func (c *VersionCommand) Help() string {
 	helpText := `
-Usage: bao version
+Usage: redacto-kms version
 
-  Prints the version of this OpenBao CLI. This does not print the target OpenBao
+  Prints the version of this Redacto KMS CLI. This does not print the target Redacto KMS
   server version.
 
   Print the version:
 
-      $ bao version
+      $ redacto-kms version
 
   There are no arguments or flags to this command. Any additional arguments or
   flags are ignored.

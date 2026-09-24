@@ -25,7 +25,7 @@ var (
 
 	// DefaultWrappingLookupFunc is the default function used if no other
 	// function is set and environment access isn't disabled, honoring the
-	// BAO_WRAP_TTL variable. The default wrap TTL will apply when when writing
+	// REDACTO_KMS_WRAP_TTL variable. The default wrap TTL will apply when when writing
 	// to `sys/wrapping/wrap` when the environment variable is not set.
 	DefaultWrappingLookupFunc = func(operation, path string) string {
 		if env := ReadBaoVariable(EnvVaultWrapTTL); env != "" {

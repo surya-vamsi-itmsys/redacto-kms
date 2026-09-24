@@ -34,26 +34,26 @@ func (c *NamespaceUnsealCommand) Synopsis() string {
 
 func (c *NamespaceUnsealCommand) Help() string {
 	helpText := `
-Usage: bao namespace unseal [options] PATH [KEY]
+Usage: redacto-kms namespace unseal [options] PATH [KEY]
 
-  Unseals the OpenBao namespace. Provide a portion of the root key to unseal
-  an OpenBao namespace. Namespaces cannot perform operations until they are
+  Unseals the Redacto KMS namespace. Provide a portion of the root key to unseal
+  a Redacto KMS namespace. Namespaces cannot perform operations until they are
   unsealed. This command accepts a portion of the root key (an "unseal key").
 
   The unseal key can be supplied as an argument to the command, but this is
   not recommended as the unseal key will be available in your history:
 
-      $ bao namespace unseal ns1 IXyR0OJnSFobekZMMCKCoVEpT7wI6l+USMzE3IcyDyo=
+      $ redacto-kms namespace unseal ns1 IXyR0OJnSFobekZMMCKCoVEpT7wI6l+USMzE3IcyDyo=
 
   Instead, run the command with no arguments and it will prompt for the key:
 
-      $ bao namespace unseal ns1
+      $ redacto-kms namespace unseal ns1
       Key (will be hidden): IXyR0OJnSFobekZMMCKCoVEpT7wI6l+USMzE3IcyDyo=
 
   Optionally, you can reset the unseal progress, discarding any already
   provided unseal keyshares with a reset flag:
 
-      $ bao namespace unseal --reset ns1
+      $ redacto-kms namespace unseal --reset ns1
 
 ` + c.Flags().Help()
 

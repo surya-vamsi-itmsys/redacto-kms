@@ -20,13 +20,13 @@ documentation](../../concepts/policies.mdx).
 Upload a policy named "my-policy" from "/tmp/policy.hcl" on the local disk:
 
 ```shell-session
-$ bao policy write my-policy /tmp/policy.hcl
+$ redacto-kms policy write my-policy /tmp/policy.hcl
 ```
 
 Upload a policy from stdin:
 
 ```shell-session
-$ cat my-policy.hcl | bao policy write my-policy -
+$ cat my-policy.hcl | redacto-kms policy write my-policy -
 ```
 
 ## Usage

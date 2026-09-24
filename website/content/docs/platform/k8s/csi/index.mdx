@@ -1,17 +1,17 @@
 ---
 sidebar_label: Overview
 description: >-
-  The OpenBao CSI Provider allows pods to consume OpenBao secrets using CSI volumes.
+  The Redacto KMS CSI Provider allows pods to consume Redacto KMS secrets using CSI volumes.
 ---
 
-# OpenBao CSI provider
+# Redacto KMS CSI provider
 
-The OpenBao CSI Provider allows pods to consume OpenBao secrets using
+The Redacto KMS CSI Provider allows pods to consume Redacto KMS secrets using
 [CSI Secrets Store](https://github.com/kubernetes-sigs/secrets-store-csi-driver) volumes.
 
 :::warning
 
-The OpenBao CSI Provider requires the [CSI Secret Store](https://github.com/kubernetes-sigs/secrets-store-csi-driver)
+The Redacto KMS CSI Provider requires the [CSI Secret Store](https://github.com/kubernetes-sigs/secrets-store-csi-driver)
 Driver to be installed.
 
 :::
@@ -20,33 +20,33 @@ Driver to be installed.
 
 At a high level, the CSI Secrets Store driver allows users to create `SecretProviderClass` objects.
 This object defines which secret provider to use and what secrets to retrieve. When pods requesting CSI volumes
-are created, the CSI Secrets Store driver will send the request to the OpenBao CSI Provider if the provider
-is `openbao`. The OpenBao CSI Provider will then use Secret Provider Class specified and the pod's service account to retrieve
-the secrets from OpenBao, and mount them into the pod's CSI volume.
+are created, the CSI Secrets Store driver will send the request to the Redacto KMS CSI Provider if the provider
+is `openbao`. The Redacto KMS CSI Provider will then use Secret Provider Class specified and the pod's service account to retrieve
+the secrets from Redacto KMS, and mount them into the pod's CSI volume.
 
-The secret is retrieved from OpenBao and populated to the CSI secrets store volume during the `ContainerCreation` phase.
-This means that pods will be blocked from starting until the secrets have been read from OpenBao and written to the volume.
+The secret is retrieved from Redacto KMS and populated to the CSI secrets store volume during the `ContainerCreation` phase.
+This means that pods will be blocked from starting until the secrets have been read from Redacto KMS and written to the volume.
 
 ### Features
 
-The following features are supported by the OpenBao CSI Provider:
+The following features are supported by the Redacto KMS CSI Provider:
 
-- All OpenBao secret engines supported.
+- All Redacto KMS secret engines supported.
 - Authentication using the requesting pod's service account.
-- TLS/mTLS communications with OpenBao.
-- Rendering OpenBao secrets to files.
+- TLS/mTLS communications with Redacto KMS.
+- Rendering Redacto KMS secrets to files.
 - Dynamic lease caching and renewal performed by Agent.
 - Syncing secrets to Kubernetes secrets to be used as environment variables.
-- Installation via [OpenBao Helm](../helm/index.mdx)
+- Installation via [Redacto KMS Helm](../helm/index.mdx)
 
 @include 'kubernetes-supported-versions.mdx'
 
-## Authenticating with OpenBao
+## Authenticating with Redacto KMS
 
-The OpenBao CSI Provider will authenticate with OpenBao as the service account of the
+The Redacto KMS CSI Provider will authenticate with Redacto KMS as the service account of the
 pod that mounts the CSI volume. [Kubernetes](../../../auth/kubernetes.mdx) and
 [JWT](../../../auth/jwt/index.mdx) auth methods are supported. The pod's service account
-must be bound to a OpenBao role and a policy granting access to the secrets desired.
+must be bound to a Redacto KMS role and a policy granting access to the secrets desired.
 
 It is highly recommended to run pods with dedicated Kubernetes service accounts to
 ensure applications cannot access more secrets than they require.
@@ -57,7 +57,7 @@ The following is an example of a Secret Provider Class using the `openbao` provi
 
 :::warning
 
-`provider: openbao` only works starting with the OpenBao Helm Chart version 0.18.0, which uses the OpenBao CSI Provider version 2.0.0 or later.
+`provider: openbao` only works starting with the Redacto KMS Helm Chart version 0.18.0, which uses the Redacto KMS CSI Provider version 2.0.0 or later.
 
 :::
 
@@ -68,14 +68,14 @@ kind: SecretProviderClass
 metadata:
   name: openbao-db-creds
 spec:
-  # OpenBao CSI Provider
+  # Redacto KMS CSI Provider
   provider: openbao
   parameters:
-    # OpenBao role name to use during login
+    # Redacto KMS role name to use during login
     roleName: 'app'
-    # OpenBao address and TLS connection config is normally best configured by the
+    # Redacto KMS address and TLS connection config is normally best configured by the
     # helm chart, but can be overridden per SecretProviderClass:
-    # OpenBao's hostname
+    # Redacto KMS's hostname
     baoAddress: 'https://openbao:8200'
     # TLS CA certification for validation
     baoCACertPath: '/openbao/tls/ca.crt'
@@ -88,8 +88,8 @@ spec:
         secretKey: "password"
     # "objectName" is an alias used within the SecretProviderClass to reference
     # that specific secret. This will also be the filename containing the secret.
-    # "secretPath" is the path in OpenBao where the secret should be retrieved.
-    # "secretKey" is the key within the OpenBao secret response to extract a value from.
+    # "secretPath" is the path in Redacto KMS where the secret should be retrieved.
+    # "secretKey" is the key within the Redacto KMS secret response to extract a value from.
 ```
 
 :::warning

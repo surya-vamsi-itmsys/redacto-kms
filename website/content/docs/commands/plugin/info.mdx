@@ -19,7 +19,7 @@ pair, seen below.
 Display information about a plugin
 
 ```shell-session
-$ bao plugin info -version=v1.0.0 auth my-custom-plugin
+$ redacto-kms plugin info -version=v1.0.0 auth my-custom-plugin
 
 Key                   Value
 ---                   -----
@@ -33,7 +33,7 @@ version               v1.0.0
 ```
 
 ```shell-session
-$ bao plugin info database postgresql-database-plugin
+$ redacto-kms plugin info database postgresql-database-plugin
 Key                   Value
 ---                   -----
 args                  []
@@ -59,7 +59,7 @@ flags](../index.mdx) included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### Command options
 

@@ -38,7 +38,7 @@ For example: https://pr1.bao.example.com:8200/v1/pki`,
 			"aia_path": {
 				Type: framework.TypeString,
 				Description: `Optional URI to this mount's AIA distribution
-point; may refer to an external non-OpenBao responder. This is for resolving AIA
+point; may refer to an external non-Redacto KMS responder. This is for resolving AIA
 URLs and providing the {{cluster_aia_path}} template parameter and will not
 be used for other purposes. As such, unlike path above, this could safely
 be an insecure transit mechanism (like HTTP without TLS).
@@ -74,7 +74,7 @@ For example: https://pr1.bao.example.com:8200/v1/pki`,
 							"aia_path": {
 								Type: framework.TypeString,
 								Description: `Optional URI to this mount's AIA distribution
-point; may refer to an external non-OpenBao responder. This is for resolving AIA
+point; may refer to an external non-Redacto KMS responder. This is for resolving AIA
 URLs and providing the {{cluster_aia_path}} template parameter and will not
 be used for other purposes. As such, unlike path above, this could safely
 be an insecure transit mechanism (like HTTP without TLS).
@@ -111,7 +111,7 @@ For example: https://pr1.bao.example.com:8200/v1/pki`,
 							"aia_path": {
 								Type: framework.TypeString,
 								Description: `Optional URI to this mount's AIA distribution
-point; may refer to an external non-OpenBao responder. This is for resolving AIA
+point; may refer to an external non-Redacto KMS responder. This is for resolving AIA
 URLs and providing the {{cluster_aia_path}} template parameter and will not
 be used for other purposes. As such, unlike path above, this could safely
 be an insecure transit mechanism (like HTTP without TLS).

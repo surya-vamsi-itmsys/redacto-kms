@@ -30,7 +30,7 @@ func (c *PluginReloadCommand) Synopsis() string {
 
 func (c *PluginReloadCommand) Help() string {
 	helpText := `
-Usage: bao plugin reload [options]
+Usage: redacto-kms plugin reload [options]
 
   Reloads mounted plugins. Either the plugin name or the desired plugin 
   mount(s) must be provided, but not both. In case the plugin name is provided,
@@ -38,7 +38,7 @@ Usage: bao plugin reload [options]
 
   Reload the plugin named "my-custom-plugin":
 
-	  $ bao plugin reload -plugin=my-custom-plugin
+	  $ redacto-kms plugin reload -plugin=my-custom-plugin
 
 ` + c.Flags().Help()
 

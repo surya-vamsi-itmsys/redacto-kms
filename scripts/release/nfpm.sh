@@ -6,7 +6,7 @@ export GOOS=${GOOS:-$(go env GOOS)}
 export GOARM=${GOARM:-$(go env GOARM)}
 export GOARCH=${GOARCH:-$(go env GOARCH)}
 
-package="openbao_${VERSION#v}_${GOOS}_${GOARCH}"
+package="redacto-kms_${VERSION#v}_${GOOS}_${GOARCH}"
 
 # Add the ARM suffix if this is an ARM build.
 if [[ -n "${GOARM:-}" ]]; then

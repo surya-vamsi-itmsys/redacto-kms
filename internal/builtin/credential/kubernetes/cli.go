@@ -62,18 +62,18 @@ func (h *CLIHandler) Auth(c *api.Client, m map[string]string, nonInteractive boo
 
 func (h *CLIHandler) Help() string {
 	help := `
-Usage: bao login -method=kubernetes [CONFIG K=V...]
+Usage: redacto-kms login -method=kubernetes [CONFIG K=V...]
 
   The Kubernetes auth method allows users to authenticate using a Kubernetes service account token.
 
   Authenticate using role "dev-role", prompting for JWT on stdin:
 
-      $ bao login -method=kubernetes role=dev-role
+      $ redacto-kms login -method=kubernetes role=dev-role
       JWT (will be hidden):
 
   Authenticate using role "dev-role", providing JWT directly:
 
-      $ bao login -method=kubernetes role=dev-role jwt="<token>"
+      $ redacto-kms login -method=kubernetes role=dev-role jwt="<token>"
 
 Configuration:
 

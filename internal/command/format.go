@@ -134,7 +134,7 @@ type RawFormatter struct{}
 func (r RawFormatter) Format(data any) ([]byte, error) {
 	byte_data, ok := data.([]byte)
 	if !ok {
-		return nil, errors.New("This command does not support the -format=raw option; only `bao read` does.") //nolint:staticcheck // user-facing error
+		return nil, errors.New("This command does not support the -format=raw option; only `redacto-kms read` does.") //nolint:staticcheck // user-facing error
 	}
 
 	return byte_data, nil
@@ -487,7 +487,7 @@ func (t TableFormatter) OutputList(ui cli.Ui, secret *api.Secret, data any) erro
 // printWarnings prints any warnings in the secret.
 func printWarnings(ui cli.Ui, secret *api.Secret) {
 	if secret != nil && len(secret.Warnings) > 0 {
-		ui.Warn("WARNING! The following warnings were returned from OpenBao:\n")
+		ui.Warn("WARNING! The following warnings were returned from Redacto KMS:\n")
 		for _, warning := range secret.Warnings {
 			ui.Warn(wrapAtLengthWithPadding(fmt.Sprintf("* %s", warning), 2))
 			ui.Warn("")

@@ -448,7 +448,7 @@ func (b *backend) pathImportIssuers(ctx context.Context, req *logical.Request, d
 					response.AddWarning("Unable to update this new root as the default issuer: " + err.Error())
 				}
 			} else if len(issuersWithKeys) > 1 {
-				response.AddWarning("Default issuer left unchanged: could not select new issuer automatically as multiple imported issuers had key material in Vault.")
+				response.AddWarning("Default issuer left unchanged: could not select new issuer automatically as multiple imported issuers had key material in Redacto KMS.")
 			}
 		}
 	}

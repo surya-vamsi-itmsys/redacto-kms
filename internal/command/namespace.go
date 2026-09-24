@@ -21,49 +21,49 @@ func (c *NamespaceCommand) Synopsis() string {
 
 func (c *NamespaceCommand) Help() string {
 	helpText := `
-Usage: bao namespace <subcommand> [options] [args]
+Usage: redacto-kms namespace <subcommand> [options] [args]
 
-  This command groups subcommands for interacting with OpenBao namespaces.
+  This command groups subcommands for interacting with Redacto KMS namespaces.
 
   List enabled child namespaces:
 
-      $ bao namespace list
+      $ redacto-kms namespace list
 
   List enabled child namespaces recursively:
 
-      $ bao namespace scan
+      $ redacto-kms namespace scan
 
   Look up an existing namespace:
 
-      $ bao namespace lookup
+      $ redacto-kms namespace lookup
 
   Create a new namespace:
 
-      $ bao namespace create
+      $ redacto-kms namespace create
 
   Patch an existing namespace:
 
-      $ bao namespace patch
+      $ redacto-kms namespace patch
 
   Delete an existing namespace:
 
-      $ bao namespace delete
+      $ redacto-kms namespace delete
 
   Lock the API for an existing namespace:
 
-      $ bao namespace lock
+      $ redacto-kms namespace lock
 
   Unlock the API for an existing namespace:
 
-      $ bao namespace unlock
+      $ redacto-kms namespace unlock
 
   Seal the namespace:  
 
-      $ bao namespace seal
+      $ redacto-kms namespace seal
 
   Unseal the namespace:
 
-      $ bao namespace unseal
+      $ redacto-kms namespace unseal
 
   Please see the individual subcommand help for detailed usage information.
 `

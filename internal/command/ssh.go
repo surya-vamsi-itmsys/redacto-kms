@@ -56,7 +56,7 @@ func (c *SSHCommand) Synopsis() string {
 
 func (c *SSHCommand) Help() string {
 	helpText := `
-Usage: bao ssh [options] username@ip [ssh options]
+Usage: redacto-kms ssh [options] username@ip [ssh options]
 
   Establishes an SSH connection with the target machine.
 
@@ -66,15 +66,15 @@ Usage: bao ssh [options] username@ip [ssh options]
 
   SSH using the OTP mode (requires sshpass for full automation):
 
-      $ bao ssh -mode=otp -role=my-role user@1.2.3.4
+      $ redacto-kms ssh -mode=otp -role=my-role user@1.2.3.4
 
   SSH using the CA mode:
 
-      $ bao ssh -mode=ca -role=my-role user@1.2.3.4
+      $ redacto-kms ssh -mode=ca -role=my-role user@1.2.3.4
 
   SSH using CA mode with host key verification:
 
-      $ bao ssh \
+      $ redacto-kms ssh \
           -mode=ca \
           -role=my-role \
           -host-key-mount-point=host-signer \
@@ -137,7 +137,7 @@ func (c *SSHCommand) Flags() *FlagSets {
 		Name:       "strict-host-key-checking",
 		Target:     &c.flagStrictHostKeyChecking,
 		Default:    "ask",
-		EnvVar:     "BAO_SSH_STRICT_HOST_KEY_CHECKING",
+		EnvVar:     "REDACTO_KMS_SSH_STRICT_HOST_KEY_CHECKING",
 		Completion: complete.PredictSet("ask", "no", "yes"),
 		Usage: "Value to use for the SSH configuration option " +
 			"\"StrictHostKeyChecking\".",
@@ -147,7 +147,7 @@ func (c *SSHCommand) Flags() *FlagSets {
 		Name:       "user-known-hosts-file",
 		Target:     &c.flagUserKnownHostsFile,
 		Default:    "",
-		EnvVar:     "BAO_SSH_USER_KNOWN_HOSTS_FILE",
+		EnvVar:     "REDACTO_KMS_SSH_USER_KNOWN_HOSTS_FILE",
 		Completion: complete.PredictFiles("*"),
 		Usage: "Value to use for the SSH configuration option " +
 			"\"UserKnownHostsFile\".",
@@ -162,7 +162,7 @@ func (c *SSHCommand) Flags() *FlagSets {
 		Default:    "",
 		EnvVar:     "",
 		Completion: complete.PredictFiles("*"),
-		Usage:      "Path to the SSH public key to send to OpenBao for signing. If not set, ~/.ssh/id_ed25519.pub, ~/.ssh/id_ecdsa.pub and ~/.ssh/id_rsa.pub will be searched in order.",
+		Usage:      "Path to the SSH public key to send to Redacto KMS for signing. If not set, ~/.ssh/id_ed25519.pub, ~/.ssh/id_ecdsa.pub and ~/.ssh/id_rsa.pub will be searched in order.",
 	})
 
 	f.StringVar(&StringVar{
@@ -179,10 +179,10 @@ func (c *SSHCommand) Flags() *FlagSets {
 		Name:       "host-key-mount-point",
 		Target:     &c.flagHostKeyMountPoint,
 		Default:    "",
-		EnvVar:     "BAO_SSH_HOST_KEY_MOUNT_POINT",
+		EnvVar:     "REDACTO_KMS_SSH_HOST_KEY_MOUNT_POINT",
 		Completion: complete.PredictAnything,
 		Usage: "Mount point to the SSH secrets engine where host keys are signed. " +
-			"When given a value, OpenBao will generate a custom \"known_hosts\" file " +
+			"When given a value, Redacto KMS will generate a custom \"known_hosts\" file " +
 			"with delegation to the CA at the provided mount point to verify the " +
 			"SSH connection's host keys against the provided CA. By default, host " +
 			"keys are validated against the user's local \"known_hosts\" file. " +
@@ -194,7 +194,7 @@ func (c *SSHCommand) Flags() *FlagSets {
 		Name:       "host-key-hostnames",
 		Target:     &c.flagHostKeyHostnames,
 		Default:    "*",
-		EnvVar:     "BAO_SSH_HOST_KEY_HOSTNAMES",
+		EnvVar:     "REDACTO_KMS_SSH_HOST_KEY_HOSTNAMES",
 		Completion: complete.PredictAnything,
 		Usage: "List of hostnames to delegate for the CA. The default value " +
 			"allows all domains and IPs. This is specified as a comma-separated " +
@@ -215,7 +215,7 @@ func (c *SSHCommand) Flags() *FlagSets {
 		Name:       "ssh-executable",
 		Target:     &c.flagSSHExecutable,
 		Default:    "ssh",
-		EnvVar:     "BAO_SSH_EXECUTABLE",
+		EnvVar:     "REDACTO_KMS_SSH_EXECUTABLE",
 		Completion: complete.PredictAnything,
 		Usage:      "Path to the SSH executable to use when connecting to the host",
 	})
@@ -332,7 +332,7 @@ func (c *SSHCommand) Run(args []string) int {
 	// TODO: remove in 0.9.0, convert to validation error
 	if c.flagRole == "" {
 		c.UI.Error(wrapAtLength(
-			"No -role specified. Use -role to tell OpenBao which " +
+			"No -role specified. Use -role to tell Redacto KMS which " +
 				"ssh role to use for authentcation.",
 		))
 		return 1
@@ -344,7 +344,7 @@ func (c *SSHCommand) Run(args []string) int {
 	// TODO: remove in 0.9.0, convert to validation error
 	if c.flagMode == "" {
 		c.UI.Error(wrapAtLength(
-			"WARNING: No -mode specified. Use -mode to tell OpenBao which ssh " +
+			"WARNING: No -mode specified. Use -mode to tell Redacto KMS which ssh " +
 				"authentication mode to use.",
 		))
 		return 1
@@ -553,9 +553,9 @@ func (c *SSHCommand) handleTypeOTP(username, ip, port string, sshArgs []string) 
 	if err != nil {
 		// No sshpass available so using normal ssh client
 		c.UI.Warn(wrapAtLength(
-			"OpenBao could not locate \"sshpass\". The OTP code for the session is " +
+			"Redacto KMS could not locate \"sshpass\". The OTP code for the session is " +
 				"displayed below. Enter this code in the SSH password prompt. If you " +
-				"install sshpass, OpenBao can automatically perform this step for you.",
+				"install sshpass, Redacto KMS can automatically perform this step for you.",
 		))
 		c.UI.Output("OTP for the session is: " + cred.Key)
 	} else {

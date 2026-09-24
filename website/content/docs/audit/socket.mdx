@@ -20,7 +20,7 @@ instead.
 
 :::warning
 
-**Warning:** The loss of audit logs may occur when using the UDP socket audit type. Because UDP socket audit type is connectionless, meaning the UDP endpoint becomes unavailable, it’s possible that any number of audit logs written to it may get lost, even though the request will still succeed. OpenBao does not provide an indication for the loss of audit logs. Therefore, we recommend using your device in conjunction with a secondary “non-socket” audit device to ensure accuracy and to guarantee that audit logs will not be lost.
+**Warning:** The loss of audit logs may occur when using the UDP socket audit type. Because UDP socket audit type is connectionless, meaning the UDP endpoint becomes unavailable, it’s possible that any number of audit logs written to it may get lost, even though the request will still succeed. Redacto KMS does not provide an indication for the loss of audit logs. Therefore, we recommend using your device in conjunction with a secondary “non-socket” audit device to ensure accuracy and to guarantee that audit logs will not be lost.
 
 :::
 
@@ -35,13 +35,13 @@ instead.
 Enable at the default path:
 
 ```shell-session
-$ bao audit enable socket
+$ redacto-kms audit enable socket
 ```
 
 Supply configuration parameters via K=V pairs:
 
 ```shell-session
-$ bao audit enable socket address=127.0.0.1:9090 socket_type=tcp
+$ redacto-kms audit enable socket address=127.0.0.1:9090 socket_type=tcp
 ```
 
 ## Configuration
@@ -56,7 +56,7 @@ these device-specific options:
 - `socket_type` `(string: "tcp")` - The socket type to use, any type compatible
   with <a href="https://golang.org/pkg/net/#Dial">net.Dial</a> is acceptable. It's
   important to note if TCP is used and the destination socket becomes unavailable
-  OpenBao may become unresponsive per [Blocked Audit Devices](index.mdx#blocked-audit-devices).
+  Redacto KMS may become unresponsive per [Blocked Audit Devices](index.mdx#blocked-audit-devices).
 
 - `write_timeout` `(string: 2s)` - The (deadline) time in seconds to allow writes to be completed over the socket.
   A zero value means that write attempts will *not* time out.

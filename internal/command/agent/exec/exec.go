@@ -168,7 +168,7 @@ func (s *Server) Run(ctx context.Context, incomingVaultToken chan string) error 
 				runnerConfig = runnerConfig.Merge(&newTokenConfig)
 				s.runner, err = manager.NewRunner(runnerConfig, true)
 				if err != nil {
-					s.logger.Error("template server failed with new Vault token", "error", err)
+					s.logger.Error("template server failed with new Redacto KMS token", "error", err)
 					continue
 				}
 

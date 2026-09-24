@@ -41,7 +41,7 @@ func TestOutputStringError_CurlStringAndError(t *testing.T) {
 			headers: map[string]string{AuthHeaderName: "abcd1234"},
 			wantSubstr: []string{
 				`curl `,
-				`-H "X-Vault-Token: $(bao print token)"`,
+				`-H "X-Vault-Token: $(redacto-kms print token)"`,
 				`"https://example.com/foo"`,
 			},
 		},

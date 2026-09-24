@@ -28,20 +28,20 @@ func (c *UnwrapCommand) Synopsis() string {
 
 func (c *UnwrapCommand) Help() string {
 	helpText := `
-Usage: bao unwrap [options] [TOKEN]
+Usage: redacto-kms unwrap [options] [TOKEN]
 
-  Unwraps a wrapped secret from OpenBao by the given token. The result is the
-  same as the "bao read" operation on the non-wrapped secret. If no token
+  Unwraps a wrapped secret from Redacto KMS by the given token. The result is the
+  same as the "redacto-kms read" operation on the non-wrapped secret. If no token
   is given, the data in the currently authenticated token is unwrapped.
 
   Unwrap the data in the cubbyhole secrets engine for a token:
 
-      $ bao unwrap 3de9ece1-b347-e143-29b0-dc2dc31caafd
+      $ redacto-kms unwrap 3de9ece1-b347-e143-29b0-dc2dc31caafd
 
   Unwrap the data in the active token:
 
-      $ bao login 848f9ccf-7176-098c-5e2b-75a0689d41cd
-      $ bao unwrap # unwraps 848f9ccf...
+      $ redacto-kms login 848f9ccf-7176-098c-5e2b-75a0689d41cd
+      $ redacto-kms unwrap # unwraps 848f9ccf...
 
   For a full list of examples and paths, please see the online documentation.
 

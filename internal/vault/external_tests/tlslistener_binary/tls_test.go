@@ -30,9 +30,9 @@ func entrypointPath(t *testing.T) string {
 func TestTLSListener_SelfHostedNonStandard(t *testing.T) {
 	// We provision OpenBao in a container so that we can simulate
 	// having remote-only access with ACME over non-TLS localhost only.
-	binary := api.ReadBaoVariable("BAO_BINARY")
+	binary := api.ReadBaoVariable("REDACTO_KMS_BINARY")
 	if binary == "" {
-		t.Skip("only running docker test when $BAO_BINARY present")
+		t.Skip("only running docker test when $REDACTO_KMS_BINARY present")
 	}
 
 	opts := &docker.DockerClusterOptions{
@@ -97,9 +97,9 @@ func TestTLSListener_SelfHostedPrivileged(t *testing.T) {
 	// This differs from the above in that we provision port 80 and 443
 	// listeners, on standard, privileged ports. The above will automatically
 	// create a short-term port 80 listener just to solve the HTTP challenge.
-	binary := api.ReadBaoVariable("BAO_BINARY")
+	binary := api.ReadBaoVariable("REDACTO_KMS_BINARY")
 	if binary == "" {
-		t.Skip("only running docker test when $BAO_BINARY present")
+		t.Skip("only running docker test when $REDACTO_KMS_BINARY present")
 	}
 
 	opts := &docker.DockerClusterOptions{
@@ -160,9 +160,9 @@ func TestTLSListener_ALPN(t *testing.T) {
 	// using DNS and ALPN (which must be solved via port 443).
 	//
 	// This is also used to test our deny list capabilities.
-	binary := api.ReadBaoVariable("BAO_BINARY")
+	binary := api.ReadBaoVariable("REDACTO_KMS_BINARY")
 	if binary == "" {
-		t.Skip("only running docker test when $BAO_BINARY present")
+		t.Skip("only running docker test when $REDACTO_KMS_BINARY present")
 	}
 
 	opts := &docker.DockerClusterOptions{
@@ -235,9 +235,9 @@ func TestTLSListener_ALPN(t *testing.T) {
 }
 
 func TestTLSListener_NonPrivileged(t *testing.T) {
-	binary := api.ReadBaoVariable("BAO_BINARY")
+	binary := api.ReadBaoVariable("REDACTO_KMS_BINARY")
 	if binary == "" {
-		t.Skip("only running docker test when $BAO_BINARY present")
+		t.Skip("only running docker test when $REDACTO_KMS_BINARY present")
 	}
 
 	opts := &docker.DockerClusterOptions{

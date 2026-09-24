@@ -16,20 +16,20 @@ type PKICommand struct {
 }
 
 func (c *PKICommand) Synopsis() string {
-	return "Interact with OpenBao's PKI Secrets Engine"
+	return "Interact with Redacto KMS's PKI Secrets Engine"
 }
 
 func (c *PKICommand) Help() string {
 	helpText := `
-Usage: bao pki <subcommand> [options] [args]
+Usage: redacto-kms pki <subcommand> [options] [args]
 
-  This command has subcommands for interacting with OpenBao's PKI Secrets
+  This command has subcommands for interacting with Redacto KMS's PKI Secrets
   Engine. Here are some simple examples; more detailed examples are available
   in the subcommands or the documentation.
 
   Check the health of a PKI mount, to the best of this token's abilities:
 
-      $ bao pki health-check pki
+      $ redacto-kms pki health-check pki
 
   Please see the individual subcommand help for detailed usage information.
 `

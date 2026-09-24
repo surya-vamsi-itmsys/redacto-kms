@@ -29,10 +29,10 @@ function getEditUrlFn(dir: string): EditUrlFunction {
 }
 
 const config: Config = {
-  title: "OpenBao",
+  title: "Redacto KMS",
   tagline:
-    "OpenBao is an open source, community-driven fork of HashiCorp Vault managed by the Linux Foundation to manage, store, and distribute sensitive data.",
-  favicon: "img/favicon.svg",
+    "Redacto KMS manages, stores, and distributes sensitive data including secrets, certificates, and keys.",
+  favicon: "img/redacto-favicon.svg",
 
   // Set the production url of your site here
   url: "https://openbao.org",
@@ -242,11 +242,10 @@ const config: Config = {
   themeConfig: {
     colorMode: { respectPrefersColorScheme: true },
     navbar: {
-      title: "OpenBao",
       logo: {
-        alt: "OpenBao Logo",
-        src: "img/logo-black.svg",
-        srcDark: "img/logo-white.svg",
+        alt: "Redacto KMS",
+        src: "img/redacto-logo.svg",
+        srcDark: "img/redacto-logo-white.svg",
       },
       items: [
         {
@@ -289,13 +288,8 @@ const config: Config = {
     },
     footer: {
       copyright: [
-        `Copyright © ${new Date().getFullYear()} OpenBao a Series of LF Projects, LLC <br>`,
-        `For web site terms of use, trademark policy and other project policies please see <a href="https://lfprojects.org">lfprojects.org</a>. <br>`,
-        ` OpenBao is a <a href="https://openssf.org/projects/openbao/">Sandbox project</a> at`,
-        `<a href="https://openssf.org/"><img src="/img/openssf-logo.svg" alt="OpenSSF Logo" width="90px"></a>.`,
-        `<br><br>Follow us on social media:<br>`,
-        `<a href="https://linkedin.com/company/openbao" target="_blank">LinkedIn</a> | <a href="https://bsky.app/profile/openbao-official.bsky.social" target="_blank">Bluesky</a> | <a href="https://www.youtube.com/@OpenBao" target="_blank">YouTube</a> | <a href="https://www.instagram.com/openbao.official/" target="_blank">Instagram</a> | <a href="https://www.threads.com/@openbao.official" target="_blank">Threads</a> | <a href="https://github.com/openbao/openbao" target="_blank">GitHub</a>`,
-        `<br><br><a href="/sitemap.xml">Sitemap</a>`,
+        `Copyright © ${new Date().getFullYear()} Redacto KMS <br>`,
+        `<br><a href="/sitemap.xml">Sitemap</a>`,
       ].join(" "),
     },
     prism: {
@@ -307,9 +301,9 @@ const config: Config = {
       {
         name: "keywords",
         content:
-          "openbao, secrets management, open source, linux foundation, encryption as a service, key management system, pki, transit, ssh, secret vault, database passwords",
+          "redacto kms, key management system, secrets management, encryption as a service, pki, transit, ssh, database passwords",
       },
-      { name: "author", content: "OpenBao a Series of LF Projects, LLC" },
+      { name: "author", content: "Redacto KMS" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     headTags: [

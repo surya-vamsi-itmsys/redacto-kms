@@ -78,7 +78,7 @@ func TestOperatorSealCommand_Run(t *testing.T) {
 			t.Errorf("expected %d to be %d", code, exp)
 		}
 
-		expected := "Success! Vault is sealed."
+		expected := "Success! Redacto KMS is sealed."
 		combined := ui.OutputWriter.String() + ui.ErrorWriter.String()
 		if !strings.Contains(combined, expected) {
 			t.Errorf("expected %q to contain %q", combined, expected)

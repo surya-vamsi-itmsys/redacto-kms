@@ -520,7 +520,7 @@ var (
 	// against names passed in by a plugin via the system view.
 	namePattern   = regexp.MustCompile("^" + framework.GenericNameRegex("name") + "$")
 	errInvalidRef = errors.New(`invalid key reference: must be "<config name>:<key name>"`)
-	errMissingKey = errors.New(`plugin returned nil key; report to OpenBao authors`)
+	errMissingKey = errors.New(`plugin returned nil key; report to Redacto KMS authors`)
 )
 
 // ParseRef parses a key reference into config name and key name.

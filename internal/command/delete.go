@@ -31,22 +31,22 @@ func (c *DeleteCommand) Synopsis() string {
 
 func (c *DeleteCommand) Help() string {
 	helpText := `
-Usage: bao delete [options] PATH
+Usage: redacto-kms delete [options] PATH
 
-  Deletes secrets and configuration from OpenBao at the given path. The behavior
+  Deletes secrets and configuration from Redacto KMS at the given path. The behavior
   of "delete" is delegated to the backend corresponding to the given path.
 
   Remove data in the status secret backend:
 
-      $ bao delete secret/my-secret
+      $ redacto-kms delete secret/my-secret
 
   Uninstall an encryption key in the transit backend:
 
-      $ bao delete transit/keys/my-key
+      $ redacto-kms delete transit/keys/my-key
 
   Delete an IAM role:
 
-      $ bao delete aws/roles/ops
+      $ redacto-kms delete aws/roles/ops
 
   For a full list of examples and paths, please see the documentation that
   corresponds to the secret backend in use.

@@ -26,7 +26,7 @@ func (c *OperatorKeyStatusCommand) Synopsis() string {
 
 func (c *OperatorKeyStatusCommand) Help() string {
 	helpText := `
-Usage: bao operator key-status [options]
+Usage: redacto-kms operator key-status [options]
 
   Provides information about specific namespace barrier encryption key.
   Specifically the current key term, installation time and encryption count.

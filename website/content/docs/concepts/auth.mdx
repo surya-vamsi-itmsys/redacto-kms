@@ -1,6 +1,6 @@
 ---
 description: >-
-  Before performing any operation with OpenBao, the connecting client must be
+  Before performing any operation with Redacto KMS, the connecting client must be
   authenticated.
 ---
 import Tabs from '@theme/Tabs';
@@ -8,12 +8,12 @@ import TabItem from '@theme/TabItem';
 
 # Authentication
 
-Authentication in OpenBao is the process by which user or machine supplied
-information is verified against an internal or external system. OpenBao supports
+Authentication in Redacto KMS is the process by which user or machine supplied
+information is verified against an internal or external system. Redacto KMS supports
 multiple [auth methods](../auth/index.mdx) including GitHub,
 LDAP, AppRole, and more. Each auth method has a specific use case.
 
-Before a client can interact with OpenBao, it must _authenticate_ against an
+Before a client can interact with Redacto KMS, it must _authenticate_ against an
 auth method. Upon authentication, a token is generated. This token is
 conceptually similar to a session ID on a website. The token may have attached
 policy, which is mapped at authentication time. This process is described in
@@ -21,12 +21,12 @@ detail in the [policies concepts](policies.mdx) documentation.
 
 ## Auth methods
 
-OpenBao supports a number of auth methods. Some backends are targeted
+Redacto KMS supports a number of auth methods. Some backends are targeted
 toward users while others are targeted toward machines. Most authentication
 backends must be enabled before use. To enable an auth method:
 
 ```shell-session
-$ bao write sys/auth/my-auth type=userpass
+$ redacto-kms write sys/auth/my-auth type=userpass
 ```
 
 This enables the "userpass" auth method at the path "my-auth". This
@@ -36,13 +36,13 @@ authentications at the same path as their name, but this is not a requirement.
 To learn more about this authentication, use the built-in `path-help` command:
 
 ```shell-session
-$ bao path-help auth/my-auth
+$ redacto-kms path-help auth/my-auth
 # ...
 ```
 
-OpenBao supports multiple auth methods simultaneously, and you can even
+Redacto KMS supports multiple auth methods simultaneously, and you can even
 mount the same type of auth method at different paths. Only one
-authentication is required to gain access to OpenBao, and it is not currently
+authentication is required to gain access to Redacto KMS, and it is not currently
 possible to force a user through multiple auth methods to gain
 access, although some backends do support MFA.
 
@@ -53,7 +53,7 @@ but it is important to understand that authentication works by verifying
 your identity and then generating a token to associate with that identity.
 
 For example, even though you may authenticate using something like GitHub,
-OpenBao generates a unique access token for you to use for future requests.
+Redacto KMS generates a unique access token for you to use for future requests.
 The CLI automatically attaches this token to requests, but if you're using
 the API you'll have to do this manually.
 
@@ -69,11 +69,11 @@ authentication, see the [authentication landing page](../auth/index.mdx).
 
 ### Via the CLI
 
-To authenticate with the CLI, `bao login` is used. This supports many
+To authenticate with the CLI, `redacto-kms login` is used. This supports many
 of the built-in auth methods. For example, with GitHub:
 
 ```shell-session
-$ bao login -method=github token=<token>
+$ redacto-kms login -method=github token=<token>
 ...
 ```
 
@@ -92,11 +92,11 @@ must be used.
 ### Via the API
 
 API authentication is generally used for machine authentication. Each
-auth method implements its own login endpoint. Use the `bao path-help`
+auth method implements its own login endpoint. Use the `redacto-kms path-help`
 mechanism to find the proper endpoint.
 
 For example, the GitHub login endpoint is located at `auth/github/login`.
-And to determine the arguments needed, `bao path-help auth/github/login` can
+And to determine the arguments needed, `redacto-kms path-help auth/github/login` can
 be used.
 
 ## Auth leases
@@ -104,14 +104,14 @@ be used.
 Just like secrets, identities have
 [leases](lease.mdx) associated with them. This means that
 you must reauthenticate after the given lease period to continue accessing
-OpenBao.
+Redacto KMS.
 
 To set the lease associated with an identity, reference the help for
 the specific auth method in use. It is specific to each backend
 how leasing is implemented.
 
 And just like secrets, identities can be renewed without having to
-completely reauthenticate. Just use `bao token renew <token>` with the
+completely reauthenticate. Just use `redacto-kms token renew <token>` with the
 leased token associated with your identity to renew it.
 
 ## Code example
@@ -133,7 +133,7 @@ import (
 	auth "github.com/openbao/openbao/api/auth/userpass"
 )
 
-// Once you've set the token for your OpenBao client, you will need to
+// Once you've set the token for your Redacto KMS client, you will need to
 // periodically renew its lease.
 //
 // A function like this should be run as a goroutine to avoid blocking.
@@ -144,7 +144,7 @@ func renewToken(client *openbao.Client) {
 	for {
 		openbaoLoginResp, err := login(client)
 		if err != nil {
-			log.Fatalf("unable to authenticate to OpenBao: %v", err)
+			log.Fatalf("unable to authenticate to Redacto KMS: %v", err)
 		}
 		tokenErr := manageTokenLifecycle(client, openbaoLoginResp)
 		if tokenErr != nil {
@@ -198,7 +198,7 @@ func manageTokenLifecycle(client *openbao.Client, token *openbao.Secret) error {
 func login(client *openbao.Client) (*openbao.Secret, error) {
 	// WARNING: A plaintext password like this is obviously insecure.
 	// See the hashicorp/vault-examples repo for full examples of how to securely
-	// log in to OpenBao using various auth methods. This function is just
+	// log in to Redacto KMS using various auth methods. This function is just
 	// demonstrating the basic idea that a *openbao.Secret is returned by
 	// the login call.
 	

@@ -1,5 +1,5 @@
 <Hds::SideNav::Portal @ariaLabel="Cluster Navigation Links" data-test-sidebar-nav-panel="Cluster" as |Nav|>
-  <Nav.Title data-test-sidebar-nav-heading="OpenBao">OpenBao</Nav.Title>
+  <Nav.Title data-test-sidebar-nav-heading="Redacto KMS">Redacto KMS</Nav.Title>
 
   <Nav.Link
     @route="vault.cluster.secrets"
@@ -51,8 +51,8 @@
     <Nav.Link
       @route="vault.cluster.settings.seal"
       @model={{this.cluster.name}}
-      @text="Seal OpenBao"
-      data-test-sidebar-nav-link="Seal OpenBao"
+      @text="Seal Redacto KMS"
+      data-test-sidebar-nav-link="Seal Redacto KMS"
     />
   {{/if}}
 </Hds::SideNav::Portal>

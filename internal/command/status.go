@@ -26,10 +26,10 @@ func (c *StatusCommand) Synopsis() string {
 
 func (c *StatusCommand) Help() string {
 	helpText := `
-Usage: bao status [options]
+Usage: redacto-kms status [options]
 
-  Prints the current state of OpenBao including whether it is sealed and if HA
-  mode is enabled. This command prints regardless of whether OpenBao is sealed.
+  Prints the current state of Redacto KMS including whether it is sealed and if HA
+  mode is enabled. This command prints regardless of whether Redacto KMS is sealed.
 
   The exit code reflects the seal status:
 

@@ -29,9 +29,9 @@ const (
 	// resolving replicaiton addresses
 	ReplicationResolverALPN = "replication_resolver_v1"
 
-	VaultEnableFilePermissionsCheckEnv = "BAO_ENABLE_FILE_PERMISSIONS_CHECK"
+	VaultEnableFilePermissionsCheckEnv = "REDACTO_KMS_ENABLE_FILE_PERMISSIONS_CHECK"
 
-	VaultDisableUserLockout = "BAO_DISABLE_USER_LOCKOUT"
+	VaultDisableUserLockout = "REDACTO_KMS_DISABLE_USER_LOCKOUT"
 
 	PerformanceReplicationPathTarget = "performance"
 

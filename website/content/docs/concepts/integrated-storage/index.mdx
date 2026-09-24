@@ -1,49 +1,49 @@
 ---
 sidebar_label: Overview
-description: Learn about the integrated raft storage in OpenBao.
+description: Learn about the integrated raft storage in Redacto KMS.
 ---
 
 # Integrated Storage
 
-OpenBao supports a number of storage options for the durable storage of OpenBao's
+Redacto KMS supports a number of storage options for the durable storage of Redacto KMS's
 information. This Integrated Storage backend does not rely on any third party
 systems, implements High Availability semantics and provides backup/restore
 workflows.
 
-The option stores OpenBao's data on the server's filesystem and
+The option stores Redacto KMS's data on the server's filesystem and
 uses a consensus protocol to replicate data to each server in the cluster. More
 information on the internals of Integrated Storage can be found in the
 [Integrated Storage internals
 documentation](../../internals/integrated-storage.mdx). Additionally, the
 [Configuration](../../configuration/storage/raft.mdx) docs can help in configuring
-OpenBao to use Integrated Storage.
+Redacto KMS to use Integrated Storage.
 
-The sections below go into various details on how to operate OpenBao with
+The sections below go into various details on how to operate Redacto KMS with
 Integrated Storage.
 
 ## Server-to-Server communication
 
 Once nodes are joined to one another they begin to communicate using mTLS over
-OpenBao's cluster port. The cluster port defaults to `8201`. The TLS information
+Redacto KMS's cluster port. The cluster port defaults to `8201`. The TLS information
 is exchanged at join time and is rotated on a cadence.
 
 A requirement for Integrated Storage is that the
 [`cluster_addr`](../ha.mdx#per-node-cluster-address) configuration option
-is set. This allows OpenBao to assign an address to the node ID at join time.
+is set. This allows Redacto KMS to assign an address to the node ID at join time.
 
 ## Cluster membership
 
-This section will outline how to bootstrap and manage a cluster of OpenBao nodes
+This section will outline how to bootstrap and manage a cluster of Redacto KMS nodes
 running Integrated Storage.
 
 Integrated Storage is bootstrapped during the initialization process
 and results in a cluster of size 1. Depending on the [desired deployment
 size](../../internals/integrated-storage.mdx#deployment-table), nodes can be joined
-to the active OpenBao node.
+to the active Redacto KMS node.
 
 ### Joining nodes
 
-Joining is the process of taking an uninitialized OpenBao node and making it a
+Joining is the process of taking an uninitialized Redacto KMS node and making it a
 member of an existing cluster. In order to authenticate the new node to the
 cluster it must use the same seal mechanism. If using a Auto Unseal the node
 must be configured to use the same KMS provider and Key as the cluster it's
@@ -60,7 +60,7 @@ option on all nodes to make joining simpler.
 #### `retry_join` configuration
 
 This method enables setting one, or more, target leader nodes in the config file.
-When an uninitialized OpenBao server starts up it will attempt to join each potential
+When an uninitialized Redacto KMS server starts up it will attempt to join each potential
 leader that is defined, retrying until successful. When one of the specified
 leaders becomes active this node will successfully join. When using Shamir seal,
 the joined nodes will still need to be unsealed manually. When using Auto Unseal
@@ -88,7 +88,7 @@ stanza, you may provide a single
 [`leader_api_addr`](../../configuration/storage/raft.mdx#leader_api_addr) or
 [`auto_join`](../../configuration/storage/raft.mdx#auto_join) value. When a cloud
 [`auto_join`](../../configuration/storage/raft.mdx#auto_join) configuration value is
-provided, OpenBao will use [go-discover](https://github.com/hashicorp/go-discover)
+provided, Redacto KMS will use [go-discover](https://github.com/hashicorp/go-discover)
 to automatically attempt to discover and resolve potential Raft leader
 addresses.
 
@@ -107,7 +107,7 @@ storage "raft" {
 }
 ```
 
-By default, OpenBao will attempt to reach discovered peers using HTTPS and port 8200. Operators may override these through the
+By default, Redacto KMS will attempt to reach discovered peers using HTTPS and port 8200. Operators may override these through the
 [`auto_join_scheme`](../../configuration/storage/raft.mdx#auto_join_scheme) and
 [`auto_join_port`](../../configuration/storage/raft.mdx#auto_join_port) fields
 respectively.
@@ -132,18 +132,18 @@ command](../../commands/operator/raft.mdx#join) or the API to join a node. The
 active node's API address will need to be specified:
 
 ```shell-session
-$ bao operator raft join https://node1.openbao.local:8200
+$ redacto-kms operator raft join https://node1.openbao.local:8200
 ```
 
 #### Non-Voting nodes
 
 Nodes that are joined to a cluster can be specified as non-voters. A non-voting
-node has all of OpenBao's data replicated to it, but does not contribute to the
+node has all of Redacto KMS's data replicated to it, but does not contribute to the
 quorum count. This can be used to add read scalability to
 a cluster in cases where a high volume of reads to servers are needed.
 
 ```shell-session
-$ bao operator raft join -non-voter https://node1.openbao.local:8200
+$ redacto-kms operator raft join -non-voter https://node1.openbao.local:8200
 ```
 
 ### Removing peers
@@ -159,7 +159,7 @@ To remove the peer you can issue a
 node ID you wish to remove:
 
 ```shell-session
-$ bao operator raft remove-peer node1
+$ redacto-kms operator raft remove-peer node1
 Peer removed successfully!
 ```
 
@@ -171,7 +171,7 @@ nodes that are listed here contribute to the quorum and a majority must be alive
 for Integrated Storage to continue to operate.
 
 ```shell-session
-$ bao operator raft list-peers
+$ redacto-kms operator raft list-peers
 Node     Address                   State       Voter
 ----     -------                   -----       -----
 node1    node1.openbao.local:8201    follower    true
@@ -186,27 +186,27 @@ The instructions are sufficient for most cases, but some users have run into
 problems when using auto-join and TLS in conjunction with things like auto-scaling.
 The issue is that [go-discover](https://github.com/hashicorp/go-discover) on
 most platforms returns IPs (not hostnames), and because the IPs aren't knowable
-in advance, the TLS certificates used to secure the OpenBao API port don't contain
+in advance, the TLS certificates used to secure the Redacto KMS API port don't contain
 these IPs in their IP SANs.
 
-### OpenBao networking recap
+### Redacto KMS networking recap
 
-Before we explore solutions to this problem, let's recapitulate how OpenBao nodes
+Before we explore solutions to this problem, let's recapitulate how Redacto KMS nodes
 speak to one another.
 
-OpenBao exposes two TCP ports: [the API port](../../configuration/index.mdx#api_addr) and
+Redacto KMS exposes two TCP ports: [the API port](../../configuration/index.mdx#api_addr) and
 [the cluster port](../../configuration/index.mdx#cluster_addr).
 
-The API port is where clients send their OpenBao HTTP requests.
+The API port is where clients send their Redacto KMS HTTP requests.
 
-For a single-node OpenBao cluster you don't worry about a cluster port as it won't be used.
+For a single-node Redacto KMS cluster you don't worry about a cluster port as it won't be used.
 
-When you have multiple nodes, you also need a cluster port. This is used by OpenBao
+When you have multiple nodes, you also need a cluster port. This is used by Redacto KMS
 nodes to issue RPCs to one another, e.g. to forward requests from a standby node
 to the active node, or when Raft is in use, to handle leader election and
 replication of stored data.
 
-The cluster port is secured using a TLS certificate that the OpenBao active node
+The cluster port is secured using a TLS certificate that the Redacto KMS active node
 generates internally. It's clear how this can work when not using integrated
 storage: every node has at least read access to storage, so once the active
 node has persisted the certificate, the standby nodes can fetch it, and all
@@ -215,9 +215,9 @@ agree on how cluster traffic should be encrypted.
 It's less clear how this works with Integrated Storage, as there is a chicken
 and egg problem. Nodes don't have a shared view of storage until the raft
 cluster has been formed, but we're trying to form the raft cluster! To solve
-this problem, an OpenBao node must speak to another OpenBao node using the API port
+this problem, a Redacto KMS node must speak to another Redacto KMS node using the API port
 instead of the cluster port. This is currently the only situation in which
-OpenBao does this.
+Redacto KMS does this.
 
 - `node2` wants to join the cluster, so issues challenge API request to existing member `node1`
 - `node1` replies to challenge request with (1) an encrypted random UUID and (2) seal config
@@ -251,7 +251,7 @@ using certificate(s) that contain this shared `servername` in their DNS SANs.
 
 #### Autojoin but constrain CIDR, list all possible IPs in certificate
 
-If all the OpenBao node IPs are assigned from a small subnet, e.g. a `/28`, it
+If all the Redacto KMS node IPs are assigned from a small subnet, e.g. a `/28`, it
 becomes practical to put all the IPs that exist in that subnet into the IP SANs
 of the TLS certificate the nodes will share.
 
@@ -261,14 +261,14 @@ using non-voting nodes and dynamically scaling clusters.
 
 #### Load balancer instead of autojoin
 
-Most OpenBao instances are going to have a load balancer (LB) between clients and
-the OpenBao nodes. In that case, the LB knows how to route traffic to working
-OpenBao nodes, and there's no need for auto-join: we can just use
+Most Redacto KMS instances are going to have a load balancer (LB) between clients and
+the Redacto KMS nodes. In that case, the LB knows how to route traffic to working
+Redacto KMS nodes, and there's no need for auto-join: we can just use
 [`retry_join`](../../configuration/storage/raft.mdx#retry_join-stanza) with the LB
 address as the target.
 
 One potential issue here: some users want a public facing LB for clients to
-connect to OpenBao, but aren't comfortable with OpenBao internal traffic
+connect to Redacto KMS, but aren't comfortable with Redacto KMS internal traffic
 egressing from the internal network it normally runs on.
 
 ## Outage recovery
@@ -318,7 +318,7 @@ with an identical [`peers.json`](#manual-recovery-using-peersjson)
 configuration.
 
 Any servers you introduce later can be fresh with totally clean data
-directories and joined using OpenBao's join command.
+directories and joined using Redacto KMS's join command.
 
 In extreme cases, it should be possible to recover with just a single remaining
 server by starting that single server with itself as the only peer in the
@@ -334,10 +334,10 @@ automated processes that will put the peers file in place on a periodic basis.
 To begin, stop all remaining servers.
 
 The next step is to go to the [configured data
-path](../../configuration/storage/raft.mdx#path) of each OpenBao server. Inside that
+path](../../configuration/storage/raft.mdx#path) of each Redacto KMS server. Inside that
 directory, there will be a `raft/` sub-directory. We need to create a
 `raft/peers.json` file. The file should be formatted as a JSON array containing
-the node ID, `address:port`, and suffrage information of each OpenBao server you
+the node ID, `address:port`, and suffrage information of each Redacto KMS server you
 wish to be in the cluster:
 
 ```json
@@ -376,5 +376,5 @@ active.
 
 ### Other recovery methods
 
-For other, non-quorum related recovery [OpenBao's
+For other, non-quorum related recovery [Redacto KMS's
 recovery](../recovery-mode.mdx) mode can be used.

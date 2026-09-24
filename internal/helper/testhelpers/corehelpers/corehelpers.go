@@ -400,7 +400,7 @@ func NewTestLogger(t testing.T) *TestLogger {
 	var logPath string
 	output := os.Stderr
 
-	logDir := api.ReadBaoVariable("BAO_TEST_LOG_DIR")
+	logDir := api.ReadBaoVariable("REDACTO_KMS_TEST_LOG_DIR")
 	if logDir != "" {
 		logPath = filepath.Join(logDir, t.Name()+".log")
 		// t.Name may include slashes.

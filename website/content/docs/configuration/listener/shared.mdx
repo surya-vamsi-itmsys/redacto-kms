@@ -75,13 +75,13 @@ of the documentation.
 - `x_forwarded_for_client_cert_keep_unauthorized` `(bool: false)` - allows
   keeping headers on non-forwarded requests. This is dangerous to enable as
   it means that clients connected to unauthorized forwarders (or, directly
-  to OpenBao) could set these headers.
+  to Redacto KMS) could set these headers.
 
 ### Example configs
 
 #### NGINX
 
-OpenBao config
+Redacto KMS config
 ```hcl
 listener "tcp" {
   address = "127.0.0.1:8200"
@@ -106,7 +106,7 @@ location / {
 
 #### Envoy proxy
 
-OpenBao config
+Redacto KMS config
 ```hcl
 listener "tcp" {
   address = "127.0.0.1:8200"

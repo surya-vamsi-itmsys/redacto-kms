@@ -23,12 +23,12 @@ const (
 // fail when supplied with wrong credentials. If the user is locked,
 // it returns permission denied. Otherwise, it returns invalid user
 // credentials error if the user lockout feature is disabled.
-// It tests disabling the feature using env variable VAULT_DISABLE_USER_LOCKOUT
+// It tests disabling the feature using env variable REDACTO_KMS_DISABLE_USER_LOCKOUT
 // and also using auth tune. Also, tests that env var has more precedence over
 // settings in auth tune.
 func TestIdentityStore_DisableUserLockoutTest(t *testing.T) {
 	// reset to false before exiting
-	defer os.Unsetenv("VAULT_DISABLE_USER_LOCKOUT")
+	defer os.Unsetenv("REDACTO_KMS_DISABLE_USER_LOCKOUT")
 
 	coreConfig := &vault.CoreConfig{
 		CredentialBackends: map[string]logical.Factory{
@@ -92,7 +92,7 @@ func TestIdentityStore_DisableUserLockoutTest(t *testing.T) {
 			expectedUserLocked:          false,
 		},
 		{
-			name:                        "User Lockout feature is disabled using env var VAULT_DISABLE_USER_LOCKOUT",
+			name:                        "User Lockout feature is disabled using env var REDACTO_KMS_DISABLE_USER_LOCKOUT",
 			setDisableUserLockoutEnvVar: "true",
 			setDisableLockoutAuthTune:   false,
 			expectedUserLocked:          false,
@@ -113,9 +113,9 @@ func TestIdentityStore_DisableUserLockoutTest(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if tt.setDisableUserLockoutEnvVar != "" {
-				os.Setenv("VAULT_DISABLE_USER_LOCKOUT", tt.setDisableUserLockoutEnvVar)
+				os.Setenv("REDACTO_KMS_DISABLE_USER_LOCKOUT", tt.setDisableUserLockoutEnvVar)
 			} else {
-				os.Unsetenv("VAULT_DISABLE_USER_LOCKOUT")
+				os.Unsetenv("REDACTO_KMS_DISABLE_USER_LOCKOUT")
 			}
 
 			var disableLockoutAuthTune *bool

@@ -230,7 +230,7 @@ func staticFields() map[string]*framework.FieldSchema {
 	fields := map[string]*framework.FieldSchema{
 		"username": {
 			Type: framework.TypeString,
-			Description: `Name of the static user account for OpenBao to manage.
+			Description: `Name of the static user account for Redacto KMS to manage.
 	Requires "rotation_period" to be specified`,
 		},
 		"rotation_period": {

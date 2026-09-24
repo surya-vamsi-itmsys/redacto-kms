@@ -21,19 +21,19 @@ SSH using the OTP mode (requires [sshpass](https://linux.die.net/man/1/sshpass)
 for full automation):
 
 ```shell-session
-$ bao ssh -mode=otp -role=my-role user@1.2.3.4
+$ redacto-kms ssh -mode=otp -role=my-role user@1.2.3.4
 ```
 
 SSH using the CA mode:
 
 ```shell-session
-$ bao ssh -mode=ca -role=my-role user@1.2.3.4
+$ redacto-kms ssh -mode=ca -role=my-role user@1.2.3.4
 ```
 
 SSH using CA mode with host key verification:
 
 ```shell-session
-$ bao ssh \
+$ redacto-kms ssh \
     -mode=ca \
     -role=my-role \
     -host-key-mount-point=host-signer \
@@ -58,7 +58,7 @@ flags](index.mdx) included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### SSH options
 
@@ -73,32 +73,32 @@ flags](index.mdx) included on all commands.
 
 - `-strict-host-key-checking` `(string: "")` - Value to use for the SSH
   configuration option "StrictHostKeyChecking". The default is ask. This can
-  also be specified via the `BAO_SSH_STRICT_HOST_KEY_CHECKING` environment
+  also be specified via the `REDACTO_KMS_SSH_STRICT_HOST_KEY_CHECKING` environment
   variable.
 
 - `-user-known-hosts-file` `(string: "~/.ssh/known_hosts")` - Value to use for
   the SSH configuration option "UserKnownHostsFile". This can also be specified
-  via the `BAO_SSH_USER_KNOWN_HOSTS_FILE` environment variable.
+  via the `REDACTO_KMS_SSH_USER_KNOWN_HOSTS_FILE` environment variable.
 
 ### CA mode options
 
 - `-host-key-hostnames` `(string: "*")` - List of hostnames to delegate for the
   CA. The default value allows all domains and IPs. This is specified as a
   comma-separated list of values. This can also be specified via the
-  `BAO_SSH_HOST_KEY_HOSTNAMES` environment variable.
+  `REDACTO_KMS_SSH_HOST_KEY_HOSTNAMES` environment variable.
 
 - `-host-key-mount-point` `(string: "")` - Mount point to the SSH
-  secrets engine where host keys are signed. When given a value, OpenBao will
+  secrets engine where host keys are signed. When given a value, Redacto KMS will
   generate a custom "known_hosts" file with delegation to the CA at the provided
   mount point to verify the SSH connection's host keys against the provided CA.
   By default, host keys are validated against the user's local "known_hosts"
   file. This flag forces strict key host checking and ignores a custom user
   known hosts file. This can also be specified via the
-  `BAO_SSH_HOST_KEY_MOUNT_POINT` environment variable.
+  `REDACTO_KMS_SSH_HOST_KEY_MOUNT_POINT` environment variable.
 
 - `-private-key-path` `(string: "~/.ssh/id_rsa")` - Path to the SSH private key
   to use for authentication. This must be the corresponding private key to
   `-public-key-path`.
 
 - `-public-key-path` `(string: "~/.ssh/id_rsa.pub")` - Path to the SSH public
-  key to send to OpenBao for signing.
+  key to send to Redacto KMS for signing.

@@ -651,7 +651,7 @@ func TestAcmeEabCrossingDirectoryPath(t *testing.T) {
 	require.ErrorContains(t, err, "failed to verify eab", "should have failed as EAB is for a different directory")
 }
 
-// TestAcmeDisabledWithEnvVar verifies if VAULT_DISABLE_PUBLIC_ACME is set that we completely
+// TestAcmeDisabledWithEnvVar verifies if REDACTO_KMS_DISABLE_PUBLIC_ACME is set that we completely
 // disable the ACME service
 func TestAcmeDisabledWithEnvVar(t *testing.T) {
 	// Setup a cluster with the configuration set to not-required, initially as the
@@ -662,7 +662,7 @@ func TestAcmeDisabledWithEnvVar(t *testing.T) {
 	// Seal setup the environment variable, and unseal which now means we have a cluster
 	// with ACME configuration saying it is enabled with a bad EAB policy.
 	cluster.EnsureCoresSealed(t)
-	t.Setenv("VAULT_DISABLE_PUBLIC_ACME", "true")
+	t.Setenv("REDACTO_KMS_DISABLE_PUBLIC_ACME", "true")
 	cluster.UnsealCores(t)
 
 	// Make sure that ACME is disabled now.
@@ -681,7 +681,7 @@ func TestAcmeDisabledWithEnvVar(t *testing.T) {
 
 // TestAcmeConfigChecksPublicAcmeEnv verifies certain EAB policy values can not be set if ENV var is enabled
 func TestAcmeConfigChecksPublicAcmeEnv(t *testing.T) {
-	t.Setenv("VAULT_DISABLE_PUBLIC_ACME", "true")
+	t.Setenv("REDACTO_KMS_DISABLE_PUBLIC_ACME", "true")
 	cluster, client := setupTestPkiCluster(t)
 	defer cluster.Cleanup()
 

@@ -10,7 +10,6 @@ import (
 )
 
 func TestUserAgent(t *testing.T) {
-	projectURL = "https://vault-test.com"
 	rt = "go5.0"
 
 	type args struct {
@@ -24,21 +23,21 @@ func TestUserAgent(t *testing.T) {
 		{
 			name: "User agent",
 			args: args{},
-			want: "Vault (+https://vault-test.com; go5.0)",
+			want: "Redacto KMS (go5.0)",
 		},
 		{
 			name: "User agent with additional comment",
 			args: args{
 				comments: []string{"pid-abcdefg"},
 			},
-			want: "Vault (+https://vault-test.com; go5.0; pid-abcdefg)",
+			want: "Redacto KMS (go5.0; pid-abcdefg)",
 		},
 		{
 			name: "User agent with additional comments",
 			args: args{
 				comments: []string{"pid-abcdefg", "cloud-provider"},
 			},
-			want: "Vault (+https://vault-test.com; go5.0; pid-abcdefg; cloud-provider)",
+			want: "Redacto KMS (go5.0; pid-abcdefg; cloud-provider)",
 		},
 	}
 	for _, tt := range tests {
@@ -51,7 +50,6 @@ func TestUserAgent(t *testing.T) {
 }
 
 func TestUserAgentPlugin(t *testing.T) {
-	projectURL = "https://vault-test.com"
 	rt = "go5.0"
 
 	type args struct {
@@ -78,7 +76,7 @@ func TestUserAgentPlugin(t *testing.T) {
 					VaultVersion: "1.2.3",
 				},
 			},
-			want: "Vault/1.2.3 (+https://vault-test.com; go5.0)",
+			want: "Redacto KMS/1.2.3 (go5.0)",
 		},
 		{
 			name: "Plugin user agent without plugin name",
@@ -87,7 +85,7 @@ func TestUserAgentPlugin(t *testing.T) {
 					VaultVersion: "1.2.3",
 				},
 			},
-			want: "Vault/1.2.3 (+https://vault-test.com; go5.0)",
+			want: "Redacto KMS/1.2.3 (go5.0)",
 		},
 		{
 			name: "Plugin user agent with plugin name",
@@ -97,7 +95,7 @@ func TestUserAgentPlugin(t *testing.T) {
 					VaultVersion: "1.2.3",
 				},
 			},
-			want: "Vault/1.2.3 (+https://vault-test.com; azure-auth; go5.0)",
+			want: "Redacto KMS/1.2.3 (azure-auth; go5.0)",
 		},
 		{
 			name: "Plugin user agent with plugin name and additional comment",
@@ -108,7 +106,7 @@ func TestUserAgentPlugin(t *testing.T) {
 				},
 				comments: []string{"pid-abcdefg"},
 			},
-			want: "Vault/1.2.3 (+https://vault-test.com; azure-auth; go5.0; pid-abcdefg)",
+			want: "Redacto KMS/1.2.3 (azure-auth; go5.0; pid-abcdefg)",
 		},
 		{
 			name: "Plugin user agent with plugin name and additional comments",
@@ -119,7 +117,7 @@ func TestUserAgentPlugin(t *testing.T) {
 				},
 				comments: []string{"pid-abcdefg", "cloud-provider"},
 			},
-			want: "Vault/1.2.3 (+https://vault-test.com; azure-auth; go5.0; pid-abcdefg; cloud-provider)",
+			want: "Redacto KMS/1.2.3 (azure-auth; go5.0; pid-abcdefg; cloud-provider)",
 		},
 		{
 			name: "Plugin user agent with no plugin name and additional comments",
@@ -129,7 +127,7 @@ func TestUserAgentPlugin(t *testing.T) {
 				},
 				comments: []string{"pid-abcdefg", "cloud-provider"},
 			},
-			want: "Vault/1.2.3 (+https://vault-test.com; go5.0; pid-abcdefg; cloud-provider)",
+			want: "Redacto KMS/1.2.3 (go5.0; pid-abcdefg; cloud-provider)",
 		},
 		{
 			name: "Plugin user agent with version prerelease",
@@ -141,7 +139,7 @@ func TestUserAgentPlugin(t *testing.T) {
 				},
 				comments: []string{"pid-abcdefg", "cloud-provider"},
 			},
-			want: "Vault/1.2.3-dev (+https://vault-test.com; azure-auth; go5.0; pid-abcdefg; cloud-provider)",
+			want: "Redacto KMS/1.2.3-dev (azure-auth; go5.0; pid-abcdefg; cloud-provider)",
 		},
 		{
 			name: "Plugin user agent with version metadata",
@@ -153,7 +151,7 @@ func TestUserAgentPlugin(t *testing.T) {
 				},
 				comments: []string{"pid-abcdefg", "cloud-provider"},
 			},
-			want: "Vault/1.2.3+ent (+https://vault-test.com; azure-auth; go5.0; pid-abcdefg; cloud-provider)",
+			want: "Redacto KMS/1.2.3+ent (azure-auth; go5.0; pid-abcdefg; cloud-provider)",
 		},
 		{
 			name: "Plugin user agent with version prerelease and metadata",
@@ -166,7 +164,7 @@ func TestUserAgentPlugin(t *testing.T) {
 				},
 				comments: []string{"pid-abcdefg", "cloud-provider"},
 			},
-			want: "Vault/1.2.3-dev+ent (+https://vault-test.com; azure-auth; go5.0; pid-abcdefg; cloud-provider)",
+			want: "Redacto KMS/1.2.3-dev+ent (azure-auth; go5.0; pid-abcdefg; cloud-provider)",
 		},
 	}
 	for _, tt := range tests {

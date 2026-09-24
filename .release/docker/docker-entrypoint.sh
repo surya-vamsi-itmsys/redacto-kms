@@ -12,10 +12,10 @@ set -e
 # Prevent core dumps
 ulimit -c 0
 
-# Allow setting BAO_REDIRECT_ADDR and BAO_CLUSTER_ADDR using an interface
+# Allow setting REDACTO_KMS_REDIRECT_ADDR and REDACTO_KMS_CLUSTER_ADDR using an interface
 # name instead of an IP address. The interface name is specified using
-# BAO_REDIRECT_INTERFACE and BAO_CLUSTER_INTERFACE environment variables. If
-# BAO_*_ADDR is also set, the resulting URI will combine the protocol and port
+# REDACTO_KMS_REDIRECT_INTERFACE and REDACTO_KMS_CLUSTER_INTERFACE environment variables. If
+# REDACTO_KMS_*_ADDR is also set, the resulting URI will combine the protocol and port
 # number with the IP of the named interface.
 get_addr () {
     local if_name=$1
@@ -26,70 +26,70 @@ get_addr () {
       exit}'
 }
 
-if [ -n "$BAO_REDIRECT_INTERFACE" ]; then
-    export BAO_REDIRECT_ADDR=$(get_addr $BAO_REDIRECT_INTERFACE ${BAO_REDIRECT_ADDR:-"http://0.0.0.0:8200"})
-    echo "Using $BAO_REDIRECT_INTERFACE for BAO_REDIRECT_ADDR: $BAO_REDIRECT_ADDR"
+if [ -n "$REDACTO_KMS_REDIRECT_INTERFACE" ]; then
+    export REDACTO_KMS_REDIRECT_ADDR=$(get_addr $REDACTO_KMS_REDIRECT_INTERFACE ${REDACTO_KMS_REDIRECT_ADDR:-"http://0.0.0.0:8200"})
+    echo "Using $REDACTO_KMS_REDIRECT_INTERFACE for REDACTO_KMS_REDIRECT_ADDR: $REDACTO_KMS_REDIRECT_ADDR"
 fi
-if [ -n "$BAO_CLUSTER_INTERFACE" ]; then
-    export BAO_CLUSTER_ADDR=$(get_addr $BAO_CLUSTER_INTERFACE ${BAO_CLUSTER_ADDR:-"https://0.0.0.0:8201"})
-    echo "Using $BAO_CLUSTER_INTERFACE for BAO_CLUSTER_ADDR: $BAO_CLUSTER_ADDR"
+if [ -n "$REDACTO_KMS_CLUSTER_INTERFACE" ]; then
+    export REDACTO_KMS_CLUSTER_ADDR=$(get_addr $REDACTO_KMS_CLUSTER_INTERFACE ${REDACTO_KMS_CLUSTER_ADDR:-"https://0.0.0.0:8201"})
+    echo "Using $REDACTO_KMS_CLUSTER_INTERFACE for REDACTO_KMS_CLUSTER_ADDR: $REDACTO_KMS_CLUSTER_ADDR"
 fi
 
-# BAO_CONFIG_DIR isn't exposed as a volume but you can compose additional
+# REDACTO_KMS_CONFIG_DIR isn't exposed as a volume but you can compose additional
 # config files in there if you use this image as a base, or use
-# BAO_LOCAL_CONFIG below.
-BAO_CONFIG_DIR=/openbao/config
+# REDACTO_KMS_LOCAL_CONFIG below.
+REDACTO_KMS_CONFIG_DIR=/redacto-kms/config
 
-# You can also set the BAO_LOCAL_CONFIG environment variable to pass some
-# OpenBao configuration JSON without having to bind any volumes.
-if [ -n "$BAO_LOCAL_CONFIG" ]; then
-    echo "$BAO_LOCAL_CONFIG" > "$BAO_CONFIG_DIR/local.json"
+# You can also set the REDACTO_KMS_LOCAL_CONFIG environment variable to pass some
+# Redacto KMS configuration JSON without having to bind any volumes.
+if [ -n "$REDACTO_KMS_LOCAL_CONFIG" ]; then
+    echo "$REDACTO_KMS_LOCAL_CONFIG" > "$REDACTO_KMS_CONFIG_DIR/local.json"
 fi
 
-# If the user is trying to run OpenBao directly with some arguments, then
-# pass them to OpenBao.
+# If the user is trying to run Redacto KMS directly with some arguments, then
+# pass them to Redacto KMS.
 if [ "${1:0:1}" = '-' ]; then
-    set -- bao "$@"
+    set -- redacto-kms "$@"
 fi
 
-# Look for OpenBao subcommands.
+# Look for Redacto KMS subcommands.
 if [ "$1" = 'server' ]; then
     shift
-    set -- bao server \
-        -config="$BAO_CONFIG_DIR" \
-        -dev-root-token-id="$BAO_DEV_ROOT_TOKEN_ID" \
-        -dev-listen-address="${BAO_DEV_LISTEN_ADDRESS:-"0.0.0.0:8200"}" \
+    set -- redacto-kms server \
+        -config="$REDACTO_KMS_CONFIG_DIR" \
+        -dev-root-token-id="$REDACTO_KMS_DEV_ROOT_TOKEN_ID" \
+        -dev-listen-address="${REDACTO_KMS_DEV_LISTEN_ADDRESS:-"0.0.0.0:8200"}" \
         "$@"
 elif [ "$1" = 'version' ]; then
     # This needs a special case because there's no help output.
-    set -- bao "$@"
-elif bao --help "$1" 2>&1 | grep -q "bao $1"; then
+    set -- redacto-kms "$@"
+elif redacto-kms --help "$1" 2>&1 | grep -q "redacto-kms $1"; then
     # We can't use the return code to check for the existence of a subcommand, so
     # we have to use grep to look for a pattern in the help output.
-    set -- bao "$@"
+    set -- redacto-kms "$@"
 fi
 
-# If we are running OpenBao, make sure it executes as the proper user.
-if [ "$1" = 'bao' ]; then
+# If we are running Redacto KMS, make sure it executes as the proper user.
+if [ "$1" = 'redacto-kms' ]; then
     if [ -z "$SKIP_CHOWN" ]; then
         # If the config dir is bind mounted then chown it
-        if [ "$(stat -c %u /openbao/config)" != "$(id -u openbao)" ]; then
-            chown -R openbao:openbao /openbao/config || echo "Could not chown /openbao/config (may not have appropriate permissions)"
+        if [ "$(stat -c %u /redacto-kms/config)" != "$(id -u redacto-kms)" ]; then
+            chown -R redacto-kms:redacto-kms /redacto-kms/config || echo "Could not chown /redacto-kms/config (may not have appropriate permissions)"
         fi
 
         # If the logs dir is bind mounted then chown it
-        if [ "$(stat -c %u /openbao/logs)" != "$(id -u openbao)" ]; then
-            chown -R openbao:openbao /openbao/logs
+        if [ "$(stat -c %u /redacto-kms/logs)" != "$(id -u redacto-kms)" ]; then
+            chown -R redacto-kms:redacto-kms /redacto-kms/logs
         fi
 
         # If the file dir is bind mounted then chown it
-        if [ "$(stat -c %u /openbao/file)" != "$(id -u openbao)" ]; then
-            chown -R openbao:openbao /openbao/file
+        if [ "$(stat -c %u /redacto-kms/file)" != "$(id -u redacto-kms)" ]; then
+            chown -R redacto-kms:redacto-kms /redacto-kms/file
         fi
     fi
 
-    if [ "$(id -u)" = '0' ] && [ -z "$BAO_SKIP_DROP_ROOT" ]; then
-      set -- su-exec openbao "$@"
+    if [ "$(id -u)" = '0' ] && [ -z "$REDACTO_KMS_SKIP_DROP_ROOT" ]; then
+      set -- su-exec redacto-kms "$@"
     fi
 fi
 

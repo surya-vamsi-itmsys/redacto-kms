@@ -1,11 +1,11 @@
 ---
 sidebar_label: Endpoints
-description: The `/sys/external-keys` endpoint is used to configure external keys in OpenBao.
+description: The `/sys/external-keys` endpoint is used to configure external keys in Redacto KMS.
 ---
 
 # `/sys/external-keys`
 
-The `/sys/external-keys` endpoint is used to configure external keys in OpenBao.
+The `/sys/external-keys` endpoint is used to configure external keys in Redacto KMS.
 
 ## Manage configs
 
@@ -55,7 +55,7 @@ This endpoint creates, updates or patches a config.
   e.g., `"transit"` or `"pkcs11"`. This corresponds to the name the plugin is
   declared under within the server configuration, or some constant identifier
   if the plugin is built-in. See the [plugin overview](./plugins/index.mdx) for
-  more information on this parameter's intersection with OpenBao's plugin system
+  more information on this parameter's intersection with Redacto KMS's plugin system
   and available plugins.
 
 - `verify` `(bool: true)` - Verify that the configured plugin is available and
@@ -144,7 +144,7 @@ E.g., when using the Transit plugin:
 ### Delete config
 
 This endpoint deletes a config, including all of its keys. Notably, it does not
-delete the underlying KMS keys, only the mappings in OpenBao.
+delete the underlying KMS keys, only the mappings in Redacto KMS.
 
 | Method   | Path                               |
 | :------- | :--------------------------------- |
@@ -283,7 +283,7 @@ E.g., when using the Transit plugin:
 ### Delete key
 
 This endpoint deletes a key. Notably, it does not delete the underlying KMS key,
-only the mapping in OpenBao.
+only the mapping in Redacto KMS.
 
 | Method   | Path                                                     |
 | :------- | :------------------------------------------------------- |

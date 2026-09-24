@@ -13,9 +13,9 @@ import (
 // uses docker containers for the vault nodes.
 func TestRaft_Configuration_Docker(t *testing.T) {
 	t.Parallel()
-	binary := api.ReadBaoVariable("BAO_BINARY")
+	binary := api.ReadBaoVariable("REDACTO_KMS_BINARY")
 	if binary == "" {
-		t.Skip("only running docker test when $BAO_BINARY present")
+		t.Skip("only running docker test when $REDACTO_KMS_BINARY present")
 	}
 	opts := &docker.DockerClusterOptions{
 		ImageRepo: "quay.io/openbao/openbao",

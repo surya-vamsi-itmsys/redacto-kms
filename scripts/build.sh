@@ -43,11 +43,11 @@ rm -rf pkg/*
 mkdir -p bin/
 
 # Build!
-echo "==> Building bao..."
+echo "==> Building redacto-kms..."
 ${GO_CMD} build \
     -gcflags "${GCFLAGS}" \
     -ldflags "${LD_FLAGS} -X github.com/openbao/openbao/v2/internal/version.GitCommit='${GIT_COMMIT}${GIT_DIRTY}' -X github.com/openbao/openbao/v2/internal/version.CommitDate=${COMMIT_DATE}" \
-    -o "bin/bao" \
+    -o "bin/redacto-kms" \
     -tags "${BUILD_TAGS}" \
     .
 
@@ -81,8 +81,8 @@ IFS=$OLDIFS
 
 # Ensure the go bin folder exists
 mkdir -p ${BIN_PATH}
-rm -f ${BIN_PATH}/bao
-cp bin/bao ${BIN_PATH}
+rm -f ${BIN_PATH}/redacto-kms
+cp bin/redacto-kms ${BIN_PATH}
 
 # Done!
 echo

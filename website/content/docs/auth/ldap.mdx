@@ -1,7 +1,7 @@
 ---
 sidebar_label: LDAP
 description: |-
-  The "ldap" auth method allows users to authenticate with OpenBao using LDAP
+  The "ldap" auth method allows users to authenticate with Redacto KMS using LDAP
   credentials.
 ---
 
@@ -17,11 +17,11 @@ section](../plugins/index.mdx).
 :::
 
 The `ldap` auth method allows authentication using an existing LDAP
-server and user/password credentials. This allows OpenBao to be integrated
+server and user/password credentials. This allows Redacto KMS to be integrated
 into environments using LDAP without duplicating the user/pass configuration
 in multiple places.
 
-The mapping of groups and users in LDAP to OpenBao policies is managed by using
+The mapping of groups and users in LDAP to Redacto KMS policies is managed by using
 the `users/` and `groups/` paths.
 
 ## A note on escaping
@@ -50,7 +50,7 @@ Directory](http://social.technet.microsoft.com/wiki/contents/articles/5312.activ
 ### Via the CLI
 
 ```shell-session
-$ bao login -method=ldap username=mitchellh
+$ redacto-kms login -method=ldap username=mitchellh
 Password (will be hidden):
 Successfully authenticated! The policies that are associated
 with this token are listed below:
@@ -98,7 +98,7 @@ management tool.
 1. Enable the ldap auth method:
 
    ```text
-   $ bao auth enable ldap
+   $ redacto-kms auth enable ldap
    ```
 
 1. Configure connection details for your LDAP server, information on how to
@@ -162,7 +162,7 @@ There are two alternate methods of resolving the user object used to authenticat
 
 #### Binding - user principal name (AD)
 
-- `upndomain` (string, optional) - userPrincipalDomain used to construct the UPN string for the authenticating user. The constructed UPN will appear as `[username]@UPNDomain`. Example: `example.com`, which will cause OpenBao to bind as `username@example.com`.
+- `upndomain` (string, optional) - userPrincipalDomain used to construct the UPN string for the authenticating user. The constructed UPN will appear as `[username]@UPNDomain`. Example: `example.com`, which will cause Redacto KMS to bind as `username@example.com`.
 
 ### Group membership resolution
 
@@ -174,7 +174,7 @@ Once a user has been authenticated, the LDAP auth method must know how to resolv
 
 _Note_: When using _Authenticated Search_ for binding parameters (see above) the distinguished name defined for `binddn` is used for the group search. Otherwise, the authenticating user is used to perform the group search.
 
-Use `bao path-help` for more details.
+Use `redacto-kms path-help` for more details.
 
 ### Other
 
@@ -194,7 +194,7 @@ Use `bao path-help` for more details.
 - Group names are identified using their `cn` attribute.
 
 ```shell-session
-$ bao write auth/ldap/config \
+$ redacto-kms write auth/ldap/config \
     url="ldap://ldap.example.com" \
     userdn="ou=Users,dc=example,dc=com" \
     groupdn="ou=Groups,dc=example,dc=com" \
@@ -219,7 +219,7 @@ $ bao write auth/ldap/config \
 - Group membership will be resolved via the `memberOf` attribute of _user_ objects. That search will begin under `ou=Users,dc=example,dc=com`.
 
 ```shell-session
-$ bao write auth/ldap/config \
+$ redacto-kms write auth/ldap/config \
     url="ldap://ldap.example.com" \
     userattr=sAMAccountName \
     userdn="ou=Users,dc=example,dc=com" \
@@ -239,13 +239,13 @@ $ bao write auth/ldap/config \
 - LDAP server running on `ldap.example.com`, port 636 (LDAPS)
 - CA Certificate stored in file named `ldap_ca_cert.pem`
 - User objects are under the `ou=Users,dc=example,dc=com` organizational unit.
-- Username passed to OpenBao when authenticating maps to the `uid` attribute.
+- Username passed to Redacto KMS when authenticating maps to the `uid` attribute.
 - User bind DN will be auto-discovered using anonymous binding.
 - Group membership will be resolved via any one of `memberUid`, `member`, or `uniqueMember` attributes. That search will begin under `ou=Groups,dc=example,dc=com`.
 - Group names are identified using the `cn` attribute.
 
 ```shell-session
-$ bao write auth/ldap/config \
+$ redacto-kms write auth/ldap/config \
     url="ldaps://ldap.example.com" \
     userattr="uid" \
     userdn="ou=Users,dc=example,dc=com" \
@@ -259,29 +259,29 @@ $ bao write auth/ldap/config \
 
 ## LDAP group -> policy mapping
 
-Next we want to create a mapping from an LDAP group to an OpenBao policy:
+Next we want to create a mapping from an LDAP group to a Redacto KMS policy:
 
 ```shell-session
-$ bao write auth/ldap/groups/scientists policies=foo,bar
+$ redacto-kms write auth/ldap/groups/scientists policies=foo,bar
 ```
 
-This maps the LDAP group "scientists" to the "foo" and "bar" OpenBao policies.
+This maps the LDAP group "scientists" to the "foo" and "bar" Redacto KMS policies.
 We can also add specific LDAP users to additional (potentially non-LDAP)
 groups. Note that policies can also be specified on LDAP users as well.
 
 ```shell-session
-$ bao write auth/ldap/groups/engineers policies=foobar
-$ bao write auth/ldap/users/tesla groups=engineers policies=zoobar
+$ redacto-kms write auth/ldap/groups/engineers policies=foobar
+$ redacto-kms write auth/ldap/users/tesla groups=engineers policies=zoobar
 ```
 
 This adds the LDAP user "tesla" to the "engineers" group, which maps to
-the "foobar" OpenBao policy. User "tesla" itself is associated with "zoobar"
+the "foobar" Redacto KMS policy. User "tesla" itself is associated with "zoobar"
 policy.
 
 Finally, we can test this by authenticating:
 
 ```shell-session
-$ bao login -method=ldap username=tesla
+$ redacto-kms login -method=ldap username=tesla
 Password (will be hidden):
 Successfully authenticated! The policies that are associated
 with this token are listed below:
@@ -296,7 +296,7 @@ It should be noted that user -> policy mapping happens at token creation time. A
 ## User lockout
 
 If a user provides bad credentials several times in quick succession,
-OpenBao will stop trying to validate their credentials for a while, instead returning immediately
+Redacto KMS will stop trying to validate their credentials for a while, instead returning immediately
 with a permission denied error. We call this behavior "user lockout". The time for which
 a user will be locked out is called “lockout duration”. The user will be able to login after the lockout
 duration has passed. The number of failed login attempts after which the user is locked out is called
@@ -309,7 +309,7 @@ The user lockout feature is enabled by default. The default values for "lockout 
 "lockout duration" is 15 minutes, "lockout counter reset" is 15 minutes.
 
 The user lockout feature can be disabled as follows:
-- It can be disabled globally using environment variable `BAO_DISABLE_USER_LOCKOUT`.
+- It can be disabled globally using environment variable `REDACTO_KMS_DISABLE_USER_LOCKOUT`.
 - It can be disabled for all supported auth methods (ldap, userpass and approle) or a specific supported auth method using the `disable_lockout`
   parameter within `user_lockout` stanza in configuration file.
   Please see [user lockout configuration](../configuration/user-lockout.mdx#user_lockout-stanza) for more details.

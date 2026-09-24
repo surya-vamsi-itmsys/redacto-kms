@@ -48,34 +48,34 @@ func (c *SecretsEnableCommand) Synopsis() string {
 
 func (c *SecretsEnableCommand) Help() string {
 	helpText := `
-Usage: bao secrets enable [options] TYPE
+Usage: redacto-kms secrets enable [options] TYPE
 
   Enables a secrets engine. By default, secrets engines are enabled at the path
   corresponding to their TYPE, but users can customize the path using the
   -path option.
 
-  Once enabled, OpenBao will route all requests which begin with the path to the
+  Once enabled, Redacto KMS will route all requests which begin with the path to the
   secrets engine.
 
   Enable the AWS secrets engine at aws/:
 
-      $ bao secrets enable aws
+      $ redacto-kms secrets enable aws
 
   Enable the SSH secrets engine at ssh-prod/:
 
-      $ bao secrets enable -path=ssh-prod ssh
+      $ redacto-kms secrets enable -path=ssh-prod ssh
 
   Enable the database secrets engine with an explicit maximum TTL of 30m:
 
-      $ bao secrets enable -max-lease-ttl=30m database
+      $ redacto-kms secrets enable -max-lease-ttl=30m database
 
   Enable a custom plugin (after it is registered in the plugin registry):
 
-      $ bao secrets enable -path=my-secrets -plugin-name=my-plugin plugin
+      $ redacto-kms secrets enable -path=my-secrets -plugin-name=my-plugin plugin
 
   OR (preferred way):
 
-      $ bao secrets enable -path=my-secrets my-plugin
+      $ redacto-kms secrets enable -path=my-secrets my-plugin
 
   For a full list of secrets engines and examples, please see the documentation.
 
@@ -111,7 +111,7 @@ func (c *SecretsEnableCommand) Flags() *FlagSets {
 		Target:     &c.flagDefaultLeaseTTL,
 		Completion: complete.PredictAnything,
 		Usage: "The default lease TTL for this secrets engine. If unspecified, " +
-			"this defaults to the OpenBao server's globally configured default lease " +
+			"this defaults to the Redacto KMS server's globally configured default lease " +
 			"TTL.",
 	})
 
@@ -120,7 +120,7 @@ func (c *SecretsEnableCommand) Flags() *FlagSets {
 		Target:     &c.flagMaxLeaseTTL,
 		Completion: complete.PredictAnything,
 		Usage: "The maximum lease TTL for this secrets engine. If unspecified, " +
-			"this defaults to the OpenBao server's globally configured maximum lease " +
+			"this defaults to the Redacto KMS server's globally configured maximum lease " +
 			"TTL.",
 	})
 
@@ -163,7 +163,7 @@ func (c *SecretsEnableCommand) Flags() *FlagSets {
 		Target:  &c.flagForceNoCache,
 		Default: false,
 		Usage: "Force the secrets engine to disable caching. If unspecified, this " +
-			"defaults to the OpenBao server's globally configured cache settings. " +
+			"defaults to the Redacto KMS server's globally configured cache settings. " +
 			"This does not affect caching of the underlying encrypted data storage.",
 	})
 
@@ -172,7 +172,7 @@ func (c *SecretsEnableCommand) Flags() *FlagSets {
 		Target:     &c.flagPluginName,
 		Completion: c.PredictVaultPlugins(api.PluginTypeSecrets, api.PluginTypeDatabase),
 		Usage: "Name of the secrets engine plugin. This plugin name must already " +
-			"exist in OpenBao's plugin catalog.",
+			"exist in Redacto KMS's plugin catalog.",
 	})
 
 	f.StringVar(&StringVar{
@@ -210,7 +210,7 @@ func (c *SecretsEnableCommand) Flags() *FlagSets {
 		Name:    "external-entropy-access",
 		Target:  &c.flagExternalEntropyAccess,
 		Default: false,
-		Usage:   "Enable secrets engine to access OpenBao's external entropy source.",
+		Usage:   "Enable secrets engine to access Redacto KMS's external entropy source.",
 	})
 
 	f.IntVar(&IntVar{

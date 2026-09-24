@@ -31,32 +31,32 @@ import (
 )
 
 const (
-	EnvVaultAddress          = "BAO_ADDR"
-	EnvVaultAgentAddr        = "BAO_AGENT_ADDR"
-	EnvVaultCACert           = "BAO_CACERT"
-	EnvVaultCACertBytes      = "BAO_CACERT_BYTES"
-	EnvVaultCAPath           = "BAO_CAPATH"
-	EnvVaultClientCert       = "BAO_CLIENT_CERT"
-	EnvVaultClientCertBytes  = "BAO_CLIENT_CERT_BYTES"
-	EnvVaultClientKey        = "BAO_CLIENT_KEY"
-	EnvVaultClientKeyBytes   = "BAO_CLIENT_KEY_BYTES"
-	EnvVaultClientTimeout    = "BAO_CLIENT_TIMEOUT"
-	EnvVaultSRVLookup        = "BAO_SRV_LOOKUP"
-	EnvVaultSkipVerify       = "BAO_SKIP_VERIFY"
-	EnvVaultNamespace        = "BAO_NAMESPACE"
-	EnvVaultTLSServerName    = "BAO_TLS_SERVER_NAME"
-	EnvVaultWrapTTL          = "BAO_WRAP_TTL"
-	EnvVaultMaxRetries       = "BAO_MAX_RETRIES"
-	EnvVaultToken            = "BAO_TOKEN"
-	EnvVaultMFA              = "BAO_MFA"
-	EnvRateLimit             = "BAO_RATE_LIMIT"
-	EnvHTTPProxy             = "BAO_HTTP_PROXY"
-	EnvVaultProxyAddr        = "BAO_PROXY_ADDR"
-	EnvVaultDisableRedirects = "BAO_DISABLE_REDIRECTS"
+	EnvVaultAddress          = "REDACTO_KMS_ADDR"
+	EnvVaultAgentAddr        = "REDACTO_KMS_AGENT_ADDR"
+	EnvVaultCACert           = "REDACTO_KMS_CACERT"
+	EnvVaultCACertBytes      = "REDACTO_KMS_CACERT_BYTES"
+	EnvVaultCAPath           = "REDACTO_KMS_CAPATH"
+	EnvVaultClientCert       = "REDACTO_KMS_CLIENT_CERT"
+	EnvVaultClientCertBytes  = "REDACTO_KMS_CLIENT_CERT_BYTES"
+	EnvVaultClientKey        = "REDACTO_KMS_CLIENT_KEY"
+	EnvVaultClientKeyBytes   = "REDACTO_KMS_CLIENT_KEY_BYTES"
+	EnvVaultClientTimeout    = "REDACTO_KMS_CLIENT_TIMEOUT"
+	EnvVaultSRVLookup        = "REDACTO_KMS_SRV_LOOKUP"
+	EnvVaultSkipVerify       = "REDACTO_KMS_SKIP_VERIFY"
+	EnvVaultNamespace        = "REDACTO_KMS_NAMESPACE"
+	EnvVaultTLSServerName    = "REDACTO_KMS_TLS_SERVER_NAME"
+	EnvVaultWrapTTL          = "REDACTO_KMS_WRAP_TTL"
+	EnvVaultMaxRetries       = "REDACTO_KMS_MAX_RETRIES"
+	EnvVaultToken            = "REDACTO_KMS_TOKEN"
+	EnvVaultMFA              = "REDACTO_KMS_MFA"
+	EnvRateLimit             = "REDACTO_KMS_RATE_LIMIT"
+	EnvHTTPProxy             = "REDACTO_KMS_HTTP_PROXY"
+	EnvVaultProxyAddr        = "REDACTO_KMS_PROXY_ADDR"
+	EnvVaultDisableRedirects = "REDACTO_KMS_DISABLE_REDIRECTS"
 
 	// EnvTokenPath is the path to a file that holds a token. This is presently
 	// only respected by the `bao` CLI, not the API client.
-	EnvTokenPath = "BAO_TOKEN_PATH"
+	EnvTokenPath = "REDACTO_KMS_TOKEN_PATH"
 
 	// NamespaceHeaderName is the header set to specify which namespace the
 	// request is intended for.
@@ -159,9 +159,9 @@ const (
 		"but the client is configured to use TLS. Please either enable TLS\n" +
 		"on the server or run the client with -address set to an address\n" +
 		"that uses the http protocol:\n\n" +
-		"    vault <command> -address http://<address>\n\n" +
-		"You can also set the BAO_ADDR environment variable:\n\n\n" +
-		"    BAO_ADDR=http://<address> vault <command>\n\n" +
+		"    redacto-kms <command> -address http://<address>\n\n" +
+		"You can also set the REDACTO_KMS_ADDR environment variable:\n\n\n" +
+		"    REDACTO_KMS_ADDR=http://<address> redacto-kms <command>\n\n" +
 		"where <address> is replaced by the actual address to the server."
 )
 
@@ -170,8 +170,8 @@ type InlineAuthOpts func() map[string][]string
 
 // Deprecated values
 const (
-	EnvVaultAgentAddress = "BAO_AGENT_ADDR"
-	EnvVaultInsecure     = "BAO_SKIP_VERIFY"
+	EnvVaultAgentAddress = "REDACTO_KMS_AGENT_ADDR"
+	EnvVaultInsecure     = "REDACTO_KMS_SKIP_VERIFY"
 )
 
 // WrappingLookupFunc is a function that, given an HTTP verb and a path,
@@ -391,7 +391,7 @@ func NewConfig() *Config {
 // the return value of this function.
 //
 // The default Address is https://127.0.0.1:8200, but this can be
-// overridden by setting the `BAO_ADDR` environment variable. Several other
+// overridden by setting the `REDACTO_KMS_ADDR` environment variable. Several other
 // fields are automatically populated from environment variables using
 // [Config.ReadEnvironment]. For a clean constructor that does not read
 // environment variables, see [NewConfig].
@@ -605,7 +605,7 @@ func (c *Config) ReadEnvironment() error {
 		envVaultProxy = v
 	}
 
-	// BAO_PROXY_ADDR supersedes BAO_HTTP_PROXY
+	// REDACTO_KMS_PROXY_ADDR supersedes REDACTO_KMS_HTTP_PROXY
 	if v := ReadBaoVariable(EnvVaultProxyAddr); v != "" {
 		envVaultProxy = v
 	}
@@ -755,7 +755,7 @@ type Client struct {
 // If the configuration is nil, OpenBao will use configuration from
 // [DefaultConfig], which is the recommended starting configuration.
 //
-// If the environment variables `BAO_TOKEN` and/or `BAO_NAMESPACE` are present
+// If the environment variables `REDACTO_KMS_TOKEN` and/or `REDACTO_KMS_NAMESPACE` are present
 // and DisableEnvironment is not set, token and namespace will be automatically
 // added to the client. Otherwise, you must manually call [Client.SetToken] and
 // [Client.SetNamespace].
@@ -863,7 +863,7 @@ func (c *Client) CloneConfig() *Config {
 
 // SetAddress sets the address of Vault in the client. The format of address should be
 // "<Scheme>://<Host>:<Port>". Setting this on a client will override the
-// value of BAO_ADDR environment variable.
+// value of REDACTO_KMS_ADDR environment variable.
 func (c *Client) SetAddress(addr string) error {
 	c.modifyLock.Lock()
 	defer c.modifyLock.Unlock()
@@ -1889,7 +1889,7 @@ func validateToken(t string) error {
 		return !unicode.IsPrint(c)
 	})
 	if idx != -1 {
-		return errors.New("configured Vault token contains non-printable characters and cannot be used")
+		return errors.New("configured Redacto KMS token contains non-printable characters and cannot be used")
 	}
 	return nil
 }

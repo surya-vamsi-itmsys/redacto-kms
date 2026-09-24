@@ -1,16 +1,16 @@
 ---
 sidebar_label: Eventual consistency
-description: OpenBao Consistency Model
+description: Redacto KMS Consistency Model
 ---
 
 # Eventual consistency
 
-When running in a cluster, OpenBao has an eventual consistency model when not
+When running in a cluster, Redacto KMS has an eventual consistency model when not
 using `disable_standby_reads=true`.
 
-Only one node (the leader) can write to OpenBao's storage. Users generally expect
+Only one node (the leader) can write to Redacto KMS's storage. Users generally expect
 read-after-write consistency: in other words, after writing `foo=1`, a
-subsequent read of foo should return 1. Depending on the OpenBao configuration
+subsequent read of foo should return 1. Depending on the Redacto KMS configuration
 this isn't always the case. When `disable_standby_reads=false` (the default)
 is used with standby read-enabled HA storage engine such as Integrated Storage
 or PostgreSQL, there are some sequences of operations that don't always yield
@@ -23,7 +23,7 @@ information on which storage backends are standby read-enabled HA engines.
 
 When using the Integrated Storage or PostgreSQL backend with
 `disable_standby_reads=true` or a non-HA backend (such as in `-dev` mode),
-only a single OpenBao node (the active node) handles requests. Requests sent
+only a single Redacto KMS node (the active node) handles requests. Requests sent
 to regular standbys are handled by forwarding them to the active node.
 
 When using a standby read-enabled HA storage backend with the default
@@ -93,7 +93,7 @@ X-Vault-Inconsistent: fail
 
 (this is the default value).
 
-When the desired state isn't present, OpenBao will return a failure response
+When the desired state isn't present, Redacto KMS will return a failure response
 with HTTP status code 429. This tells the client that it should retry the
 request based on the value in the `Retry-After` header.
 
@@ -101,9 +101,9 @@ The advantage over the [Conditional forwarding solution above](#conditional-forw
 is that there's no additional load on the active node as long as the standby
 catches up.
 
-The OpenBao Go API will automatically retry 412s and 429s, and provides
+The Redacto KMS Go API will automatically retry 412s and 429s, and provides
 convenience methods for propagating the `X-Vault-Index` response header into
-the request header of subsequent requests. Those not using the OpenBao Go API
+the request header of subsequent requests. Those not using the Redacto KMS Go API
 will want to build equivalent functionality into their client library.
 
 ### Server-held requests
@@ -152,7 +152,7 @@ the read-enabled standby.
 
 ## Server Side Consistent Tokens
 
-Like in Vault, OpenBao v2.7 allows reintroducing the Server-Side Consistent Token
+Like in Vault, Redacto KMS v2.7 allows reintroducing the Server-Side Consistent Token
 (SSCTs) format by setting `disable_ssct_tokens=false` in the global server
 configuration.
 

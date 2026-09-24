@@ -1,6 +1,6 @@
 ---
 description: |-
-  Describes how to set up a Raft HA OpenBao cluster with TLS certificate
+  Describes how to set up a Raft HA Redacto KMS cluster with TLS certificate
 ---
 
 # HA Cluster with Raft and TLS
@@ -22,7 +22,7 @@ matches the name(s) listed in the TLS certificate.
 
 ## Before you start
 
-1. Follow the steps from the example [HA OpenBao Cluster with Integrated
+1. Follow the steps from the example [HA Redacto KMS Cluster with Integrated
 Storage](ha-with-raft.mdx) to build the cluster.
 
 2. Follow the examples and instructions in [Standalone Server with
@@ -34,7 +34,7 @@ certificate.
 The join warning disappears if you use auto-join and set the expected TLS
 server name (`${CN}`) with
 [`leader_tls_servername`](../../../../configuration/storage/raft.mdx#leader_tls_servername)
-in the Raft stanza for your OpenBao configuration.
+in the Raft stanza for your Redacto KMS configuration.
 
 For example:
 
@@ -70,7 +70,7 @@ storage "raft" {
 
 ## Solution 2:  Add a load balancer to your Raft configuration
 
-If you have a load balancer for your OpenBao cluster, you can add a single
+If you have a load balancer for your Redacto KMS cluster, you can add a single
 `retry_join` stanza to your Raft configuration and use the load balancer
 address for `leader_api_addr`.
 

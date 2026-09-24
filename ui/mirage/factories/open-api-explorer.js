@@ -8,12 +8,12 @@ import { Factory } from 'miragejs';
 export default Factory.extend({
   openapi: '3.0.2',
   info: {
-    title: 'HashiCorp OpenBao API',
-    description: 'HTTP API that gives you full access to OpenBao. All API routes are prefixed with `/v1/`.',
+    title: 'Redacto KMS API',
+    description:
+      'HTTP API that gives you full access to Redacto KMS. All API routes are prefixed with `/v1/`.',
     version: '1.0.0',
     license: {
-      name: 'Mozilla Public License 2.0',
-      url: 'https://www.mozilla.org/en-US/MPL/2.0',
+      name: '*',
     },
   },
   paths: {

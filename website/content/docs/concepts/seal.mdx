@@ -1,35 +1,35 @@
 ---
 description: >-
-  An OpenBao must be unsealed before it can access its data. Likewise, it can be
+  A Redacto KMS must be unsealed before it can access its data. Likewise, it can be
   sealed to lock it down.
 ---
 
 # Seal/Unseal
 
-When an OpenBao server is started, it starts in a _sealed_ state. In this
-state, OpenBao is configured to know where and how to access the physical
+When a Redacto KMS server is started, it starts in a _sealed_ state. In this
+state, Redacto KMS is configured to know where and how to access the physical
 storage, but doesn't know how to decrypt any of it.
 
 _Unsealing_ is the process of obtaining the plaintext root key necessary to
-read the decryption key to decrypt the data, allowing access to the OpenBao.
+read the decryption key to decrypt the data, allowing access to the Redacto KMS.
 
-Prior to unsealing, almost no operations are possible with OpenBao. For
+Prior to unsealing, almost no operations are possible with Redacto KMS. For
 example authentication, managing the mount tables, etc. are all not possible.
-The only possible operations are to unseal the OpenBao and check the status
+The only possible operations are to unseal the Redacto KMS and check the status
 of the seal.
 
 ## Why?
 
-The data stored by OpenBao is encrypted. OpenBao needs the _encryption key_ in order
+The data stored by Redacto KMS is encrypted. Redacto KMS needs the _encryption key_ in order
 to decrypt the data. The encryption key is also stored with the data
 (in the _keyring_), but encrypted with another encryption key known as the _root key_.
 
-Therefore, to decrypt the data, OpenBao must decrypt the encryption key
+Therefore, to decrypt the data, Redacto KMS must decrypt the encryption key
 which requires the root key. Unsealing is the process of getting access to
-this root key. The root key is stored alongside all other OpenBao data,
+this root key. The root key is stored alongside all other Redacto KMS data,
 but is encrypted by yet another mechanism: the unseal key.
 
-To recap: most OpenBao data is encrypted using the encryption key in the keyring;
+To recap: most Redacto KMS data is encrypted using the encryption key in the keyring;
 the keyring is encrypted by the root key; and the root key is encrypted by
 the unseal key.
 
@@ -37,8 +37,8 @@ the unseal key.
 
 ![Shahir seals](/img/openbao-shamir-seal.png)
 
-The default OpenBao config uses a Shamir seal. Instead of distributing the unseal
-key as a single key to an operator, OpenBao uses an algorithm known as
+The default Redacto KMS config uses a Shamir seal. Instead of distributing the unseal
+key as a single key to an operator, Redacto KMS uses an algorithm known as
 [Shamir's Secret Sharing](https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing)
 to split the key into shares. A certain threshold of shares is required to
 reconstruct the unseal key, which is then used to decrypt the root key.
@@ -49,7 +49,7 @@ decrypt the root key.
 
 ## Unsealing
 
-The unseal process is done by running `bao operator unseal` or via the API.
+The unseal process is done by running `redacto-kms operator unseal` or via the API.
 This process is stateful: each key can be entered via multiple mechanisms from
 multiple client machines and it will work. This allows each share of the root
 key to be on a distinct client machine for better security.
@@ -58,18 +58,18 @@ Note that when using the Shamir seal with multiple nodes, each node must be
 unsealed with the required threshold of shares. Partial unsealing of each node
 is not distributed across the cluster.
 
-Once an OpenBao node is unsealed, it remains unsealed until one of these things happens:
+Once a Redacto KMS node is unsealed, it remains unsealed until one of these things happens:
 
 1. It is resealed via the API (see below).
 
 2. The server is restarted.
 
-3. OpenBao's storage layer encounters an unrecoverable error.
+3. Redacto KMS's storage layer encounters an unrecoverable error.
 
 :::info
 
-**Note:** Unsealing makes the process of automating an OpenBao install
-difficult. Automated tools can easily install, configure, and start OpenBao,
+**Note:** Unsealing makes the process of automating a Redacto KMS install
+difficult. Automated tools can easily install, configure, and start Redacto KMS,
 but unsealing it using Shamir is a very manual process. For most users
 Auto Unseal will provide a better experience.
 
@@ -82,11 +82,11 @@ Shamir's manual unseal.
 
 ## Sealing
 
-There is also an API to seal the OpenBao. This will throw away the root
+There is also an API to seal the Redacto KMS. This will throw away the root
 key in memory and require another unseal process to restore it. Sealing
 only requires a single operator with root privileges.
 
-This way, if there is a detected intrusion, the OpenBao data can be locked
+This way, if there is a detected intrusion, the Redacto KMS data can be locked
 quickly to try to minimize damages. It can't be accessed again without
 access to the root key shares.
 
@@ -95,12 +95,12 @@ access to the root key shares.
 Auto Unseal was developed to aid in reducing the operational complexity of
 keeping the unseal key secure. This feature delegates the responsibility of
 securing the unseal key from users to a trusted device or service. At startup
-OpenBao will connect to the device or service implementing the seal and ask it
-to decrypt the root key OpenBao read from storage.
+Redacto KMS will connect to the device or service implementing the seal and ask it
+to decrypt the root key Redacto KMS read from storage.
 
 ![Auto Unseal](/img/openbao-auto-unseal.png)
 
-There are certain operations in OpenBao besides unsealing that
+There are certain operations in Redacto KMS besides unsealing that
 require a quorum of users to perform, e.g. generating a root token. When
 using a Shamir seal the unseal keys must be provided to authorize these
 operations. When using Auto Unseal these operations require _recovery
@@ -109,7 +109,7 @@ keys_ instead.
 Just as the initialization process with a Shamir seal yields unseal keys,
 initializing with an Auto Unseal yields recovery keys.
 
-It is still possible to seal an OpenBao node using the API. In this case OpenBao
+It is still possible to seal a Redacto KMS node using the API. In this case Redacto KMS
 will remain sealed until restarted, or the unseal API is used, which with Auto
 Unseal requires the recovery key fragments instead of the unseal key fragments
 that would be provided with Shamir. The process remains the same.
@@ -120,13 +120,13 @@ For a list of examples and supported providers, please see the
 :::info
 
 **Warning:** Recovery keys cannot decrypt the root key, and thus are not
-sufficient to unseal OpenBao if the Auto Unseal mechanism isn't working. They
+sufficient to unseal Redacto KMS if the Auto Unseal mechanism isn't working. They
 are purely an authorization mechanism.  Using Auto Unseal
-creates a strict OpenBao lifecycle dependency on the underlying seal mechanism.
+creates a strict Redacto KMS lifecycle dependency on the underlying seal mechanism.
 This means that if the seal mechanism (such as the Cloud KMS key) becomes unavailable,
 or deleted before the seal is migrated, then there is no ability to recover
-access to the OpenBao cluster until the mechanism is available again. **If the seal
-mechanism or its keys are permanently deleted, then the OpenBao cluster cannot be recovered, even
+access to the Redacto KMS cluster until the mechanism is available again. **If the seal
+mechanism or its keys are permanently deleted, then the Redacto KMS cluster cannot be recovered, even
 from backups.**
 To mitigate this risk, we recommend careful controls around management of the seal
 mechanism, for example using
@@ -137,10 +137,10 @@ or similar.
 
 ## Recovery key
 
-When OpenBao is initialized while using an HSM or KMS, rather than unseal keys
+When Redacto KMS is initialized while using an HSM or KMS, rather than unseal keys
 being returned to the operator, recovery keys are returned. These are generated
 from an internal recovery key that is split via Shamir's Secret Sharing, similar
-to OpenBao's treatment of unseal keys when running without an HSM or KMS.
+to Redacto KMS's treatment of unseal keys when running without an HSM or KMS.
 
 Details about initialization and rotation follow. When performing an operation
 that uses recovery keys, such as `generate-root`, selection of the recovery
@@ -173,14 +173,14 @@ and their API equivalents in the [/sys/init](../api/system/init.mdx) endpoint:
   API endpoint, although as with `pgp_keys` the object in the API endpoint is
   an array, not a string.
 
-Additionally, OpenBao will refuse to initialize if the option has not been set to
+Additionally, Redacto KMS will refuse to initialize if the option has not been set to
 generate a key, and no key is found.
 
 ### Rotation
 
 #### Unseal key
 
-OpenBao's unseal key can be rotated using a normal `bao operator rotate-keys`
+Redacto KMS's unseal key can be rotated using a normal `redacto-kms operator rotate-keys`
 operation from the CLI or the matching API calls. The rotation is authorized
 by meeting the threshold of recovery keys. After rotation, the new barrier
 key is wrapped by the HSM or KMS and stored like the previous key; it is not
@@ -189,8 +189,8 @@ returned to the users that submitted their recovery keys.
 #### Recovery key
 
 The recovery key can be rotated to change the number of shares/threshold or to
-target different key holders via different PGP keys. When using the OpenBao CLI,
-this is performed by using the `-target=recovery` flag to `bao operator rotate-keys`.
+target different key holders via different PGP keys. When using the Redacto KMS CLI,
+this is performed by using the `-target=recovery` flag to `redacto-kms operator rotate-keys`.
 
 Via the API, the rotation is performed using
 [`/sys/rotate/recovery` endpoint](../api/system/rotate/index.mdx).
@@ -222,7 +222,7 @@ the migration.
 :::warning
 
 **NOTE**: Seal migration from Auto Unseal to Auto Unseal of the same type is
-supported in OpenBao. However, there is a current limitation that
+supported in Redacto KMS. However, there is a current limitation that
 prevents migrating from AWSKMS to AWSKMS; all other seal migrations of the same
 type are supported. Seal migration from One Auto Unseal type (AWS KMS) to
 different Auto Unseal type (HSM, Azure KMS, etc.) is also supported on older

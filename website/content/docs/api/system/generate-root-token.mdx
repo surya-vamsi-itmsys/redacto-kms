@@ -1,12 +1,12 @@
 ---
 description: |-
   The `/sys/generate-root-token/` endpoints are used to create a new root token for
-  OpenBao's root namespace or a sealable namespace.
+  Redacto KMS's root namespace or a sealable namespace.
 ---
 
 # `/sys/generate-root-token`
 
-The `/sys/generate-root-token` endpoint is used to create a new root token for OpenBao.
+The `/sys/generate-root-token` endpoint is used to create a new root token for Redacto KMS.
 
 :::info
 
@@ -119,7 +119,7 @@ $ curl \
 
 This endpoint is used to enter a single root key share to progress the root token
 generation attempt. If the threshold number of root key shares is reached,
-OpenBao will complete the root key generation and issue the new token. Otherwise,
+Redacto KMS will complete the root key generation and issue the new token. Otherwise,
 this API must be called multiple times until that threshold is met. The attempt
 nonce must be provided with each call.
 

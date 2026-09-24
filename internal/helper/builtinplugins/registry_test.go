@@ -228,10 +228,10 @@ func Test_RegistryMatchesGenOpenapi(t *testing.T) {
 
 		var (
 			credentialBackends   []string
-			credentialBackendsRe = regexp.MustCompile(`^bao auth enable (?:-.+ )*(?:"([a-zA-Z]+)"|([a-zA-Z]+))$`)
+			credentialBackendsRe = regexp.MustCompile(`^redacto-kms auth enable (?:-.+ )*(?:"([a-zA-Z]+)"|([a-zA-Z]+))$`)
 
 			secretsBackends   []string
-			secretsBackendsRe = regexp.MustCompile(`^bao secrets enable (?:-.+ )*(?:"([a-zA-Z]+)"|([a-zA-Z]+))$`)
+			secretsBackendsRe = regexp.MustCompile(`^redacto-kms secrets enable (?:-.+ )*(?:"([a-zA-Z]+)"|([a-zA-Z]+))$`)
 		)
 
 		scanner := bufio.NewScanner(f)

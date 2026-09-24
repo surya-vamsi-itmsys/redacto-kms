@@ -146,7 +146,7 @@ func (h *CLIHandler) Auth(c *api.Client, m map[string]string, nonInteractive boo
 
 func (h *CLIHandler) Help() string {
 	help := `
-Usage: bao login TOKEN [CONFIG K=V...]
+Usage: redacto-kms login TOKEN [CONFIG K=V...]
 
   The token auth method allows logging in directly with a token. This
   can be a token from the "token-create" command or API. There are no
@@ -154,20 +154,20 @@ Usage: bao login TOKEN [CONFIG K=V...]
 
   Authenticate using a token:
 
-      $ bao login 96ddf4bc-d217-f3ba-f9bd-017055595017
+      $ redacto-kms login 96ddf4bc-d217-f3ba-f9bd-017055595017
 
   Authenticate but do not lookup information about the token:
 
-      $ bao login token=96ddf4bc-d217-f3ba-f9bd-017055595017 lookup=false
+      $ redacto-kms login token=96ddf4bc-d217-f3ba-f9bd-017055595017 lookup=false
 
   This token usually comes from a different source such as the API or via the
-  built-in "bao token create" command.
+  built-in "redacto-kms token create" command.
 
 Configuration:
 
   token=<string>
       The token to use for authentication. This is usually provided directly
-      via the "bao login" command.
+      via the "redacto-kms login" command.
 
   lookup=<bool>
       Perform a lookup of the token's metadata and policies.

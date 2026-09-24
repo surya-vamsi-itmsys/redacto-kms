@@ -27,11 +27,11 @@ func (c *OperatorRaftListPeersCommand) Synopsis() string {
 
 func (c *OperatorRaftListPeersCommand) Help() string {
 	helpText := `
-Usage: bao operator raft list-peers
+Usage: redacto-kms operator raft list-peers
 
   Provides the details of all the peers in the Raft cluster.
 
-	  $ bao operator raft list-peers
+	  $ redacto-kms operator raft list-peers
 
 ` + c.Flags().Help()
 

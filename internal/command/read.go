@@ -32,14 +32,14 @@ func (c *ReadCommand) Synopsis() string {
 
 func (c *ReadCommand) Help() string {
 	helpText := `
-Usage: bao read [options] PATH
+Usage: redacto-kms read [options] PATH
 
-  Reads data from OpenBao at the given path. This can be used to read secrets,
+  Reads data from Redacto KMS at the given path. This can be used to read secrets,
   generate dynamic credentials, get configuration details, and more.
 
   Read a secret from the static secrets engine:
 
-      $ bao read secret/my-secret
+      $ redacto-kms read secret/my-secret
 
   For a full list of examples and paths, please see the documentation that
   corresponds to the secrets engine in use.

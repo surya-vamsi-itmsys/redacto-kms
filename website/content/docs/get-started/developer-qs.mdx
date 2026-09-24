@@ -6,13 +6,13 @@ import TabItem from '@theme/TabItem';
 
 # Developer quick start
 
-This quick start explores how to use OpenBao client libraries inside your application code, to store and retrieve your first secret value. OpenBao takes the security burden away from developers by providing a secure, centralized secret store for an application’s sensitive data: credentials, certificates, encryption keys, and more.
+This quick start explores how to use Redacto KMS client libraries inside your application code, to store and retrieve your first secret value. Redacto KMS takes the security burden away from developers by providing a secure, centralized secret store for an application’s sensitive data: credentials, certificates, encryption keys, and more.
 
 :::warning
 
 **Warning**: This guide explains how to practice fetching and using secrets, but the explanation relies on an in-memory _dev_ server.
 
-The _dev_ server configuration is useful for practicing with OpenBao locally while you learn, but is insecure and the data isn't durable. You should **never** use a _dev_ OpenBao instance to protect real secrets, or in any production context.
+The _dev_ server configuration is useful for practicing with Redacto KMS locally while you learn, but is insecure and the data isn't durable. You should **never** use a _dev_ Redacto KMS instance to protect real secrets, or in any production context.
 
 :::
 
@@ -23,45 +23,45 @@ The _dev_ server configuration is useful for practicing with OpenBao locally whi
   - You can use **Go**
   - You can use POSIX shell (**bash**), with `curl`
 
-This page assumes that you have downloaded OpenBao and have it ready to run on your computer. You can find links to download OpenBao from the [Downloads](/downloads) page, along with basic installation instructions. Pick the option that is right for the computer where you want to run OpenBao.
+This page assumes that you have downloaded Redacto KMS and have it ready to run on your computer. You can find links to download Redacto KMS from the [Downloads](/downloads) page, along with basic installation instructions. Pick the option that is right for the computer where you want to run Redacto KMS.
 
-If you download the binary `.tar.gz` archive, you need to manually extract the `bao` program from the downloaded archive, and place it somewhere in your path.
+If you download the binary `.tar.gz` archive, you need to manually extract the `redacto-kms` program from the downloaded archive, and place it somewhere in your path.
 
-If you know how to run OpenBao in a container, you can start that container in `server` mode (see the next step), and then exec into that container using a command such as `docker exec` or `podman exec`. The downloads page lists available container images for OpenBao.
+If you know how to run Redacto KMS in a container, you can start that container in `server` mode (see the next step), and then exec into that container using a command such as `docker exec` or `podman exec`. The downloads page lists available container images for Redacto KMS.
 
-## Step 1: start OpenBao
+## Step 1: start Redacto KMS
 
-Run the OpenBao server in a non-production "dev" mode:
+Run the Redacto KMS server in a non-production "dev" mode:
 
 ```shell-session
-$ bao server -dev -dev-root-token-id="example-tutorial-token"
+$ redacto-kms server -dev -dev-root-token-id="example-tutorial-token"
 ```
 
-The `-dev-root-token-id` flag for dev servers tells the OpenBao server to allow full ("root") access to anyone who presents a token with the specified value (in this case, `example-tutorial-token`).
+The `-dev-root-token-id` flag for dev servers tells the Redacto KMS server to allow full ("root") access to anyone who presents a token with the specified value (in this case, `example-tutorial-token`).
 
 :::warning
 
-**Warning**: The [root token](../concepts/tokens.mdx#root-tokens) is useful for development, but allows full access to all data and functionality of OpenBao. In a real cluster you would rotate the root token after initial setup and configure additional controls. Read [Authentication](../concepts/auth.mdx), [Identity](../concepts/identity.mdx) and [Policies](../concepts/policies.mdx) if you want to set up a secure OpenBao cluster for real use.
+**Warning**: The [root token](../concepts/tokens.mdx#root-tokens) is useful for development, but allows full access to all data and functionality of Redacto KMS. In a real cluster you would rotate the root token after initial setup and configure additional controls. Read [Authentication](../concepts/auth.mdx), [Identity](../concepts/identity.mdx) and [Policies](../concepts/policies.mdx) if you want to set up a secure Redacto KMS cluster for real use.
 
 :::
 
-OpenBao is now listening over HTTP on port **8200**. With the initial setup out of the way, it's time to get coding!
+Redacto KMS is now listening over HTTP on port **8200**. With the initial setup out of the way, it's time to get coding!
 
-## Step 2: authenticate to OpenBao
+## Step 2: authenticate to Redacto KMS
 
-The `bao` program is more than the server; it's also a command line tool that you can use to access OpenBao. Imagine for a moment that you are doing IT operations work and you want to interact with an existing OpenBao cluster.
+The `redacto-kms` program is more than the server; it's also a command line tool that you can use to access Redacto KMS. Imagine for a moment that you are doing IT operations work and you want to interact with an existing Redacto KMS cluster.
 
-A variety of [authentication methods](../auth/index.mdx) can be used to prove your application's identity to the OpenBao server. To keep things simple for the example, just use the (insecure) root token created in **Step 1**.
+A variety of [authentication methods](../auth/index.mdx) can be used to prove your application's identity to the Redacto KMS server. To keep things simple for the example, just use the (insecure) root token created in **Step 1**.
 
 ```shell-session
-$ export BAO_ADDR=http://127.0.0.1:8200/
-$ export BAO_TOKEN_PATH=/tmp/token-for-developer-quickstart
-$ bao login
+$ export REDACTO_KMS_ADDR=http://127.0.0.1:8200/
+$ export REDACTO_KMS_TOKEN_PATH=/tmp/token-for-developer-quickstart
+$ redacto-kms login
 ```
 
 You'll be prompted for the token. Enter the root token (again, this isn't good practice outside of a learning context). The root token is `example-tutorial-token`. Press enter once you've typed the token in.
 
-You're now able to identify yourself to the local development OpenBao server, as an identity that is authorized to do any action.
+You're now able to identify yourself to the local development Redacto KMS server, as an identity that is authorized to do any action.
 
 If you're using the shell (bash) route through this tutorial, that's it for now. However, if you're writing Go client code,
 you also need to write the code for programmatic authentication.
@@ -69,7 +69,7 @@ you also need to write the code for programmatic authentication.
 <Tabs>
 <TabItem value="Go" heading="Go">
 
-Paste the following code to initialize a new OpenBao client that will use token-based
+Paste the following code to initialize a new Redacto KMS client that will use token-based
 authentication for all its requests:
 
 ```go
@@ -87,13 +87,13 @@ func main() {
 
   client, err := openbao.NewClient(config)
   if err != nil {
-    log.Fatalf("unable to initialize OpenBao client: %v", err)
+    log.Fatalf("unable to initialize Redacto KMS client: %v", err)
   }
 
   // hard coding a token into source code is an INSECURE practice
   //
   // this is just an example; in real code you would use other means to let
-  // the client authenticate to OpenBao
+  // the client authenticate to Redacto KMS
   client.SetToken("example-tutorial-token")
 }
 ```
@@ -113,21 +113,21 @@ _There's nothing to do here; you already stored a token._
 Run the following command to make sure that the `secret/` mount point has been upgraded to version 2:
 
 ```shell-session
-$ bao kv enable-versioning secret/
+$ redacto-kms kv enable-versioning secret/
 ```
 
-OpenBao supports version 1 and version 2 key/value (KV) secrets engines. You'll use KV2, which supports versioning (so that
+Redacto KMS supports version 1 and version 2 key/value (KV) secrets engines. You'll use KV2, which supports versioning (so that
 you can go back to the last version of a secret if you need to, for example).
 
 ## Step 4: store a secret
 
 Secrets are often sensitive data (like API keys or passwords) that don't belong inside source code or even in normal configuration files.
-In OpenBao, secrets are documents. You can treat a secret like a map between keys and values.
+In Redacto KMS, secrets are documents. You can treat a secret like a map between keys and values.
 
 You need to pick a name for the overall document. For this example, name it `developer-quickstart`. When you see `developer-quickstart`
 in the code, that's the document name.
 
-Next, write a secret to OpenBao:
+Next, write a secret to Redacto KMS:
 
 <Tabs>
 <TabItem value="Go" heading="Go">
@@ -137,9 +137,9 @@ Add this code to the end of the `main()` function, ensure you have 'context' and
 ```go
   // an example secret.
   secretData := map[string]any{
-      // this example hard-codes the password to store into OpenBao
+      // this example hard-codes the password to store into Redacto KMS
       // in a real application you might generate a secure password
-      "password": "OpenBao123",
+      "password": "Redacto KMS123",
   }
 
   mountPoint := "secret" // default path of the KVv2 mount enabled within dev server
@@ -157,19 +157,19 @@ Add this code to the end of the `main()` function, ensure you have 'context' and
 </TabItem>
 <TabItem value="Bash" group="bash" heading="Bash">
 
-Even if you're using a shell script, the best way to write to OpenBao is using the `bao` command line tool. You're already
+Even if you're using a shell script, the best way to write to Redacto KMS is using the `redacto-kms` command line tool. You're already
 logged in, so the command is:
 
 ```shell-session
-$ bao kv put -mount=secret developer-quickstart password=-
+$ redacto-kms kv put -mount=secret developer-quickstart password=-
 ```
 
-Because you specified that the password comes from `-`, and not an actual file, the `bao` tool asks you for the value of the secret.
-This isn't a login in to OpenBao; it's you providing the secret value.
+Because you specified that the password comes from `-`, and not an actual file, the `redacto-kms` tool asks you for the value of the secret.
+This isn't a login in to Redacto KMS; it's you providing the secret value.
 
-Type in `OpenBao123` (or any other secret you want to store). The secret **is** echoed back to you.
+Type in `Redacto KMS123` (or any other secret you want to store). The secret **is** echoed back to you.
 
-When you have finished typing, press Enter and then ^D (Control-D). The `bao` client sends the request to the OpenBao server.
+When you have finished typing, press Enter and then ^D (Control-D). The `redacto-kms` client sends the request to the Redacto KMS server.
 The output is similar to:
 ```
 ========== Secret Path ==========
@@ -188,19 +188,19 @@ version            1
 </TabItem>
 </Tabs>
 
-A common way of storing secrets is as key-value pairs using the [KV secrets engine (v2)](../secrets/kv/kv-v2.mdx). In the code you just added, `password` is the key in the key-value pair, and `OpenBao123` is the value.
+A common way of storing secrets is as key-value pairs using the [KV secrets engine (v2)](../secrets/kv/kv-v2.mdx). In the code you just added, `password` is the key in the key-value pair, and `Redacto KMS123` is the value.
 
-The code also provided the path to your secret in OpenBao. You will reference this path in a moment when you practice fetching the secret. The path includes the secret name, `developer-quickstart`.
+The code also provided the path to your secret in Redacto KMS. You will reference this path in a moment when you practice fetching the secret. The path includes the secret name, `developer-quickstart`.
 
-Run the code now, and you should see `Secret written successfully`. If not, check that you've used the correct value for the root token and OpenBao server address.
+Run the code now, and you should see `Secret written successfully`. If not, check that you've used the correct value for the root token and Redacto KMS server address.
 
 ## Step 5: test that the stored secret is correct
 
 ```shell-session
-$ bao kv get -mount=secret -field=password developer-quickstart
+$ redacto-kms kv get -mount=secret -field=password developer-quickstart
 ```
 
-You should see the password ("OpenBao123").
+You should see the password ("Redacto KMS123").
 
 <details>
   <summary><em>Optional detailed checking</em></summary>
@@ -208,7 +208,7 @@ You should see the password ("OpenBao123").
   You can fetch the entire secret document, not just the value for the `password`:
 
   ```shell-session
-  $ bao kv get -mount=secret -format=yaml developer-quickstart
+  $ redacto-kms kv get -mount=secret -format=yaml developer-quickstart
   ```
 
   The output is similar to:
@@ -216,7 +216,7 @@ You should see the password ("OpenBao123").
   data:
     data:
       password: |
-        OpenBao123
+        Redacto KMS123
     metadata:
       created_time: "2026-04-01T08:52:20.68805668Z"
       custom_metadata: null
@@ -261,13 +261,13 @@ func main() {
 
   client, err := openbao.NewClient(config)
   if err != nil {
-    log.Fatalf("unable to initialize OpenBao client: %v", err)
+    log.Fatalf("unable to initialize Redacto KMS client: %v", err)
   }
 
   // hard coding a token into source code is an INSECURE practice
   //
   // this is just an example; in real code you would use other means to let
-  // the client authenticate to OpenBao
+  // the client authenticate to Redacto KMS
   client.SetToken("example-tutorial-token")
 
   mountPoint := "secret"
@@ -296,7 +296,7 @@ func main() {
 
 ```shell-session
 $ curl \
-    --header "X-Vault-Token: $( cat "${BAO_TOKEN_PATH}" )" \
+    --header "X-Vault-Token: $( cat "${REDACTO_KMS_TOKEN_PATH}" )" \
     --header "Accept: application/json" \
     http://127.0.0.1:8200/v1/secret/data/developer-quickstart | tee secrets.json
 ```
@@ -306,8 +306,8 @@ $ curl \
 
 If you don't see the secret you expected to see, check that you didn't make a mistake on the way.
 
-**That's it! You've just written and retrieved your first OpenBao secret!**
+**That's it! You've just written and retrieved your first Redacto KMS secret!**
 
 ## Further reading
 
-To learn how to integrate applications with OpenBao without needing to always change your application code, see the [OpenBao Agent](../agent-and-proxy/agent/index.mdx) documentation.
+To learn how to integrate applications with Redacto KMS without needing to always change your application code, see the [Redacto KMS Agent](../agent-and-proxy/agent/index.mdx) documentation.

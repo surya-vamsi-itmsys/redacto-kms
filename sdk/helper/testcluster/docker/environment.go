@@ -167,7 +167,7 @@ func (dc *DockerCluster) GetRootToken() string {
 }
 
 func (dc *DockerCluster) SetRootToken(s string) {
-	dc.Logger.Trace("cluster root token changed", "helpful_env", fmt.Sprintf("BAO_TOKEN=%s BAO_CACERT=/openbao/config/ca.pem", s))
+	dc.Logger.Trace("cluster root token changed", "helpful_env", fmt.Sprintf("REDACTO_KMS_TOKEN=%s REDACTO_KMS_CACERT=/openbao/config/ca.pem", s))
 	dc.rootToken = s
 }
 
@@ -417,7 +417,7 @@ func NewTestDockerCluster(t *testing.T, opts *DockerClusterOptions) *DockerClust
 	if err != nil {
 		t.Fatal(err)
 	}
-	dc.Logger.Trace("cluster started", "helpful_env", fmt.Sprintf("BAO_TOKEN=%s BAO_CACERT=/openbao/config/ca.pem", dc.GetRootToken()))
+	dc.Logger.Trace("cluster started", "helpful_env", fmt.Sprintf("REDACTO_KMS_TOKEN=%s REDACTO_KMS_CACERT=/openbao/config/ca.pem", dc.GetRootToken()))
 	return dc
 }
 
@@ -745,10 +745,10 @@ func (n *DockerClusterNode) Start(ctx context.Context, opts *DockerClusterOption
 		// For now we're using disable_mlock, because this is for testing
 		// anyway, and because it prevents us using external plugins.
 		"SKIP_SETCAP=true",
-		"BAO_LOG_FORMAT=json",
+		"REDACTO_KMS_LOG_FORMAT=json",
 	}
 	if opts.Root {
-		env = append(env, "BAO_SKIP_DROP_ROOT=true")
+		env = append(env, "REDACTO_KMS_SKIP_DROP_ROOT=true")
 	}
 
 	r, err := dockhelper.NewServiceRunner(dockhelper.RunOptions{
@@ -1039,7 +1039,7 @@ func DefaultOptions(t *testing.T) *DockerClusterOptions {
 	return &DockerClusterOptions{
 		ImageRepo:   "quay.io/openbao/openbao",
 		ImageTag:    "latest",
-		VaultBinary: api.ReadBaoVariable("BAO_BINARY"),
+		VaultBinary: api.ReadBaoVariable("REDACTO_KMS_BINARY"),
 		ClusterOptions: testcluster.ClusterOptions{
 			NumCores:    3,
 			ClusterName: strings.ReplaceAll(t.Name(), "/", "-"),

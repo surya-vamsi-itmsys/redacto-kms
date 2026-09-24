@@ -13,7 +13,7 @@ import (
 
 func Test_BoltOptions(t *testing.T) {
 	t.Parallel()
-	key := "VAULT_RAFT_INITIAL_MMAP_SIZE"
+	key := "REDACTO_KMS_RAFT_INITIAL_MMAP_SIZE"
 
 	testCases := []struct {
 		name         string

@@ -1,6 +1,6 @@
 # plugin-database-valkey
 
-An [OpenBao](https://openbao.org) plugin for Valkey
+An [Redacto KMS](https://openbao.org) plugin for Valkey
 
 This plugin should be compatible with Redis.
 

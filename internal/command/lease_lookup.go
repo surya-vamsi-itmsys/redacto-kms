@@ -26,16 +26,16 @@ func (c *LeaseLookupCommand) Synopsis() string {
 
 func (c *LeaseLookupCommand) Help() string {
 	helpText := `
-Usage: bao lease lookup ID
+Usage: redacto-kms lease lookup ID
 
   Lookup the lease information of a secret.
 
-  Every secret in OpenBao has a lease associated with it. Users can look up
+  Every secret in Redacto KMS has a lease associated with it. Users can look up
   information on the lease by referencing the lease ID.
 
   Lookup lease of a secret:
 
-      $ bao lease lookup database/creds/readonly/2f6a614c...
+      $ redacto-kms lease lookup database/creds/readonly/2f6a614c...
 
 ` + c.Flags().Help()
 

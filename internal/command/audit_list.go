@@ -30,18 +30,18 @@ func (c *AuditListCommand) Synopsis() string {
 
 func (c *AuditListCommand) Help() string {
 	helpText := `
-Usage: bao audit list [options]
+Usage: redacto-kms audit list [options]
 
-  Lists the enabled audit devices in the OpenBao server. The output lists the
+  Lists the enabled audit devices in the Redacto KMS server. The output lists the
   enabled audit devices and the options for those devices.
 
   List all audit devices:
 
-      $ bao audit list
+      $ redacto-kms audit list
 
   List detailed output about the audit devices:
 
-      $ bao audit list -detailed
+      $ redacto-kms audit list -detailed
 
 ` + c.Flags().Help()
 

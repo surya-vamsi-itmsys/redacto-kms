@@ -1,15 +1,15 @@
 ---
-description: This is the API documentation for the OpenBao Kubernetes auth method plugin.
+description: This is the API documentation for the Redacto KMS Kubernetes auth method plugin.
 ---
 
 # Kubernetes auth method (API)
 
-This is the API documentation for the OpenBao Kubernetes auth method plugin. To
+This is the API documentation for the Redacto KMS Kubernetes auth method plugin. To
 learn more about the usage and operation, see the
-[OpenBao Kubernetes auth method](../../auth/kubernetes.mdx).
+[Redacto KMS Kubernetes auth method](../../auth/kubernetes.mdx).
 
 This documentation assumes the Kubernetes method is mounted at the
-`/auth/kubernetes` path in OpenBao. Since it is possible to enable auth methods at
+`/auth/kubernetes` path in Redacto KMS. Since it is possible to enable auth methods at
 any location, please update your API calls accordingly.
 
 ## Configure method
@@ -53,13 +53,13 @@ See [these instructions](../../auth/kubernetes.mdx#discovering-the-service-accou
 
 ### Caveats
 
-If OpenBao is running in a Kubernetes Pod, the `kubernetes_ca_cert` and
+If Redacto KMS is running in a Kubernetes Pod, the `kubernetes_ca_cert` and
 `token_reviewer_jwt` parameters will automatically default to the local CA cert
 (`/var/run/secrets/kubernetes.io/serviceaccount/ca.crt`) and local service
 account JWT (`/var/run/secrets/kubernetes.io/serviceaccount/token`). This
 behavior may be disabled by setting `disable_local_ca_jwt` to `true`.
 
-When OpenBao is running in a non-Kubernetes environment, either
+When Redacto KMS is running in a non-Kubernetes environment, either
 `kubernetes_ca_cert` or `pem_keys` must be set by the user.
 
 ### Sample payload
@@ -130,7 +130,7 @@ entities attempting to login.
 - `bound_service_account_namespaces` `(array: <required>)` - List of namespaces
   allowed to access this role. If set to "\*" all namespaces are allowed.
 - `bound_service_account_namespace_selector` `(string: "")` - A label selector for Kubernetes namespaces 
-  which are allowed to access this role. Accepts either a JSON or YAML object. To use label selectors, OpenBao
+  which are allowed to access this role. Accepts either a JSON or YAML object. To use label selectors, Redacto KMS
   must have read permission for namespaces in the Kubernetes cluster. If set with `bound_service_account_namespaces`, the 
   conditions are `OR`ed.
 - `audience` `(string: "")` <a name="audience"></a> - Optional Audience claim to verify in the JWT.

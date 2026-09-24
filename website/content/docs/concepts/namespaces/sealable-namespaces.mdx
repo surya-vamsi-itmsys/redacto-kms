@@ -1,6 +1,6 @@
 ---
 description: >-
-  Learn about OpenBao's advanced Namespace isolation
+  Learn about Redacto KMS's advanced Namespace isolation
 ---
 
 # Sealable Namespaces
@@ -14,10 +14,10 @@ guide, see the [Sealable Namespace Guide](../../guides/sealable-namespaces.mdx).
 
 ## Overview
 
-Sealable namespaces extend OpenBao's multi-tenancy model by giving tenants
+Sealable namespaces extend Redacto KMS's multi-tenancy model by giving tenants
 cryptographic control over their own namespace. When a namespace is created with
 sealing enabled, it gets its own encryption keys, separate from the global
-OpenBao seal. A tenant can independently seal and unseal their namespace without
+Redacto KMS seal. A tenant can independently seal and unseal their namespace without
 affecting any other tenants and without involving the platform operator.
 
 This is distinct from the existing namespace lock/unlock mechanism. Sealing is a
@@ -48,7 +48,7 @@ Sealable namespaces are useful when:
 
 Sealable namespaces are an optional feature. A namespace that is not itself
 sealable, and has no sealable ancestor in its namespace hierarchy, behaves
-exactly as all pre-v2.6 namespaces: it is protected by the global OpenBao seal.
+exactly as all pre-v2.6 namespaces: it is protected by the global Redacto KMS seal.
 
 ## How Sealable Namespaces Work
 
@@ -59,7 +59,7 @@ data. This means:
 - Even if the global root key is available, a sealed namespace's data remains
   inaccessible
 - In a single-node cluster: A server restart seals all namespaces; each must be unsealed independently
-  after OpenBao is unsealed. Parent namespaces must be unsealed before child
+  after Redacto KMS is unsealed. Parent namespaces must be unsealed before child
   namespaces can be unsealed.
 - In a multi-node cluster: Seal status of all namespaces is maintained across
   the active cluster when a single node is restarted. After restarting and
@@ -68,7 +68,7 @@ data. This means:
 
 :::warning
 
-**Important**: OpenBao must be globally unsealed before any namespace can be
+**Important**: Redacto KMS must be globally unsealed before any namespace can be
 unsealed.
 
 :::

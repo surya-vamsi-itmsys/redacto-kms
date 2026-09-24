@@ -11,7 +11,7 @@
 
 set -euo pipefail
 
-GITHUB_REPOSITORY=${GITHUB_REPOSITORY:-openbao/openbao}
+GITHUB_REPOSITORY=${GITHUB_REPOSITORY:-surya-vamsi-itmsys/redacto-kms}
 
 mkdir -p dist && cd dist
 

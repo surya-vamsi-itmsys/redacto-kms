@@ -26,24 +26,24 @@ func (c *NamespaceDeleteCommand) Synopsis() string {
 
 func (c *NamespaceDeleteCommand) Help() string {
 	helpText := `
-Usage: bao namespace delete [options] PATH
+Usage: redacto-kms namespace delete [options] PATH
 
   Delete a namespace.
 
   The namespace deleted will be relative to the namespace provided in either the
-  BAO_NAMESPACE environment variable or -namespace CLI flag.
+  REDACTO_KMS_NAMESPACE environment variable or -namespace CLI flag.
 
   Delete a namespace (e.g. ns1/):
 
-      $ bao namespace delete ns1
+      $ redacto-kms namespace delete ns1
 
   Delete a namespace from a parent namespace (e.g. ns1/ns2/):
 
-      $ bao namespace delete -namespace=ns1 ns2
+      $ redacto-kms namespace delete -namespace=ns1 ns2
 
   To delete a sealed namespace, use the delete-sealed subcommand instead:
 
-      $ bao namespace delete-sealed ns1
+      $ redacto-kms namespace delete-sealed ns1
 
   Note that this requires the sudo capability, and will not clean up external
   resources via lease deletion like standard namespace deletion does.

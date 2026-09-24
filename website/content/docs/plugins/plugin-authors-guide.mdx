@@ -1,13 +1,13 @@
 ---
 sidebar_label: Plugin Development Patterns
-description: OpenBao's plugin authors guide.
+description: Redacto KMS's plugin authors guide.
 ---
 
 # Plugin Development Patterns
 
 :::warning
 
-Advanced topic! Plugin development is a highly advanced topic in OpenBao, and
+Advanced topic! Plugin development is a highly advanced topic in Redacto KMS, and
 is not required knowledge for day-to-day usage. If you don't plan on writing any
 plugins, we recommend not reading this section of the documentation.
 
@@ -72,17 +72,17 @@ If your secrets engine plugin implements a revoke operation for dynamic
 credentials, it should consider a "credentials not found" error from the backing
 system a successful revocation.
 
-OpenBao may try to revoke already revoked credentials for several reasons:
+Redacto KMS may try to revoke already revoked credentials for several reasons:
 
-- OpenBao was restored from a backup / snapshot
-- OpenBao could not delete the lease from its storage after revoking the
+- Redacto KMS was restored from a backup / snapshot
+- Redacto KMS could not delete the lease from its storage after revoking the
   credentials (e.g. because it lost connection to PostgreSQL, a power outage or
   an OOM issue)
 - The credentials were deleted externally (e.g. by an admin or some automated
   cleanup job)
 
 Now, if your plugin returns an error when trying to revoke the non-existing
-credentials, OpenBao will retry to revoke them forever (or until manual
+credentials, Redacto KMS will retry to revoke them forever (or until manual
 intervention).
 
 When implementing this logic, make sure you properly distinguish the
@@ -94,14 +94,14 @@ implementation.
 
 If you cannot safely detect the not found error, it is better to document this
 as a known limitation and document how to manually recover from a revoke retry
-loop (i.e. using the [`bao lease revoke`](../../commands/lease/revoke/) command
+loop (i.e. using the [`redacto-kms lease revoke`](../../commands/lease/revoke/) command
 with the `-force` flag).
 
 ## Docker-based Tests
 
-OpenBao's SDK offers test helpers to automatically spin up an OpenBao cluster
+Redacto KMS's SDK offers test helpers to automatically spin up a Redacto KMS cluster
 in Go tests. This is both very handy for plugin development but also used in the
-main OpenBao repository for end-to-end testing.
+main Redacto KMS repository for end-to-end testing.
 
 Here's an example of how to use it:
 
@@ -125,9 +125,9 @@ func Test_Something_With_Docker(t *testing.T) {
 ```
 
 By default, this is based on the latest `openbao/openbao:latest` container
-image. However, you can customize the `bao` binary present in the container
+image. However, you can customize the `redacto-kms` binary present in the container
 simply by building a custom version of it locally (though make sure it targets
-`GOOS=linux`) and pointing at it via the `BAO_BINARY` environment variable. The
+`GOOS=linux`) and pointing at it via the `REDACTO_KMS_BINARY` environment variable. The
 test helper will pick this up and copy the binary into the container at startup.
 
 Additionally, you can optionally set `COMMIT_SHA`, which will be appended to the
@@ -136,19 +136,19 @@ image name we build as a debugging convenience.
 ## Dangers of Custom Auto Unseal Mechanisms
 
 KMS provider plugins enable development of custom Auto Unseal mechanisms
-for OpenBao by providing an implementation of [go-kms-wrapping's `Wrapper`
+for Redacto KMS by providing an implementation of [go-kms-wrapping's `Wrapper`
 interface](https://pkg.go.dev/github.com/openbao/go-kms-wrapping/v2#Wrapper) via
 [`WrapperFactoryFunc`](https://pkg.go.dev/github.com/openbao/go-kms-wrapping/plugin/v2#ServeOpts).
 
 Both implementation and installation of such plugins must be treated with
-extreme caution. OpenBao's (Auto-)Seals represent the root of trust for any
-instance of OpenBao, hence bugs or abuse pose risks:
+extreme caution. Redacto KMS's (Auto-)Seals represent the root of trust for any
+instance of Redacto KMS, hence bugs or abuse pose risks:
 
 - A faulty or malicious implementation may result in data loss if key material
   is lost or ciphertext is otherwise irrecoverable.
-- A faulty or malicious implementation may result in compromise of OpenBao's
+- A faulty or malicious implementation may result in compromise of Redacto KMS's
   root key if insecure cryptography is used (e.g., via weak algorithms, weak key
   material or unprotected key material). If handled badly, this can lead to data
-  inside OpenBao's secure storage being compromised.
+  inside Redacto KMS's secure storage being compromised.
 
 [Consul plugin revoke operation]: https://github.com/openbao/openbao-plugins/blob/c3eb5134e359ee112754cc0f488e2b91d71a6129/secrets/consul/secret_token.go#L101-L114

@@ -367,7 +367,7 @@ func toAlg[T ~string](a []T) []jwt.Alg {
 
 const (
 	pathLoginHelpSyn = `
-	Authenticates to OpenBao using a JWT (or OIDC) token.
+	Authenticates to Redacto KMS using a JWT (or OIDC) token.
 	`
 	pathLoginHelpDesc = `
 Authenticates JWTs.

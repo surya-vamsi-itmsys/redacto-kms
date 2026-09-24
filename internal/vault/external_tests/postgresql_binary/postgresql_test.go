@@ -23,9 +23,9 @@ import (
 )
 
 func TestPostgreSQL_FencedWrites(t *testing.T) {
-	binary := api.ReadBaoVariable("BAO_BINARY")
+	binary := api.ReadBaoVariable("REDACTO_KMS_BINARY")
 	if binary == "" {
-		t.Skip("only running docker test when $BAO_BINARY present")
+		t.Skip("only running docker test when $REDACTO_KMS_BINARY present")
 	}
 
 	psql := docker.NewPostgreSQLStorage(t, "")
@@ -139,9 +139,9 @@ func TestPostgreSQL_FencedWrites(t *testing.T) {
 }
 
 func TestPostgreSQL_ParallelInit(t *testing.T) {
-	binary := api.ReadBaoVariable("BAO_BINARY")
+	binary := api.ReadBaoVariable("REDACTO_KMS_BINARY")
 	if binary == "" {
-		t.Skip("missing $BAO_BINARY")
+		t.Skip("missing $REDACTO_KMS_BINARY")
 	}
 
 	psql := docker.NewPostgreSQLStorage(t, "")
@@ -204,9 +204,9 @@ func TestPostgreSQL_ParallelInit(t *testing.T) {
 }
 
 func TestPostgreSQL_FatalInit(t *testing.T) {
-	binary := api.ReadBaoVariable("BAO_BINARY")
+	binary := api.ReadBaoVariable("REDACTO_KMS_BINARY")
 	if binary == "" {
-		t.Skip("missing $BAO_BINARY")
+		t.Skip("missing $REDACTO_KMS_BINARY")
 	}
 
 	psql := docker.NewPostgreSQLStorage(t, "")
@@ -259,9 +259,9 @@ func TestPostgreSQL_FatalInit(t *testing.T) {
 }
 
 func TestPostgreSQL_Upgrade(t *testing.T) {
-	binary := api.ReadBaoVariable("BAO_BINARY")
+	binary := api.ReadBaoVariable("REDACTO_KMS_BINARY")
 	if binary == "" {
-		t.Skip("missing $BAO_BINARY")
+		t.Skip("missing $REDACTO_KMS_BINARY")
 	}
 
 	psql := docker.NewPostgreSQLStorage(t, "")
@@ -329,9 +329,9 @@ func TestPostgreSQL_Upgrade(t *testing.T) {
 }
 
 func TestPostgreSQL_Scalability(t *testing.T) {
-	binary := api.ReadBaoVariable("BAO_BINARY")
+	binary := api.ReadBaoVariable("REDACTO_KMS_BINARY")
 	if binary == "" {
-		t.Skip("missing $BAO_BINARY")
+		t.Skip("missing $REDACTO_KMS_BINARY")
 	}
 
 	logger := logging.NewVaultLogger(log.Trace).Named(t.Name())

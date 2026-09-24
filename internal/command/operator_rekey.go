@@ -50,16 +50,16 @@ func (c *OperatorRekeyCommand) Synopsis() string {
 
 func (c *OperatorRekeyCommand) Help() string {
 	helpText := `
-Usage: bao operator rekey [options] [KEY]
+Usage: redacto-kms operator rekey [options] [KEY]
 
   WARNING: this method is deprecated, please use:
-    $ bao operator rotate-keys
+    $ redacto-kms operator rotate-keys
   instead.
 
   Generates a new set of unseal keys. This can optionally change the total
   number of key shares or the required threshold of those key shares to
   reconstruct the root key. This operation is zero downtime, but it requires
-  that the OpenBao instance is unsealed and a quorum of existing unseal keys
+  that the Redacto KMS instance is unsealed and a quorum of existing unseal keys
   are provided.
 
   An unseal key may be provided directly on the command line as an argument to
@@ -71,33 +71,33 @@ Usage: bao operator rekey [options] [KEY]
 
   Initialize a rekey:
 
-      $ bao operator rekey \
+      $ redacto-kms operator rekey \
           -init \
           -key-shares=15 \
           -key-threshold=9
 
   Rekey and encrypt the resulting unseal keys with PGP:
 
-      $ bao operator rekey \
+      $ redacto-kms operator rekey \
           -init \
           -key-shares=3 \
           -key-threshold=2 \
           -pgp-keys="keybase:hashicorp,keybase:jefferai,keybase:sethvargo"
 
-  Store encrypted PGP keys in OpenBao's core:
+  Store encrypted PGP keys in Redacto KMS's core:
 
-      $ bao operator rekey \
+      $ redacto-kms operator rekey \
           -init \
           -pgp-keys="..." \
           -backup
 
   Retrieve backed-up unseal keys:
 
-      $ bao operator rekey -backup-retrieve
+      $ redacto-kms operator rekey -backup-retrieve
 
   Delete backed-up unseal keys:
 
-      $ bao operator rekey -backup-delete
+      $ redacto-kms operator rekey -backup-delete
 
 ` + c.Flags().Help()
 	return strings.TrimSpace(helpText)
@@ -199,7 +199,7 @@ func (c *OperatorRekeyCommand) Flags() *FlagSets {
 		Target:  &c.flagBackup,
 		Default: false,
 		Usage: "Store a backup of the current PGP encrypted unseal or recovery keys in " +
-			"OpenBao's core. The encrypted values can be recovered in the event of " +
+			"Redacto KMS's core. The encrypted values can be recovered in the event of " +
 			"failure or discarded after success. See the -backup-delete and " +
 			"-backup-retrieve options for more information. This option only " +
 			"applies when the existing unseal or recovery keys were PGP encrypted.",
@@ -331,7 +331,7 @@ func (c *OperatorRekeyCommand) init(client *api.Client) int {
 			c.UI.Warn(wrapAtLength(
 				fmt.Sprintf("WARNING! You are using PGP keys for encryption "+
 					"of resulting %s keys, but you did not enable the option to backup "+
-					"the keys to OpenBao's core. If you lose the encrypted keys after "+
+					"the keys to Redacto KMS's core. If you lose the encrypted keys after "+
 					"they are returned, you will not be able to recover them. Consider "+
 					"canceling this operation and re-running with -backup to allow "+
 					"recovery of the encrypted unseal keys in case of emergency. You "+
@@ -460,7 +460,7 @@ func (c *OperatorRekeyCommand) provide(client *api.Client, key string) int {
 	if !started {
 		c.UI.Error(wrapAtLength(
 			"No rekey is in progress. Start a rekey process by running " +
-				"\"bao operator rekey -init\".",
+				"\"redacto-kms operator rekey -init\".",
 		))
 		return 1
 	}
@@ -682,14 +682,14 @@ func (c *OperatorRekeyCommand) printWarnings(client *api.Client, status *api.Rot
 			c.UI.Output(wrapAtLength(fmt.Sprintf(
 				"The encrypted unseal keys are backed up to \"core/unseal-keys-backup\" " +
 					"in the storage backend. Remove these keys at any time using " +
-					"\"bao operator rekey -backup-delete\". OpenBao does not automatically " +
+					"\"redacto-kms operator rekey -backup-delete\". Redacto KMS does not automatically " +
 					"remove these keys.",
 			)))
 		case "recovery", "hsm":
 			c.UI.Output(wrapAtLength(fmt.Sprintf(
 				"The encrypted recovery keys are backed up to \"core/recovery-keys-backup\" " +
 					"in the storage backend. Remove these keys at any time using " +
-					"\"bao operator rekey -backup-delete -target=recovery\". OpenBao does not automatically " +
+					"\"redacto-kms operator rekey -backup-delete -target=recovery\". Redacto KMS does not automatically " +
 					"remove these keys.",
 			)))
 		}
@@ -701,10 +701,10 @@ func (c *OperatorRekeyCommand) printWarnings(client *api.Client, status *api.Rot
 		switch target {
 		case "barrier":
 			c.UI.Output(wrapAtLength(fmt.Sprintf(
-				"OpenBao has created a new unseal key, split into %d key shares and a "+
+				"Redacto KMS has created a new unseal key, split into %d key shares and a "+
 					"key threshold of %d. These will not be active until after verification is "+
 					"complete. Please securely distribute the key shares printed above. When "+
-					" OpenBao is re-sealed, restarted, or stopped, you must supply at least %d "+
+					" Redacto KMS is re-sealed, restarted, or stopped, you must supply at least %d "+
 					"of these keys to unseal it before it can start servicing requests.",
 				status.N,
 				status.T,
@@ -713,7 +713,7 @@ func (c *OperatorRekeyCommand) printWarnings(client *api.Client, status *api.Rot
 			warningText = "unseal"
 		case "recovery", "hsm":
 			c.UI.Output(wrapAtLength(fmt.Sprintf(
-				"OpenBao has created a new recovery key, split into %d key shares and a "+
+				"Redacto KMS has created a new recovery key, split into %d key shares and a "+
 					"key threshold of %d. These will not be active until after verification is "+
 					"complete. Please securely distribute the key shares printed above.",
 				status.N,
@@ -726,8 +726,8 @@ func (c *OperatorRekeyCommand) printWarnings(client *api.Client, status *api.Rot
 		c.UI.Warn(wrapAtLength(fmt.Sprintf(
 			"Again, these key shares are _not_ valid until verification is performed. "+
 				"Do not lose or discard your current key shares until after verification "+
-				"is complete or you will be unable to %s OpenBao. If you cancel the "+
-				"rekey process or seal OpenBao before verification is complete the new "+
+				"is complete or you will be unable to %s Redacto KMS. If you cancel the "+
+				"rekey process or seal Redacto KMS before verification is complete the new "+
 				"shares will be discarded and the current shares will remain valid.", warningText,
 		)))
 		c.UI.Output("")
@@ -743,8 +743,8 @@ func (c *OperatorRekeyCommand) printWarnings(client *api.Client, status *api.Rot
 		switch target {
 		case "barrier":
 			c.UI.Output(wrapAtLength(fmt.Sprintf(
-				"OpenBao unseal keys rekeyed to %d key shares and a key threshold of %d. "+
-					"Please securely distribute the key shares printed above. When OpenBao is "+
+				"Redacto KMS unseal keys rekeyed to %d key shares and a key threshold of %d. "+
+					"Please securely distribute the key shares printed above. When Redacto KMS is "+
 					"re-sealed, restarted, or stopped, you must supply at least %d of "+
 					"these keys to unseal it before it can start servicing requests.",
 				status.N,
@@ -753,7 +753,7 @@ func (c *OperatorRekeyCommand) printWarnings(client *api.Client, status *api.Rot
 			)))
 		case "recovery", "hsm":
 			c.UI.Output(wrapAtLength(fmt.Sprintf(
-				"OpenBao recovery keys rekeyed to %d key shares and a key threshold of %d. "+
+				"Redacto KMS recovery keys rekeyed to %d key shares and a key threshold of %d. "+
 					"Please securely distribute the key shares printed above.",
 				status.N,
 				status.T,

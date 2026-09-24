@@ -1,14 +1,14 @@
 ---
 sidebar_label: Overview
 description: |-
-  OpenBao Agent Caching allows client-side caching of responses containing newly
+  Redacto KMS Agent Caching allows client-side caching of responses containing newly
   created tokens and responses containing leased secrets generated off of these
   newly created tokens.
 ---
 
-# OpenBao agent caching
+# Redacto KMS agent caching
 
-OpenBao Agent Caching allows client-side caching of responses containing newly
+Redacto KMS Agent Caching allows client-side caching of responses containing newly
 created tokens and responses containing leased secrets generated off of these
 newly created tokens. The renewals of the cached tokens and leases are also
 managed by the agent.
@@ -32,10 +32,10 @@ specific scenarios.
 
 ## Persistent cache
 
-OpenBao Agent can restore tokens and leases from a persistent cache file created
-by a previous OpenBao Agent process.
+Redacto KMS Agent can restore tokens and leases from a persistent cache file created
+by a previous Redacto KMS Agent process.
 
-Refer to the [OpenBao Agent Persistent
+Refer to the [Redacto KMS Agent Persistent
 Caching](persistent-caches/index.mdx) page for more information on
 this functionality.
 
@@ -47,7 +47,7 @@ TTL or if the renewals result in errors.
 
 Agent does some best-effort cache evictions by observing specific request types
 and response codes. For example, if a token revocation request is made via the
-agent and if the forwarded request to the OpenBao server succeeds, then agent
+agent and if the forwarded request to the Redacto KMS server succeeds, then agent
 evicts all the cache entries associated with the revoked token. Similarly, any
 lease revocation operation will also be intercepted by the agent and the
 respective cache entries will be evicted.
@@ -55,7 +55,7 @@ respective cache entries will be evicted.
 Note that while agent evicts the cache entries upon secret expirations and upon
 intercepting revocation requests, it is still possible for the agent to be
 completely unaware of the revocations that happen through direct client
-interactions with the OpenBao server. This could potentially lead to stale cache
+interactions with the Redacto KMS server. This could potentially lead to stale cache
 entries. For managing the stale entries in the cache, an endpoint
 `/agent/v1/cache-clear`(see below) is made available to manually evict cache
 entries based on some of the query criteria used for indexing the cache entries.
@@ -80,19 +80,19 @@ the caching functionality is built upon.
 ## Renewal management
 
 The tokens and leases are renewed by the agent using the secret renewer that is
-made available via the OpenBao server's [Go
+made available via the Redacto KMS server's [Go
 API](https://godoc.org/github.com/openbao/openbao/api#Renewer). Agent performs
 all operations in memory and does not persist anything to storage. This means
 that when the agent is shut down, all the renewal operations are immediately
 terminated and there is no way for agent to resume renewals after the fact.
 Note that shutting down the agent does not indicate revocations of the secrets,
 instead it only means that renewal responsibility for all the valid unrevoked
-secrets are no longer performed by the OpenBao agent.
+secrets are no longer performed by the Redacto KMS agent.
 
 ### Agent CLI
 
 Agent's listener address will be picked up by the CLI through the
-`BAO_AGENT_ADDR` environment variable. This should be a complete URL such as
+`REDACTO_KMS_AGENT_ADDR` environment variable. This should be a complete URL such as
 `"http://127.0.0.1:8200"`.
 
 ## API
@@ -188,7 +188,7 @@ These are common configuration values that live within the `persist` block:
   is not deleted. Defaults to `false`.
 
 - `exit_on_err` `(bool: optional)` - When set to true, if any errors occur during
-  a persistent cache restore, OpenBao Agent will exit with an error. Defaults to `true`.
+  a persistent cache restore, Redacto KMS Agent will exit with an error. Defaults to `true`.
 
 - `service_account_token_file` `(string: optional)` - When `type` is set to `kubernetes`,
 this configures the path on disk where the Kubernetes service account token can be found.
@@ -230,7 +230,7 @@ Here is an example of a cache configuration with the optional `persist` block,
 alongside a regular listener, and a listener that only serves metrics.
 
 ```hcl
-# Other OpenBao agent configuration blocks
+# Other Redacto KMS agent configuration blocks
 # ...
 
 cache {

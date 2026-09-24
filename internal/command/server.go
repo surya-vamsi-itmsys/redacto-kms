@@ -136,26 +136,26 @@ type ServerCommand struct {
 }
 
 func (c *ServerCommand) Synopsis() string {
-	return "Start an OpenBao server"
+	return "Start a Redacto KMS server"
 }
 
 func (c *ServerCommand) Help() string {
 	helpText := `
-Usage: bao server [options]
+Usage: redacto-kms server [options]
 
-  This command starts an OpenBao server that responds to API requests. By default,
-  OpenBao will start in a "sealed" state. The OpenBao cluster must be initialized
-  before use, usually by the "bao operator init" command. Each OpenBao server must
-  also be unsealed using the "bao operator unseal" command or the API before the
+  This command starts a Redacto KMS server that responds to API requests. By default,
+  Redacto KMS will start in a "sealed" state. The Redacto KMS cluster must be initialized
+  before use, usually by the "redacto-kms operator init" command. Each Redacto KMS server must
+  also be unsealed using the "redacto-kms operator unseal" command or the API before the
   server can respond to requests.
 
   Start a server with a configuration file:
 
-      $ bao server -config=/etc/openbao/config.hcl
+      $ redacto-kms server -config=/etc/redacto-kms/config.hcl
 
   Run in "dev" mode:
 
-      $ bao server -dev -dev-root-token-id="root"
+      $ redacto-kms server -dev -dev-root-token-id="root"
 
   For a full list of examples, please see the documentation.
 
@@ -173,7 +173,7 @@ func (c *ServerCommand) Flags() *FlagSets {
 
 	f.StringSliceVar(&StringSliceVar{
 		Name:   "config",
-		EnvVar: "BAO_CONFIG_PATH",
+		EnvVar: "REDACTO_KMS_CONFIG_PATH",
 		Target: &c.flagConfigs,
 		Completion: complete.PredictOr(
 			complete.PredictFiles("*.hcl"),
@@ -190,13 +190,13 @@ func (c *ServerCommand) Flags() *FlagSets {
 		Name:    "exit-on-core-shutdown",
 		Target:  &c.flagExitOnCoreShutdown,
 		Default: false,
-		Usage:   "Exit the OpenBao server if the OpenBao core is shutdown.",
+		Usage:   "Exit the Redacto KMS server if the Redacto KMS core is shutdown.",
 	})
 
 	f.BoolVar(&BoolVar{
 		Name:   "recovery",
 		Target: &c.flagRecovery,
-		Usage: "Enable recovery mode. In this mode, OpenBao is used to perform recovery actions." +
+		Usage: "Enable recovery mode. In this mode, Redacto KMS is used to perform recovery actions." +
 			"Using a recovery operation token, \"sys/raw\" API can be used to manipulate the storage.",
 	})
 
@@ -205,7 +205,7 @@ func (c *ServerCommand) Flags() *FlagSets {
 	f.BoolVar(&BoolVar{
 		Name:   "dev",
 		Target: &c.flagDev,
-		Usage: "Enable development mode. In this mode, OpenBao runs in-memory and " +
+		Usage: "Enable development mode. In this mode, Redacto KMS runs in-memory and " +
 			"starts unsealed. As the name implies, do not run \"dev\" mode in " +
 			"production.",
 	})
@@ -213,7 +213,7 @@ func (c *ServerCommand) Flags() *FlagSets {
 	f.BoolVar(&BoolVar{
 		Name:   "dev-tls",
 		Target: &c.flagDevTLS,
-		Usage: "Enable TLS development mode. In this mode, OpenBao runs in-memory and " +
+		Usage: "Enable TLS development mode. In this mode, Redacto KMS runs in-memory and " +
 			"starts unsealed, with a generated TLS CA, certificate and key. " +
 			"As the name implies, do not run \"dev-tls\" mode in " +
 			"production.",
@@ -231,7 +231,7 @@ func (c *ServerCommand) Flags() *FlagSets {
 		Name:    "dev-root-token-id",
 		Target:  &c.flagDevRootTokenID,
 		Default: "",
-		EnvVar:  "BAO_DEV_ROOT_TOKEN_ID",
+		EnvVar:  "REDACTO_KMS_DEV_ROOT_TOKEN_ID",
 		Usage: "Initial root token. This only applies when running in \"dev\" " +
 			"mode.",
 	})
@@ -240,7 +240,7 @@ func (c *ServerCommand) Flags() *FlagSets {
 		Name:    "dev-listen-address",
 		Target:  &c.flagDevListenAddr,
 		Default: "127.0.0.1:8200",
-		EnvVar:  "BAO_DEV_LISTEN_ADDRESS",
+		EnvVar:  "REDACTO_KMS_DEV_LISTEN_ADDRESS",
 		Usage:   "Address to bind to in \"dev\" mode.",
 	})
 	f.BoolVar(&BoolVar{
@@ -400,7 +400,7 @@ func (c *ServerCommand) runRecoveryMode() int {
 	namedGRPCLogFaker := c.logger.Named("grpclogfaker")
 	grpclog.SetLoggerV2(&grpclogFaker{
 		logger: namedGRPCLogFaker,
-		log:    api.ReadBaoVariable("BAO_GRPC_LOGGING") != "",
+		log:    api.ReadBaoVariable("REDACTO_KMS_GRPC_LOGGING") != "",
 	})
 
 	if config.Storage == nil {
@@ -432,7 +432,7 @@ func (c *ServerCommand) runRecoveryMode() int {
 		return 1
 	}
 	if config.Storage.Type == storageTypeRaft || (config.HAStorage != nil && config.HAStorage.Type == storageTypeRaft) {
-		if envCA := api.ReadBaoVariable("BAO_CLUSTER_ADDR"); envCA != "" {
+		if envCA := api.ReadBaoVariable("REDACTO_KMS_CLUSTER_ADDR"); envCA != "" {
 			config.ClusterAddr = envCA
 		}
 
@@ -464,8 +464,8 @@ func (c *ServerCommand) runRecoveryMode() int {
 	}
 
 	configSeal := config.Seals[0]
-	if !configSeal.Disabled && api.ReadBaoVariable("BAO_SEAL_TYPE") != "" {
-		configSeal.Type = api.ReadBaoVariable("BAO_SEAL_TYPE")
+	if !configSeal.Disabled && api.ReadBaoVariable("REDACTO_KMS_SEAL_TYPE") != "" {
+		configSeal.Type = api.ReadBaoVariable("REDACTO_KMS_SEAL_TYPE")
 	}
 
 	var seal vault.Seal
@@ -591,7 +591,7 @@ func (c *ServerCommand) runRecoveryMode() int {
 	padding := 24
 
 	sort.Strings(infoKeys)
-	c.UI.Output("\n==> OpenBao server configuration:\n")
+	c.UI.Output("\n==> Redacto KMS server configuration:\n")
 
 	titleCaser := cases.Title(language.English, cases.NoLower)
 
@@ -648,13 +648,13 @@ func (c *ServerCommand) runRecoveryMode() int {
 	}
 
 	if !c.logFlags.flagCombineLogs {
-		c.UI.Output("==> OpenBao server started!")
+		c.UI.Output("==> Redacto KMS server started!")
 	}
 
 	for {
 		select {
 		case <-c.ShutdownCh:
-			c.UI.Output("==> OpenBao shutdown triggered")
+			c.UI.Output("==> Redacto KMS shutdown triggered")
 
 			c.cleanupGuard.Do(listenerCloseFunc)
 
@@ -720,7 +720,7 @@ func (c *ServerCommand) setupStorage(config *server.Config) (physical.Backend, e
 	// Do any custom configuration needed per backend
 	switch config.Storage.Type {
 	case storageTypeRaft:
-		if envCA := api.ReadBaoVariable("BAO_CLUSTER_ADDR"); envCA != "" {
+		if envCA := api.ReadBaoVariable("REDACTO_KMS_CLUSTER_ADDR"); envCA != "" {
 			config.ClusterAddr = envCA
 		}
 		if len(config.ClusterAddr) == 0 {
@@ -1019,7 +1019,7 @@ func (c *ServerCommand) Run(args []string) int {
 	c.allLoggers = append(c.allLoggers, namedGRPCLogFaker)
 	grpclog.SetLoggerV2(&grpclogFaker{
 		logger: namedGRPCLogFaker,
-		log:    api.ReadBaoVariable("BAO_GRPC_LOGGING") != "",
+		log:    api.ReadBaoVariable("REDACTO_KMS_GRPC_LOGGING") != "",
 	})
 
 	if memProfilerEnabled {
@@ -1047,7 +1047,7 @@ func (c *ServerCommand) Run(args []string) int {
 		Config:      config.Telemetry,
 		Ui:          c.UI,
 		ServiceName: "vault",
-		DisplayName: "Vault",
+		DisplayName: "Redacto KMS",
 		UserAgent:   useragent.String(),
 		ClusterName: config.ClusterName,
 	})
@@ -1131,7 +1131,7 @@ func (c *ServerCommand) Run(args []string) int {
 
 	coreConfig := createCoreConfig(c, config, backend, configSR, barrierSeal, unwrapSeal, kms, metricsHelper, metricSink)
 	if c.flagDevThreeNode {
-		return c.enableThreeNodeDevCluster(&coreConfig, info, infoKeys, api.ReadBaoVariable("BAO_DEV_TEMP_DIR"))
+		return c.enableThreeNodeDevCluster(&coreConfig, info, infoKeys, api.ReadBaoVariable("REDACTO_KMS_DEV_TEMP_DIR"))
 	}
 
 	if allowPendingRemoval := api.ReadBaoVariable(consts.EnvVaultAllowPendingRemovalMounts); allowPendingRemoval != "" {
@@ -1166,11 +1166,11 @@ func (c *ServerCommand) Run(args []string) int {
 	}
 
 	// Override the UI enabling config by the environment variable
-	if enableUI := api.ReadBaoVariable("BAO_UI"); enableUI != "" {
+	if enableUI := api.ReadBaoVariable("REDACTO_KMS_UI"); enableUI != "" {
 		var err error
 		coreConfig.EnableUI, err = strconv.ParseBool(enableUI)
 		if err != nil {
-			c.UI.Output("Error parsing the environment variable BAO_UI")
+			c.UI.Output("Error parsing the environment variable REDACTO_KMS_UI")
 			return 1
 		}
 	}
@@ -1288,7 +1288,7 @@ func (c *ServerCommand) Run(args []string) int {
 	info["go version"] = runtime.Version()
 
 	sort.Strings(infoKeys)
-	c.UI.Output("\n==> OpenBao server configuration:\n")
+	c.UI.Output("\n==> Redacto KMS server configuration:\n")
 
 	titleCaser := cases.Title(language.English, cases.NoLower)
 
@@ -1388,7 +1388,7 @@ func (c *ServerCommand) Run(args []string) int {
 			return 1
 		}
 		if init {
-			c.UI.Error("Vault is initialized but no Seal key could be loaded")
+			c.UI.Error("Redacto KMS is initialized but no Seal key could be loaded")
 			return 1
 		}
 	}
@@ -1410,7 +1410,7 @@ func (c *ServerCommand) Run(args []string) int {
 
 	// Output the header that the server has started
 	if !c.logFlags.flagCombineLogs {
-		c.UI.Output("==> OpenBao server started!")
+		c.UI.Output("==> Redacto KMS server started!")
 	}
 
 	if c.flagDev {
@@ -1459,18 +1459,18 @@ func (c *ServerCommand) Run(args []string) int {
 	for !shutdownTriggered {
 		select {
 		case <-sealShutdownCh:
-			c.UI.Output("==> OpenBao core was shut down")
+			c.UI.Output("==> Redacto KMS core was shut down")
 			retCode = 1
 			shutdownTriggered = true
 		case <-coreShutdownDoneCh:
-			c.UI.Output("==> OpenBao core was shut down")
+			c.UI.Output("==> Redacto KMS core was shut down")
 			retCode = 1
 			shutdownTriggered = true
 		case <-c.ShutdownCh:
-			c.UI.Output("==> OpenBao shutdown triggered")
+			c.UI.Output("==> Redacto KMS shutdown triggered")
 			shutdownTriggered = true
 		case <-c.SighupCh:
-			c.UI.Output("==> OpenBao reload triggered")
+			c.UI.Output("==> Redacto KMS reload triggered")
 
 			// Notify systemd that the server is reloading config
 			c.notifySystemd(systemd.Reloading)
@@ -1556,11 +1556,11 @@ func (c *ServerCommand) Run(args []string) int {
 			logWriter := c.logger.StandardWriter(&hclog.StandardLoggerOptions{})
 			_ = pprof.Lookup("goroutine").WriteTo(logWriter, 2)
 
-			if api.ReadBaoVariable("BAO_STACKTRACE_WRITE_TO_FILE") != "" {
+			if api.ReadBaoVariable("REDACTO_KMS_STACKTRACE_WRITE_TO_FILE") != "" {
 				c.logger.Info("Writing stacktrace to file")
 
 				dir := ""
-				path := api.ReadBaoVariable("BAO_STACKTRACE_FILE_PATH")
+				path := api.ReadBaoVariable("REDACTO_KMS_STACKTRACE_FILE_PATH")
 				if path != "" {
 					if _, err := os.Stat(path); err != nil {
 						c.logger.Error("Checking stacktrace path failed", "error", err)
@@ -1596,9 +1596,9 @@ func (c *ServerCommand) Run(args []string) int {
 			// We can only get pprof outputs via the API but sometimes OpenBao can get
 			// into a state where it cannot process requests so we can get pprof outputs
 			// via SIGUSR2.
-			if api.ReadBaoVariable("BAO_PPROF_WRITE_TO_FILE") != "" {
+			if api.ReadBaoVariable("REDACTO_KMS_PPROF_WRITE_TO_FILE") != "" {
 				dir := ""
-				path := api.ReadBaoVariable("BAO_PPROF_FILE_PATH")
+				path := api.ReadBaoVariable("REDACTO_KMS_PPROF_FILE_PATH")
 				if path != "" {
 					if _, err := os.Stat(path); err != nil {
 						c.logger.Error("Checking pprof path failed", "error", err)
@@ -1939,7 +1939,7 @@ func (c *ServerCommand) enableDev(core *vault.Core, coreConfig *vault.CoreConfig
 			return nil, err
 		}
 		if !unsealed {
-			return nil, errors.New("failed to unseal Vault for dev mode")
+			return nil, errors.New("failed to unseal Redacto KMS for dev mode")
 		}
 	}
 
@@ -2088,7 +2088,7 @@ func (c *ServerCommand) enableThreeNodeDevCluster(base *vault.CoreConfig, info m
 	padding := 24
 
 	sort.Strings(infoKeys)
-	c.UI.Output("\n==> OpenBao server configuration:\n")
+	c.UI.Output("\n==> Redacto KMS server configuration:\n")
 
 	titleCaser := cases.Title(language.English, cases.NoLower)
 
@@ -2172,7 +2172,7 @@ func (c *ServerCommand) enableThreeNodeDevCluster(base *vault.CoreConfig, info m
 	c.UI.Output(fmt.Sprintf(
 		"==> Three node dev mode is enabled\n\n" +
 			"The unseal key and root token are reproduced below in case you\n" +
-			"want to seal/unseal the Vault or play with authentication.\n",
+			"want to seal/unseal the Redacto KMS or play with authentication.\n",
 	))
 
 	for i, key := range testCluster.BarrierKeys {
@@ -2188,9 +2188,9 @@ func (c *ServerCommand) enableThreeNodeDevCluster(base *vault.CoreConfig, info m
 
 	c.UI.Output(fmt.Sprintf(
 		"\nUseful env vars:\n"+
-			"BAO_TOKEN=%s\n"+
-			"BAO_ADDR=%s\n"+
-			"BAO_CACERT=%s/ca_cert.pem\n",
+			"REDACTO_KMS_TOKEN=%s\n"+
+			"REDACTO_KMS_ADDR=%s\n"+
+			"REDACTO_KMS_CACERT=%s/ca_cert.pem\n",
 		testCluster.RootToken,
 		testCluster.Cores[0].Client.Address(),
 		testCluster.TempDir,
@@ -2220,7 +2220,7 @@ func (c *ServerCommand) enableThreeNodeDevCluster(base *vault.CoreConfig, info m
 	}
 
 	// Output the header that the server has started
-	c.UI.Output("==> OpenBao server started!")
+	c.UI.Output("==> Redacto KMS server started!")
 
 	// Inform any tests that the server is ready
 	select {
@@ -2234,7 +2234,7 @@ func (c *ServerCommand) enableThreeNodeDevCluster(base *vault.CoreConfig, info m
 	for !shutdownTriggered {
 		select {
 		case <-c.ShutdownCh:
-			c.UI.Output("==> OpenBao shutdown triggered")
+			c.UI.Output("==> Redacto KMS shutdown triggered")
 
 			// Stop the listeners so that we don't process further client requests.
 			c.cleanupGuard.Do(testCluster.Cleanup)
@@ -2251,7 +2251,7 @@ func (c *ServerCommand) enableThreeNodeDevCluster(base *vault.CoreConfig, info m
 			shutdownTriggered = true
 
 		case <-c.SighupCh:
-			c.UI.Output("==> OpenBao reload triggered")
+			c.UI.Output("==> Redacto KMS reload triggered")
 			for _, core := range testCluster.Cores {
 				if err := c.Reload(core.ReloadFuncsLock, core.ReloadFuncs, nil, core.Core); err != nil {
 					c.UI.Error(fmt.Sprintf("Error(s) were encountered during reload: %s", err))
@@ -2454,7 +2454,7 @@ func (c *ServerCommand) storageMigrationActive(backend physical.Backend) bool {
 			if migrationStatus != nil {
 				startTime := migrationStatus.Start.Format(time.RFC3339)
 				c.UI.Error(wrapAtLength(fmt.Sprintf("ERROR! Storage migration in progress (started: %s). "+
-					"Server startup is prevented until the migration completes. Use 'bao operator migrate -reset' "+
+					"Server startup is prevented until the migration completes. Use 'redacto-kms operator migrate -reset' "+
 					"to force clear the migration lock.", startTime)))
 				return true
 			}
@@ -2528,8 +2528,8 @@ func setSeal(c *ServerCommand, config *server.Config, kms *kmsplugin.Catalog, in
 	}
 	createdSeals := make([]vault.Seal, len(config.Seals))
 	for _, configSeal := range config.Seals {
-		if !configSeal.Disabled && api.ReadBaoVariable("BAO_SEAL_TYPE") != "" {
-			configSeal.Type = api.ReadBaoVariable("BAO_SEAL_TYPE")
+		if !configSeal.Disabled && api.ReadBaoVariable("REDACTO_KMS_SEAL_TYPE") != "" {
+			configSeal.Type = api.ReadBaoVariable("REDACTO_KMS_SEAL_TYPE")
 		}
 
 		var seal vault.Seal
@@ -2639,17 +2639,17 @@ func initHaBackend(c *ServerCommand, config *server.Config, coreConfig *vault.Co
 
 func determineRedirectAddr(c *ServerCommand, coreConfig *vault.CoreConfig, config *server.Config) error {
 	var retErr error
-	if envRA := api.ReadBaoVariable("BAO_API_ADDR"); envRA != "" {
+	if envRA := api.ReadBaoVariable("REDACTO_KMS_API_ADDR"); envRA != "" {
 		coreConfig.RedirectAddr = envRA
-	} else if envRA := api.ReadBaoVariable("BAO_REDIRECT_ADDR"); envRA != "" {
+	} else if envRA := api.ReadBaoVariable("REDACTO_KMS_REDIRECT_ADDR"); envRA != "" {
 		coreConfig.RedirectAddr = envRA
-	} else if envAA := api.ReadBaoVariable("BAO_ADVERTISE_ADDR"); envAA != "" {
+	} else if envAA := api.ReadBaoVariable("REDACTO_KMS_ADVERTISE_ADDR"); envAA != "" {
 		coreConfig.RedirectAddr = envAA
 	}
 
 	// Attempt to detect the redirect address, if possible
 	if coreConfig.RedirectAddr == "" {
-		c.logger.Warn("no `api_addr` value specified in config or in BAO_API_ADDR; falling back to detection if possible, but this value should be manually set")
+		c.logger.Warn("no `api_addr` value specified in config or in REDACTO_KMS_API_ADDR; falling back to detection if possible, but this value should be manually set")
 	}
 
 	var ok bool
@@ -2684,7 +2684,7 @@ func determineRedirectAddr(c *ServerCommand, coreConfig *vault.CoreConfig, confi
 func findClusterAddress(c *ServerCommand, coreConfig *vault.CoreConfig, config *server.Config, disableClustering bool) error {
 	if disableClustering {
 		coreConfig.ClusterAddr = ""
-	} else if envCA := api.ReadBaoVariable("BAO_CLUSTER_ADDR"); envCA != "" {
+	} else if envCA := api.ReadBaoVariable("REDACTO_KMS_CLUSTER_ADDR"); envCA != "" {
 		coreConfig.ClusterAddr = envCA
 	} else {
 		var addrToUse string
@@ -2912,10 +2912,10 @@ func initDevCore(c *ServerCommand, coreConfig *vault.CoreConfig, config *server.
 				// Print the big dev mode warning!
 				c.UI.Warn("")
 				c.UI.Warn(wrapAtLength(
-					"WARNING! dev mode is enabled! In this mode, OpenBao runs entirely " +
+					"WARNING! dev mode is enabled! In this mode, Redacto KMS runs entirely " +
 						"in-memory and starts unsealed with a single unseal key. The root " +
 						"token is already authenticated to the CLI, so you can immediately " +
-						"begin using OpenBao.",
+						"begin using Redacto KMS.",
 				))
 				c.UI.Warn("")
 				c.UI.Warn("You may need to set the following environment variables:")
@@ -2929,21 +2929,21 @@ func initDevCore(c *ServerCommand, coreConfig *vault.CoreConfig, config *server.
 				endpointURL := protocol + config.Listeners[0].Address
 				if runtime.GOOS == "windows" {
 					c.UI.Warn("PowerShell:")
-					c.UI.Warn(fmt.Sprintf("    $env:BAO_ADDR=\"%s\"", endpointURL))
+					c.UI.Warn(fmt.Sprintf("    $env:REDACTO_KMS_ADDR=\"%s\"", endpointURL))
 					c.UI.Warn("cmd.exe:")
-					c.UI.Warn(fmt.Sprintf("    set BAO_ADDR=%s", endpointURL))
+					c.UI.Warn(fmt.Sprintf("    set REDACTO_KMS_ADDR=%s", endpointURL))
 				} else {
-					c.UI.Warn(fmt.Sprintf("    $ export BAO_ADDR='%s'", endpointURL))
+					c.UI.Warn(fmt.Sprintf("    $ export REDACTO_KMS_ADDR='%s'", endpointURL))
 				}
 
 				if c.flagDevTLS {
 					if runtime.GOOS == "windows" {
 						c.UI.Warn("PowerShell:")
-						c.UI.Warn(fmt.Sprintf("    $env:BAO_CACERT=\"%s/vault-ca.pem\"", certDir))
+						c.UI.Warn(fmt.Sprintf("    $env:REDACTO_KMS_CACERT=\"%s/vault-ca.pem\"", certDir))
 						c.UI.Warn("cmd.exe:")
-						c.UI.Warn(fmt.Sprintf("    set BAO_CACERT=%s/vault-ca.pem", certDir))
+						c.UI.Warn(fmt.Sprintf("    set REDACTO_KMS_CACERT=%s/vault-ca.pem", certDir))
 					} else {
-						c.UI.Warn(fmt.Sprintf("    $ export BAO_CACERT='%s/vault-ca.pem'", certDir))
+						c.UI.Warn(fmt.Sprintf("    $ export REDACTO_KMS_CACERT='%s/vault-ca.pem'", certDir))
 					}
 					c.UI.Warn("")
 				}
@@ -2952,7 +2952,7 @@ func initDevCore(c *ServerCommand, coreConfig *vault.CoreConfig, config *server.
 					c.UI.Warn("")
 					c.UI.Warn(wrapAtLength(
 						"The unseal key and root token are displayed below in case you want " +
-							"to seal/unseal the Vault or re-authenticate.",
+							"to seal/unseal the Redacto KMS or re-authenticate.",
 					))
 					c.UI.Warn("")
 					c.UI.Warn(fmt.Sprintf("Unseal Key: %s", base64.StdEncoding.EncodeToString(init.SecretShares[0])))
@@ -2962,7 +2962,7 @@ func initDevCore(c *ServerCommand, coreConfig *vault.CoreConfig, config *server.
 					c.UI.Warn("")
 					c.UI.Warn(wrapAtLength(
 						"The recovery key and root token are displayed below in case you want " +
-							"to seal/unseal the Vault or re-authenticate.",
+							"to seal/unseal the Redacto KMS or re-authenticate.",
 					))
 					c.UI.Warn("")
 					c.UI.Warn(fmt.Sprintf("Recovery Key: %s", base64.StdEncoding.EncodeToString(init.RecoveryShares[0])))

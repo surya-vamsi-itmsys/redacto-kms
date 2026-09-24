@@ -36,18 +36,18 @@ type AgentGenerateConfigCommand struct {
 }
 
 func (c *AgentGenerateConfigCommand) Synopsis() string {
-	return "Generate a OpenBao Agent configuration file."
+	return "Generate a Redacto KMS Agent configuration file."
 }
 
 func (c *AgentGenerateConfigCommand) Help() string {
 	helpText := `
-Usage: bao agent generate-config [options] [path/to/config.hcl]
+Usage: redacto-kms agent generate-config [options] [path/to/config.hcl]
 
-  Generates a simple OpenBao Agent configuration file from the given parameters.
+  Generates a simple Redacto KMS Agent configuration file from the given parameters.
 
   Currently, the only supported configuration type is 'env-template', which
   helps you generate a configuration file with environment variable templates
-  for running OpenBao Agent in process supervisor mode.
+  for running Redacto KMS Agent in process supervisor mode.
 
   For every specified secret -path, the command will attempt to generate one or
   multiple 'env_template' entries based on the JSON key(s) stored in the
@@ -57,7 +57,7 @@ Usage: bao agent generate-config [options] [path/to/config.hcl]
   only kv-v1 and kv-v2 paths are supported.
 
   The command specified in the '-exec' option will be used to generate an
-  'exec' entry, which will tell OpenBao Agent which child process to run.
+  'exec' entry, which will tell Redacto KMS Agent which child process to run.
 
   In addition to env_template entries, the command generates an 'auto_auth'
   section with 'token_file' authentication method. While this method is very
@@ -70,13 +70,13 @@ Usage: bao agent generate-config [options] [path/to/config.hcl]
 
   Generate a simple environment variable template configuration:
 
-      $ bao agent generate-config -type="env-template" \
+      $ redacto-kms agent generate-config -type="env-template" \
                     -exec="./my-app arg1 arg2" \
                     -path="secret/foo"
 
   Generate an environment variable template configuration for multiple secrets:
 
-      $ bao agent generate-config -type="env-template" \
+      $ redacto-kms agent generate-config -type="env-template" \
                     -exec="./my-app arg1 arg2" \
                     -path="secret/foo" \
                     -path="secret/bar" \
@@ -206,7 +206,7 @@ func generateConfiguration(ctx context.Context, client *api.Client, flagExec str
 	tokenPath := api.ReadBaoVariable(api.EnvTokenPath)
 	if tokenPath == "" {
 		var err error
-		tokenPath, err = homedir.Expand("~/.vault-token")
+		tokenPath, err = homedir.Expand("~/.redacto-kms-token")
 		if err != nil {
 			return nil, fmt.Errorf("could not expand home directory: %w", err)
 		}

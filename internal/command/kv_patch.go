@@ -39,35 +39,35 @@ func (c *KVPatchCommand) Synopsis() string {
 
 func (c *KVPatchCommand) Help() string {
 	helpText := `
-Usage: bao kv patch [options] KEY [DATA]
+Usage: redacto-kms kv patch [options] KEY [DATA]
 
   *NOTE*: This is only supported for KV v2 engine mounts.
 
   Writes the data to the corresponding path in the key-value store. The data can be of
   any type.
 
-      $ bao kv patch -mount=secret foo bar=baz
+      $ redacto-kms kv patch -mount=secret foo bar=baz
 
   The deprecated path-like syntax can also be used, but this should be avoided, 
   as the fact that it is not actually the full API path to 
   the secret (secret/data/foo) can cause confusion: 
   
-      $ bao kv patch secret/foo bar=baz
+      $ redacto-kms kv patch secret/foo bar=baz
 
   The data can also be consumed from a file on disk by prefixing with the "@"
   symbol. For example:
 
-      $ bao kv patch -mount=secret foo @data.json
+      $ redacto-kms kv patch -mount=secret foo @data.json
 
   Or it can be read from stdin using the "-" symbol:
 
-      $ echo "abcd1234" | bao kv patch -mount=secret foo bar=-
+      $ echo "abcd1234" | redacto-kms kv patch -mount=secret foo bar=-
 
   To perform a Check-And-Set operation, specify the -cas flag with the
   appropriate version number corresponding to the key you want to perform
   the CAS operation on:
 
-      $ bao kv patch -mount=secret -cas=1 foo bar=baz
+      $ redacto-kms kv patch -mount=secret -cas=1 foo bar=baz
 
   By default, this operation will attempt an HTTP PATCH operation. If your
   policy does not allow that, it will fall back to a read/local update/write approach.
@@ -75,16 +75,16 @@ Usage: bao kv patch [options] KEY [DATA]
   with the -method flag. When -method=patch is specified, only an HTTP PATCH
   operation will be tried. If it fails, the entire command will fail.
 
-      $ bao kv patch -mount=secret -method=patch foo bar=baz
+      $ redacto-kms kv patch -mount=secret -method=patch foo bar=baz
 
   When -method=rw is specified, only a read/local update/write approach will be tried.
   This was the default behavior previous to Vault 1.9.
 
-      $ bao kv patch -mount=secret -method=rw foo bar=baz
+      $ redacto-kms kv patch -mount=secret -method=rw foo bar=baz
 
   To remove data from the corresponding path in the key-value store, kv patch can be used.
 
-      $ bao kv patch -mount=secret -remove-data=bar foo
+      $ redacto-kms kv patch -mount=secret -remove-data=bar foo
 
   Additional flags and more advanced use cases are detailed below.
 

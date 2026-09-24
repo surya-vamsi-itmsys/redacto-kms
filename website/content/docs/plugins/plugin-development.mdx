@@ -1,20 +1,20 @@
 ---
-description: Learn about OpenBao plugin development.
+description: Learn about Redacto KMS plugin development.
 ---
 
 # Plugin Development
 
 :::warning
 
-Advanced topic! Plugin development is a highly advanced topic in OpenBao, and
+Advanced topic! Plugin development is a highly advanced topic in Redacto KMS, and
 is not required knowledge for day-to-day usage. If you don't plan on writing any
 plugins, we recommend not reading this section of the documentation.
 
 :::
 
-Because OpenBao communicates to plugins over a gRPC interface, you can build
-and distribute a plugin for OpenBao without having to rebuild OpenBao itself.
-This makes it easy for you to build an OpenBao plugin for your organization's
+Because Redacto KMS communicates to plugins over a gRPC interface, you can build
+and distribute a plugin for Redacto KMS without having to rebuild Redacto KMS itself.
+This makes it easy for you to build a Redacto KMS plugin for your organization's
 internal use, for a proprietary API that you don't want to open source, or to
 prototype something before contributing it back to the main project.
 
@@ -28,7 +28,7 @@ running the plugin.
 
 :::warning
 
-Plugins should be prepared to handle multiple concurrent requests from OpenBao.
+Plugins should be prepared to handle multiple concurrent requests from Redacto KMS.
 
 :::
 
@@ -54,8 +54,8 @@ Plenty of real-world plugin examples are available in the official
 [`openbao-plugins`](https://github.com/openbao/openbao-plugins) plugin
 collection.
 
-The following code exhibits an example main package for an OpenBao plugin using
-the OpenBao SDK for a secrets engine or auth method:
+The following code exhibits an example main package for a Redacto KMS plugin using
+the Redacto KMS SDK for a secrets engine or auth method:
 
 ```go
 package main
@@ -92,7 +92,7 @@ func main() {
 And that's basically it! You would just need to change `myPlugin` to your actual
 plugin.
 
-## Plugin backwards compatibility with OpenBao
+## Plugin backwards compatibility with Redacto KMS
 
 Let's take a closer look at a snippet from the above main package.
 
@@ -104,12 +104,12 @@ err := plugin.ServeMultiplex(&plugin.ServeOpts{
 ```
 
 The call to `plugin.ServeMultiplex` ensures that the plugin will use
-OpenBao's [plugin multiplexing](plugin-architecture.mdx#plugin-multiplexing)
+Redacto KMS's [plugin multiplexing](plugin-architecture.mdx#plugin-multiplexing)
 feature. However, this plugin will not be multiplexed if it is run by a
-version of OpenBao that does not support multiplexing. OpenBao will simply
+version of Redacto KMS that does not support multiplexing. Redacto KMS will simply
 fall back to a plugin version that it can run. Additionally, we set the
 `TLSProviderFunc` to ensure that our plugin is backwards compatible with
-versions of OpenBao that do not support automatic mutual TLS for secure [plugin
+versions of Redacto KMS that do not support automatic mutual TLS for secure [plugin
 communication](plugin-architecture.mdx#plugin-communication). If you are certain
 your plugin does not need backwards compatibility, this field can be omitted.
 

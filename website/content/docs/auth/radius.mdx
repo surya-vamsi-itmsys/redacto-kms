@@ -1,7 +1,7 @@
 ---
 sidebar_label: RADIUS
 description: |-
-  The "radius" auth method allows users to authenticate with OpenBao using an
+  The "radius" auth method allows users to authenticate with Redacto KMS using an
   existing RADIUS server.
 ---
 
@@ -16,7 +16,7 @@ section](../plugins/index.mdx).
 
 :::
 
-The `radius` auth method allows users to authenticate with OpenBao using an
+The `radius` auth method allows users to authenticate with Redacto KMS using an
 existing RADIUS server that accepts the PAP authentication scheme.
 
 ## Authentication
@@ -27,7 +27,7 @@ path, specify `-path=/my-path` in the CLI.
 ### Via the CLI
 
 ```shell-session
-$ bao login -method=radius username=sethvargo
+$ redacto-kms login -method=radius username=sethvargo
 ```
 
 ### Via the API
@@ -63,13 +63,13 @@ The response will contain a token at `auth.client_token`:
 1. Enable the radius auth method:
 
    ```text
-   $ bao auth enable radius
+   $ redacto-kms auth enable radius
    ```
 
 1. Configure connection details for your RADIUS server.
 
    ```text
-   $ bao write auth/radius/users/mitchellh policies=admins
+   $ redacto-kms write auth/radius/users/mitchellh policies=admins
    ```
 
    For the complete list of configuration options, please see the API
@@ -78,7 +78,7 @@ The response will contain a token at `auth.client_token`:
    The above creates a new mapping for user "mitchellh" that will be associated
    with the "admins" policy.
 
-   Alternatively, OpenBao can assign a configurable set of policies to any user
+   Alternatively, Redacto KMS can assign a configurable set of policies to any user
    that successfully authenticates with the RADIUS server but has no explicit
    mapping in the `users/` path. This is done through the
    `unregistered_user_policies` configuration parameter.

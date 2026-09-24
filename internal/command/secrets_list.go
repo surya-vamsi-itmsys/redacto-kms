@@ -31,20 +31,20 @@ func (c *SecretsListCommand) Synopsis() string {
 
 func (c *SecretsListCommand) Help() string {
 	helpText := `
-Usage: bao secrets list [options]
+Usage: redacto-kms secrets list [options]
 
-  Lists the enabled secret engines on the OpenBao server. This command also
+  Lists the enabled secret engines on the Redacto KMS server. This command also
   outputs information about the enabled path including configured TTLs and
   human-friendly descriptions. A TTL of "system" indicates that the system
   default is in use.
 
   List all enabled secrets engines:
 
-      $ bao secrets list
+      $ redacto-kms secrets list
 
   List all enabled secrets engines with detailed output:
 
-      $ bao secrets list -detailed
+      $ redacto-kms secrets list -detailed
 
 ` + c.Flags().Help()
 

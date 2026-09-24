@@ -31,7 +31,7 @@ func (c *TokenRenewCommand) Synopsis() string {
 
 func (c *TokenRenewCommand) Help() string {
 	helpText := `
-Usage: bao token renew [options] [TOKEN]
+Usage: redacto-kms token renew [options] [TOKEN]
 
   Renews a token's lease, extending the amount of time it can be used. If a
   TOKEN is not provided, the locally authenticated token is used. A token
@@ -41,16 +41,16 @@ Usage: bao token renew [options] [TOKEN]
 
   Renew a token (this uses the /auth/token/renew endpoint and permission):
 
-      $ bao token renew 96ddf4bc-d217-f3ba-f9bd-017055595017
+      $ redacto-kms token renew 96ddf4bc-d217-f3ba-f9bd-017055595017
 
   Renew the currently authenticated token (this uses the /auth/token/renew-self
   endpoint and permission):
 
-      $ bao token renew
+      $ redacto-kms token renew
 
   Renew a token requesting a specific increment value:
 
-      $ bao token renew -increment=30m 96ddf4bc-d217-f3ba-f9bd-017055595017
+      $ redacto-kms token renew -increment=30m 96ddf4bc-d217-f3ba-f9bd-017055595017
 
   For a full list of examples, please see the documentation.
 
@@ -82,7 +82,7 @@ func (c *TokenRenewCommand) Flags() *FlagSets {
 		Completion: complete.PredictAnything,
 		Usage: "Request a specific increment for renewal. This increment may " +
 			"not be honored, for instance in the case of periodic tokens. If not " +
-			"supplied, OpenBao will use the default TTL. This is specified as a " +
+			"supplied, Redacto KMS will use the default TTL. This is specified as a " +
 			"numeric string with suffix like \"30s\" or \"5m\".",
 	})
 

@@ -133,7 +133,7 @@ var (
 
 	// ErrIntrospectionNotEnabled is returned if "introspection_endpoint" is not
 	// enabled in the configuration file
-	ErrIntrospectionNotEnabled = errors.New("the Vault configuration must set \"introspection_endpoint\" to true to enable this endpoint")
+	ErrIntrospectionNotEnabled = errors.New("the Redacto KMS configuration must set \"introspection_endpoint\" to true to enable this endpoint")
 
 	// errNoMatchingMount is returned if the mount is not found
 	errNoMatchingMount = errors.New("no matching mount")
@@ -1841,7 +1841,7 @@ func (c *Core) unsealInternal(ctx context.Context, rootKey []byte) error {
 
 		if err := runPostUnseal(ctx); err != nil {
 			err = errors.Join(err, c.sealManager.sealAll())
-			c.logger.Warn("OpenBao is sealed")
+			c.logger.Warn("Redacto KMS is sealed")
 			return err
 		}
 
@@ -2414,10 +2414,10 @@ func (c *Core) postUnseal(ctx context.Context, ctxCancelFunc context.CancelFunc,
 // runPostUnsealFuncs uses a small temporary worker pool to run postUnsealFuncs in parallel.
 func (c *Core) runPostUnsealFuncs(postUnsealFuncs []func()) {
 	postUnsealFuncConcurrency := runtime.NumCPU() * 2
-	if v := api.ReadBaoVariable("BAO_POSTUNSEAL_FUNC_CONCURRENCY"); v != "" {
+	if v := api.ReadBaoVariable("REDACTO_KMS_POSTUNSEAL_FUNC_CONCURRENCY"); v != "" {
 		pv, err := strconv.Atoi(v)
 		if err != nil || pv < 1 {
-			c.logger.Warn("invalid value for BAO_POSTUNSEAL_FUNC_CURRENCY, must be a positive integer", "error", err, "value", pv)
+			c.logger.Warn("invalid value for REDACTO_KMS_POSTUNSEAL_FUNC_CURRENCY, must be a positive integer", "error", err, "value", pv)
 		} else {
 			postUnsealFuncConcurrency = pv
 		}
@@ -2695,7 +2695,7 @@ func (c *Core) adjustForSealMigration(unwrapSeal Seal) error {
 		// and after migration.
 		c.adjustSealConfigDuringMigration(existBarrierSealConfig, existRecoverySealConfig)
 	}
-	c.logger.Warn("entering seal migration mode; Vault will not automatically unseal even if using an autoseal", "from_barrier_type", c.migrationInfo.seal.BarrierType(), "to_barrier_type", c.seal.BarrierType())
+	c.logger.Warn("entering seal migration mode; Redacto KMS will not automatically unseal even if using an autoseal", "from_barrier_type", c.migrationInfo.seal.BarrierType(), "to_barrier_type", c.seal.BarrierType())
 
 	return nil
 }
@@ -3230,7 +3230,7 @@ func (c *Core) runLockedUserEntryUpdates(ctx context.Context) error {
 		var err error
 		disableUserLockout, err = strconv.ParseBool(disableUserLockoutEnv)
 		if err != nil {
-			c.Logger().Error("Error parsing the environment variable VAULT_DISABLE_USER_LOCKOUT", "error", err)
+			c.Logger().Error("Error parsing the environment variable REDACTO_KMS_DISABLE_USER_LOCKOUT", "error", err)
 		}
 	}
 	if disableUserLockout {

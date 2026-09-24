@@ -26,7 +26,7 @@ func (c *OperatorRotateCommand) Synopsis() string {
 
 func (c *OperatorRotateCommand) Help() string {
 	helpText := `
-Usage: bao operator rotate [options]
+Usage: redacto-kms operator rotate [options]
 
   Rotates the underlying encryption key which is used to secure data written
   to the storage backend. This installs a new key in the keyring. This new
@@ -34,12 +34,12 @@ Usage: bao operator rotate [options]
   decrypt older data.
 
   This is an online operation and does not cause downtime. This command is run
-  per-cluster (not per-server), since OpenBao servers in HA mode share the same
+  per-cluster (not per-server), since Redacto KMS servers in HA mode share the same
   storage backend.
 
-  Rotate OpenBao's encryption key:
+  Rotate Redacto KMS's encryption key:
 
-      $ bao operator rotate
+      $ redacto-kms operator rotate
 
   For a full list of examples, please see the documentation.
 

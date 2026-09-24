@@ -31,8 +31,8 @@ func TestParseHelp(t *testing.T) {
 			detail:  "This is an error.",
 		},
 		{
-			err:     "Errors: * OpenBao login failed. Because of reasons.",
-			summary: "OpenBao login failed.",
+			err:     "Errors: * Redacto KMS login failed. Because of reasons.",
+			summary: "Redacto KMS login failed.",
 			detail:  "Because of reasons.",
 		},
 		{

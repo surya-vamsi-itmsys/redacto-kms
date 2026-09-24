@@ -66,19 +66,19 @@ func (h *CLIHandler) Auth(c *api.Client, m map[string]string, nonInteractive boo
 
 func (h *CLIHandler) Help() string {
 	help := `
-Usage: bao login -method=userpass [CONFIG K=V...]
+Usage: redacto-kms login -method=userpass [CONFIG K=V...]
 
-  The userpass auth method allows users to authenticate using Vault's
+  The userpass auth method allows users to authenticate using Redacto KMS's
   internal user database.
 
   Authenticate as "sally":
 
-      $ bao login -method=userpass username=sally
+      $ redacto-kms login -method=userpass username=sally
       Password (will be hidden):
 
   Authenticate as "bob":
 
-      $ bao login -method=userpass username=bob password=password
+      $ redacto-kms login -method=userpass username=bob password=password
 
 Configuration:
 

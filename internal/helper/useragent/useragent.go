@@ -11,8 +11,6 @@ import (
 )
 
 var (
-	// projectURL is the project URL.
-	projectURL = "https://www.vaultproject.io/"
 
 	// rt is the runtime - variable for tests.
 	rt = runtime.Version()
@@ -23,86 +21,86 @@ var (
 	}
 )
 
-// String returns the consistent user-agent string for Vault.
+// String returns the consistent user-agent string for Redacto KMS.
 //
-// e.g. Vault/0.10.4 (+https://www.vaultproject.io/; go1.10.1)
+// e.g. Redacto KMS/0.10.4 (go1.10.1)
 func String() string {
-	return fmt.Sprintf("Vault/%s (+%s; %s)",
-		versionFunc(), projectURL, rt)
+	return fmt.Sprintf("Redacto KMS/%s (%s)",
+		versionFunc(), rt)
 }
 
-// AgentString returns the consistent user-agent string for Vault Agent.
+// AgentString returns the consistent user-agent string for Redacto KMS Agent.
 //
-// e.g. Vault Agent/0.10.4 (+https://www.vaultproject.io/; go1.10.1)
+// e.g. Redacto KMS Agent/0.10.4 (go1.10.1)
 func AgentString() string {
-	return fmt.Sprintf("Vault Agent/%s (+%s; %s)",
-		versionFunc(), projectURL, rt)
+	return fmt.Sprintf("Redacto KMS Agent/%s (%s)",
+		versionFunc(), rt)
 }
 
-// AgentTemplatingString returns the consistent user-agent string for Vault Agent Templating.
+// AgentTemplatingString returns the consistent user-agent string for Redacto KMS Agent Templating.
 //
-// e.g. Vault Agent Templating/0.10.4 (+https://www.vaultproject.io/; go1.10.1)
+// e.g. Redacto KMS Agent Templating/0.10.4 (go1.10.1)
 func AgentTemplatingString() string {
-	return fmt.Sprintf("Vault Agent Templating/%s (+%s; %s)",
-		versionFunc(), projectURL, rt)
+	return fmt.Sprintf("Redacto KMS Agent Templating/%s (%s)",
+		versionFunc(), rt)
 }
 
-// AgentProxyString returns the consistent user-agent string for Vault Agent API Proxying.
+// AgentProxyString returns the consistent user-agent string for Redacto KMS Agent API Proxying.
 //
-// e.g. Vault Agent API Proxy/0.10.4 (+https://www.vaultproject.io/; go1.10.1)
+// e.g. Redacto KMS Agent API Proxy/0.10.4 (go1.10.1)
 func AgentProxyString() string {
-	return fmt.Sprintf("Vault Agent API Proxy/%s (+%s; %s)",
-		versionFunc(), projectURL, rt)
+	return fmt.Sprintf("Redacto KMS Agent API Proxy/%s (%s)",
+		versionFunc(), rt)
 }
 
 // AgentProxyStringWithProxiedUserAgent returns the consistent user-agent
 // string for Vault Agent API Proxying, keeping the User-Agent of the proxied
 // client as an extension to this UserAgent
 //
-// e.g. Vault Agent API Proxy/0.10.4 (+https://www.vaultproject.io/; go1.10.1); proxiedUserAgent
+// e.g. Redacto KMS Agent API Proxy/0.10.4 (go1.10.1); proxiedUserAgent
 func AgentProxyStringWithProxiedUserAgent(proxiedUserAgent string) string {
-	return fmt.Sprintf("Vault Agent API Proxy/%s (+%s; %s); %s",
-		versionFunc(), projectURL, rt, proxiedUserAgent)
+	return fmt.Sprintf("Redacto KMS Agent API Proxy/%s (%s); %s",
+		versionFunc(), rt, proxiedUserAgent)
 }
 
-// AgentAutoAuthString returns the consistent user-agent string for Vault Agent Auto-Auth.
+// AgentAutoAuthString returns the consistent user-agent string for Redacto KMS Agent Auto-Auth.
 //
-// e.g. Vault Agent Auto-Auth/0.10.4 (+https://www.vaultproject.io/; go1.10.1)
+// e.g. Redacto KMS Agent Auto-Auth/0.10.4 (go1.10.1)
 func AgentAutoAuthString() string {
-	return fmt.Sprintf("Vault Agent Auto-Auth/%s (+%s; %s)",
-		versionFunc(), projectURL, rt)
+	return fmt.Sprintf("Redacto KMS Agent Auto-Auth/%s (%s)",
+		versionFunc(), rt)
 }
 
-// ProxyString returns the consistent user-agent string for Vault Proxy.
+// ProxyString returns the consistent user-agent string for Redacto KMS Proxy.
 //
-// e.g. Vault Proxy/0.10.4 (+https://www.vaultproject.io/; go1.10.1)
+// e.g. Redacto KMS Proxy/0.10.4 (go1.10.1)
 func ProxyString() string {
-	return fmt.Sprintf("Vault Proxy/%s (+%s; %s)",
-		versionFunc(), projectURL, rt)
+	return fmt.Sprintf("Redacto KMS Proxy/%s (%s)",
+		versionFunc(), rt)
 }
 
-// ProxyAPIProxyString returns the consistent user-agent string for Vault Proxy API Proxying.
+// ProxyAPIProxyString returns the consistent user-agent string for Redacto KMS Proxy API Proxying.
 //
-// e.g. Vault Proxy API Proxy/0.10.4 (+https://www.vaultproject.io/; go1.10.1)
+// e.g. Redacto KMS Proxy API Proxy/0.10.4 (go1.10.1)
 func ProxyAPIProxyString() string {
-	return fmt.Sprintf("Vault Proxy API Proxy/%s (+%s; %s)",
-		versionFunc(), projectURL, rt)
+	return fmt.Sprintf("Redacto KMS Proxy API Proxy/%s (%s)",
+		versionFunc(), rt)
 }
 
 // ProxyStringWithProxiedUserAgent returns the consistent user-agent
 // string for Vault Proxy API Proxying, keeping the User-Agent of the proxied
 // client as an extension to this UserAgent
 //
-// e.g. Vault Proxy API Proxy/0.10.4 (+https://www.vaultproject.io/; go1.10.1); proxiedUserAgent
+// e.g. Redacto KMS Proxy API Proxy/0.10.4 (go1.10.1); proxiedUserAgent
 func ProxyStringWithProxiedUserAgent(proxiedUserAgent string) string {
-	return fmt.Sprintf("Vault Proxy API Proxy/%s (+%s; %s); %s",
-		versionFunc(), projectURL, rt, proxiedUserAgent)
+	return fmt.Sprintf("Redacto KMS Proxy API Proxy/%s (%s); %s",
+		versionFunc(), rt, proxiedUserAgent)
 }
 
-// ProxyAutoAuthString returns the consistent user-agent string for Vault Agent Auto-Auth.
+// ProxyAutoAuthString returns the consistent user-agent string for Redacto KMS Agent Auto-Auth.
 //
-// e.g. Vault Proxy Auto-Auth/0.10.4 (+https://www.vaultproject.io/; go1.10.1)
+// e.g. Redacto KMS Proxy Auto-Auth/0.10.4 (go1.10.1)
 func ProxyAutoAuthString() string {
-	return fmt.Sprintf("Vault Proxy Auto-Auth/%s (+%s; %s)",
-		versionFunc(), projectURL, rt)
+	return fmt.Sprintf("Redacto KMS Proxy Auto-Auth/%s (%s)",
+		versionFunc(), rt)
 }

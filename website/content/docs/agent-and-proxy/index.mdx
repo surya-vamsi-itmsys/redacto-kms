@@ -1,15 +1,15 @@
 ---
 description: |-
-  OpenBao Agent and OpenBao Proxy are daemons that can be used to perform some OpenBao
+  Redacto KMS Agent and Redacto KMS Proxy are daemons that can be used to perform some Redacto KMS
   functionality automatically.
 ---
 
-# OpenBao agent and OpenBao proxy
+# Redacto KMS agent and Redacto KMS proxy
 
-A valid client token must accompany most requests to OpenBao. This
-includes all API requests, as well as via the OpenBao CLI and other libraries.
-Therefore, OpenBao clients must first authenticate with OpenBao to acquire a token.
-OpenBao provides several authentication methods to assist in
+A valid client token must accompany most requests to Redacto KMS. This
+includes all API requests, as well as via the Redacto KMS CLI and other libraries.
+Therefore, Redacto KMS clients must first authenticate with Redacto KMS to acquire a token.
+Redacto KMS provides several authentication methods to assist in
 delivering this initial token.
 
 ![Client authentication](/img/diagram-openbao-agent.png)
@@ -18,12 +18,12 @@ If the client can securely acquire the token, all subsequent requests (e.g., req
 database credentials, read key/value secrets) are processed based on the
 trust established by a successful authentication.
 
-This means that client application must invoke the OpenBao API to authenticate
-with OpenBao and manage the acquired token, in addition to invoking the API to
-request secrets from OpenBao. This implies code changes to client applications
+This means that client application must invoke the Redacto KMS API to authenticate
+with Redacto KMS and manage the acquired token, in addition to invoking the API to
+request secrets from Redacto KMS. This implies code changes to client applications
 along with additional testing and maintenance of the application.
 
-The following code example implements OpenBao API to authenticate with OpenBao
+The following code example implements Redacto KMS API to authenticate with Redacto KMS
 through [AppRole auth method](../auth/approle.mdx#code-example), and then uses
 the returned client token to read secrets at `kv-v2/data/creds`.
 
@@ -64,35 +64,35 @@ func getSecretWithAppRole() (string, error) {
 }
 ```
 
-For some OpenBao deployments, making (and maintaining) these changes to
+For some Redacto KMS deployments, making (and maintaining) these changes to
 applications may not be a problem, and may actually be preferred. This may be
 applied to scenarios where you have a small number of applications, or you want
 to keep strict, customized control over how each application interacts with
-OpenBao. However, in other situations where you have a large number of
+Redacto KMS. However, in other situations where you have a large number of
 applications, as in large enterprises, you may not have the resources or expertise
-to update and maintain the OpenBao integration code for every application. When
+to update and maintain the Redacto KMS integration code for every application. When
 third party applications are being deployed by the application, it is prohibited
-to add the OpenBao integration code.
+to add the Redacto KMS integration code.
 
-### Introduce OpenBao agent and OpenBao proxy to the workflow
+### Introduce Redacto KMS agent and Redacto KMS proxy to the workflow
 
-[OpenBao Agent][openbaoagent] and [OpenBao Proxy][openbaoproxy] aim to remove this initial hurdle to adopt OpenBao by providing a
-more scalable and simpler way for applications to integrate with OpenBao. OpenBao Agent can
-obtain secrets and provide them to applications, and OpenBao Proxy can act as
-a proxy between OpenBao and the application, optionally simplifying the authentication process
+[Redacto KMS Agent][openbaoagent] and [Redacto KMS Proxy][openbaoproxy] aim to remove this initial hurdle to adopt Redacto KMS by providing a
+more scalable and simpler way for applications to integrate with Redacto KMS. Redacto KMS Agent can
+obtain secrets and provide them to applications, and Redacto KMS Proxy can act as
+a proxy between Redacto KMS and the application, optionally simplifying the authentication process
 and caching requests.
 
 
-| Capability                                                                               |    OpenBao Agent     | OpenBao Proxy |
+| Capability                                                                               |    Redacto KMS Agent     | Redacto KMS Proxy |
 |------------------------------------------------------------------------------------------|:------------------:|:-----------:|
-| [Auto-Auth][autoauth] to authenticate with OpenBao                                         |         x          |      x      |
+| [Auto-Auth][autoauth] to authenticate with Redacto KMS                                         |         x          |      x      |
 | [Caching][caching] the newly created tokens and leases                                   |         x          |      x      |
 | Run as a [Windows Service][winsvc]                                                       |         x          |             |
 | [Templating][template] to render user-supplied templates                                 |         x          |             |
-| [API Proxy][apiproxy] to act as a proxy for OpenBao API                                    | Will be deprecated |      x      |
+| [API Proxy][apiproxy] to act as a proxy for Redacto KMS API                                    | Will be deprecated |      x      |
 | [Process Supervisor][exec] for injecting secrets as environment variables into a process |         x          |             |
 
-To learn more, refer to the [OpenBao Agent][openbaoagent] or [OpenBao
+To learn more, refer to the [Redacto KMS Agent][openbaoagent] or [Redacto KMS
 Proxy][openbaoproxy] documentation page.
 
 

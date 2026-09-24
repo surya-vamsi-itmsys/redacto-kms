@@ -1,21 +1,21 @@
 ---
 description: >-
-  External Keys is an OpenBao feature that defers sensitive key operations of
+  External Keys is a Redacto KMS feature that defers sensitive key operations of
   auth and secret engines to a third party KMS or HSM.
 ---
 
 # External Keys
 
 Within certain environments, users want to leverage key management systems
-external to OpenBao, when handling, storing, and interacting with sensitive
+external to Redacto KMS, when handling, storing, and interacting with sensitive
 key material, or are required to do so by standards requirements. To satisfy
-these requirements, OpenBao has a centralized abstraction called *External Keys*
+these requirements, Redacto KMS has a centralized abstraction called *External Keys*
 that different secrets engines can plug into, allowing them to delegate these
 operations to a trusted external KMS or HSM.
 
 :::info
 
-External Keys are OpenBao's equivalent of Vault Enterprise's *Managed Keys*
+External Keys are Redacto KMS's equivalent of Vault Enterprise's *Managed Keys*
 feature. External Keys are a redesign of Managed Keys with the intent of
 providing greater flexibility. As such, the two are not API-compatible but
 achieve the same high-level goal of delegating sensitive key operations to
@@ -25,7 +25,7 @@ external systems.
 
 ## Backend support
 
-External Keys support arbitrary backends by making use of OpenBao's
+External Keys support arbitrary backends by making use of Redacto KMS's
 [plugin system](../plugins/index.mdx). KMS plugins can implement the
 APIs required to support External Keys alongside or independently
 of [Auto Unseal](../configuration/seal/index.mdx) support.
@@ -46,7 +46,7 @@ Keys to create and verify cryptographic signatures, and to encrypt and decrypt
 data, offloading operations to the KMS or HSM that hosts the External Key
 material.
 
-In the future, OpenBao may allow other engines installed as plugins to interact
+In the future, Redacto KMS may allow other engines installed as plugins to interact
 with External Keys.
 
 ## API

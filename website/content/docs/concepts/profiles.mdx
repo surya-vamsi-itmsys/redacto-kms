@@ -1,7 +1,7 @@
 ---
 sidebar_label: Profile system
 description: >-
-    This is a reference for OpenBao's profile system and declarative self-initialization. It describes the structure of profiles and the supported source types.
+    This is a reference for Redacto KMS's profile system and declarative self-initialization. It describes the structure of profiles and the supported source types.
 ---
 
 # Profile system
@@ -39,7 +39,7 @@ unauthenticated rotation and audit device creation) still apply.
 
 2. **Input Validation**
 
-   During execution, before any OpenBao operation is attempted, the engine:
+   During execution, before any Redacto KMS operation is attempted, the engine:
 
    - Ensures every declared parameter is present and of the correct type,
      e.g., string, int, bool.
@@ -80,7 +80,7 @@ The core of a profile is the request, which contains the following fields:
  - `operation` `(string: <required>)` - the operation type to invoke. This
    aligns with [ACL operations](../policies/#capabilities).
  - `path` `(string: <required>)` - which API endpoint to invoke.
- - `token` `(string: <optional>)` - the OpenBao token to use to authenticate
+ - `token` `(string: <optional>)` - the Redacto KMS token to use to authenticate
    with; in some cases (like self-initialization or authenticated execution
    of the workflows API), this is inferred from the context automatically.
    However, in the case of unauthenticated execution of the workflows API,

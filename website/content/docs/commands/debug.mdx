@@ -1,15 +1,15 @@
 ---
 description: |-
-  The "debug" command monitors an OpenBao server, probing information about
+  The "debug" command monitors a Redacto KMS server, probing information about
   it for a certain duration.
 ---
 
 # debug
 
-The `debug` command starts a process that monitors an OpenBao server, probing
+The `debug` command starts a process that monitors a Redacto KMS server, probing
 information about it for a certain duration.
 
-Gathering information about the state of the OpenBao cluster often requires the
+Gathering information about the state of the Redacto KMS cluster often requires the
 operator to access all necessary information via various API calls and terminal
 commands. The `debug` command aims to provide a simple workflow that produces a
 consistent output to help operators retrieve and share information about the
@@ -17,7 +17,7 @@ server in question.
 
 The `debug` command honors the same variables that the base command
 accepts, such as the token stored via a previous login or the environment
-variables `BAO_TOKEN` and `BAO_ADDR`. The token used determines the
+variables `REDACTO_KMS_TOKEN` and `REDACTO_KMS_ADDR`. The token used determines the
 permissions and, in turn, the information that `debug` may be able to collect.
 The address specified determines the target server that will be probed against.
 
@@ -129,20 +129,20 @@ openbao-debug-2019-10-15T21-44-49Z/
 Start debug using reasonable defaults:
 
 ```shell-session
-$ bao debug
+$ redacto-kms debug
 ```
 
 Start debug with different duration, intervals, and metrics interval values, and
 skip compression:
 
 ```shell-session
-$ bao debug -duration=1m -interval=10s -metrics-interval=5s -compress=false
+$ redacto-kms debug -duration=1m -interval=10s -metrics-interval=5s -compress=false
 ```
 
 Start debug with specific targets:
 
 ```shell-session
-$ bao debug -target=host -target=metrics
+$ redacto-kms debug -target=host -target=metrics
 ```
 
 ## Usage

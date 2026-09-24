@@ -55,12 +55,12 @@ func (c *OperatorRotateKeysCommand) Synopsis() string {
 
 func (c *OperatorRotateKeysCommand) Help() string {
 	helpText := `
-Usage: bao operator rotate-keys [options] [KEY]
+Usage: redacto-kms operator rotate-keys [options] [KEY]
 
   Generates a new set of unseal keys. This can optionally change the total
   number of key shares or the required threshold of those key shares to
   reconstruct the root key. This operation is zero downtime, but it requires
-  that the OpenBao instance is unsealed and a quorum of existing unseal keys
+  that the Redacto KMS instance is unsealed and a quorum of existing unseal keys
   are provided.
 
   An unseal key may be provided directly on the command line as an argument to
@@ -72,33 +72,33 @@ Usage: bao operator rotate-keys [options] [KEY]
 
   Initialize a rotation:
 
-      $ bao operator rotate-keys \
+      $ redacto-kms operator rotate-keys \
           -init \
           -key-shares=15 \
           -key-threshold=9
 
   Rotate and encrypt the resulting unseal keys with PGP:
 
-      $ bao operator rotate-keys \
+      $ redacto-kms operator rotate-keys \
           -init \
           -key-shares=3 \
           -key-threshold=2 \
           -pgp-keys="keybase:hashicorp,keybase:jefferai,keybase:sethvargo"
 
-  Store encrypted PGP keys in OpenBao's core:
+  Store encrypted PGP keys in Redacto KMS's core:
 
-      $ bao operator rotate-keys \
+      $ redacto-kms operator rotate-keys \
           -init \
           -pgp-keys="..." \
           -backup
 
   Retrieve backed-up unseal keys:
 
-      $ bao operator rotate-keys -backup-retrieve
+      $ redacto-kms operator rotate-keys -backup-retrieve
 
   Delete backed-up unseal keys:
 
-      $ bao operator rotate-keys -backup-delete
+      $ redacto-kms operator rotate-keys -backup-delete
 
 ` + c.Flags().Help()
 	return strings.TrimSpace(helpText)
@@ -200,7 +200,7 @@ func (c *OperatorRotateKeysCommand) Flags() *FlagSets {
 		Target:  &c.flagBackup,
 		Default: false,
 		Usage: "Store a backup of the current PGP encrypted unseal or recovery keys in " +
-			"OpenBao's core. The encrypted values can be recovered in the event of " +
+			"Redacto KMS's core. The encrypted values can be recovered in the event of " +
 			"failure or discarded after success. See the -backup-delete and " +
 			"-backup-retrieve options for more information. This option only " +
 			"applies when the existing unseal or recovery keys were PGP encrypted.",
@@ -325,7 +325,7 @@ func (c *OperatorRotateKeysCommand) init(client *api.Client) int {
 				c.UI.Warn(wrapAtLength(
 					fmt.Sprintf("WARNING! You've used PGP keys for "+
 						"encryption of the resulting %s keys, but you did not "+
-						"enable the option to backup the keys to OpenBao's core. "+
+						"enable the option to backup the keys to Redacto KMS's core. "+
 						"If you lose the encrypted keys you will not be able to "+
 						"recover them. Consider rerunning this operation and "+
 						"re-initializing with -backup to allow recovery of the "+
@@ -376,7 +376,7 @@ func (c *OperatorRotateKeysCommand) init(client *api.Client) int {
 			c.UI.Warn(wrapAtLength(
 				fmt.Sprintf("WARNING! You are using PGP keys for encryption "+
 					"of resulting %s keys, but you did not enable the option to backup "+
-					"the keys to OpenBao's core. If you lose the encrypted keys after "+
+					"the keys to Redacto KMS's core. If you lose the encrypted keys after "+
 					"they are returned, you will not be able to recover them. Consider "+
 					"canceling this operation and re-running with -backup to allow "+
 					"recovery of the encrypted unseal keys in case of emergency. You "+
@@ -492,7 +492,7 @@ func (c *OperatorRotateKeysCommand) provide(client *api.Client, key string) int 
 	if !started {
 		c.UI.Error(wrapAtLength(
 			"No rotation is in progress. Start a rotation process by running " +
-				"\"bao operator rotate-keys -init\".",
+				"\"redacto-kms operator rotate-keys -init\".",
 		))
 		return 1
 	}
@@ -788,14 +788,14 @@ func (c *OperatorRotateKeysCommand) printWarnings(client *api.Client, status *ap
 			c.UI.Output(wrapAtLength(fmt.Sprintf(
 				"The encrypted unseal keys are backed up to \"core/unseal-keys-backup\" " +
 					"in the storage backend. Remove these keys at any time using " +
-					"\"bao operator rotate-keys -backup-delete\". OpenBao does not automatically " +
+					"\"redacto-kms operator rotate-keys -backup-delete\". Redacto KMS does not automatically " +
 					"remove these keys.",
 			)))
 		case "recovery", "hsm":
 			c.UI.Output(wrapAtLength(fmt.Sprintf(
 				"The encrypted recovery keys are backed up to \"core/recovery-keys-backup\" " +
 					"in the storage backend. Remove these keys at any time using " +
-					"\"bao operator rotate-keys -backup-delete -target=recovery\". OpenBao does not automatically " +
+					"\"redacto-kms operator rotate-keys -backup-delete -target=recovery\". Redacto KMS does not automatically " +
 					"remove these keys.",
 			)))
 		}
@@ -807,10 +807,10 @@ func (c *OperatorRotateKeysCommand) printWarnings(client *api.Client, status *ap
 		switch target {
 		case "barrier":
 			c.UI.Output(wrapAtLength(fmt.Sprintf(
-				"OpenBao has created a new unseal key, split into %d key shares and a "+
+				"Redacto KMS has created a new unseal key, split into %d key shares and a "+
 					"key threshold of %d. These will not be active until after verification is "+
 					"complete. Please securely distribute the key shares printed above. When "+
-					" OpenBao is re-sealed, restarted, or stopped, you must supply at least %d "+
+					" Redacto KMS is re-sealed, restarted, or stopped, you must supply at least %d "+
 					"of these keys to unseal it before it can start servicing requests.",
 				status.N,
 				status.T,
@@ -819,7 +819,7 @@ func (c *OperatorRotateKeysCommand) printWarnings(client *api.Client, status *ap
 			warningText = "unseal"
 		case "recovery", "hsm":
 			c.UI.Output(wrapAtLength(fmt.Sprintf(
-				"OpenBao has created a new recovery key, split into %d key shares and a "+
+				"Redacto KMS has created a new recovery key, split into %d key shares and a "+
 					"key threshold of %d. These will not be active until after verification is "+
 					"complete. Please securely distribute the key shares printed above.",
 				status.N,
@@ -832,8 +832,8 @@ func (c *OperatorRotateKeysCommand) printWarnings(client *api.Client, status *ap
 		c.UI.Warn(wrapAtLength(fmt.Sprintf(
 			"Again, these key shares are _not_ valid until verification is performed. "+
 				"Do not lose or discard your current key shares until after verification "+
-				"is complete or you will be unable to %s OpenBao. If you cancel the "+
-				"rotation process or seal OpenBao before verification is complete the new "+
+				"is complete or you will be unable to %s Redacto KMS. If you cancel the "+
+				"rotation process or seal Redacto KMS before verification is complete the new "+
 				"shares will be discarded and the current shares will remain valid.", warningText,
 		)))
 		c.UI.Output("")
@@ -849,8 +849,8 @@ func (c *OperatorRotateKeysCommand) printWarnings(client *api.Client, status *ap
 		switch target {
 		case "barrier":
 			c.UI.Output(wrapAtLength(fmt.Sprintf(
-				"OpenBao unseal keys rotated to %d key shares and a key threshold of %d. "+
-					"Please securely distribute the key shares printed above. When OpenBao is "+
+				"Redacto KMS unseal keys rotated to %d key shares and a key threshold of %d. "+
+					"Please securely distribute the key shares printed above. When Redacto KMS is "+
 					"re-sealed, restarted, or stopped, you must supply at least %d of "+
 					"these keys to unseal it before it can start servicing requests.",
 				status.N,
@@ -859,7 +859,7 @@ func (c *OperatorRotateKeysCommand) printWarnings(client *api.Client, status *ap
 			)))
 		case "recovery", "hsm":
 			c.UI.Output(wrapAtLength(fmt.Sprintf(
-				"OpenBao recovery keys rotated to %d key shares and a key threshold of %d. "+
+				"Redacto KMS recovery keys rotated to %d key shares and a key threshold of %d. "+
 					"Please securely distribute the key shares printed above.",
 				status.N,
 				status.T,

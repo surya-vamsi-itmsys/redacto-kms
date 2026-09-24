@@ -26,11 +26,11 @@ func (c *OperatorRaftDemoteCommand) Synopsis() string {
 
 func (c *OperatorRaftDemoteCommand) Help() string {
 	helpText := `
-Usage: bao operator raft demote <server_id>
+Usage: redacto-kms operator raft demote <server_id>
 
   Demotes voter to a permanent non-voter.
 
-	  $ bao operator raft demote node1
+	  $ redacto-kms operator raft demote node1
 
 ` + c.Flags().Help()
 

@@ -21,26 +21,26 @@ type OperatorSealCommand struct {
 }
 
 func (c *OperatorSealCommand) Synopsis() string {
-	return "Seals the OpenBao server"
+	return "Seals the Redacto KMS server"
 }
 
 func (c *OperatorSealCommand) Help() string {
 	helpText := `
-Usage: bao operator seal [options]
+Usage: redacto-kms operator seal [options]
 
-  Seals the OpenBao server. Sealing tells the OpenBao server to stop responding
-  to any operations until it is unsealed. When sealed, the OpenBao server
+  Seals the Redacto KMS server. Sealing tells the Redacto KMS server to stop responding
+  to any operations until it is unsealed. When sealed, the Redacto KMS server
   discards its in-memory root key to unlock the data, so it is physically
   blocked from responding to operations unsealed.
 
-  If an unseal is in progress, sealing OpenBao will reset the unsealing
+  If an unseal is in progress, sealing Redacto KMS will reset the unsealing
   process. Users will have to re-enter their portions of the root key again.
 
-  This command does nothing if the OpenBao server is already sealed.
+  This command does nothing if the Redacto KMS server is already sealed.
 
-  Seal the OpenBao server:
+  Seal the Redacto KMS server:
 
-      $ bao operator seal
+      $ redacto-kms operator seal
 
 ` + c.Flags().Help()
 
@@ -84,6 +84,6 @@ func (c *OperatorSealCommand) Run(args []string) int {
 		return 2
 	}
 
-	c.UI.Output("Success! Vault is sealed.")
+	c.UI.Output("Success! Redacto KMS is sealed.")
 	return 0
 }

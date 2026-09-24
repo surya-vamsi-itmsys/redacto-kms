@@ -26,7 +26,7 @@ function HomepageHeader() {
               }}
             />
             <Heading as="h1" className="hero__title">
-              Manage, store, and distribute sensitive data with OpenBao
+              Manage, store, and distribute sensitive data with Redacto KMS
             </Heading>
             <p className="hero__subtitle">
               {siteConfig.title} is an open source, community-driven secrets manager and
@@ -37,7 +37,7 @@ function HomepageHeader() {
                 className="button button--secondary button--lg margin-bottom--md"
                 to="/docs/what-is-openbao/"
               >
-                What is OpenBao?
+                What is Redacto KMS?
               </Link>
               &emsp;
               <Link
@@ -72,7 +72,7 @@ export default function Home(): JSX.Element {
 
               <p>
                 Companies, individuals or other entities who actively sponsor
-                the development of OpenBao, either via direct code or non-code
+                the development of Redacto KMS, either via direct code or non-code
                 contributions or indirectly via financial support or gifting
                 premium features on their platforms.
                 <br /><br />

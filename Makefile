@@ -17,21 +17,21 @@ CGO_ENABLED?=0
 
 default: dev
 
-# bin generates the equivalent of releasable binaries for OpenBao
+# bin generates the equivalent of releasable binaries for Redacto KMS
 bin: prep
 	@CGO_ENABLED=$(CGO_ENABLED) BUILD_TAGS='$(BUILD_TAGS) ui' sh -c "'$(CURDIR)/scripts/build.sh'"
 
 bin-plugin: prep
 	@CGO_ENABLED=$(CGO_ENABLED) BUILD_TAGS='$(BUILD_TAGS) ui' sh -c "'$(CURDIR)/scripts/build.sh' plugin"
 
-# dev creates binaries for testing OpenBao locally. These are put
+# dev creates binaries for testing Redacto KMS locally. These are put
 # into ./bin/ as well as $GOPATH/bin
 dev: prep
-	@CGO_ENABLED=$(CGO_ENABLED) BUILD_TAGS='$(BUILD_TAGS)' OPENBAO_DEV_BUILD=1 sh -c "'$(CURDIR)/scripts/build.sh'"
+	@CGO_ENABLED=$(CGO_ENABLED) BUILD_TAGS='$(BUILD_TAGS)' REDACTO_KMS_DEV_BUILD=1 sh -c "'$(CURDIR)/scripts/build.sh'"
 dev-ui: assetcheck prep
-	@CGO_ENABLED=$(CGO_ENABLED) BUILD_TAGS='$(BUILD_TAGS) ui' OPENBAO_DEV_BUILD=1 sh -c "'$(CURDIR)/scripts/build.sh'"
+	@CGO_ENABLED=$(CGO_ENABLED) BUILD_TAGS='$(BUILD_TAGS) ui' REDACTO_KMS_DEV_BUILD=1 sh -c "'$(CURDIR)/scripts/build.sh'"
 dev-dynamic: prep
-	@CGO_ENABLED=1 BUILD_TAGS='$(BUILD_TAGS)' OPENBAO_DEV_BUILD=1 sh -c "'$(CURDIR)/scripts/build.sh'"
+	@CGO_ENABLED=1 BUILD_TAGS='$(BUILD_TAGS)' REDACTO_KMS_DEV_BUILD=1 sh -c "'$(CURDIR)/scripts/build.sh'"
 
 # *-mem variants will enable memory profiling which will write snapshots of heap usage
 # to $TMP/vaultprof every 5 minutes. These can be analyzed using `$ go tool pprof <profile_file>`.
@@ -47,20 +47,20 @@ dev-tlsdebug: BUILD_TAGS+=tlsdebug
 dev-tlsdebug: dev
 
 # Creates a Docker image by adding the compiled linux/amd64 binary found in ./bin.
-# The resulting image is tagged "openbao:dev".
+# The resulting image is tagged "redacto-kms:dev".
 docker-dev: prep
-	$(DOCKER_CMD) build --build-arg VERSION=$(GO_VERSION_MIN) --build-arg BUILD_TAGS="$(BUILD_TAGS)" -f scripts/docker/Dockerfile -t openbao:dev .
+	$(DOCKER_CMD) build --build-arg VERSION=$(GO_VERSION_MIN) --build-arg BUILD_TAGS="$(BUILD_TAGS)" -f scripts/docker/Dockerfile -t redacto-kms:dev .
 
 docker-dev-ui: prep
-	$(DOCKER_CMD) build --build-arg VERSION=$(GO_VERSION_MIN) --build-arg BUILD_TAGS="$(BUILD_TAGS)" -f scripts/docker/Dockerfile.ui -t openbao:dev-ui .
+	$(DOCKER_CMD) build --build-arg VERSION=$(GO_VERSION_MIN) --build-arg BUILD_TAGS="$(BUILD_TAGS)" -f scripts/docker/Dockerfile.ui -t redacto-kms:dev-ui .
 
 # test runs the unit tests and vets the code
 test: prep
 	@CGO_ENABLED=$(CGO_ENABLED) \
-	BAO_ADDR= \
-	BAO_TOKEN= \
-	BAO_DEV_ROOT_TOKEN_ID= \
-	BAO_ACC= \
+	REDACTO_KMS_ADDR= \
+	REDACTO_KMS_TOKEN= \
+	REDACTO_KMS_DEV_ROOT_TOKEN_ID= \
+	REDACTO_KMS_ACC= \
 	go test -tags='$(BUILD_TAGS)' $(TEST) $(TESTARGS) -timeout=$(TEST_TIMEOUT) -parallel=20
 
 testcompile: prep
@@ -74,15 +74,15 @@ testacc: prep
 		echo "ERROR: Set TEST to a specific package"; \
 		exit 1; \
 	fi
-	BAO_ACC=1 go test -tags='$(BUILD_TAGS)' $(TEST) -v $(TESTARGS) -timeout=$(EXTENDED_TEST_TIMEOUT)
+	REDACTO_KMS_ACC=1 go test -tags='$(BUILD_TAGS)' $(TEST) -v $(TESTARGS) -timeout=$(EXTENDED_TEST_TIMEOUT)
 
 # testrace runs the race checker
 testrace: prep
 	@CGO_ENABLED=1 \
-	BAO_ADDR= \
-	BAO_TOKEN= \
-	BAO_DEV_ROOT_TOKEN_ID= \
-	BAO_ACC= \
+	REDACTO_KMS_ADDR= \
+	REDACTO_KMS_TOKEN= \
+	REDACTO_KMS_DEV_ROOT_TOKEN_ID= \
+	REDACTO_KMS_ACC= \
 	go test -tags='$(BUILD_TAGS)' -race $(TEST) $(TESTARGS) -timeout=$(EXTENDED_TEST_TIMEOUT) -parallel=20
 
 cover:
@@ -152,10 +152,10 @@ test-ember: install-ui-dependencies
 	@echo "--> Running ember tests"
 	@cd ui && pnpm test
 
-check-openbao-in-path:
-	@OPENBAO_BIN=$$(command -v bao) || { echo "bao command not found"; exit 1; }; \
-		[ -x "$$OPENBAO_BIN" ] || { echo "$$OPENBAO_BIN not executable"; exit 1; }; \
-		printf "Using OpenBao at %s:\n\$$ openbao version\n%s\n" "$$OPENBAO_BIN" "$$(bao version)"
+check-redacto-kms-in-path:
+	@REDACTO_KMS_BIN=$$(command -v redacto-kms) || { echo "redacto-kms command not found"; exit 1; }; \
+		[ -x "$$REDACTO_KMS_BIN" ] || { echo "$$REDACTO_KMS_BIN not executable"; exit 1; }; \
+		printf "Using Redacto KMS at %s:\n\$$ redacto-kms version\n%s\n" "$$REDACTO_KMS_BIN" "$$(redacto-kms version)"
 
 ember-dist: install-ui-dependencies
 	@echo "--> Building Ember application"
@@ -222,7 +222,7 @@ spellcheck:
 	@echo "==> Spell checking website..."
 	go tool -modfile=tools/go.mod misspell -w -source=text website/content
 
-.PHONY: bin default prep test vet bootstrap fmt fmtcheck ember-dist ember-dist-dev static-dist static-dist-dev assetcheck check-openbao-in-path packages build build-ci semgrep semgrep-ci vet-godoctests ci-vet-godoctests
+.PHONY: bin default prep test vet bootstrap fmt fmtcheck ember-dist ember-dist-dev static-dist static-dist-dev assetcheck check-redacto-kms-in-path packages build build-ci semgrep semgrep-ci vet-godoctests ci-vet-godoctests
 
 .NOTPARALLEL: ember-dist ember-dist-dev
 

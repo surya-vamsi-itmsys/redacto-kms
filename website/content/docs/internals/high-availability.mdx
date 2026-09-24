@@ -1,33 +1,33 @@
 ---
-description: Learn about the high availability design of OpenBao.
+description: Learn about the high availability design of Redacto KMS.
 ---
 
 # High Availability
 
-OpenBao can run in a High Availability (HA) mode to protect against outages by running multiple OpenBao servers.
+Redacto KMS can run in a High Availability (HA) mode to protect against outages by running multiple Redacto KMS servers.
 
 ## Design overview
 
-The primary design goal for making OpenBao Highly Available is to
-minimize downtime without affecting horizontal scalability. OpenBao is
+The primary design goal for making Redacto KMS Highly Available is to
+minimize downtime without affecting horizontal scalability. Redacto KMS is
 bound by the IO limits of the storage backend rather than the compute
 requirements. Being bound by the IO limits simplifies the HA approach and avoids complex
 coordination.
 
 Storage backends, such as Integrated Storage, provide additional coordinative
-functions enabling OpenBao to run in an HA configuration. Supported
-by the backend, OpenBao will automatically run in HA mode without further
+functions enabling Redacto KMS to run in an HA configuration. Supported
+by the backend, Redacto KMS will automatically run in HA mode without further
 configuration.
 
-When running in HA mode, OpenBao servers have two states they
-can be in: **standby** and **active**. For multiple OpenBao servers sharing a storage
+When running in HA mode, Redacto KMS servers have two states they
+can be in: **standby** and **active**. For multiple Redacto KMS servers sharing a storage
 backend, only a single instance is active at any time. All standby instances are placed in hot standbys.
 
-Only the active server processes all requests; the standby server redirects all requests to an active OpenBao server.
+Only the active server processes all requests; the standby server redirects all requests to an active Redacto KMS server.
 
 Meanwhile, if the active server is sealed, fails, or loses network connectivity,
-then one of the standby OpenBao servers becomes the active instance.
+then one of the standby Redacto KMS servers becomes the active instance.
 
-Please note that only _unsealed_ OpenBao servers may act as a standby.
+Please note that only _unsealed_ Redacto KMS servers may act as a standby.
 If a server is in a sealed state, it cannot act as a standby. Servers in a sealed state cannot
  serve any requests if the active server fails.

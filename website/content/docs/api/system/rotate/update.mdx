@@ -1,5 +1,5 @@
 ---
-description: The `/sys/rotate/(root|recovery)/update` endpoint is used to progress rotation of the unseal keys for OpenBao.
+description: The `/sys/rotate/(root|recovery)/update` endpoint is used to progress rotation of the unseal keys for Redacto KMS.
 ---
 
 # `/sys/rotate/(root|recovery)/update`
@@ -11,7 +11,7 @@ The `/sys/rotate/(root|recovery)/update` endpoints are available from version `v
 :::
 
 This endpoint is used to enter a single key share to progress the rotation
-of the OpenBao. If the threshold number of key shares is reached, OpenBao will
+of the Redacto KMS. If the threshold number of key shares is reached, Redacto KMS will
 complete the rotation. Otherwise, this API call must be repeated until
 threshold is met. The nonce must be provided with each call.
 

@@ -29,19 +29,19 @@ func (c *LeaseRenewCommand) Synopsis() string {
 
 func (c *LeaseRenewCommand) Help() string {
 	helpText := `
-Usage: bao lease renew [options] ID
+Usage: redacto-kms lease renew [options] ID
 
   Renews the lease on a secret, extending the time that it can be used before
-  it is revoked by OpenBao.
+  it is revoked by Redacto KMS.
 
-  Every secret in OpenBao has a lease associated with it. If the owner of the
+  Every secret in Redacto KMS has a lease associated with it. If the owner of the
   secret wants to use it longer than the lease, then it must be renewed.
   Renewing the lease does not change the contents of the secret. The ID is the
   full path lease ID.
 
   Renew a secret:
 
-      $ bao lease renew database/creds/readonly/2f6a614c...
+      $ redacto-kms lease renew database/creds/readonly/2f6a614c...
 
   Lease renewal will fail if the secret is not renewable, the secret has already
   been revoked, or if the secret has already reached its maximum TTL.
@@ -63,7 +63,7 @@ func (c *LeaseRenewCommand) Flags() *FlagSets {
 		Default:    0,
 		EnvVar:     "",
 		Completion: complete.PredictAnything,
-		Usage: "Request a specific increment in seconds. OpenBao is not required " +
+		Usage: "Request a specific increment in seconds. Redacto KMS is not required " +
 			"to honor this request.",
 	})
 

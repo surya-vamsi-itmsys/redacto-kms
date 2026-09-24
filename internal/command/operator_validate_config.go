@@ -33,25 +33,25 @@ type OperatorValidateConfigCommand struct {
 }
 
 func (c *OperatorValidateConfigCommand) Synopsis() string {
-	return "Validate OpenBao configuration files"
+	return "Validate Redacto KMS configuration files"
 }
 
 func (c *OperatorValidateConfigCommand) Help() string {
 	helpText := `
-Usage: bao operator validate-config
+Usage: redacto-kms operator validate-config
 
-  This command validates OpenBao configuration.
+  This command validates Redacto KMS configuration.
   It will detect invalid syntax, unknown properties and invalid types.
   Some problems like wrong cluster_addr (i.e. a missing DNS entry) won't be
   detected as this can only be detected at runtime.
   Some problems are deliberately not detected, e.g. that the raft path is writable.
   This is to ensure that a configuration can be validated on a different machine,
   for example an operator's laptop, or during Pull Request validation.
-  To include these kinds of tests use "bao operator diagnose" instead.
+  To include these kinds of tests use "redacto-kms operator diagnose" instead.
 
   Validate a configuration file:
 
-     $ bao operator validate-config -config=/etc/openbao/config.hcl
+     $ redacto-kms operator validate-config -config=/etc/redacto-kms/config.hcl
 
 ` + c.Flags().Help()
 	return strings.TrimSpace(helpText)
@@ -63,14 +63,14 @@ func (c *OperatorValidateConfigCommand) Flags() *FlagSets {
 
 	f.StringSliceVar(&StringSliceVar{
 		Name:   "config",
-		EnvVar: "BAO_CONFIG_PATH",
+		EnvVar: "REDACTO_KMS_CONFIG_PATH",
 		Target: &c.flagConfigs,
 		Completion: complete.PredictOr(
 			complete.PredictFiles("*.hcl"),
 			complete.PredictFiles("*.json"),
 			complete.PredictDirs("*"),
 		),
-		Usage: "Path to an OpenBao configuration file or directory of configuration " +
+		Usage: "Path to a Redacto KMS configuration file or directory of configuration " +
 			"files. This flag can be specified multiple times to load multiple " +
 			"configurations. If the path is a directory, all files which end in " +
 			".hcl or .json are loaded.",
@@ -174,5 +174,5 @@ func (c *OperatorValidateConfigCommand) validateConfig(ctx context.Context) {
 		return
 	}
 
-	diagnose.Success(ctx, "Vault configuration syntax is ok.")
+	diagnose.Success(ctx, "Redacto KMS configuration syntax is ok.")
 }

@@ -706,7 +706,7 @@ func TestDebugCommand_PartialPermissions(t *testing.T) {
 		case header.Name == filepath.Join(basePath, "index.json"):
 		case header.Name == filepath.Join(basePath, "replication_status.json"):
 		case header.Name == filepath.Join(basePath, "server_status.json"):
-		case header.Name == filepath.Join(basePath, "bao.log"):
+		case header.Name == filepath.Join(basePath, "redacto-kms.log"):
 		default:
 			t.Fatalf("unexpected file: %s", header.Name)
 		}

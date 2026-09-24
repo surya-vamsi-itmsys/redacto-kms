@@ -1,23 +1,23 @@
 ---
 sidebar_label: init
 description: |-
-  The "operator init" command initializes an OpenBao server. Initialization is the
-  process by which OpenBao's storage backend is prepared to receive data. Since
-  OpenBao servers share the same storage backend in HA mode, you only need to
-  initialize one OpenBao to initialize the storage backend.
+  The "operator init" command initializes a Redacto KMS server. Initialization is the
+  process by which Redacto KMS's storage backend is prepared to receive data. Since
+  Redacto KMS servers share the same storage backend in HA mode, you only need to
+  initialize one Redacto KMS to initialize the storage backend.
 ---
 
 # operator init
 
-The `operator init` command initializes an OpenBao server. Initialization is the
-process by which OpenBao's storage backend is prepared to receive data. Since
-OpenBao servers share the same storage backend in HA mode, you only need to
-initialize one OpenBao to initialize the storage backend.
-This command cannot be run against already-initialized OpenBao cluster.
+The `operator init` command initializes a Redacto KMS server. Initialization is the
+process by which Redacto KMS's storage backend is prepared to receive data. Since
+Redacto KMS servers share the same storage backend in HA mode, you only need to
+initialize one Redacto KMS to initialize the storage backend.
+This command cannot be run against already-initialized Redacto KMS cluster.
 
-During initialization, OpenBao generates a root key, which is stored in the storage backend alongside all other OpenBao data. The root key itself is encrypted and requires an _unseal key_ to decrypt it.
+During initialization, Redacto KMS generates a root key, which is stored in the storage backend alongside all other Redacto KMS data. The root key itself is encrypted and requires an _unseal key_ to decrypt it.
 
-The default OpenBao configuration uses [Shamir's Secret Sharing](https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing) to split the root key into a configured number of shards (referred as key shares, or unseal keys). A certain threshold of shards is required to reconstruct the root key, which is then used to decrypt the OpenBao's encryption key.
+The default Redacto KMS configuration uses [Shamir's Secret Sharing](https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing) to split the root key into a configured number of shards (referred as key shares, or unseal keys). A certain threshold of shards is required to reconstruct the root key, which is then used to decrypt the Redacto KMS's encryption key.
 
 Refer to the [Seal/Unseal](../../concepts/seal.mdx) documentation for further details.
 
@@ -26,13 +26,13 @@ Refer to the [Seal/Unseal](../../concepts/seal.mdx) documentation for further de
 Start initialization with the default options:
 
 ```shell-session
-$ bao operator init
+$ redacto-kms operator init
 ```
 
 Initialize, but encrypt the unseal keys with pgp keys:
 
 ```shell-session
-$ bao operator init \
+$ redacto-kms operator init \
     -key-shares=3 \
     -key-threshold=2 \
     -pgp-keys="keybase:hashicorp,keybase:jefferai,keybase:sethvargo"
@@ -41,7 +41,7 @@ $ bao operator init \
 Initialize Auto Unseal with a non-default threshold and number of recovery keys, and encrypt the recovery keys with pgp keys:
 
 ```shell-session
-$ bao operator init \
+$ redacto-kms operator init \
     -recovery-shares=7 \
     -recovery-threshold=4 \
     -recovery-pgp-keys="keybase:jeff,keybase:chris,keybase:brian,keybase:calvin,keybase:matthew,keybase:vishal,keybase:nick"
@@ -50,7 +50,7 @@ $ bao operator init \
 Encrypt the initial root token using a pgp key:
 
 ```shell-session
-$ bao operator init -root-token-pgp-key="keybase:hashicorp"
+$ redacto-kms operator init -root-token-pgp-key="keybase:hashicorp"
 ```
 
 ## Usage
@@ -62,7 +62,7 @@ flags](../index.mdx) included on all commands.
 
 - `-format` `(string: "")` - Print the output in the given format. Valid formats
   are "table", "json", or "yaml". The default is table. This can also be
-  specified via the `BAO_FORMAT` environment variable.
+  specified via the `REDACTO_KMS_FORMAT` environment variable.
 
 ### Common options
 
@@ -87,22 +87,22 @@ flags](../index.mdx) included on all commands.
   public key.
 
 - `-status` `(bool: false)` - Print the current initialization status. An exit
-  code of 0 means OpenBao is already initialized. An exit code of 1 means an
-  error occurred. An exit code of 2 means OpenBao is not initialized.
+  code of 0 means Redacto KMS is already initialized. An exit code of 1 means an
+  error occurred. An exit code of 2 means Redacto KMS is not initialized.
 
 ### Consul options
 
 - `-consul-auto` `(bool: false)` - Perform automatic service discovery using
-  Consul in HA mode. When all nodes in an OpenBao HA cluster are registered with
+  Consul in HA mode. When all nodes in a Redacto KMS HA cluster are registered with
   Consul, enabling this option will trigger automatic service discovery based on
   the provided -consul-service value. Ensure the proper Consul environment
-  variables are set (CONSUL_HTTP_ADDR, etc). When only one OpenBao server is
-  discovered, it will be initialized automatically. When more than one OpenBao
+  variables are set (CONSUL_HTTP_ADDR, etc). When only one Redacto KMS server is
+  discovered, it will be initialized automatically. When more than one Redacto KMS
   server is discovered, they will each be output for selection. The default is
   false.
 
 - `-consul-service` `(string: "openbao")` - Name of the service in Consul under
-  which OpenBao servers are registered.
+  which Redacto KMS servers are registered.
 
 ### HSM and KMS options
 

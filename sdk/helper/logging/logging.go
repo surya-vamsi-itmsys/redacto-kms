@@ -69,7 +69,7 @@ func ParseLogFormat(format string) (LogFormat, error) {
 
 // ParseEnvLogFormat parses the log format from an environment variable.
 func ParseEnvLogFormat() LogFormat {
-	logFormat := api.ReadBaoVariable("BAO_LOG_FORMAT")
+	logFormat := api.ReadBaoVariable("REDACTO_KMS_LOG_FORMAT")
 	switch strings.ToLower(logFormat) {
 	case "json", "vault_json", "vault-json", "vaultjson":
 		return JSONFormat

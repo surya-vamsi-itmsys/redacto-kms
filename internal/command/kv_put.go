@@ -34,33 +34,33 @@ func (c *KVPutCommand) Synopsis() string {
 
 func (c *KVPutCommand) Help() string {
 	helpText := `
-Usage: bao kv put [options] KEY [DATA]
+Usage: redacto-kms kv put [options] KEY [DATA]
 
   Writes the data to the given path in the key-value store. The data can be of
   any type.
 
-      $ bao kv put -mount=secret foo bar=baz
+      $ redacto-kms kv put -mount=secret foo bar=baz
 
   The deprecated path-like syntax can also be used, but this should be avoided 
   for KV v2, as the fact that it is not actually the full API path to 
   the secret (secret/data/foo) can cause confusion: 
   
-      $ bao kv put secret/foo bar=baz
+      $ redacto-kms kv put secret/foo bar=baz
 
   The data can also be consumed from a file on disk by prefixing with the "@"
   symbol. For example:
 
-      $ bao kv put -mount=secret foo @data.json
+      $ redacto-kms kv put -mount=secret foo @data.json
 
   Or it can be read from stdin using the "-" symbol:
 
-      $ echo "abcd1234" | bao kv put -mount=secret foo bar=-
+      $ echo "abcd1234" | redacto-kms kv put -mount=secret foo bar=-
 
   To perform a Check-And-Set operation, specify the -cas flag with the
   appropriate version number corresponding to the key you want to perform
   the CAS operation on:
 
-      $ bao kv put -mount=secret -cas=1 foo bar=baz
+      $ redacto-kms kv put -mount=secret -cas=1 foo bar=baz
 
   Additional flags and more advanced use cases are detailed below.
 

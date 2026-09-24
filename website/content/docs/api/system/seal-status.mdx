@@ -1,14 +1,14 @@
 ---
-description: The `/sys/seal-status` endpoint is used to check the seal status of an OpenBao.
+description: The `/sys/seal-status` endpoint is used to check the seal status of a Redacto KMS.
 ---
 
 # `/sys/seal-status`
 
-The `/sys/seal-status` endpoint is used to check the seal status of an OpenBao.
+The `/sys/seal-status` endpoint is used to check the seal status of a Redacto KMS.
 
 ## Seal status
 
-This endpoint returns the seal status of the OpenBao. This is an unauthenticated
+This endpoint returns the seal status of the Redacto KMS. This is an unauthenticated
 endpoint.
 
 | Method | Path               |
@@ -43,7 +43,7 @@ The "t" parameter is the threshold, and "n" is the number of shares.
 }
 ```
 
-Sample response when OpenBao is unsealed.
+Sample response when Redacto KMS is unsealed.
 
 ```json
 {

@@ -80,7 +80,7 @@ type Listener struct {
 
 func NewListener(networkLayer NetworkLayer, cipherSuites []uint16, logger log.Logger, idleTimeout time.Duration) *Listener {
 	var maxStreams uint32 = math.MaxUint32
-	if override := api.ReadBaoVariable("BAO_GRPC_MAX_STREAMS"); override != "" {
+	if override := api.ReadBaoVariable("REDACTO_KMS_GRPC_MAX_STREAMS"); override != "" {
 		i, err := strconv.ParseUint(override, 10, 32)
 		if err != nil {
 			logger.Warn("vault grpc max streams override must be an uint32 integer", "value", override)
@@ -113,7 +113,7 @@ func NewListener(networkLayer NetworkLayer, cipherSuites []uint16, logger log.Lo
 		networkLayer:              networkLayer,
 		cipherSuites:              cipherSuites,
 		logger:                    logger,
-		tlsConnectionLoggingLevel: log.LevelFromString(api.ReadBaoVariable("BAO_CLUSTER_TLS_SESSION_LOG_LEVEL")),
+		tlsConnectionLoggingLevel: log.LevelFromString(api.ReadBaoVariable("REDACTO_KMS_CLUSTER_TLS_SESSION_LOG_LEVEL")),
 	}
 }
 

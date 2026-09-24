@@ -42,7 +42,7 @@ func (c *SecretsTuneCommand) Synopsis() string {
 
 func (c *SecretsTuneCommand) Help() string {
 	helpText := `
-Usage: bao secrets tune [options] PATH
+Usage: redacto-kms secrets tune [options] PATH
 
   Tunes the configuration options for the secrets engine at the given PATH.
   The argument corresponds to the PATH where the secrets engine is enabled,
@@ -50,7 +50,7 @@ Usage: bao secrets tune [options] PATH
 
   Tune the default lease for the PKI secrets engine:
 
-      $ bao secrets tune -default-lease-ttl=72h pki/
+      $ redacto-kms secrets tune -default-lease-ttl=72h pki/
 
 ` + c.Flags().Help()
 
@@ -83,7 +83,7 @@ func (c *SecretsTuneCommand) Flags() *FlagSets {
 		EnvVar:     "",
 		Completion: complete.PredictAnything,
 		Usage: "The default lease TTL for this secrets engine. If unspecified, " +
-			"this defaults to the OpenBao server's globally configured default lease " +
+			"this defaults to the Redacto KMS server's globally configured default lease " +
 			"TTL, or a previously configured value for the secrets engine.",
 	})
 
@@ -108,7 +108,7 @@ func (c *SecretsTuneCommand) Flags() *FlagSets {
 		EnvVar:     "",
 		Completion: complete.PredictAnything,
 		Usage: "The maximum lease TTL for this secrets engine. If unspecified, " +
-			"this defaults to the OpenBao server's globally configured maximum lease " +
+			"this defaults to the Redacto KMS server's globally configured maximum lease " +
 			"TTL, or a previously configured value for the secrets engine.",
 	})
 

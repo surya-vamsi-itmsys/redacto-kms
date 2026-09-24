@@ -1,0 +1,41 @@
+/**
+ * Copyright (c) 2026 Redacto KMS
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+// Loading indicator: the Redacto KMS mark asset with a pulse animation.
+
+@keyframes redacto-loading-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.45;
+    transform: scale(0.88);
+  }
+}
+
+.redacto-loading {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.redacto-loading-mark {
+  width: 40px;
+  height: 40px;
+  animation: redacto-loading-pulse 1.3s infinite ease-in-out;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.redacto-loading-text {
+  color: var(--color-text-muted);
+  font-size: $size-9;
+}

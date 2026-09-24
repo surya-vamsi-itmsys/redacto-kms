@@ -1,8 +1,8 @@
 ---
 sidebar_label: validate-config
 description: |-
-  "bao operator validate-config" is a new operator-centric command, focused on
-  validating OpenBao configuration. It is similar to "bao operator diagnose",
+  "redacto-kms operator validate-config" is a new operator-centric command, focused on
+  validating Redacto KMS configuration. It is similar to "redacto-kms operator diagnose",
   but it only validates the config and not the system it is running on (e.g. it
   will not check that the raft directory is writable). This allows it to be
   used on an operator's laptop or in CI validations.
@@ -12,11 +12,11 @@ description: |-
 # operator validate-config
 
 The `operator validate-config` command should be used primarily before the configuration
-is copied to the OpenBao nodes. For example on the operator's laptop and/or in
+is copied to the Redacto KMS nodes. For example on the operator's laptop and/or in
 CI validations, if you manage your configuration with git.
-You might also want to run it on the OpenBao node after updating the configuration
+You might also want to run it on the Redacto KMS node after updating the configuration
 and before restarting the node.
-In case your OpenBao nodes do not start, running [`bao operator diagnose`](
+In case your Redacto KMS nodes do not start, running [`redacto-kms operator diagnose`](
 ../diagnose) should be preferred.
 
 ## Usage
@@ -27,10 +27,10 @@ flags](../index.mdx) included on all commands.
 ### Output options
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
-  formats are "table" or "json". This can also be specified via the `BAO_FORMAT`
+  formats are "table" or "json". This can also be specified via the `REDACTO_KMS_FORMAT`
   environment variable.
 
 ### Command options
 
-- `-config` `(string: "")` - The paths to the OpenBao configuration files used by
-the OpenBao server on startup. See the [server `-config` option](../../server#command-options) for more details.
+- `-config` `(string: "")` - The paths to the Redacto KMS configuration files used by
+the Redacto KMS server on startup. See the [server `-config` option](../../server#command-options) for more details.

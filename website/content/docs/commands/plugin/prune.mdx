@@ -2,13 +2,13 @@
 sidebar_label: prune
 description: |-
   The "plugin prune" command removes stale OCI-based plugins no longer
-  configured in OpenBao server configuration files from disk.
+  configured in Redacto KMS server configuration files from disk.
 ---
 
 # plugin prune
 
 The `plugin prune` command removes unused OCI-based plugins found in the given
-plugin directory but not referenced by the OpenBao server configuration's
+plugin directory but not referenced by the Redacto KMS server configuration's
 [plugin definitions](../../configuration/plugins.mdx) from disk.
 
 This can be used to free disk space following plugin upgrades by removing the
@@ -20,19 +20,19 @@ plugin directory are ignored and left in place.
 Prune plugins using a configuration file:
 
 ```shell-session
-$ bao plugin prune -config=/path/to/openbao.hcl
+$ redacto-kms plugin prune -config=/path/to/redacto-kms.hcl
 ```
 
 Prune within a specific directory:
 
 ```shell-session
-$ bao plugin prune -config=/path/to/config.hcl -directory=/opt/openbao/plugins
+$ redacto-kms plugin prune -config=/path/to/config.hcl -directory=/opt/openbao/plugins
 ```
 
 Load multiple configuration files:
 
 ```shell-session
-$ bao plugin prune -config=/etc/openbao -config=/opt/openbao/extra.hcl
+$ redacto-kms plugin prune -config=/etc/redacto-kms -config=/opt/openbao/extra.hcl
 ```
 
 ## Usage
@@ -43,7 +43,7 @@ flags](../index.mdx) included on all commands.
 ### Command options
 
 - `-config` `(string: required)` - Path to configuration file or directory. Can
-  be specified multiple times. The environment variable `BAO_CONFIG_PATH` may
+  be specified multiple times. The environment variable `REDACTO_KMS_CONFIG_PATH` may
   also be used to specify multiple configuration paths using a comma (,) as a
   separator.
 

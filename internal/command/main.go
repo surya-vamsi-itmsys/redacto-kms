@@ -143,6 +143,7 @@ type RunOptions struct {
 }
 
 func Run(args []string) int {
+	bridgeThirdPartyEnv()
 	return RunCustom(args, nil)
 }
 
@@ -223,11 +224,11 @@ func RunCustom(args []string, runOpts *RunOptions) int {
 	hiddenCommands := []string{"version"}
 
 	cli := &cli.CLI{
-		Name:     "bao",
+		Name:     "redacto-kms",
 		Args:     args,
 		Commands: commands,
 		HelpFunc: groupedHelpFunc(
-			cli.BasicHelpFunc("bao"),
+			cli.BasicHelpFunc("redacto-kms"),
 		),
 		HelpWriter:                 runOpts.Stdout,
 		ErrorWriter:                runOpts.Stderr,
@@ -266,7 +267,7 @@ func groupedHelpFunc(_ cli.HelpFunc) cli.HelpFunc {
 		var b bytes.Buffer
 		tw := tabwriter.NewWriter(&b, 0, 2, 6, ' ', 0)
 
-		_, _ = fmt.Fprintf(tw, "Usage: bao <command> [args]\n\n")
+		_, _ = fmt.Fprintf(tw, "Usage: redacto-kms <command> [args]\n\n")
 		_, _ = fmt.Fprintf(tw, "Common commands:\n")
 		for _, v := range commonCommands {
 			printCommand(tw, v, commands[v])

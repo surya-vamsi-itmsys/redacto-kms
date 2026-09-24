@@ -57,20 +57,20 @@ type migratorConfig struct {
 }
 
 func (c *OperatorMigrateCommand) Synopsis() string {
-	return "Migrates OpenBao data between storage backends"
+	return "Migrates Redacto KMS data between storage backends"
 }
 
 func (c *OperatorMigrateCommand) Help() string {
 	helpText := `
-Usage: bao operator migrate [options]
+Usage: redacto-kms operator migrate [options]
 
   This command starts a storage backend migration process to copy all data
   from one backend to another. This operates directly on encrypted data and
-  does not require an OpenBao server, nor any unsealing.
+  does not require a Redacto KMS server, nor any unsealing.
 
   Start a migration with a configuration file:
 
-      $ bao operator migrate -config=migrate.hcl
+      $ redacto-kms operator migrate -config=migrate.hcl
 
   For more information, please see the documentation.
 
@@ -85,7 +85,7 @@ func (c *OperatorMigrateCommand) Flags() *FlagSets {
 
 	f.StringVar(&StringVar{
 		Name:   "config",
-		EnvVar: "BAO_MIGRATE_CONFIG_PATH",
+		EnvVar: "REDACTO_KMS_MIGRATE_CONFIG_PATH",
 		Target: &c.flagConfig,
 		Completion: complete.PredictOr(
 			complete.PredictFiles("*.hcl"),
@@ -118,7 +118,7 @@ func (c *OperatorMigrateCommand) Flags() *FlagSets {
 		Name:       "log-level",
 		Target:     &c.flagLogLevel,
 		Default:    "info",
-		EnvVar:     "BAO_LOG_LEVEL",
+		EnvVar:     "REDACTO_KMS_LOG_LEVEL",
 		Completion: complete.PredictSet("trace", "debug", "info", "warn", "error"),
 		Usage: "Log verbosity level. Supported values (in order of detail) are " +
 			"\"trace\", \"debug\", \"info\", \"warn\", and \"error\". These are not case sensitive.",
@@ -275,7 +275,7 @@ func (c *OperatorMigrateCommand) migrateAll(ctx context.Context, from physical.B
 func (c *OperatorMigrateCommand) newBackend(kind string, conf map[string]string) (physical.Backend, error) {
 	factory, ok := c.PhysicalBackends[kind]
 	if !ok {
-		return nil, fmt.Errorf("no Vault storage backend named: %+q", kind)
+		return nil, fmt.Errorf("no Redacto KMS storage backend named: %+q", kind)
 	}
 
 	return factory(conf, c.logger)

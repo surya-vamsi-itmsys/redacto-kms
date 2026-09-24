@@ -57,25 +57,25 @@ type OperatorDiagnoseCommand struct {
 }
 
 func (c *OperatorDiagnoseCommand) Synopsis() string {
-	return "Troubleshoot problems starting OpenBao"
+	return "Troubleshoot problems starting Redacto KMS"
 }
 
 func (c *OperatorDiagnoseCommand) Help() string {
 	helpText := `
-Usage: bao operator diagnose
+Usage: redacto-kms operator diagnose
 
-  This command troubleshoots OpenBao startup issues, such as TLS configuration or
+  This command troubleshoots Redacto KMS startup issues, such as TLS configuration or
   auto-unseal. It should be run using the same environment variables and configuration
-  files as the "bao server" command, so that startup problems can be accurately
+  files as the "redacto-kms server" command, so that startup problems can be accurately
   reproduced.
 
   Start diagnose with a configuration file:
 
-     $ bao operator diagnose -config=/etc/openbao/config.hcl
+     $ redacto-kms operator diagnose -config=/etc/redacto-kms/config.hcl
 
-  Perform a diagnostic check while OpenBao is still running:
+  Perform a diagnostic check while Redacto KMS is still running:
 
-     $ bao operator diagnose -config=/etc/openbao/config.hcl -skip=listener
+     $ redacto-kms operator diagnose -config=/etc/redacto-kms/config.hcl -skip=listener
 
 ` + c.Flags().Help()
 	return strings.TrimSpace(helpText)
@@ -87,14 +87,14 @@ func (c *OperatorDiagnoseCommand) Flags() *FlagSets {
 
 	f.StringSliceVar(&StringSliceVar{
 		Name:   "config",
-		EnvVar: "BAO_CONFIG_PATH",
+		EnvVar: "REDACTO_KMS_CONFIG_PATH",
 		Target: &c.flagConfigs,
 		Completion: complete.PredictOr(
 			complete.PredictFiles("*.hcl"),
 			complete.PredictFiles("*.json"),
 			complete.PredictDirs("*"),
 		),
-		Usage: "Path to an OpenBao configuration file or directory of configuration " +
+		Usage: "Path to a Redacto KMS configuration file or directory of configuration " +
 			"files. This flag can be specified multiple times to load multiple " +
 			"configurations. If the path is a directory, all files which end in " +
 			".hcl or .json are loaded.",
@@ -214,7 +214,7 @@ func (c *OperatorDiagnoseCommand) offlineDiagnostics(ctx context.Context) error 
 		reloadFuncsLock: new(sync.RWMutex),
 	}
 
-	ctx, span := diagnose.StartSpan(ctx, "Vault Diagnose")
+	ctx, span := diagnose.StartSpan(ctx, "Redacto KMS Diagnose")
 	defer span.End()
 
 	// OS Specific checks
@@ -232,11 +232,11 @@ func (c *OperatorDiagnoseCommand) offlineDiagnostics(ctx context.Context) error 
 		for _, ce := range configErrors {
 			diagnose.Warn(ctx, diagnose.CapitalizeFirstLetter(ce.String())+".")
 		}
-		diagnose.Success(ctx, "Vault configuration syntax is ok.") //nolint:staticcheck // user-facing error
+		diagnose.Success(ctx, "Redacto KMS configuration syntax is ok.") //nolint:staticcheck // user-facing error
 		return nil
 	})
 	if config == nil {
-		return errors.New("No vault server configuration found.") //nolint:staticcheck // user-facing error
+		return errors.New("No Redacto KMS server configuration found.") //nolint:staticcheck // user-facing error
 	}
 
 	_ = diagnose.Test(ctx, "Check Telemetry", func(ctx context.Context) (err error) {
@@ -288,8 +288,8 @@ func (c *OperatorDiagnoseCommand) offlineDiagnostics(ctx context.Context) error 
 	_ = diagnose.Test(ctx, "Check Storage", func(ctx context.Context) error {
 		// Ensure that there is a storage stanza
 		if config.Storage == nil {
-			diagnose.Advise(ctx, "To learn how to specify a storage backend, see the Vault server configuration documentation.")
-			return errors.New("No storage stanza in Vault server configuration.") //nolint:staticcheck // user-facing error
+			diagnose.Advise(ctx, "To learn how to specify a storage backend, see the Redacto KMS server configuration documentation.")
+			return errors.New("No storage stanza in Redacto KMS server configuration.") //nolint:staticcheck // user-facing error
 		}
 
 		_ = diagnose.Test(ctx, "Create Storage Backend", func(ctx context.Context) error {
@@ -298,7 +298,7 @@ func (c *OperatorDiagnoseCommand) offlineDiagnostics(ctx context.Context) error 
 				return err
 			}
 			if b == nil {
-				diagnose.Advise(ctx, "To learn how to specify a storage backend, see the Vault server configuration documentation.")
+				diagnose.Advise(ctx, "To learn how to specify a storage backend, see the Redacto KMS server configuration documentation.")
 				return errors.New("Storage backend could not be initialized.") //nolint:staticcheck // user-facing error
 			}
 			backend = &b
@@ -381,7 +381,7 @@ func (c *OperatorDiagnoseCommand) offlineDiagnostics(ctx context.Context) error 
 		return nil
 	})
 
-	sealcontext, sealspan := diagnose.StartSpan(ctx, "Create Vault Server Configuration Seals")
+	sealcontext, sealspan := diagnose.StartSpan(ctx, "Create Redacto KMS Server Configuration Seals")
 	var seals []vault.Seal
 	var sealConfigError error
 
@@ -389,7 +389,7 @@ func (c *OperatorDiagnoseCommand) offlineDiagnostics(ctx context.Context) error 
 	barrierSeal, barrierWrapper, unwrapSeal, seals, sealConfigError, err := setSeal(server, config, kms, &infoKeys, make(map[string]string))
 	// Check error here
 	if err != nil {
-		diagnose.Advise(ctx, "For assistance with the seal stanza, see the Vault configuration documentation.")
+		diagnose.Advise(ctx, "For assistance with the seal stanza, see the Redacto KMS configuration documentation.")
 		diagnose.Fail(sealcontext, fmt.Sprintf("Seal creation resulted in the following error: %s.", err.Error()))
 		goto SEALFAIL
 	}
@@ -420,7 +420,7 @@ func (c *OperatorDiagnoseCommand) offlineDiagnostics(ctx context.Context) error 
 	}
 
 	if barrierSeal == nil {
-		diagnose.Fail(sealcontext, "Could not create barrier seal. No error was generated, but it is likely that the seal stanza is misconfigured. For guidance, see Vault's configuration documentation on the seal stanza.")
+		diagnose.Fail(sealcontext, "Could not create barrier seal. No error was generated, but it is likely that the seal stanza is misconfigured. For guidance, see Redacto KMS's configuration documentation on the seal stanza.")
 	}
 
 SEALFAIL:
@@ -434,7 +434,7 @@ SEALFAIL:
 
 				tlsSkipVerify := seal.Config["tls_skip_verify"]
 				if tlsSkipVerify == "true" {
-					diagnose.Warn(ctx, "TLS verification is skipped. This is highly discouraged and decreases the security of data transmissions to and from the Vault server.")
+					diagnose.Warn(ctx, "TLS verification is skipped. This is highly discouraged and decreases the security of data transmissions to and from the Redacto KMS server.")
 					return nil
 				}
 
@@ -552,7 +552,7 @@ SEALFAIL:
 
 	if vaultCore == nil {
 		//nolint:staticcheck // user-facing error
-		return errors.New("Diagnose could not initialize the Vault core from the Vault server configuration.")
+		return errors.New("Diagnose could not initialize the Redacto KMS core from the Redacto KMS server configuration.")
 	}
 
 	var lns []listenerutil.Listener
@@ -636,7 +636,7 @@ SEALFAIL:
 		for _, ln := range lns {
 			if ln.Config == nil {
 				//nolint:staticcheck // user-facing error
-				return errors.New("Found no listener config after parsing the Vault configuration.")
+				return errors.New("Found no listener config after parsing the Redacto KMS configuration.")
 			}
 		}
 		return nil

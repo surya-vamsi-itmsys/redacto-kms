@@ -238,7 +238,7 @@ DONELISTHANDLING:
 		}
 		resp.WrapInfo.Token = ser
 		if c.redirectAddr == "" {
-			resp.AddWarning("No redirect address set in Vault so none could be encoded in the token. You may need to supply Vault's API address when unwrapping the token.")
+			resp.AddWarning("No redirect address set in Redacto KMS so none could be encoded in the token. You may need to supply Redacto KMS's API address when unwrapping the token.")
 		}
 	}
 

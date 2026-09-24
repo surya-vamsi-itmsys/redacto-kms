@@ -1,10 +1,10 @@
 ---
-description: The `/sys/mounts` endpoint is used to manage secrets engines in OpenBao.
+description: The `/sys/mounts` endpoint is used to manage secrets engines in Redacto KMS.
 ---
 
 # `/sys/mounts`
 
-The `/sys/mounts` endpoint is used to manage secrets engines in OpenBao.
+The `/sys/mounts` endpoint is used to manage secrets engines in Redacto KMS.
 
 ## List mounted secrets engines
 
@@ -231,7 +231,7 @@ disable the secrets engine once the underlying issue is resolved. Often, this ca
 simple as increasing the timeout (in the event of timeout errors).
 
 For recovery situations where the secret was manually removed from the
-secrets backing service, one can force a secrets engine disable in OpenBao by
+secrets backing service, one can force a secrets engine disable in Redacto KMS by
 performing a [force revoke](leases.mdx)
 on the mount prefix, followed by a secrets disable when that completes.
 If the underlying secrets were not manually cleaned up, this method might result

@@ -82,7 +82,7 @@ func (d *OutputStringError) buildCurlString() (string, error) {
 	for k, v := range d.Header {
 		for _, h := range v {
 			if strings.ToLower(k) == "x-vault-token" {
-				h = `$(bao print token)`
+				h = `$(redacto-kms print token)`
 			}
 			finalCurlString = fmt.Sprintf("%s-H \"%s: %s\" ", finalCurlString, k, h)
 		}

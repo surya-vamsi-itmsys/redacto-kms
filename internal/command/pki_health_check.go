@@ -55,7 +55,7 @@ func (c *PKIHealthCheckCommand) Synopsis() string {
 
 func (c *PKIHealthCheckCommand) Help() string {
 	helpText := `
-Usage: bao pki health-check [options] MOUNT
+Usage: redacto-kms pki health-check [options] MOUNT
 
   Reports status of the specified mount against best practices and pending
   failures. This is an informative command and not all recommendations will
@@ -64,11 +64,11 @@ Usage: bao pki health-check [options] MOUNT
 
   To check the pki-root mount with default configuration:
 
-      $ bao pki health-check pki-root
+      $ redacto-kms pki health-check pki-root
 
   To specify a configuration:
 
-      $ bao pki health-check -health-config=mycorp-root.json /pki-root
+      $ redacto-kms pki health-check -health-config=mycorp-root.json /pki-root
 
   Return codes indicate failure type:
 
@@ -77,13 +77,13 @@ Usage: bao pki health-check [options] MOUNT
 	  2 - Informational message from a health check.
 	  3 - Warning message from a health check.
 	  4 - Critical message from a health check.
-	  5 - A version mismatch between health check and OpenBao Server occurred,
+	  5 - A version mismatch between health check and Redacto KMS Server occurred,
 	      preventing one or more health checks from being run.
-      6 - A permission denied message was returned from OpenBao Server for
+      6 - A permission denied message was returned from Redacto KMS Server for
 	      one or more health checks.
 
 For more detailed information, refer to the online documentation about the
-bao pki health-check command.
+redacto-kms pki health-check command.
 
 ` + c.Flags().Help()
 

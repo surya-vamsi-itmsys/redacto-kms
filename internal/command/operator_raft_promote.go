@@ -26,11 +26,11 @@ func (c *OperatorRaftPromoteCommand) Synopsis() string {
 
 func (c *OperatorRaftPromoteCommand) Help() string {
 	helpText := `
-Usage: bao operator raft promote <server_id>
+Usage: redacto-kms operator raft promote <server_id>
 
   Promotes a permanent non-voter to a voter.
 
-	  $ bao operator raft promote node1
+	  $ redacto-kms operator raft promote node1
 
 ` + c.Flags().Help()
 

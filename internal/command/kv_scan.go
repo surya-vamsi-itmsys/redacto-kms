@@ -29,13 +29,13 @@ func (c *KVScanCommand) Synopsis() string {
 func (c *KVScanCommand) Help() string {
 	helpText := `
 
-Usage: bao kv scan [options] PATH
+Usage: redacto-kms kv scan [options] PATH
 
-  Scans data from OpenBao's key-value store at the given path.
+  Scans data from Redacto KMS's key-value store at the given path.
 
   Scan values under the "my-app" folder of the key-value store:
 
-      $ bao kv scan secret/my-app/
+      $ redacto-kms kv scan secret/my-app/
 
   Additional flags and more advanced use cases are detailed below.
 

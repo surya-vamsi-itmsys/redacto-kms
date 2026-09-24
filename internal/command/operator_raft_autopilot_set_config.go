@@ -33,7 +33,7 @@ func (c *OperatorRaftAutopilotSetConfigCommand) Synopsis() string {
 
 func (c *OperatorRaftAutopilotSetConfigCommand) Help() string {
 	helpText := `
-Usage: bao operator raft autopilot set-config [options]
+Usage: redacto-kms operator raft autopilot set-config [options]
 
   Modify the configuration of the autopilot subsystem under integrated storage.
 ` + c.Flags().Help()

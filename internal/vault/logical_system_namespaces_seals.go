@@ -63,7 +63,7 @@ func (b *SystemBackend) namespaceSealPaths() []*framework.Path {
 
 			Operations: map[logical.Operation]framework.OperationHandler{
 				logical.ReadOperation: &framework.PathOperation{
-					Summary:  "Check the seal status of an OpenBao namespace.",
+					Summary:  "Check the seal status of a Redacto KMS namespace.",
 					Callback: b.handleNamespaceSealStatus(),
 					Responses: map[int][]framework.Response{
 						http.StatusOK: {{

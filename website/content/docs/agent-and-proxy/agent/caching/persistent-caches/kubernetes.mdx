@@ -1,20 +1,20 @@
 ---
 sidebar_label: Kubernetes
-description: Kubernetes Persistent Cache for OpenBao Agent Caching
+description: Kubernetes Persistent Cache for Redacto KMS Agent Caching
 ---
 
-# OpenBao agent kubernetes persistent cache
+# Redacto KMS agent kubernetes persistent cache
 
-When `kubernetes` is configured for the persistent cache type, OpenBao Agent will optimize the
+When `kubernetes` is configured for the persistent cache type, Redacto KMS Agent will optimize the
 persistent cache specifically for Kubernetes. This type of persistent cache requires a Kubernetes
 service account token. The service account token is used during encryption and decryption of the
 persistent cache as an additional integrity check.
 
-The OpenBao Agent persistent cache file in Kubernetes should only be used for handing off OpenBao tokens
-and leases between initialization and sidecar OpenBao Agent containers. This cache file should be shared
-using a memory volume between the OpenBao Agent containers.
+The Redacto KMS Agent persistent cache file in Kubernetes should only be used for handing off Redacto KMS tokens
+and leases between initialization and sidecar Redacto KMS Agent containers. This cache file should be shared
+using a memory volume between the Redacto KMS Agent containers.
 
-If the OpenBao Agent Injector for Kubernetes is being used, the persistent cache is automatically configured
+If the Redacto KMS Agent Injector for Kubernetes is being used, the persistent cache is automatically configured
 and used if the annotation [`vault.hashicorp.com/agent-cache-enable: true`](https://github.com/hashicorp/vault-k8s/blob/v1.4.2/agent-inject/agent/annotations.go#L249)
 is set.
 

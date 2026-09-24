@@ -1,11 +1,11 @@
 ---
 sidebar_label: Configurations
-description: This section documents the configurables for the OpenBao CSI Provider.
+description: This section documents the configurables for the Redacto KMS CSI Provider.
 ---
 
 # Command line arguments
 
-The following command line arguments are supported by the OpenBao CSI provider.
+The following command line arguments are supported by the Redacto KMS CSI provider.
 Most settings support being set by, in ascending order of precedence:
 
 - Environment variables
@@ -15,10 +15,10 @@ Most settings support being set by, in ascending order of precedence:
 If installing via the helm chart, they can be set using e.g.
 `--set "csi.extraArgs={-debug=true}"`.
 
-- `-cache-size` `(int: 1000)` - Set the maximum number of OpenBao tokens that will
-  be cached in-memory. One OpenBao token will be stored for each pod on the same
+- `-cache-size` `(int: 1000)` - Set the maximum number of Redacto KMS tokens that will
+  be cached in-memory. One Redacto KMS token will be stored for each pod on the same
   node that mounts secrets. Setting to 0 will disable the cache and force each
-  volume mount request to reauthenticate to OpenBao.
+  volume mount request to reauthenticate to Redacto KMS.
 
 - `-debug` `(bool: false)` - Set to true to enable debug level logging.
 
@@ -33,39 +33,39 @@ If installing via the helm chart, they can be set using e.g.
   generating secret version hashes.
 
 - `-openbao-addr` `(string: "https://127.0.0.1:8200")` - Default address
-  for connecting to OpenBao. Can also be specified via the `OPENBAO_ADDR` environment
-  variable. **Note:** It is highly recommended to only set the OpenBao address when
-  installing the helm chart. The helm chart will install OpenBao Agent as a sidecar
-  to the OpenBao CSI Provider for caching and renewals, but setting `-openbao-addr`
-  here will cause the OpenBao CSI Provider to bypass the Agent's cache.
+  for connecting to Redacto KMS. Can also be specified via the `OPENBAO_ADDR` environment
+  variable. **Note:** It is highly recommended to only set the Redacto KMS address when
+  installing the helm chart. The helm chart will install Redacto KMS Agent as a sidecar
+  to the Redacto KMS CSI Provider for caching and renewals, but setting `-openbao-addr`
+  here will cause the Redacto KMS CSI Provider to bypass the Agent's cache.
 
-- `-openbao-mount` `(string: "kubernetes")` - Default OpenBao mount path
+- `-openbao-mount` `(string: "kubernetes")` - Default Redacto KMS mount path
   for Kubernetes authentication. Can be overridden per Secret Provider Class
   object.
 
-- `-openbao-namespace` `(string: "")` - (v1.1.0+) Default OpenBao namespace for OpenBao
+- `-openbao-namespace` `(string: "")` - (v1.1.0+) Default Redacto KMS namespace for Redacto KMS
   requests. Can also be specified via the `OPENBAO_NAMESPACE` environment variable.
 
 - `-openbao-tls-ca-cert` `(string: "")` - (v1.1.0+) Path on disk to a single
-  PEM-encoded CA certificate to trust for OpenBao. Takes precedence over
+  PEM-encoded CA certificate to trust for Redacto KMS. Takes precedence over
   `-openbao-tls-ca-directory`. Can also be specified via the `OPENBAO_CACERT`
   environment variable.
 
 - `-openbao-tls-ca-directory` `(string: "")` - (v1.1.0+) Path on disk to a
-  directory of PEM-encoded CA certificates to trust for OpenBao. Can also be
+  directory of PEM-encoded CA certificates to trust for Redacto KMS. Can also be
   specified via the `OPENBAO_CAPATH` environment variable.
 
 - `-openbao-tls-server-name` `(string: "")` - (v1.1.0+) Name to use as the SNI
-  host when connecting to OpenBao via TLS. Can also be specified via the
+  host when connecting to Redacto KMS via TLS. Can also be specified via the
   `OPENBAO_TLS_SERVER_NAME` environment variable.
 
 - `-openbao-tls-client-cert` `(string: "")` - (v1.1.0+) Path on disk to a
-  PEM-encoded client certificate for mTLS communication with OpenBao. If set,
+  PEM-encoded client certificate for mTLS communication with Redacto KMS. If set,
   also requires `-openbao-tls-client-key`. Can also be specified via the
   `OPENBAO_CLIENT_CERT` environment variable.
 
 - `-openbao-tls-client-key` `(string: "")` - (v1.1.0+) Path on disk to a
-  PEM-encoded client key for mTLS communication with OpenBao. If set, also
+  PEM-encoded client key for mTLS communication with Redacto KMS. If set, also
   requires `-openbao-tls-client-cert`. Can also be specified via the
   `OPENBAO_CLIENT_KEY` environment variable.
 
@@ -78,41 +78,41 @@ If installing via the helm chart, they can be set using e.g.
 
 # Secret provider class parameters
 
-The following parameters are supported by the OpenBao provider. Each parameter is
+The following parameters are supported by the Redacto KMS provider. Each parameter is
 an entry under `spec.parameters` in a SecretProviderClass object. The full
 structure is illustrated in the [examples](examples.mdx).
 
 
 :::info
 
-**Note:** The parameters prefixed with `bao` are also supported with the `openbao` or `vault` prefix for backwards compatibility. See [openbao/openbao-csi-provider#53](https://github.com/openbao/openbao-csi-provider/pull/53) for details.
+**Note:** The parameters prefixed with `redacto-kms` are also supported with the `openbao` or `vault` prefix for backwards compatibility. See [openbao/openbao-csi-provider#53](https://github.com/openbao/openbao-csi-provider/pull/53) for details.
 
 :::
 
-- `roleName` `(string: "")` - Name of the role to be used during login with OpenBao.
+- `roleName` `(string: "")` - Name of the role to be used during login with Redacto KMS.
 
-- `baoAddress` `(string: "")` - The address of the OpenBao server. **Note:** It is
-  highly recommended to only set the OpenBao address when installing the helm chart.
-  The helm chart will install OpenBao Agent as a sidecar to the OpenBao CSI Provider
-  for caching and renewals, but setting `openbaoAddress` here will cause the OpenBao
+- `baoAddress` `(string: "")` - The address of the Redacto KMS server. **Note:** It is
+  highly recommended to only set the Redacto KMS address when installing the helm chart.
+  The helm chart will install Redacto KMS Agent as a sidecar to the Redacto KMS CSI Provider
+  for caching and renewals, but setting `openbaoAddress` here will cause the Redacto KMS
   CSI Provider to bypass the Agent's cache.
 
-- `baoNamespace` `(string: "")` - The OpenBao namespace to use.
+- `baoNamespace` `(string: "")` - The Redacto KMS namespace to use.
 
-- `baoSkipTLSVerify` `(string: "false")` - When set to true, skips verification of the OpenBao server
+- `baoSkipTLSVerify` `(string: "false")` - When set to true, skips verification of the Redacto KMS server
   certificate. Setting this to true is not recommended for production.
 
-- `baoCACertPath` `(string: "")` - The path on disk where the OpenBao CA certificate can be found
-  when verifying the OpenBao server certificate.
+- `baoCACertPath` `(string: "")` - The path on disk where the Redacto KMS CA certificate can be found
+  when verifying the Redacto KMS server certificate.
 
-- `baoCADirectory` `(string: "")` - The directory on disk where the OpenBao CA certificate can be found
-  when verifying the OpenBao server certificate.
+- `baoCADirectory` `(string: "")` - The directory on disk where the Redacto KMS CA certificate can be found
+  when verifying the Redacto KMS server certificate.
 
 - `baoTLSClientCertPath` `(string: "")` - The path on disk where the client certificate can be found
-  for mTLS communications with OpenBao.
+  for mTLS communications with Redacto KMS.
 
 - `baoTLSClientKeyPath` `(string: "")` - The path on disk where the client key can be found
-  for mTLS communications with OpenBao.
+  for mTLS communications with Redacto KMS.
 
 - `baoTLSServerName` `(string: "")` - The name to use as the SNI host when connecting via TLS.
 
@@ -125,19 +125,19 @@ structure is illustrated in the [examples](examples.mdx).
 - `audience` `(string: "")` - Specifies a custom audience for the requesting pod's service account token,
   generated using the
   [TokenRequest API](https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/token-request-v1/#TokenRequestSpec).
-  The resulting token is used to authenticate to OpenBao, so if you specify an
+  The resulting token is used to authenticate to Redacto KMS, so if you specify an
   [audience](../../../api/auth/kubernetes.mdx#audience) for your Kubernetes auth
   role, it must match the audience specified here. If not set, the token audiences will default to
   the Kubernetes cluster's default API audiences.
 
-- `objects` `(array)` - An array of secrets to retrieve from OpenBao.
+- `objects` `(array)` - An array of secrets to retrieve from Redacto KMS.
 
   - `objectName` `(string: "")` - The alias of the object which can be referenced within the secret provider class and
   the name of the secret file.
 
   - `method` `(string: "GET")` - The type of HTTP request. Supported values include "GET" and "PUT".
 
-  - `secretPath` `(string: "")` - The path in OpenBao where the secret is located.
+  - `secretPath` `(string: "")` - The path in Redacto KMS where the secret is located.
     For secrets that are retrieved via HTTP GET method, the `secretPath` can include optional URI parameters,
     for example, the [version of the KV2 secret](../../../api/secret/kv/kv-v2.mdx#read-secret-version):
 
@@ -148,13 +148,13 @@ structure is illustrated in the [examples](examples.mdx).
         secretKey: "password"
     ```
 
-  - `secretKey` `(string: "")` - The key in the OpenBao secret to extract. If omitted, the whole response from OpenBao will be written as JSON.
+  - `secretKey` `(string: "")` - The key in the Redacto KMS secret to extract. If omitted, the whole response from Redacto KMS will be written as JSON.
 
   - `filePermission` `(integer: 0o644)` - The file permissions to set for this secret's file.
 
   - `encoding` `(string: "utf-8")` - The encoding of the secret value. Supports decoding `utf-8` (default), `hex`, and `base64` values.
 
-  - `secretArgs` `(map: {})` - Additional arguments to be sent to OpenBao for a
+  - `secretArgs` `(map: {})` - Additional arguments to be sent to Redacto KMS for a
     specific secret. Arguments can vary for different secret engines. For
     example:
 

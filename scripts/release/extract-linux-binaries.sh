@@ -13,5 +13,5 @@ for archive in dist/*.tar.gz; do
         | sed -E 's/.*_linux_([^.]+)\.tar\.gz/\1/' \
         | sed -E 's/arm(v6|v7)/arm/'
     )
-    mkdir -p "bin/$arch" && tar xf "$archive" -C "bin/$arch" bao
+    mkdir -p "bin/$arch" && tar xf "$archive" -C "bin/$arch" redacto-kms
 done

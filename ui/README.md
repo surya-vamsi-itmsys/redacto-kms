@@ -3,19 +3,19 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [OpenBao UI](#openbao-ui)
+- [Redacto KMS UI](#redacto-kms-ui)
   - [Prerequisites](#prerequisites)
-  - [Running an OpenBao Server](#running-an-openbao-server)
+  - [Running a Redacto KMS Server](#running-an-redacto-kms-server)
   - [Running / Development](#running--development)
     - [Code Generators](#code-generators)
     - [Running Tests](#running-tests)
     - [Linting](#linting)
-    - [Building the OpenBao UI into an OpenBao Binary](#building-the-openbao-ui-into-an-openbao-binary)
+    - [Building the Redacto KMS UI into a Redacto KMS Binary](#building-the-redacto-kms-ui-into-an-redacto-kms-binary)
   - [Further Reading / Useful Links](#further-reading--useful-links)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# OpenBao UI
+# Redacto KMS UI
 
 This README outlines the details of collaborating on this Ember application.
 
@@ -29,15 +29,15 @@ You will need the following things properly installed on your computer.
 * [Ember CLI](https://cli.emberjs.com/release/)
 * [Google Chrome](https://google.com/chrome/)
 
-## Running an OpenBao Server
+## Running a Redacto KMS Server
 
-Before running the OpenBao UI locally, an OpenBao server must be running. First,
-ensure a dev build of OpenBao is available according the the instructions in
-`../README.md`. To start a single local OpenBao server:
+Before running the Redacto KMS UI locally, a Redacto KMS server must be running. First,
+ensure a dev build of Redacto KMS is available according the the instructions in
+`../README.md`. To start a single local Redacto KMS server:
 
 - `pnpm openbao`
 
-To start a local OpenBao cluster:
+To start a local Redacto KMS cluster:
 
 - `pnpm openbao:cluster`
 
@@ -47,7 +47,7 @@ To get all of the JavaScript dependencies installed, run this in the `ui` direct
 
 - `pnpm install`
 
-If you want to run the OpenBao UI and proxy back to an OpenBao server running on
+If you want to run the Redacto KMS UI and proxy back to a Redacto KMS server running on
 the default port, 8200, run the following in the `ui` directory:
 
 - `pnpm start`
@@ -56,7 +56,7 @@ This will start an Ember CLI server that proxies requests to port 8200,
 and enable live rebuilding of the application as you change the UI application code.
 Visit your app at [http://localhost:4200](http://localhost:4200).
 
-If your OpenBao server is running on a different port you can use the long-form
+If your Redacto KMS server is running on a different port you can use the long-form
 version of the npm script:
 
 `ember server --proxy=http://localhost:PORT`
@@ -81,7 +81,7 @@ eg. a reusable component named foo that you'd like in the core engine
 
 ### Running Tests
 
-Running tests will spin up an OpenBao dev server on port 9200 via a pretest
+Running tests will spin up a Redacto KMS dev server on port 9200 via a pretest
 script that testem (the test runner) executes. All of the acceptance tests then
 run, proxing requests back to that server.
 
@@ -95,18 +95,18 @@ run, proxing requests back to that server.
 - `pnpm lint`
 - `pnpm lint:fix`
 
-### Building the OpenBao UI into an OpenBao Binary
+### Building the Redacto KMS UI into a Redacto KMS Binary
 
 We use the [embed](https://golang.org/pkg/embed/) package from Go 1.16+ to build
-the static assets of the Ember application into an OpenBao binary.
+the static assets of the Ember application into a Redacto KMS binary.
 
 This can be done by running these commands from the root directory run:
 `make static-dist`
 `make dev-ui`
 
-This will result in an OpenBao binary that has the UI built-in - though in a
+This will result in a Redacto KMS binary that has the UI built-in - though in a
 non-dev setup it will still need to be enabled via the `ui` config or setting
-`BAO_UI` environment variable.
+`REDACTO_KMS_UI` environment variable.
 
 ## Further Reading / Useful Links
 

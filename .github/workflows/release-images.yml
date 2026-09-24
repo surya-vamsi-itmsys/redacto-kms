@@ -19,9 +19,9 @@ on:
         type: choice
         options:
           - all
-          - openbao
-          - openbao-distroless
-          - openbao-ubi
+          - redacto-kms
+          - redacto-kms-distroless
+          - redacto-kms-ubi
 
   # This trigger is called directly by "release.yml" to automatically trigger
   # image releases on nightly releases.
@@ -53,12 +53,12 @@ jobs:
       fail-fast: false
       matrix:
         distro:
-          - name: openbao
+          - name: redacto-kms
             target: default
             include: >-
               ${{
                 github.event_name == 'release' ||
-                contains(fromJSON('["all", "openbao"]'), inputs.distro)
+                contains(fromJSON('["all", "redacto-kms"]'), inputs.distro)
               }}
             platforms:
               - linux/amd64
@@ -67,24 +67,24 @@ jobs:
               - linux/ppc64le
               - linux/riscv64
               - linux/s390x
-          - name: openbao-ubi
+          - name: redacto-kms-ubi
             target: ubi
             include: >-
               ${{
                 github.event_name == 'release' ||
-                contains(fromJSON('["all", "openbao-ubi"]'), inputs.distro)
+                contains(fromJSON('["all", "redacto-kms-ubi"]'), inputs.distro)
               }}
             platforms:
               - linux/amd64
               - linux/arm64
               - linux/ppc64le
               - linux/s390x
-          - name: openbao-distroless
+          - name: redacto-kms-distroless
             target: distroless
             include: >-
               ${{
                 github.event_name == 'release' ||
-                contains(fromJSON('["all", "openbao-distroless"]'), inputs.distro)
+                contains(fromJSON('["all", "redacto-kms-distroless"]'), inputs.distro)
               }}
             platforms:
               - linux/amd64
@@ -147,7 +147,7 @@ jobs:
           ./scripts/release/extract-linux-binaries.sh
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          PATTERN: openbao_*_linux_*.tar.gz
+          PATTERN: redacto-kms_*_linux_*.tar.gz
 
       - name: Get release info
         id: info
@@ -172,27 +172,27 @@ jobs:
           # images based on UBI, but it does not harm to add them to all
           # distributions.
           labels: |
-            name=OpenBao
-            maintainer=OpenBao <openbao@lists.openssf.org>
-            vendor=OpenBao
+            name=Redacto KMS
+            maintainer=Redacto KMS
+            vendor=Redacto KMS
             version=${{ env.VERSION }}
             release=${{ steps.info.outputs.epoch }}
             build-date=${{ steps.info.outputs.date }}
-            summary=OpenBao is a tool for securely accessing secrets
-            description=OpenBao is a tool for securely accessing secrets. A secret is anything that you want to tightly control access to, such as API keys, passwords, certificates, and more. OpenBao provides a unified interface to any secret, while providing tight access control and recording a detailed audit log
-            url=https://openbao.org
+            summary=Redacto KMS manages, stores, and distributes secrets, certificates, and keys
+            description=Redacto KMS manages, stores, and distributes sensitive data including secrets, certificates, and keys, with tight access control and a detailed audit log
+            url=${{ github.server_url }}/${{ github.repository }}
             vcs-ref=${{ steps.info.outputs.sha }}
             vcs-type=git
-            org.opencontainers.image.authors=OpenBao <openbao@lists.openssf.org>
-            org.opencontainers.image.url=https://openbao.org
-            org.opencontainers.image.documentation=https://github.com/openbao/openbao/blob/main/README.md
-            org.opencontainers.image.source=https://github.com/openbao/openbao
+            org.opencontainers.image.authors=Redacto KMS
+            org.opencontainers.image.url=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.documentation=${{ github.server_url }}/${{ github.repository }}/blob/main/README.md
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
             org.opencontainers.image.version=${{ env.VERSION }}
             org.opencontainers.image.revision=${{ steps.info.outputs.sha }}
-            org.opencontainers.image.vendor=OpenBao
-            org.opencontainers.image.licenses=MPL-2.0
-            org.opencontainers.image.title=OpenBao
-            org.opencontainers.image.description=OpenBao is a tool for securely accessing secrets
+            org.opencontainers.image.vendor=Redacto KMS
+            org.opencontainers.image.licenses=*
+            org.opencontainers.image.title=Redacto KMS
+            org.opencontainers.image.description=Redacto KMS manages, stores, and distributes secrets, certificates, and keys
 
       - name: Sign images w/ Cosign
         run: |

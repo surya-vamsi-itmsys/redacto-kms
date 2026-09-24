@@ -1,13 +1,13 @@
 ---
 sidebar_label: Overview
 description: |-
-  The "audit" command groups subcommands for interacting with OpenBao's audit
+  The "audit" command groups subcommands for interacting with Redacto KMS's audit
   devices. Users can list, enable, and disable audit devices.
 ---
 
 # audit
 
-The `audit` command groups subcommands for interacting with OpenBao's audit
+The `audit` command groups subcommands for interacting with Redacto KMS's audit
 devices. Users can list, enable, and disable audit devices.
 
 For more information, please see the [audit device
@@ -18,14 +18,14 @@ documentation](../../audit/index.mdx)
 Enable an audit device:
 
 ```shell-session
-$ bao audit enable file file_path=/tmp/my-file.txt
+$ redacto-kms audit enable file file_path=/tmp/my-file.txt
 Success! Enabled the file audit device at: file/
 ```
 
 List all audit devices:
 
 ```shell-session
-$ bao audit list
+$ redacto-kms audit list
 Path     Type    Description
 ----     ----    -----------
 file/    file    n/a
@@ -34,7 +34,7 @@ file/    file    n/a
 Disable an audit device:
 
 ```shell-session
-$ bao audit disable file/
+$ redacto-kms audit disable file/
 Success! Disabled audit device (if it was enabled) at: file/
 ```
 
@@ -49,7 +49,7 @@ the audit device at the same path, as a new salt will be created for hashing.
 ## Usage
 
 ```text
-Usage: bao audit <subcommand> [options] [args]
+Usage: redacto-kms audit <subcommand> [options] [args]
 
   # ...
 

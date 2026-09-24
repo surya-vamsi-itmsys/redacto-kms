@@ -123,7 +123,7 @@ func NewDirectInmem(conf map[string]string, logger log.Logger) (physical.Backend
 		return nil, fmt.Errorf("error creating underlying implementation: %w", err)
 	}
 
-	doLog := api.ReadBaoVariable("BAO_INMEM_LOG_ALL_OPS") != ""
+	doLog := api.ReadBaoVariable("REDACTO_KMS_INMEM_LOG_ALL_OPS") != ""
 	if logger == nil {
 		if !doLog {
 			logger = log.NewNullLogger()

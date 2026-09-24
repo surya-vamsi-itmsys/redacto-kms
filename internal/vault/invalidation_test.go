@@ -520,7 +520,7 @@ func TestCore_Invalidate_LoginMFA(t *testing.T) {
 			req.ClientToken = root
 			req.Data = map[string]any{
 				"method_name": "testing",
-				"issuer":      "OpenBao",
+				"issuer":      "Redacto KMS",
 			}
 			resp := testCore_Invalidate_handleRequest(t, ctx, c, req)
 			require.NotNil(t, resp)

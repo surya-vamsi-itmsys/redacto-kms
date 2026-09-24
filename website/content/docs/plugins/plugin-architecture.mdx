@@ -1,30 +1,30 @@
 ---
 sidebar_label: Plugin Architecture
-description: Learn about OpenBao's plugin architecture.
+description: Learn about Redacto KMS's plugin architecture.
 ---
 
 # External plugin architecture
 
-OpenBao's external plugins are completely separate, standalone applications that
-OpenBao executes and communicates with over gRPC. This means the plugin process
-does not share the same memory space as OpenBao and therefore can only access
+Redacto KMS's external plugins are completely separate, standalone applications that
+Redacto KMS executes and communicates with over gRPC. This means the plugin process
+does not share the same memory space as Redacto KMS and therefore can only access
 the interfaces and arguments given to it. This also means a crash in a plugin
-cannot crash the entirety of OpenBao.
+cannot crash the entirety of Redacto KMS.
 
 It is possible to enable a custom plugin with a name that's identical to a
-built-in plugin. In such a situation, OpenBao will always choose the custom
+built-in plugin. In such a situation, Redacto KMS will always choose the custom
 plugin when enabling it.
 
 ## External plugin lifecycle
 
-OpenBao external plugins are long-running processes that remain running once
-they are spawned per OpenBao node, the parent process. Additionally, there are
-cases where plugin processes may be terminated by OpenBao. These cases include,
+Redacto KMS external plugins are long-running processes that remain running once
+they are spawned per Redacto KMS node, the parent process. Additionally, there are
+cases where plugin processes may be terminated by Redacto KMS. These cases include,
 but are not limited to:
 
-- OpenBao active node step-down
-- OpenBao barrier seal
-- OpenBao graceful shutdown
+- Redacto KMS active node step-down
+- Redacto KMS barrier seal
+- Redacto KMS graceful shutdown
 - Disabling a Secrets Engine or Auth method that uses external plugins
 - Database configured connection deletion
 - Database configured connection update
@@ -32,48 +32,48 @@ but are not limited to:
 - Database root credentials rotation
 - WAL Rollback from a previously failed root credentials rotation operation
 
-The lifecycle of plugin processes are managed automatically by OpenBao.
+The lifecycle of plugin processes are managed automatically by Redacto KMS.
 Termination of these processes are typical in certain scenarios, such as the
-ones listed above. OpenBao will start plugin processes when they are enabled.
+ones listed above. Redacto KMS will start plugin processes when they are enabled.
 A plugin process may be started or terminated through other internal processes
-within OpenBao as well. Since OpenBao manages and tracks the lifecycle of
+within Redacto KMS as well. Since Redacto KMS manages and tracks the lifecycle of
 its plugins, these processes should not be terminated by anything other than
-OpenBao. If a plugin process is shutdown out-of-band, the plugin process will be
-lazily reloaded when a request that requires the plugin is received by OpenBao.
+Redacto KMS. If a plugin process is shutdown out-of-band, the plugin process will be
+lazily reloaded when a request that requires the plugin is received by Redacto KMS.
 
 ## Plugin communication
 
-OpenBao communicates with external plugins over gRPC. To secure this
-communication, OpenBao creates a mutually authenticated TLS connection with
+Redacto KMS communicates with external plugins over gRPC. To secure this
+communication, Redacto KMS creates a mutually authenticated TLS connection with
 the plugin's gRPC server. Plugins make use of the `AutoMTLS` feature of
 [go-plugin](https://www.github.com/hashicorp/go-plugin) which will automatically
 negotiate mutual TLS for transport authentication.
 
 ## Plugin registration
 
-An important consideration of OpenBao's plugin system is to ensure the
-plugin invoked by OpenBao is authentic and maintains integrity. There are two
-components that an OpenBao operator needs to configure before external plugins
+An important consideration of Redacto KMS's plugin system is to ensure the
+plugin invoked by Redacto KMS is authentic and maintains integrity. There are two
+components that a Redacto KMS operator needs to configure before external plugins
 can be run - the plugin directory and the plugin catalog entry.
 
 ### Plugin directory
 
-The plugin directory is a configuration option of OpenBao and can be specified
+The plugin directory is a configuration option of Redacto KMS and can be specified
 in the [configuration file](../configuration/index.mdx). This setting specifies
 a directory in which all plugin binaries must live; _this value cannot be a
-symbolic link_. A plugin cannot be added to OpenBao unless it exists in the
+symbolic link_. A plugin cannot be added to Redacto KMS unless it exists in the
 plugin directory. There is no default for this configuration option, and if it
-is not set, plugins cannot be added to OpenBao.
+is not set, plugins cannot be added to Redacto KMS.
 
 @include 'plugin-file-permissions-check.mdx'
 
 ### Plugin catalog
 
-The plugin catalog is OpenBao's list of approved plugins.
+The plugin catalog is Redacto KMS's list of approved plugins.
 
-As of v2.6.0, OpenBao has two plugin catalogs:
+As of v2.6.0, Redacto KMS has two plugin catalogs:
 
-1. The "core" plugin catalog that persists plugin registrations to OpenBao's
+1. The "core" plugin catalog that persists plugin registrations to Redacto KMS's
    barrier. This handles plugins of type `auth`, `secrets` and `database`.
    Both [Declarative plugin configuration](../configuration/plugins.mdx) and
    [API-driven plugin management](./index.mdx#plugin-registration) can be used in tandem
@@ -83,7 +83,7 @@ As of v2.6.0, OpenBao has two plugin catalogs:
 2. The "static" plugin catalog that is driven by [Declarative plugin
    configuration](../configuration/plugins.mdx) only. This currently only
    handles plugins of type `kms`. This catalog does not persist plugin
-   registration to OpenBao's barrier and is not accessible via the API.
+   registration to Redacto KMS's barrier and is not accessible via the API.
 
 Upon adding a new plugin, the plugin name, SHA-256 sum of the executable, and
 the command that should be used to run the plugin must be provided. The catalog
@@ -100,10 +100,10 @@ plugin "database" "myplugin" {
 }
 ```
 
-An example of plugin registration via the API, using the `bao` CLI:
+An example of plugin registration via the API, using the `redacto-kms` CLI:
 
 ```shell-session
-$ bao plugin register -sha256=<SHA256 Hex value of the plugin binary> \
+$ redacto-kms plugin register -sha256=<SHA256 Hex value of the plugin binary> \
     secret \                  # type
     myplugin-database-plugin
 
@@ -114,13 +114,13 @@ Success! Registered plugin: myplugin-database-plugin
 
 When a backend wants to run a plugin, it first looks up the plugin, by name,
 in the catalog. It then checks the executable's SHA-256 sum against the one
-configured in the plugin catalog. Finally OpenBao runs the command configured in
+configured in the plugin catalog. Finally Redacto KMS runs the command configured in
 the catalog.
 
 ### Plugin upgrades
 
 External plugins may be updated by registering and reloading them. More
-details on the upgrade procedure can be found in [Upgrading OpenBao
+details on the upgrade procedure can be found in [Upgrading Redacto KMS
 Plugins](../guides/upgrade/plugins.mdx).
 
 ## Plugin multiplexing
@@ -128,18 +128,18 @@ Plugins](../guides/upgrade/plugins.mdx).
 To avoid spawning multiple plugin processes for mounts of the same type, auth
 method, secrets engine and database plugins can implement plugin multiplexing.
 This allows a single plugin process to be used for multiple mounts of a given
-type. This single process will be multiplexed across all OpenBao namespaces for
+type. This single process will be multiplexed across all Redacto KMS namespaces for
 mounts of this type. Multiplexing a plugin does not affect the current behavior
 of existing plugins.
 
 To enable multiplexing, the plugin must be compiled with the `ServeMultiplex`
-function call from OpenBao's respective `plugin` or `dbplugin` SDK packages.
+function call from Redacto KMS's respective `plugin` or `dbplugin` SDK packages.
 At this time, there is no opt-out capability for plugins that implement
 multiplexing. To use a non-multiplexed plugin, run an older version of the
 plugin, i.e., the plugin calls the `Serve` function.
 
 KMS provider plugins support concurrent usage by several subsystems or instances
-in OpenBao by default and do not make a distinction between multiplexed and
+in Redacto KMS by default and do not make a distinction between multiplexed and
 non-multiplexed plugin processes by design.
 
 More resources on implementing plugin multiplexing:

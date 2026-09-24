@@ -1,7 +1,7 @@
 ---
 sidebar_label: AliCloud KMS
 description: >-
-  The AliCloud KMS seal configures OpenBao to use AliCloud KMS as the seal
+  The AliCloud KMS seal configures Redacto KMS to use AliCloud KMS as the seal
   wrapping mechanism.
 ---
 
@@ -16,11 +16,11 @@ section](./index.mdx#plugins).
 
 :::
 
-The AliCloud KMS seal configures OpenBao to use AliCloud KMS as the seal wrapping mechanism.
+The AliCloud KMS seal configures Redacto KMS to use AliCloud KMS as the seal wrapping mechanism.
 The AliCloud KMS seal is activated by one of the following:
 
-- The presence of a `seal "alicloudkms"` block in OpenBao's configuration file.
-- The presence of the environment variable `VAULT_SEAL_TYPE` set to `alicloudkms`. If
+- The presence of a `seal "alicloudkms"` block in Redacto KMS's configuration file.
+- The presence of the environment variable `REDACTO_KMS_SEAL_TYPE` set to `alicloudkms`. If
   enabling via environment variable, all other required values specific to AliCloud
   KMS (i.e. `VAULT_ALICLOUDKMS_SEAL_KEY_ID`) must be also supplied, as well as all
   other AliCloud-related environment variables that lends to successful
@@ -28,7 +28,7 @@ The AliCloud KMS seal is activated by one of the following:
 
 ## `alicloudkms` example
 
-This example shows configuring AliCloud KMS seal through the OpenBao configuration file
+This example shows configuring AliCloud KMS seal through the Redacto KMS configuration file
 by providing all the required values:
 
 ```hcl
@@ -42,7 +42,7 @@ seal "alicloudkms" {
 
 ## `alicloudkms` parameters
 
-These parameters apply to the `seal` stanza in the OpenBao configuration file:
+These parameters apply to the `seal` stanza in the Redacto KMS configuration file:
 
 - `region` `(string: <required> "us-east-1")`: The AliCloud region where the encryption key
   lives. May also be specified by the `ALICLOUD_REGION`
@@ -64,7 +64,7 @@ These parameters apply to the `seal` stanza in the OpenBao configuration file:
   and decryption. May also be specified by the `VAULT_ALICLOUDKMS_SEAL_KEY_ID`
   environment variable.
 
-- `disabled` `(string: "")`: Set this to `true` if OpenBao is migrating from an auto seal configuration. Otherwise, set to `false`.
+- `disabled` `(string: "")`: Set this to `true` if Redacto KMS is migrating from an auto seal configuration. Otherwise, set to `false`.
 
 Refer to the [Seal Migration](../../concepts/seal.mdx#seal-migration) documentation for more information about the seal migration process.
 
@@ -98,8 +98,8 @@ Alternatively, the AliCloud KMS seal can be activated by providing the following
 environment variables:
 
 ```text
-OpenBao Seal specific values:
+Redacto KMS Seal specific values:
 
-* `VAULT_SEAL_TYPE`
+* `REDACTO_KMS_SEAL_TYPE`
 * `VAULT_ALICLOUDKMS_SEAL_KEY_ID`
 ```

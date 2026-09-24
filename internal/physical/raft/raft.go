@@ -49,13 +49,13 @@ import (
 
 const (
 	// EnvVaultRaftNodeID is used to fetch the Raft node ID from the environment.
-	EnvVaultRaftNodeID = "BAO_RAFT_NODE_ID"
+	EnvVaultRaftNodeID = "REDACTO_KMS_RAFT_NODE_ID"
 
 	// EnvVaultRaftPath is used to fetch the path where Raft data is stored from the environment.
-	EnvVaultRaftPath = "BAO_RAFT_PATH"
+	EnvVaultRaftPath = "REDACTO_KMS_RAFT_PATH"
 
 	// EnvVaultRaftNonVoter is used to override the non_voter config option, telling Vault to join as a non-voter (i.e. read replica).
-	EnvVaultRaftNonVoter  = "BAO_RAFT_RETRY_JOIN_AS_NON_VOTER"
+	EnvVaultRaftNonVoter  = "REDACTO_KMS_RAFT_RETRY_JOIN_AS_NON_VOTER"
 	raftNonVoterConfigKey = "retry_join_as_non_voter"
 
 	// NodeNonVoter is a custom node type for non-voters
@@ -200,7 +200,7 @@ type RaftBackend struct {
 	// disableAutopilot if set will not put autopilot implementation to use. The
 	// fallback will be to interact with the raft instance directly. This can only
 	// be set during startup via the environment variable
-	// VAULT_RAFT_AUTOPILOT_DISABLE during startup and can't be updated once the
+	// REDACTO_KMS_RAFT_AUTOPILOT_DISABLE during startup and can't be updated once the
 	// node is up and running.
 	disableAutopilot bool
 
@@ -550,7 +550,7 @@ func NewRaftBackend(conf map[string]string, logger log.Logger) (physical.Backend
 	var nonVoter bool
 	if v := api.ReadBaoVariable(EnvVaultRaftNonVoter); v != "" {
 		// Consistent with handling of other raft boolean env vars
-		// VAULT_RAFT_AUTOPILOT_DISABLE and VAULT_RAFT_FREELIST_SYNC
+		// REDACTO_KMS_RAFT_AUTOPILOT_DISABLE and REDACTO_KMS_RAFT_FREELIST_SYNC
 		nonVoter = true
 	} else if v, ok := conf[raftNonVoterConfigKey]; ok {
 		nonVoter, err = strconv.ParseBool(v)
@@ -2155,23 +2155,23 @@ func boltOptions(path string) *bolt.Options {
 		MmapFlags:      getMmapFlags(path),
 	}
 
-	if api.ReadBaoVariable("BAO_RAFT_FREELIST_TYPE") == "array" {
+	if api.ReadBaoVariable("REDACTO_KMS_RAFT_FREELIST_TYPE") == "array" {
 		o.FreelistType = bolt.FreelistArrayType
 	}
 
-	if api.ReadBaoVariable("BAO_RAFT_FREELIST_SYNC") != "" {
+	if api.ReadBaoVariable("REDACTO_KMS_RAFT_FREELIST_SYNC") != "" {
 		o.NoFreelistSync = false
 	}
 
 	// By default, we want to set InitialMmapSize to 100GB, but only on 64bit platforms.
-	// Otherwise, we set it to whatever the value of BAO_RAFT_INITIAL_MMAP_SIZE
+	// Otherwise, we set it to whatever the value of REDACTO_KMS_RAFT_INITIAL_MMAP_SIZE
 	// is, assuming it can be parsed as an int. Bolt itself sets this to 0 by default,
 	// so if users are wanting to turn this off, they can also set it to 0. Setting it
 	// to a negative value is the same as not setting it at all.
-	if api.ReadBaoVariable("BAO_RAFT_INITIAL_MMAP_SIZE") == "" {
+	if api.ReadBaoVariable("REDACTO_KMS_RAFT_INITIAL_MMAP_SIZE") == "" {
 		o.InitialMmapSize = initialMmapSize
 	} else {
-		imms, err := strconv.Atoi(api.ReadBaoVariable("BAO_RAFT_INITIAL_MMAP_SIZE"))
+		imms, err := strconv.Atoi(api.ReadBaoVariable("REDACTO_KMS_RAFT_INITIAL_MMAP_SIZE"))
 
 		// If there's an error here, it means they passed something that's not convertible to
 		// a number. Rather than fail startup, just ignore it.

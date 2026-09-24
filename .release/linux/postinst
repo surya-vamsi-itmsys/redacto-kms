@@ -1,18 +1,18 @@
 #!/bin/bash
 
-if [[ -f /opt/openbao/tls/tls.crt ]] && [[ -f /opt/openbao/tls/tls.key ]]; then
-  echo "OpenBao TLS key and certificate already exist. Exiting."
+if [[ -f /opt/redacto-kms/tls/tls.crt ]] && [[ -f /opt/redacto-kms/tls/tls.key ]]; then
+  echo "Redacto KMS TLS key and certificate already exist. Exiting."
   exit 0
 fi
 
-echo "Generating OpenBao TLS key and self-signed certificate..."
+echo "Generating Redacto KMS TLS key and self-signed certificate..."
 
 # Create TLS and Data directory
-mkdir --parents /opt/openbao/tls
-mkdir --parents /opt/openbao/data
+mkdir --parents /opt/redacto-kms/tls
+mkdir --parents /opt/redacto-kms/data
 
 # Generate TLS key and certificate
-cd /opt/openbao/tls
+cd /opt/redacto-kms/tls
 openssl req \
   -out tls.crt \
   -new \
@@ -21,16 +21,16 @@ openssl req \
   -nodes \
   -sha256 \
   -x509 \
-  -subj "/O=OpenBao/CN=OpenBao" \
+  -subj "/O=Redacto KMS/CN=Redacto KMS" \
   -days 1095 # 3 years
 
 # Update file permissions
-chown --recursive openbao:openbao /etc/openbao
-chown --recursive openbao:openbao /opt/openbao
-chmod 600 /opt/openbao/tls/tls.crt /opt/openbao/tls/tls.key
-chmod 700 /opt/openbao/tls
+chown --recursive redacto-kms:redacto-kms /etc/redacto-kms
+chown --recursive redacto-kms:redacto-kms /opt/redacto-kms
+chmod 600 /opt/redacto-kms/tls/tls.crt /opt/redacto-kms/tls/tls.key
+chmod 700 /opt/redacto-kms/tls
 
-echo "OpenBao TLS key and self-signed certificate have been generated in '/opt/openbao/tls'."
+echo "Redacto KMS TLS key and self-signed certificate have been generated in '/opt/redacto-kms/tls'."
 
 if [ -d /run/systemd/system ]; then
     systemctl --system daemon-reload >/dev/null || true

@@ -35,28 +35,28 @@ func (c *OperatorRaftJoinCommand) Synopsis() string {
 
 func (c *OperatorRaftJoinCommand) Help() string {
 	helpText := `
-Usage: bao operator raft join [options] <leader-api-addr|auto-join-configuration>
+Usage: redacto-kms operator raft join [options] <leader-api-addr|auto-join-configuration>
 
   Join the current node as a peer to the Raft cluster by providing the address
   of the Raft leader node.
 
-      $ bao operator raft join "http://127.0.0.2:8200"
+      $ redacto-kms operator raft join "http://127.0.0.2:8200"
 
   Join the current node as a peer to the Raft cluster by providing cloud auto-join
   configuration.
 
-      $ bao operator raft join "provider=aws region=eu-west-1 ..."
+      $ redacto-kms operator raft join "provider=aws region=eu-west-1 ..."
 			
   Join the current node as a peer to the Raft cluster by providing cloud auto-join
   configuration with an explicit URI scheme and port.
 
-			$ bao operator raft join -auto-join-scheme="http" -auto-join-port=8201 \
+			$ redacto-kms operator raft join -auto-join-scheme="http" -auto-join-port=8201 \
 			  "provider=aws region=eu-west-1 ..."
 
   TLS certificate data can also be consumed from a file on disk by prefixing with
   the "@" symbol. For example:
 
-      $ bao operator raft join "http://127.0.0.2:8200" \
+      $ redacto-kms operator raft join "http://127.0.0.2:8200" \
         -leader-ca-cert=@leader_ca.crt \
         -leader-client-cert=@leader_client.crt \
         -leader-client-key=@leader.key

@@ -2,7 +2,7 @@
 
 if [ "$1" = "purge" ]
 then
-  userdel openbao
+  userdel redacto-kms
 fi
 
 exit 0

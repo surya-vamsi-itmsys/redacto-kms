@@ -21,23 +21,23 @@ func (c *OperatorCommand) Synopsis() string {
 
 func (c *OperatorCommand) Help() string {
 	helpText := `
-Usage: bao operator <subcommand> [options] [args]
+Usage: redacto-kms operator <subcommand> [options] [args]
 
-  This command groups subcommands for operators interacting with OpenBao. Most
+  This command groups subcommands for operators interacting with Redacto KMS. Most
   users will not need to interact with these commands. Here are a few examples
   of the operator commands:
 
-  Initialize a new OpenBao cluster:
+  Initialize a new Redacto KMS cluster:
 
-      $ bao operator init
+      $ redacto-kms operator init
 
-  Force an OpenBao node to resign leadership in a cluster:
+  Force a Redacto KMS node to resign leadership in a cluster:
 
-      $ bao operator step-down
+      $ redacto-kms operator step-down
 
-  Rotate OpenBao's underlying encryption key:
+  Rotate Redacto KMS's underlying encryption key:
 
-      $ bao operator rotate
+      $ redacto-kms operator rotate
 
   Please see the individual subcommand help for detailed usage information.
 `

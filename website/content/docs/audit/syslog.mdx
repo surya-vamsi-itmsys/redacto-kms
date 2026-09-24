@@ -9,7 +9,7 @@ The `syslog` audit device writes audit logs to syslog.
 
 It currently does not support a configurable syslog destination, and always
 sends to the local agent. This device is only supported on Unix systems,
-and should not be enabled if any standby OpenBao instances do not support it.
+and should not be enabled if any standby Redacto KMS instances do not support it.
 
 :::warning
 
@@ -19,7 +19,7 @@ packet](https://tools.ietf.org/html/rfc5426#section-3.1). If possible with your
 syslog daemon, configure a TCP listener. Otherwise, consider using a `file`
 backend and having syslog configured to read entries from the file; or, enable
 both `file` and `syslog` so that a failure for a particular message to log
-directly to `syslog` will not result in OpenBao being blocked.
+directly to `syslog` will not result in Redacto KMS being blocked.
 
 :::
 
@@ -28,13 +28,13 @@ directly to `syslog` will not result in OpenBao being blocked.
 Audit `syslog` device can be enabled by the following command:
 
 ```shell-session
-$ bao audit enable syslog
+$ redacto-kms audit enable syslog
 ```
 
 Supply configuration parameters via K=V pairs:
 
 ```shell-session
-$ bao audit enable syslog tag="openbao" facility="AUTH"
+$ redacto-kms audit enable syslog tag="openbao" facility="AUTH"
 ```
 
 ## Configuration

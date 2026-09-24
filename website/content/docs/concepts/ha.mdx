@@ -1,38 +1,38 @@
 ---
 sidebar_label: High availability
 description: >-
-  OpenBao can be highly available, allowing you to run multiple OpenBaos to protect
+  Redacto KMS can be highly available, allowing you to run multiple Redacto KMSs to protect
   against outages.
 ---
 
 # High Availability (HA) mode
 
-OpenBao supports a multi-server mode for High Availability. This mode protects
-against outages by running multiple OpenBao servers. High Availability mode
+Redacto KMS supports a multi-server mode for High Availability. This mode protects
+against outages by running multiple Redacto KMS servers. High Availability mode
 is automatically enabled when using a data store that supports it.
 
 You can tell if a data store supports High Availability mode by starting
 the server and seeing if "(HA available)" is output next to the data store
-information. If it is, then OpenBao will automatically use HA mode. This
+information. If it is, then Redacto KMS will automatically use HA mode. This
 information is also available on the
 [Configuration](../configuration/storage/index.mdx) page.
 
-To be Highly Available, one of the OpenBao server nodes grabs a lock within the
+To be Highly Available, one of the Redacto KMS server nodes grabs a lock within the
 data store. The successful server node then becomes the active node; all other
 nodes become standby nodes. At this point, if the standby nodes receive a
 request, they will either [forward the request](#request-forwarding) or
 [redirect the client](#client-redirection) depending on the current
 configuration and state of the cluster -- see the sections below for details.
 Due to this architecture, HA does not enable increased scalability. In general,
-the bottleneck of OpenBao is the data store itself, not OpenBao core.
+the bottleneck of Redacto KMS is the data store itself, not Redacto KMS core.
 
 Certain storage backends can support High Availability mode, which enable them
-to store both OpenBao's information in addition to the HA lock. However, OpenBao
+to store both Redacto KMS's information in addition to the HA lock. However, Redacto KMS
 also supports split data/HA mode, whereby the lock value and the rest of the
 data live separately. This can be done by specifying both the
 [`storage`](../configuration/index.mdx#storage) and
 [`ha_storage`](../configuration/index.mdx#ha_storage) stanzas in the configuration file
-with different backends. For instance, an OpenBao cluster can be set up to use
+with different backends. For instance, a Redacto KMS cluster can be set up to use
 Consul as the [`ha_storage`](../configuration/index.mdx#ha_storage) to manage the lock,
 and use Amazon S3 as the [`storage`](../configuration/index.mdx#storage) for all other
 persisted data.
@@ -45,8 +45,8 @@ mode must be met for an HA cluster to work successfully.
 
 Both methods of request handling rely on the active node advertising
 information about itself to the other nodes. Rather than over the network, this
-communication takes place within OpenBao's encrypted storage; the active node
-writes this information and unsealed standby OpenBao nodes can read it.
+communication takes place within Redacto KMS's encrypted storage; the active node
+writes this information and unsealed standby Redacto KMS nodes can read it.
 
 For the client redirection method, this is the extent of server-to-server
 communication -- no direct communication with only encrypted entries in the
@@ -85,21 +85,21 @@ always required for all HA setups.
 Some HA data store drivers can autodetect the redirect address, but it is often
 necessary to configure it manually via a top-level value in the configuration
 file. The key for this value is [`api_addr`](../configuration/index.mdx#api_addr) and
-the value can also be specified by the `BAO_API_ADDR` environment variable,
+the value can also be specified by the `REDACTO_KMS_API_ADDR` environment variable,
 which takes precedence.
 
 What the [`api_addr`](../configuration/index.mdx#api_addr) value should be set to
-depends on how OpenBao is set up. There are two common scenarios: OpenBao servers
-accessed directly by clients, and OpenBao servers accessed via a load balancer.
+depends on how Redacto KMS is set up. There are two common scenarios: Redacto KMS servers
+accessed directly by clients, and Redacto KMS servers accessed via a load balancer.
 
 In both cases, the [`api_addr`](../configuration/index.mdx#api_addr) should be a full
 URL including scheme (`http`/`https`), not simply an IP address and port.
 
 ### Direct access
 
-When clients are able to access OpenBao directly, the
+When clients are able to access Redacto KMS directly, the
 [`api_addr`](../configuration/index.mdx#api_addr) for each node should be that node's
-address. For instance, if there are two OpenBao nodes:
+address. For instance, if there are two Redacto KMS nodes:
 
 - `A`, accessed via `https://a.openbao.mycompany.com:8200`
 - `B`, accessed via `https://b.openbao.mycompany.com:8200`
@@ -118,11 +118,11 @@ and vice-versa.
 ### Behind load balancers
 
 Sometimes clients use load balancers as an initial method to access one of the
-OpenBao servers, but actually have direct access to each OpenBao node. In this
-case, the OpenBao servers should actually be set up as described in the above
+Redacto KMS servers, but actually have direct access to each Redacto KMS node. In this
+case, the Redacto KMS servers should actually be set up as described in the above
 section, since for redirection purposes the clients have direct access.
 
-However, if the only access to the OpenBao servers is via the load balancer, the
+However, if the only access to the Redacto KMS servers is via the load balancer, the
 [`api_addr`](../configuration/index.mdx#api_addr) on each node should be the same: the
 address of the load balancer. Clients that reach a standby node will be
 redirected back to the load balancer; at that point hopefully the load
@@ -132,12 +132,12 @@ setup when it can be avoided.
 
 ### Per-Node cluster listener addresses
 
-Each [`listener`](../configuration/listener/index.mdx) block in OpenBao's configuration
+Each [`listener`](../configuration/listener/index.mdx) block in Redacto KMS's configuration
 file contains an [`address`](../configuration/listener/tcp.mdx#address) value on
-which OpenBao listens for requests. Similarly, each
+which Redacto KMS listens for requests. Similarly, each
 [`listener`](../configuration/listener/index.mdx) block can contain a
 [`cluster_address`](../configuration/listener/tcp.mdx#cluster_address) on which
-OpenBao listens for server-to-server cluster requests. If this value is not set,
+Redacto KMS listens for server-to-server cluster requests. If this value is not set,
 its IP address will be automatically set to same as the
 [`address`](../configuration/listener/tcp.mdx#address) value, and its port will
 be automatically set to the same as the
@@ -160,7 +160,7 @@ use to reach one of that node's
 this will always be forced to `https` since only TLS connections are used
 between servers.)
 
-This value can also be specified by the `BAO_CLUSTER_ADDR` environment
+This value can also be specified by the `REDACTO_KMS_CLUSTER_ADDR` environment
 variable, which takes precedence.
 
 ## Storage support
@@ -172,8 +172,8 @@ that, some community supported storage backends implement High Availability as
 well. These may change over time, and the [configuration
 page](../configuration/storage/index.mdx) should be referenced.
 
-The [OpenBao Integrated Storage](../configuration/storage/raft.mdx) is
-recommended as the default HA backend for new deployments of OpenBao. See the
+The [Redacto KMS Integrated Storage](../configuration/storage/raft.mdx) is
+recommended as the default HA backend for new deployments of Redacto KMS. See the
 [comparison
 chart](../configuration/storage/index.mdx#integrated-storage-raft-vs-postgresql)
 for help deciding which option is best for you.
@@ -186,10 +186,10 @@ interface for the storage backend.
 
 ## Horizontal scalability
 
-Since OpenBao v2.5.0, the [Raft backend](../configuration/storage/raft.mdx)
+Since Redacto KMS v2.5.0, the [Raft backend](../configuration/storage/raft.mdx)
 has supported horizontal scalability for read requests. Any operation which
 does not result in a storage write can be handled by a standby node. Support
-for horizontal scalability was added in OpenBao v2.7.0 for the [PostgreSQL
+for horizontal scalability was added in Redacto KMS v2.7.0 for the [PostgreSQL
 backend](../configuration/storage/postgresql.mdx).
 
 This is similar to the Performance Standby node types in Vault Enterprise.

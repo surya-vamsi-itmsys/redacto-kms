@@ -13,23 +13,23 @@ esac
 mkdir -p build/deb/conf
 
 cat > build/deb/conf/distributions <<-EOF
-	Origin: OpenBao - Official
-	Label: OpenBao
+	Origin: Redacto KMS - Official
+	Label: Redacto KMS
 	Suite: stable
 	Codename: stable
 	Architectures: amd64 arm64 armhf ppc64el riscv64 s390x
 	Components: main
-	Description: Official APT repository for OpenBao releases
+	Description: Official APT repository for Redacto KMS releases
 	SignWith: ${GPG_FINGERPRINT}
 	Limit: 0
 
-	Origin: OpenBao - Official
-	Label: OpenBao
+	Origin: Redacto KMS - Official
+	Label: Redacto KMS
 	Suite: testing
 	Codename: testing
 	Architectures: amd64 arm64 armhf ppc64el riscv64 s390x
 	Components: main
-	Description: Official APT repository for OpenBao pre-releases
+	Description: Official APT repository for Redacto KMS pre-releases
 	SignWith: ${GPG_FINGERPRINT}
 	Limit: 0
 EOF

@@ -27,12 +27,13 @@ func NewOASDocument(version string) *OASDocument {
 	return &OASDocument{
 		Version: OASVersion,
 		Info: OASInfo{
-			Title:       "OpenBao API",
-			Description: "HTTP API that gives you full access to OpenBao. All API routes are prefixed with `/v1/`.",
+			Title:       "Redacto KMS API",
+			Description: "HTTP API that gives you full access to Redacto KMS. All API routes are prefixed with `/v1/`.",
 			Version:     version,
+			// Licensing display value for Redacto KMS product surfaces. Source
+			// license notices (LICENSE, SPDX headers) are unaffected.
 			License: OASLicense{
-				Name: "Mozilla Public License 2.0",
-				URL:  "https://www.mozilla.org/en-US/MPL/2.0",
+				Name: "*",
 			},
 		},
 		Paths: make(map[string]*OASPathItem),
@@ -104,7 +105,7 @@ type OASInfo struct {
 
 type OASLicense struct {
 	Name string `json:"name"`
-	URL  string `json:"url"`
+	URL  string `json:"url,omitempty"`
 }
 
 type OASPathItem struct {

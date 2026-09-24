@@ -21,7 +21,7 @@ also possible to configure automatic encryption key rotation using
 
 ### Rotate unseal/recovery keys
 
-The `/sys/rotate/root` endpoints are used to rotate the root key for OpenBao,
+The `/sys/rotate/root` endpoints are used to rotate the root key for Redacto KMS,
 and the unseal key shares when using Shamir's manual unseal mechanism.
 
 When using Auto Unseal, the recovery key share(s) can be provided to rotate
@@ -29,7 +29,7 @@ the root key since no unseal keys are available. Upon successful rotation, no
 unseal key share(s) are returned.
 
 The `/sys/rotate/recovery` endpoints are used to rotate the recovery keys for
-OpenBao. These endpoints only apply to seals that support recovery keys.
+Redacto KMS. These endpoints only apply to seals that support recovery keys.
 
 Depending on the variable in the request path (`root` or `recovery`)
 operation is performed for the root or recovery keys.
@@ -67,8 +67,8 @@ configuration, as no existing key shares exist.
 ### Progress rotation
 
 `/sys/rotate/(root|recovery)/update` endpoint is used to enter a single
-key share to progress the rotation of the OpenBao. If the threshold number
-of key shares is reached, OpenBao will complete the rotation.
+key share to progress the rotation of the Redacto KMS. If the threshold number
+of key shares is reached, Redacto KMS will complete the rotation.
 
 ### Rotation verification
 

@@ -20,7 +20,7 @@ listener "tcp" {
   tls_disable = true
 }
 
-plugin_directory = "/opt/openbao/plugins"
+plugin_directory = "/opt/redacto-kms/plugins"
 
 plugin "secret" "aws" {
   image = "ghcr.io/openbao/openbao-plugin-secrets-aws"
@@ -50,7 +50,7 @@ plugin_download_behavior = "fail"
 	config, err := ParseConfig(configData, "test")
 	require.NoError(t, err)
 
-	require.Equal(t, "/opt/openbao/plugins", config.PluginDirectory)
+	require.Equal(t, "/opt/redacto-kms/plugins", config.PluginDirectory)
 	require.Equal(t, config.PluginDownloadBehavior, "fail")
 
 	for _, c := range config.Plugins {

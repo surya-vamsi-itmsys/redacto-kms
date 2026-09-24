@@ -29,20 +29,20 @@ func (c *KVUndeleteCommand) Synopsis() string {
 
 func (c *KVUndeleteCommand) Help() string {
 	helpText := `
-Usage: bao kv undelete [options] KEY
+Usage: redacto-kms kv undelete [options] KEY
 
   Undeletes the data for the provided version and path in the key-value store.
   This restores the data, allowing it to be returned on get requests.
 
   To undelete version 3 of key "foo":
   
-      $ bao kv undelete -mount=secret -versions=3 foo
+      $ redacto-kms kv undelete -mount=secret -versions=3 foo
 
   The deprecated path-like syntax can also be used, but this should be avoided, 
   as the fact that it is not actually the full API path to 
   the secret (secret/data/foo) can cause confusion: 
 
-      $ bao kv undelete -versions=3 secret/foo
+      $ redacto-kms kv undelete -versions=3 secret/foo
 
   Additional flags and more advanced use cases are detailed below.
 

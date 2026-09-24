@@ -1,14 +1,14 @@
 ---
 sidebar_label: Limits and maximums
-description: Learn about the maximum number of objects within OpenBao.
+description: Learn about the maximum number of objects within Redacto KMS.
 ---
 
-# OpenBao limits and maximums
+# Redacto KMS limits and maximums
 
-OpenBao imposes fixed upper limits on the size of certain fields and
-objects, and configurable limits on others. OpenBao also has upper
+Redacto KMS imposes fixed upper limits on the size of certain fields and
+objects, and configurable limits on others. Redacto KMS also has upper
 bounds that are a consequence of its underlying storage. This page
-attempts to collect these limits, to assist in planning OpenBao
+attempts to collect these limits, to assist in planning Redacto KMS
 deployments.
 
 In some cases, the system will show performance problems in advance of
@@ -25,10 +25,10 @@ For the Integrated Storage backend, the default limit is 1 MiB. This may be
 configured via `max_entry_size` in the [storage
 stanza](../configuration/storage/raft.mdx#max_entry_size).
 
-Many of the other limits within OpenBao derive from the maximum size of
+Many of the other limits within Redacto KMS derive from the maximum size of
 a storage entry, as described in the next sections. It is possible to
 recover from an error where a storage entry has reached its maximum
-size by reconfiguring OpenBao to a larger maximum storage
+size by reconfiguring Redacto KMS to a larger maximum storage
 entry. However, using large storage entries also negatively affects
 performance, as even a small change may become a large
 read-modify-write cycle on the entire entry. Larger writes may also delay
@@ -36,7 +36,7 @@ Raft heartbeats, leading to leadership instability.
 
 ### Mount and namespace limits
 
-Since [OpenBao v2.1.0](/community/release-notes/2-1-0#features), the mount,
+Since [Redacto KMS v2.1.0](/community/release-notes/2-1-0#features), the mount,
 auth, and namespace tables have been split into separate storage entries per
 mount, effectively removing the storage-related limits on the number of mounts
 and namespaces. These are now managed [with transactions](/community/rfcs/split-mount-tables)
@@ -57,7 +57,7 @@ has the following constraints:
 | Metadata key size                     | 128 bytes |
 | Metadata value size                   | 512 bytes |
 
-OpenBao shards the entities across 256 storage entries. This creates a hard
+Redacto KMS shards the entities across 256 storage entries. This creates a hard
 limit of  256MiB on Integrated Storage with its default settings. Entity aliases
 are stored inline in the Entity objects and so consume the same pool of storage.
 Entity definitions are compressed within each storage entry, and the
@@ -88,7 +88,7 @@ group has a large number of members.
 | Maximum number of groups (100 entities per group)                                        | ~50,000                            |
 | Maximum number of members in a group                                                     | ~23,000                            |
 
-The number of entities can be monitored using OpenBao's [telemetry](telemetry/metrics/authn.mdx); see `vault.identity.num_entities` (total) or `vault.identity.entities.count` (by namespace).
+The number of entities can be monitored using Redacto KMS's [telemetry](telemetry/metrics/authn.mdx); see `vault.identity.num_entities` (total) or `vault.identity.entities.count` (by namespace).
 
 The cost of entity and group updates grows as the number of objects in
 each shard increases. This cost can be monitored via the
@@ -126,10 +126,10 @@ within a single storage entry.
 | Maximum number of policies per token           | ~28,000                            |
 | Maximum number of policies per entity or group | ~28,000                            |
 
-Each time a token is used, OpenBao must assemble the collection of
+Each time a token is used, Redacto KMS must assemble the collection of
 policies attached to that token, to the entity, to any groups that the
 entity belongs to, and recursively to any groups that contain those groups.
-Very large numbers of policies are possible, but can cause OpenBao’s
+Very large numbers of policies are possible, but can cause Redacto KMS’s
 response time to increase. You can monitor the
 [`vault.core.fetch_acl_and_token`](telemetry/metrics/core-system.mdx#vault-core-fetch_acl_and_token)
 metric to determine if the time required to assemble an access control list
@@ -151,7 +151,7 @@ Version metadata consumes 21 bytes per version and must fit in a
 single storage entry, separate from the stored data.
 
 Each secret also has version-agnostic metadata. This data can contain a `custom_metadata` field of
-user-provided key-value pairs. OpenBao imposes the following custom metadata limits:
+user-provided key-value pairs. Redacto KMS imposes the following custom metadata limits:
 
 |                                           | Limit     |
 | ----------------------------------------- | --------- |
@@ -161,7 +161,7 @@ user-provided key-value pairs. OpenBao imposes the following custom metadata lim
 
 ### Transit secret engine
 
-The maximum size of a Transit ciphertext or plaintext is limited by OpenBao's
+The maximum size of a Transit ciphertext or plaintext is limited by Redacto KMS's
 maximum request size, as described [below](#request-size).
 
 All archived versions of a single key must fit in a single storage entry.
@@ -184,19 +184,19 @@ This limit depends on the key size.
 
 ### Request size
 
-The maximum size of an HTTP request sent to OpenBao is limited by
+The maximum size of an HTTP request sent to Redacto KMS is limited by
 the `max_request_size` option in the [listener stanza](../configuration/listener/tcp.mdx). It defaults to 32 MiB. This value, minus the overhead of
 the HTTP request itself, places an upper bound on any Transit operation,
 and on the maximum size of any key-value secrets.
 
 ### Request duration
 
-The maximum duration of an OpenBao operation is
+The maximum duration of a Redacto KMS operation is
 [`max_request_duration`](../configuration/listener/tcp.mdx), which defaults to
 90 seconds. If a particular secret engine takes longer than this to perform an
-operation on a remote service, the OpenBao client will see a failure.
+operation on a remote service, the Redacto KMS client will see a failure.
 
-The environment variable [`BAO_CLIENT_TIMEOUT`](../commands/index.mdx#bao_client_timeout) sets a client-side maximum duration as well,
+The environment variable [`REDACTO_KMS_CLIENT_TIMEOUT`](../commands/index.mdx#redacto_kms_client_timeout) sets a client-side maximum duration as well,
 which is 60 seconds by default.
 
 ### Request JSON Complexity
@@ -244,8 +244,8 @@ The current number of unexpired leases can be monitored via the
 ### External plugin limits
 
 The [plugin system](../plugins/index.mdx) launches a separate process
-initiated by OpenBao that communicates over RPC. For each secret engine and auth
-method that's enabled as an external plugin, OpenBao will spawn a process on the
+initiated by Redacto KMS that communicates over RPC. For each secret engine and auth
+method that's enabled as an external plugin, Redacto KMS will spawn a process on the
 host system. For the Database Secrets Engines, external database plugins will
 spawn a process for every configured connection.
 

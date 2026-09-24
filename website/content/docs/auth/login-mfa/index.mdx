@@ -7,18 +7,18 @@ description: |-
 
 # Login MFA
 
-OpenBao supports Multi-factor Authentication (MFA) for authenticating to an auth
+Redacto KMS supports Multi-factor Authentication (MFA) for authenticating to an auth
 method using different authentication types.  Login MFA is built on top of the
-Identity system of OpenBao.
+Identity system of Redacto KMS.
 
 ## MFA types
 
-MFA in OpenBao includes the following login types:
+MFA in Redacto KMS includes the following login types:
 
 - `Time-based One-time Password (TOTP)` - If configured and enabled on a login path,
-  this would require a TOTP passcode along with an OpenBao token to be presented
+  this would require a TOTP passcode along with a Redacto KMS token to be presented
   while invoking the API login request. The passcode will be validated against the
-  TOTP key present in the caller's identify in OpenBao.
+  TOTP key present in the caller's identify in Redacto KMS.
 
 - `Okta` - If Okta push is configured and enabled on a login path, then the enrolled
   device of the user will receive a push notification to either approve or deny access
@@ -39,7 +39,7 @@ MFA in OpenBao includes the following login types:
 
 :::warning
 
-**NOTE:** OpenBao's built-in Login MFA feature does not protect against brute forcing of
+**NOTE:** Redacto KMS's built-in Login MFA feature does not protect against brute forcing of
 TOTP passcodes by default. We recommend that per-client [rate limits](../../concepts/resource-quotas.mdx)
 are applied to the relevant login and/or mfa paths (e.g. `/sys/mfa/validate`). External MFA
 methods (`Duo`, `Ping` and `Okta`) may already provide configurable rate limiting. Rate limiting of
@@ -210,12 +210,12 @@ $ curl \
 A user is also able to use the CLI write command to validate the login request.
 
 ```shell-session
-$ bao write sys/mfa/validate -format=json @payload.json
+$ redacto-kms write sys/mfa/validate -format=json @payload.json
 ```
 
 #### Interactive CLI for login MFA
 
-OpenBao supports an interactive way of authenticating to an auth method using CLI only if the
+Redacto KMS supports an interactive way of authenticating to an auth method using CLI only if the
 login request is subject to a single MFA method validation. In this situation, if the MFA method
 is configured to use passcodes, after sending a regular login request, the user is prompted to
 insert the passcode. Upon successful MFA validation, a client token is returned.
@@ -225,12 +225,12 @@ This alleviates a user from sending the second request separately to validate a 
 To disable the interactive login experience, a user needs to pass in the `non-interactive` flag to the login request.
 
 ```shell-session
-$ bao write -non-interactive sys/mfa/validate -format=json @payload.json
+$ redacto-kms write -non-interactive sys/mfa/validate -format=json @payload.json
 ```
 
 ### TOTP passcode validation rate limit
 
-Rate limiting of Login MFA paths are enforced by default.  OpenBao allows for 5
+Rate limiting of Login MFA paths are enforced by default.  Redacto KMS allows for 5
 consecutive failed TOTP passcode validations.  This value can also be configured
 by adding `max_validation_attempts` to the TOTP configuration.  If the number of
 consecutive failed TOTP passcode validation exceeds the configured value, the

@@ -27,11 +27,11 @@ func (c *KVEnableVersioningCommand) Synopsis() string {
 
 func (c *KVEnableVersioningCommand) Help() string {
 	helpText := `
-Usage: bao kv enable-versioning [options] KEY
+Usage: redacto-kms kv enable-versioning [options] KEY
 
   This command turns on versioning for the backend at the provided path.
 
-      $ bao kv enable-versioning secret
+      $ redacto-kms kv enable-versioning secret
 
   Additional flags and more advanced use cases are detailed below.
 

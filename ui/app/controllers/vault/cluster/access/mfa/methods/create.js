@@ -28,8 +28,8 @@ export default class MfaMethodCreateController extends Controller {
 
   get description() {
     if (this.type === 'totp') {
-      return `Once set up, TOTP requires a passcode to be presented alongside a Vault token when invoking an API request.
-        The passcode will be validated against the TOTP key present in the identity of the caller in Vault.`;
+      return `Once set up, TOTP requires a passcode to be presented alongside a Redacto KMS token when invoking an API request.
+        The passcode will be validated against the TOTP key present in the identity of the caller in Redacto KMS.`;
     }
     return `Once set up, the ${this.formattedType} MFA method will require a push confirmation on mobile before login.`;
   }

@@ -26,7 +26,7 @@ func (c *SecretsDisableCommand) Synopsis() string {
 
 func (c *SecretsDisableCommand) Help() string {
 	helpText := `
-Usage: bao secrets disable [options] PATH
+Usage: redacto-kms secrets disable [options] PATH
 
   Disables a secrets engine at the given PATH. The argument corresponds to
   the enabled PATH of the engine, not the TYPE! All secrets created by this
@@ -34,7 +34,7 @@ Usage: bao secrets disable [options] PATH
 
   Disable the secrets engine enabled at aws/:
 
-      $ bao secrets disable aws/
+      $ redacto-kms secrets disable aws/
 
 ` + c.Flags().Help()
 

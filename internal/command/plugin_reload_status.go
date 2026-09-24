@@ -27,11 +27,11 @@ func (c *PluginReloadStatusCommand) Synopsis() string {
 
 func (c *PluginReloadStatusCommand) Help() string {
 	helpText := `
-Usage: bao plugin reload-status RELOAD_ID
+Usage: redacto-kms plugin reload-status RELOAD_ID
 
   Retrieves the status of a recent cluster plugin reload.  The reload id must be provided.
 
-	  $ bao plugin reload-status d60a3e83-a598-4f3a-879d-0ddd95f11d4e
+	  $ redacto-kms plugin reload-status d60a3e83-a598-4f3a-879d-0ddd95f11d4e
 
 ` + c.Flags().Help()
 

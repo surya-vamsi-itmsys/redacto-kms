@@ -21,7 +21,7 @@ func (c *OperatorRaftSnapshotCommand) Synopsis() string {
 
 func (c *OperatorRaftSnapshotCommand) Help() string {
 	helpText := `
-Usage: bao operator raft snapshot <subcommand> [options] [args]
+Usage: redacto-kms operator raft snapshot <subcommand> [options] [args]
 
   This command groups subcommands for operators interacting with the snapshot
   functionality of the integrated Raft storage backend. Here are a few examples of
@@ -29,11 +29,11 @@ Usage: bao operator raft snapshot <subcommand> [options] [args]
 
   Installs the provided snapshot, returning the cluster to the state defined in it:
 
-      $ bao operator raft snapshot restore raft.snap
+      $ redacto-kms operator raft snapshot restore raft.snap
 
   Saves a snapshot of the current state of the Raft cluster into a file:
 
-      $ bao operator raft snapshot save raft.snap
+      $ redacto-kms operator raft snapshot save raft.snap
 
   Please see the individual subcommand help for detailed usage information.
 `

@@ -2,18 +2,18 @@
 sidebar_label: Integrated storage (Raft)
 description: |-
 
-  The Integrated Storage (Raft) backend is used to persist OpenBao's data. Unlike all the other
+  The Integrated Storage (Raft) backend is used to persist Redacto KMS's data. Unlike all the other
   storage backends, this backend does not operate from a single source for the
-  data. Instead all the nodes in an OpenBao cluster will have a replicated copy of
+  data. Instead all the nodes in a Redacto KMS cluster will have a replicated copy of
   the entire data. The data is replicated across the nodes using the Raft
   Consensus Algorithm.
 ---
 
 # Integrated Storage (Raft) backend
 
-The Integrated Storage backend is used to persist OpenBao's data. Unlike other storage
+The Integrated Storage backend is used to persist Redacto KMS's data. Unlike other storage
 backends, Integrated Storage does not operate from a single source of data. Instead
-all the nodes in an OpenBao cluster will have a replicated copy of OpenBao's data.
+all the nodes in a Redacto KMS cluster will have a replicated copy of Redacto KMS's data.
 Data gets replicated across all the nodes via the [Raft Consensus
 Algorithm][raft].
 
@@ -21,7 +21,7 @@ Algorithm][raft].
 :::tip
 
 **High Availability** – the Integrated Storage (Raft) backend supports High
-Availability and Horizontal Scalability (as of OpenBao v2.5.0).
+Availability and Horizontal Scalability (as of Redacto KMS v2.5.0).
 
 :::
 
@@ -58,34 +58,34 @@ backend cannot be declared.
 
 ## `raft` parameters
 
-- `path` `(string: "")` <a name="path"></a> – The file system path where all the OpenBao data gets
+- `path` `(string: "")` <a name="path"></a> – The file system path where all the Redacto KMS data gets
   stored.
-  This value can be overridden by setting the `BAO_RAFT_PATH` environment variable.
+  This value can be overridden by setting the `REDACTO_KMS_RAFT_PATH` environment variable.
 
 - `node_id` `(string: "")` - The identifier for the node in the Raft cluster.
-  This value can be overridden by setting the `BAO_RAFT_NODE_ID` environment variable.
+  This value can be overridden by setting the `REDACTO_KMS_RAFT_NODE_ID` environment variable.
 
 - `performance_multiplier` `(integer: 0)` - An integer multiplier used by
   servers to scale key Raft timing parameters. Tuning this affects the time it
-  takes OpenBao to detect leader failures and to perform leader elections, at the
+  takes Redacto KMS to detect leader failures and to perform leader elections, at the
   expense of requiring more network and CPU resources for better performance.
   Omitting this value or setting it to 0 uses default timing described below.
   Lower values are used to tighten timing and increase sensitivity while higher
   values relax timings and reduce sensitivity.
 
-  By default, OpenBao will use a lower-performance timing that's suitable for
-  minimal OpenBao servers, currently equivalent to setting this to a value of 5
-  (this default may be changed in future versions of OpenBao, depending if the
+  By default, Redacto KMS will use a lower-performance timing that's suitable for
+  minimal Redacto KMS servers, currently equivalent to setting this to a value of 5
+  (this default may be changed in future versions of Redacto KMS, depending if the
   target minimum server profile changes). Setting this to a value of 1 will
   configure Raft to its highest-performance mode and is recommended for
-  production OpenBao servers. The maximum allowed value is 10.
+  production Redacto KMS servers. The maximum allowed value is 10.
 
 - `trailing_logs` `(integer: 10000)` - This controls how many log entries are
   left in the log store on disk after truncation. This should only be
   adjusted when followers cannot catch up to the leader due to
   high write throughput causing log truncation before a follower can replicate
   the entries. If you need to use this to recover a cluster,
-  consider reducing write throughput or the amount of data stored on OpenBao. The
+  consider reducing write throughput or the amount of data stored on Redacto KMS. The
   default value is 10000 which is suitable for all normal workloads. The
   `trailing_logs` metric is not the same as `max_trailing_logs`.
 
@@ -124,9 +124,9 @@ backend cannot be declared.
   in the Raft quorum but will still receive the data replication stream, adding
   read scalability to a cluster. This option has the same effect as the
   [`-non-voter`](../../commands/operator/raft.mdx#_non_voter) flag for the
-  `bao operator raft join` command, but only affects voting status when joining
+  `redacto-kms operator raft join` command, but only affects voting status when joining
   via `retry_join` config. This setting can be overridden to true by setting the
-  `BAO_RAFT_RETRY_JOIN_AS_NON_VOTER` environment variable to any non-empty value.
+  `REDACTO_KMS_RAFT_RETRY_JOIN_AS_NON_VOTER` environment variable to any non-empty value.
   Only valid if there is at least one `retry_join` stanza.
 
 - `max_entry_size` `(integer: 1048576)` <a name="max_entry_size"></a> - This configures the maximum number of
@@ -153,7 +153,7 @@ backend cannot be declared.
   as dead needing eviction from Raft configuration, etc.
 
 - `autopilot_update_interval` `(string: "2s")` - This is the interval after which
-  autopilot will poll OpenBao for any updates to the information it cares about. This
+  autopilot will poll Redacto KMS for any updates to the information it cares about. This
   includes things like the autopilot configuration, current autopilot state, raft
   configuration, known servers, latest raft index, and stats for all the known servers.
   The information that autopilot receives will be used to calculate its next state.
@@ -204,13 +204,13 @@ file paths or as a single-line certificate string value with newlines delimited
 by `\n`, but not a combination of both. Each [`retry_join`](#retry_join-stanza)
 stanza may contain either a [`leader_api_addr`](#leader_api_addr) value or a
 cloud [`auto_join`](#auto_join) configuration value, but not both. When an
-[`auto_join`](#auto_join) value is provided, OpenBao will automatically attempt to
+[`auto_join`](#auto_join) value is provided, Redacto KMS will automatically attempt to
 discover and resolve potential Raft leader addresses using [go-discover](https://github.com/hashicorp/go-discover).
 See the go-discover
 [README](https://github.com/hashicorp/go-discover/blob/master/README.md)
 for details on the format of the `auto_join` value.
 
-By default, OpenBao will attempt to reach discovered peers using HTTPS and port 8200. Operators may override these through the
+By default, Redacto KMS will attempt to reach discovered peers using HTTPS and port 8200. Operators may override these through the
 [`auto_join_scheme`](#auto_join_scheme) and [`auto_join_port`](#auto_join_port)
 fields respectively.
 

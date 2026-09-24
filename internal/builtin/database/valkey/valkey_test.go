@@ -216,7 +216,7 @@ func testValkeyDBInitialize_ConnectionURL(t *testing.T, host string, port int) {
 }
 
 func testValkeyDBCreateUser(t *testing.T, address string, port int) {
-	if api.ReadBaoVariable("BAO_ACC") == "" {
+	if api.ReadBaoVariable("REDACTO_KMS_ACC") == "" {
 		t.SkipNow()
 	}
 
@@ -295,7 +295,7 @@ func testValkeyDBCreateUser(t *testing.T, address string, port int) {
 }
 
 func testValkeyDBCreateUser_WithCreationStatements(t *testing.T, address string, port int) {
-	if api.ReadBaoVariable("BAO_ACC") == "" {
+	if api.ReadBaoVariable("REDACTO_KMS_ACC") == "" {
 		t.SkipNow()
 	}
 	t.Log("Testing CreateUser() with creation statements")
@@ -374,7 +374,7 @@ func testValkeyDBCreateUser_WithCreationStatements(t *testing.T, address string,
 }
 
 func checkCredsExist(t *testing.T, username, password, address string, port int) error {
-	if api.ReadBaoVariable("BAO_ACC") == "" {
+	if api.ReadBaoVariable("REDACTO_KMS_ACC") == "" {
 		t.SkipNow()
 	}
 
@@ -418,7 +418,7 @@ func checkCredsExist(t *testing.T, username, password, address string, port int)
 }
 
 func checkRuleAllowed(t *testing.T, username, password, address string, port int, cmd string, rules []string) error {
-	if api.ReadBaoVariable("BAO_ACC") == "" {
+	if api.ReadBaoVariable("REDACTO_KMS_ACC") == "" {
 		t.SkipNow()
 	}
 
@@ -464,7 +464,7 @@ func checkRuleAllowed(t *testing.T, username, password, address string, port int
 }
 
 func revokeUser(t *testing.T, username, address string, port int) error {
-	if api.ReadBaoVariable("BAO_ACC") == "" {
+	if api.ReadBaoVariable("REDACTO_KMS_ACC") == "" {
 		t.SkipNow()
 	}
 
@@ -514,7 +514,7 @@ func revokeUser(t *testing.T, username, address string, port int) error {
 }
 
 func testValkeyDBCreateUser_DefaultRule(t *testing.T, address string, port int) {
-	if api.ReadBaoVariable("BAO_ACC") == "" {
+	if api.ReadBaoVariable("REDACTO_KMS_ACC") == "" {
 		t.SkipNow()
 	}
 
@@ -596,7 +596,7 @@ func testValkeyDBCreateUser_DefaultRule(t *testing.T, address string, port int) 
 }
 
 func testValkeyDBCreateUser_plusRole(t *testing.T, address string, port int) {
-	if api.ReadBaoVariable("BAO_ACC") == "" {
+	if api.ReadBaoVariable("REDACTO_KMS_ACC") == "" {
 		t.SkipNow()
 	}
 
@@ -670,7 +670,7 @@ func testValkeyDBCreateUser_plusRole(t *testing.T, address string, port int) {
 
 // g1 & g2 must exist in the database.
 func testValkeyDBCreateUser_groupOnly(t *testing.T, address string, port int) {
-	if api.ReadBaoVariable("BAO_ACC") == "" {
+	if api.ReadBaoVariable("REDACTO_KMS_ACC") == "" {
 		t.SkipNow()
 	}
 
@@ -747,7 +747,7 @@ func testValkeyDBCreateUser_groupOnly(t *testing.T, address string, port int) {
 }
 
 func testValkeyDBCreateUser_roleAndGroup(t *testing.T, address string, port int) {
-	if api.ReadBaoVariable("BAO_ACC") == "" {
+	if api.ReadBaoVariable("REDACTO_KMS_ACC") == "" {
 		t.SkipNow()
 	}
 
@@ -824,7 +824,7 @@ func testValkeyDBCreateUser_roleAndGroup(t *testing.T, address string, port int)
 }
 
 func testValkeyDBRotateRootCredentials(t *testing.T, address string, port int) {
-	if api.ReadBaoVariable("BAO_ACC") == "" {
+	if api.ReadBaoVariable("REDACTO_KMS_ACC") == "" {
 		t.SkipNow()
 	}
 
@@ -958,7 +958,7 @@ func doValkeyDBSetCredentials(t *testing.T, username, password, address string, 
 }
 
 func testValkeyDBSetCredentials(t *testing.T, address string, port int) {
-	if api.ReadBaoVariable("BAO_ACC") == "" {
+	if api.ReadBaoVariable("REDACTO_KMS_ACC") == "" {
 		t.SkipNow()
 	}
 

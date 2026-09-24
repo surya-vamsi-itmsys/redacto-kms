@@ -1,19 +1,19 @@
 ---
 sidebar_label: Overview
 description: |-
-  Learn about how telemetry metrics are structured in OpenBao
+  Learn about how telemetry metrics are structured in Redacto KMS
 ---
 
 # Telemetry metrics overview
 
 ## Metric types
 
-OpenBao provides three types of telemetry metrics:
+Redacto KMS provides three types of telemetry metrics:
 
 - **Counter metrics** increment when an event occurs. Counters are cumulative
   and reset at the end of reporting intervals.
 - **Gauge metrics** provide measurements of current values.
-- **Summary metrics** provide observational values. OpenBao commonly uses
+- **Summary metrics** provide observational values. Redacto KMS commonly uses
   summaries to measure the time required to for a discrete event to complete.
 
 High-cardinality gauges, like `vault.kv.secret.count`, update at the interval

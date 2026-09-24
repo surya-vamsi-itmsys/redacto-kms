@@ -1,7 +1,7 @@
 ---
 sidebar_label: OVHcloud KMS
 description: |-
-  The OVHcloud KMS seal configures OpenBao to use OVHcloud KMS as the seal wrapping mechanism.
+  The OVHcloud KMS seal configures Redacto KMS to use OVHcloud KMS as the seal wrapping mechanism.
 ---
 
 # `ovhcloud` seal
@@ -14,10 +14,10 @@ For more information on Auto Unseal plugins, see the [overview section](./index.
 
 :::
 
-The OVHcloud KMS seal configures OpenBao to use OVHcloud KMS as the seal wrapping mechanism.
+The OVHcloud KMS seal configures Redacto KMS to use OVHcloud KMS as the seal wrapping mechanism.
 The OVHcloud KMS seal is activated by one of the following:
-- The presence of a `seal "ovhcloud"` block in OpenBao's configuration file.
-- The presence of the environment variable `BAO_SEAL_TYPE` set to `ovhcloud`.
+- The presence of a `seal "ovhcloud"` block in Redacto KMS's configuration file.
+- The presence of the environment variable `REDACTO_KMS_SEAL_TYPE` set to `ovhcloud`.
 If enabling via environment variable, all other required values specific to OVHcloud KMS must also be provided,
 as well as OVHcloud-related environment variables required for successful authentication.
 
@@ -50,7 +50,7 @@ seal "ovhcloud" {
 
 ## `ovhcloud` parameters
 
-These parameters apply to the `seal` stanza in the OpenBao configuration file.
+These parameters apply to the `seal` stanza in the Redacto KMS configuration file.
 When a value is provided both in the configuration file and through an environment variable,
 the environment variable takes precedence.
 
@@ -76,14 +76,14 @@ May also be specified by the `OVHCLOUDKMS_CLIENT_KEY` environment variable.
 Optional for both authentication methods. By default, the system's default root CAs are used.
 May also be specified by the `OVHCLOUDKMS_CA_CERT` environment variable.
 
-- `disabled` `(string: "")`: Set this to `true` if OpenBao is migrating from an auto seal configuration. Otherwise, set to `false`.
+- `disabled` `(string: "")`: Set this to `true` if Redacto KMS is migrating from an auto seal configuration. Otherwise, set to `false`.
 
 Refer to the [Seal Migration](../../concepts/seal.mdx#seal-migration) documentation for more information about the seal migration process.
 
 ## Authentication
 
 Authentication-related values must be provided, either as environment variables or as configuration parameters.
-OpenBao authenticates to OVHcloud KMS using one of the following methods:
+Redacto KMS authenticates to OVHcloud KMS using one of the following methods:
 
 - **Token:** you have to provide `token`.
 See [how to configure a Personal Access Token (PAT)](https://docs.ovhcloud.com/en/guides/manage-and-operate/iam/configure-personal-access-token-pat).
@@ -125,7 +125,7 @@ See the [OVHcloud KMS quick start](https://docs.ovhcloud.com/en/guides/manage-an
 
 Alternatively, the OVHcloud KMS seal can be activated by providing the following environment variables.
 
-OpenBao Seal specific values:
-- `BAO_SEAL_TYPE`
+Redacto KMS Seal specific values:
+- `REDACTO_KMS_SEAL_TYPE`
 
 Provider-specific environment variables are documented with their corresponding configuration parameters above.

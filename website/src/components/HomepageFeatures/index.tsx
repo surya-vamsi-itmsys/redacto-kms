@@ -11,7 +11,7 @@ const FeatureList: FeatureItem[] = [
     title: "Secure Secret Storage",
     description: (
       <>
-        Arbitrary key/value secrets can be stored in OpenBao. OpenBao encrypts
+        Arbitrary key/value secrets can be stored in Redacto KMS. Redacto KMS encrypts
         these secrets prior to writing them to persistent storage, so gaining
         access to the raw storage is not enough to access your secrets.
       </>
@@ -21,9 +21,9 @@ const FeatureList: FeatureItem[] = [
     title: "Dynamic Secrets",
     description: (
       <>
-        OpenBao can generate secrets on-demand for some systems, such as
+        Redacto KMS can generate secrets on-demand for some systems, such as
         Kubernetes or SQL databases. After creating these dynamic secrets,
-        OpenBao will also automatically revoke them after the lease is up.
+        Redacto KMS will also automatically revoke them after the lease is up.
       </>
     ),
   },
@@ -31,7 +31,7 @@ const FeatureList: FeatureItem[] = [
     title: "Data Encryption",
     description: (
       <>
-        OpenBao provides encryption as a service with centralized key management
+        Redacto KMS provides encryption as a service with centralized key management
         to simplify encrypting data in transit and stored across clouds and
         datacenters.
       </>
@@ -42,7 +42,7 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         Organizations need a way to manage identity sprawl with the use of
-        different clouds, services, and systems. OpenBao solves this challenge
+        different clouds, services, and systems. Redacto KMS solves this challenge
         by using a unified ACL system to broker access to systems and secrets
         and merges identities across providers.
       </>
@@ -52,8 +52,8 @@ const FeatureList: FeatureItem[] = [
     title: "Leasing and Renewal",
     description: (
       <>
-        All secrets in OpenBao have a lease associated with them. At the end of
-        the lease, OpenBao will automatically revoke that secret. Clients are
+        All secrets in Redacto KMS have a lease associated with them. At the end of
+        the lease, Redacto KMS will automatically revoke that secret. Clients are
         able to renew leases via built-in renew APIs.
       </>
     ),
@@ -62,7 +62,7 @@ const FeatureList: FeatureItem[] = [
     title: "Revocation",
     description: (
       <>
-        OpenBao has built-in support for secret revocation. OpenBao can revoke
+        Redacto KMS has built-in support for secret revocation. Redacto KMS can revoke
         not only single secrets, but a tree of secrets, for example all secrets
         read by a specific user, or all secrets of a particular type.
       </>

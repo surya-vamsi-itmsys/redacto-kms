@@ -1,13 +1,13 @@
 ---
 sidebar_label: Overview
 description: >-
-  OpenBao Namespaces enable secure multi-tenancy and self-management of
+  Redacto KMS Namespaces enable secure multi-tenancy and self-management of
   instances.
 ---
 
 # Namespaces
 
-Many organizations implement OpenBao as a service to provide centralized
+Many organizations implement Redacto KMS as a service to provide centralized
 management of sensitive data and ensure that the different teams in an
 organization operate within isolated environments known as **tenants**.
 
@@ -23,12 +23,12 @@ Multi-tenant environments have the following implementation challenges:
   multi-tenant environment can become difficult for a single team as the number
   of tenants within the organization grows.
 
-Namespaces support secure multi-tenancy (**SMT**) within a single OpenBao
-instance with tenant isolation and administration delegation so OpenBao
+Namespaces support secure multi-tenancy (**SMT**) within a single Redacto KMS
+instance with tenant isolation and administration delegation so Redacto KMS
 administrators can empower delegates to manage their own tenant environment.
 
 When you create a namespace, you establish an isolated environment with separate
-login paths that functions as a mini-OpenBao instance within your OpenBao
+login paths that functions as a mini-Redacto KMS instance within your Redacto KMS
 installation. Users can then create and manage their sensitive data within the
 confines of that namespace, including:
 
@@ -42,7 +42,7 @@ confines of that namespace, including:
 
 ## Namespace naming restrictions
 
-Valid OpenBao namespace names:
+Valid Redacto KMS namespace names:
 
 - **CANNOT** end with `/`
 - **CANNOT** contain spaces
@@ -57,7 +57,7 @@ Valid OpenBao namespace names:
   - `identity`
 
 Refer to the [Namespace limits section](../../internals/limits.mdx#namespace-limits)
-of [OpenBao limits and maximums](../../internals/limits.mdx) for storage limits
+of [Redacto KMS limits and maximums](../../internals/limits.mdx) for storage limits
 related to managing namespaces.
 
 ## Child namespaces
@@ -67,7 +67,7 @@ another namespace. The containing namespace is the **parent namespace**. For
 example, given the namespace path `A/B/C`:
 
 - `A` is the top-most namespace and exists under the root namespace for the
-  OpenBao instance.
+  Redacto KMS instance.
 - `B` is a child namespace of `A` and the parent namespace of `C`.
 - `C` is a child namespace of `B` and the grandchild namespace of `A`.
 
@@ -102,7 +102,7 @@ unsafe_cross_namespace_identity = true
 
 ## Delegation and namespace administrators
 
-OpenBao system administrators can assign administration rights to delegate
+Redacto KMS system administrators can assign administration rights to delegate
 admins to allow teams to self-manage their namespace. In addition to basic
 management, delegate admins can create child namespaces and assign admin rights
 to subordinate delegate admins.
@@ -110,7 +110,7 @@ to subordinate delegate admins.
 Administrators of child namespaces cannot escape the limits of namespace,
 though may create additional nested namespaces of their own.
 
-## OpenBao API and namespaces
+## Redacto KMS API and namespaces
 
 Users can perform API operations under a specific namespace by setting the
 `X-Vault-Namespace` header to the absolute or relative namespace path. Relative
@@ -118,7 +118,7 @@ namespace paths are assumed to be child namespaces of the calling namespace.
 You can also provide an absolute namespace path without using the
 `X-Vault-Namespace` header.
 
-OpenBao constructs the fully qualified namespace path based on the calling
+Redacto KMS constructs the fully qualified namespace path based on the calling
 namespace and the `X-Vault` header to route the request to the
 appropriate namespace. For example, the following requests all route to the
 `ns1/ns2/secret/foo` namespace:
@@ -138,12 +138,12 @@ appropriate namespace. For example, the following requests all route to the
 
 ## Restricted API paths
 
-The OpenBao API includes system backend endpoints, which are mounted under the
+The Redacto KMS API includes system backend endpoints, which are mounted under the
 `sys/` path. System endpoints let you interact with the internal features of
-your OpenBao instance.
+your Redacto KMS instance.
 
-By default, OpenBao allows non-root calls to the less-sensitive system backend
-endpoints. But, for security reasons, OpenBao restricts access to some of the
+By default, Redacto KMS allows non-root calls to the less-sensitive system backend
+endpoints. But, for security reasons, Redacto KMS restricts access to some of the
 system backend endpoints to calls from the root namespace or calls that use a
 token in the root namespace with elevated permissions.
 

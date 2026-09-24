@@ -47,16 +47,16 @@ import (
 
 const (
 	// EnvVaultCLINoColor is an env var that toggles colored UI output.
-	EnvVaultCLINoColor = `BAO_CLI_NO_COLOR`
+	EnvVaultCLINoColor = `REDACTO_KMS_CLI_NO_COLOR`
 	// EnvVaultFormat is the output format
-	EnvVaultFormat = `BAO_FORMAT`
+	EnvVaultFormat = `REDACTO_KMS_FORMAT`
 	// EnvVaultDetailed is to output detailed information (e.g., ListResponseWithInfo).
-	EnvVaultDetailed = `BAO_DETAILED`
+	EnvVaultDetailed = `REDACTO_KMS_DETAILED`
 	// EnvVaultLogFormat is used to specify the log format. Supported values are "standard" and "json"
-	EnvVaultLogFormat = "BAO_LOG_FORMAT"
+	EnvVaultLogFormat = "REDACTO_KMS_LOG_FORMAT"
 	// EnvVaultLogLevel is used to specify the log level applied to logging
 	// Supported log levels: Trace, Debug, Error, Warn, Info
-	EnvVaultLogLevel = "BAO_LOG_LEVEL"
+	EnvVaultLogLevel = "REDACTO_KMS_LOG_LEVEL"
 
 	// flagNameAddress is the flag used in the base command to read in the
 	// address of the Vault server.

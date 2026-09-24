@@ -27,14 +27,16 @@ $black: hsl(0, 0%, 4%); // in hex: #0a0a0a
 // White
 $white: hsl(0, 0%, 100%);
 
-// Blue
-$blue-010: #fbfcff;
-$blue-050: #f0f5ff;
-$blue-100: #bfd4ff;
-$blue-300: #5b92ff;
-$blue-500: #1563ff;
-$blue-700: #0e40a3;
-$blue-900: #061b46;
+// Blue: the legacy "action" scale, derived from the Redacto KMS brand palette
+// so existing Sass consumers inherit the brand without per-component edits.
+@import 'redacto_brand';
+$blue-010: mix($redacto-white, $redacto-primary, 98%);
+$blue-050: $redacto-primary-subtle;
+$blue-100: $redacto-primary-muted;
+$blue-300: mix($redacto-white, $redacto-primary, 25%);
+$blue-500: $redacto-primary;
+$blue-700: $redacto-primary-active;
+$blue-900: $redacto-navy;
 $blue-lightest: $blue-050;
 $blue-light: $blue-300;
 $blue: $blue-500;

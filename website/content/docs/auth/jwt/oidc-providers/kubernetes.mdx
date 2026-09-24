@@ -4,7 +4,7 @@ description: OIDC provider configuration for Kubernetes
 
 ## Kubernetes
 
-Kubernetes can function as an OIDC provider such that OpenBao can validate its
+Kubernetes can function as an OIDC provider such that Redacto KMS can validate its
 service account tokens using JWT/OIDC auth.
 
 :::info
@@ -12,7 +12,7 @@ service account tokens using JWT/OIDC auth.
 **Note:** The JWT auth engine does **not** use Kubernetes' `TokenReview` API
 during authentication, and instead uses public key cryptography to verify the
 contents of JWTs. This means tokens that have been revoked by Kubernetes will
-still be considered valid by OpenBao until their expiry time. To mitigate this
+still be considered valid by Redacto KMS until their expiry time. To mitigate this
 risk, use short TTLs for service account tokens or use
 [Kubernetes auth](../../kubernetes.mdx) which _does_ use the `TokenReview` API.
 
@@ -30,17 +30,17 @@ Kubernetes cluster requirements:
 * [`ServiceAccountIssuerDiscovery`][k8s-sa-issuer-discovery] feature enabled.
   * Present from 1.18, defaults to enabled from 1.20.
 * kube-apiserver's `--service-account-issuer` flag is set to a URL that is
-  reachable from OpenBao. Public by default for most managed Kubernetes solutions.
+  reachable from Redacto KMS. Public by default for most managed Kubernetes solutions.
 * Must use short-lived service account tokens when logging in.
   * Tokens mounted into pods default to short-lived from 1.21.
 
-#### Configuration steps when OpenBao is running in Kubernetes
+#### Configuration steps when Redacto KMS is running in Kubernetes
 
-Enable and configure JWT auth in OpenBao.
+Enable and configure JWT auth in Redacto KMS.
 
 ```bash
-kubectl exec openbao-0 -- bao auth enable jwt
-kubectl exec openbao-0 -- bao write auth/jwt/config -<<EOF
+kubectl exec openbao-0 -- redacto-kms auth enable jwt
+kubectl exec openbao-0 -- redacto-kms write auth/jwt/config -<<EOF
 {
    "provider_config": {
        "provider": "kubernetes"
@@ -49,7 +49,7 @@ kubectl exec openbao-0 -- bao write auth/jwt/config -<<EOF
 EOF
 ```
 
-OpenBao automatically derives the OIDC discovery URL from the `KUBERNETES_SERVICE_HOST` and
+Redacto KMS automatically derives the OIDC discovery URL from the `KUBERNETES_SERVICE_HOST` and
 `KUBERNETES_SERVICE_PORT` environment variables set in every pod, uses the service account token found
 at `/var/run/secrets/kubernetes.io/serviceaccount/token` for authentication with the Kubernetes
 API server, and the CA certificate at `/var/run/secrets/kubernetes.io/serviceaccount/ca.crt`
@@ -58,11 +58,11 @@ to verify the server's TLS certificate. It supports short-lived tokens.
 No special Kubernetes RBAC permissions are required for the service account token.
 The default service account token is sufficient.
 
-#### Configuration steps when OpenBao is _not_ running in Kubernetes:
+#### Configuration steps when Redacto KMS is _not_ running in Kubernetes:
 
 :::info
 
-**Note:** When OpenBao is outside the cluster, the `$ISSUER` endpoint below
+**Note:** When Redacto KMS is outside the cluster, the `$ISSUER` endpoint below
 may or may not be reachable. If not, you can configure JWT auth using
 [`jwt_validation_pubkeys`](#using-jwt-validation-public-keys) instead.
 
@@ -83,11 +83,11 @@ may or may not be reachable. If not, you can configure JWT auth using
       --group=system:unauthenticated
    ```
 
-1. Enable and configure JWT auth in OpenBao.
+1. Enable and configure JWT auth in Redacto KMS.
 
    ```bash
-   bao auth enable jwt
-   bao write auth/jwt/config oidc_discovery_url="${ISSUER}"
+   redacto-kms auth enable jwt
+   redacto-kms write auth/jwt/config oidc_discovery_url="${ISSUER}"
    ```
 
 
@@ -95,7 +95,7 @@ may or may not be reachable. If not, you can configure JWT auth using
 
 ### Using JWT validation public keys
 
-This method can be useful if Kubernetes' API is not reachable from OpenBao or if
+This method can be useful if Kubernetes' API is not reachable from Redacto KMS or if
 you would like a single JWT auth mount to service multiple Kubernetes clusters
 by chaining their public signing keys.
 
@@ -125,7 +125,7 @@ Configuration steps:
 1. Configure the JWT auth mount with those public keys.
 
    ```bash
-   bao write auth/jwt/config \
+   redacto-kms write auth/jwt/config \
       jwt_validation_pubkeys="-----BEGIN PUBLIC KEY-----
    MIIBIjANBgkqhkiG9...
    -----END PUBLIC KEY-----","-----BEGIN PUBLIC KEY-----
@@ -167,7 +167,7 @@ below if you'd like to control the audience or TTL.
    `default` namespace can use.
 
    ```bash
-   bao write auth/jwt/role/my-role \
+   redacto-kms write auth/jwt/role/my-role \
       role_type="jwt" \
       bound_audiences="<AUDIENCE-FROM-PREVIOUS-STEP>" \
       user_claim="sub" \
@@ -179,7 +179,7 @@ below if you'd like to control the audience or TTL.
 1. Pods or other clients with access to a service account JWT can then log in.
 
    ```bash
-   bao write auth/jwt/login \
+   redacto-kms write auth/jwt/login \
       role=my-role \
       jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token
    # OR equivalent to:
@@ -188,7 +188,7 @@ below if you'd like to control the audience or TTL.
       --request POST \
       --header "X-Vault-Request: true" \
       --data '{"jwt":"<JWT-TOKEN-HERE>","role":"my-role"}' \
-      "${BAO_ADDR}/v1/auth/jwt/login"
+      "${REDACTO_KMS_ADDR}/v1/auth/jwt/login"
    ```
 
 ### Specifying TTL and audience
@@ -200,7 +200,7 @@ disable the [--service-account-extend-token-expiration][k8s-extended-tokens]
 flag for `kube-apiserver` and want to use short TTLs.
 
 When using the resulting token, you will need to set `bound_audiences=openbao`
-when creating roles in OpenBao's JWT auth mount.
+when creating roles in Redacto KMS's JWT auth mount.
 
 ```yaml
 apiVersion: v1

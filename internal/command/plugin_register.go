@@ -33,19 +33,19 @@ func (c *PluginRegisterCommand) Synopsis() string {
 
 func (c *PluginRegisterCommand) Help() string {
 	helpText := `
-Usage: bao plugin register [options] TYPE NAME
+Usage: redacto-kms plugin register [options] TYPE NAME
 
-  Registers a new plugin in the catalog. The plugin binary must exist in OpenBao's
+  Registers a new plugin in the catalog. The plugin binary must exist in Redacto KMS's
   configured plugin directory. The argument of type takes "auth", "database",
   or "secret".
 
   Register the plugin named my-custom-plugin:
 
-      $ bao plugin register -sha256=d3f0a8b... -version=v1.0.0 auth my-custom-plugin
+      $ redacto-kms plugin register -sha256=d3f0a8b... -version=v1.0.0 auth my-custom-plugin
 
   Register a plugin with custom arguments:
 
-      $ bao plugin register \
+      $ redacto-kms plugin register \
           -sha256=d3f0a8b... \
           -version=v1.0.0 \
           -args=--with-glibc,--with-cgo \

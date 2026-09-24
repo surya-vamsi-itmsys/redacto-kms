@@ -40,25 +40,25 @@ is available, the command will prompt for text.
 Generate an OTP code for the final token:
 
 ```shell-session
-$ bao operator generate-root -generate-otp
+$ redacto-kms operator generate-root -generate-otp
 ```
 
 Start a root token generation:
 
 ```shell-session
-$ bao operator generate-root -init -otp="..."
+$ redacto-kms operator generate-root -init -otp="..."
 ```
 
 Enter an unseal key to progress root token generation:
 
 ```shell-session
-$ bao operator generate-root -otp="..."
+$ redacto-kms operator generate-root -otp="..."
 ```
 
 Start root token generation for a sealable namespace:
 
 ```shell-session
-$ bao operator generate-root -ns=tenants/my-tenant -init
+$ redacto-kms operator generate-root -ns=tenants/my-tenant -init
 ```
 
 ## Usage
@@ -70,7 +70,7 @@ flags](../index.mdx) included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### Command options
 

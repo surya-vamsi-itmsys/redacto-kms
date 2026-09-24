@@ -30,7 +30,7 @@ func (c *TokenRevokeCommand) Synopsis() string {
 
 func (c *TokenRevokeCommand) Help() string {
 	helpText := `
-Usage: bao token revoke [options] [TOKEN | ACCESSOR]
+Usage: redacto-kms token revoke [options] [TOKEN | ACCESSOR]
 
   Revokes authentication tokens and their children. If a TOKEN is not provided,
   the locally authenticated token is used. The "-mode" flag can be used to
@@ -39,15 +39,15 @@ Usage: bao token revoke [options] [TOKEN | ACCESSOR]
 
   Revoke a token and all the token's children:
 
-      $ bao token revoke 96ddf4bc-d217-f3ba-f9bd-017055595017
+      $ redacto-kms token revoke 96ddf4bc-d217-f3ba-f9bd-017055595017
 
   Revoke a token leaving the token's children:
 
-      $ bao token revoke -mode=orphan 96ddf4bc-d217-f3ba-f9bd-017055595017
+      $ redacto-kms token revoke -mode=orphan 96ddf4bc-d217-f3ba-f9bd-017055595017
 
   Revoke a token by accessor:
 
-      $ bao token revoke -accessor 9793c9b3-e04a-46f3-e7b8-748d7da248da
+      $ redacto-kms token revoke -accessor 9793c9b3-e04a-46f3-e7b8-748d7da248da
 
   For a full list of examples, please see the documentation.
 
@@ -85,8 +85,8 @@ func (c *TokenRevokeCommand) Flags() *FlagSets {
 		Default:    "",
 		EnvVar:     "",
 		Completion: complete.PredictSet("orphan", "path"),
-		Usage: "Type of revocation to perform. If unspecified, OpenBao will revoke " +
-			"the token and all of the token's children. If \"orphan\", OpenBao will " +
+		Usage: "Type of revocation to perform. If unspecified, Redacto KMS will revoke " +
+			"the token and all of the token's children. If \"orphan\", Redacto KMS will " +
 			"revoke only the token, leaving the children as orphans. If \"path\", " +
 			"tokens created from the given authentication path prefix are deleted " +
 			"along with their children.",

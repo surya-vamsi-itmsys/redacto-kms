@@ -1,16 +1,16 @@
 ---
 sidebar_label: OpenTofu
 description: |-
-  Describes how to configure the OpenBao Helm chart using OpenTofu
+  Describes how to configure the Redacto KMS Helm chart using OpenTofu
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Configuring OpenBao HELM with OpenTofu
+# Configuring Redacto KMS HELM with OpenTofu
 
-OpenTofu may also be used to configure and deploy the OpenBao Helm chart, by using the [Helm provider](https://github.com/hashicorp/terraform-provider-helm).
+OpenTofu may also be used to configure and deploy the Redacto KMS Helm chart, by using the [Helm provider](https://github.com/hashicorp/terraform-provider-helm).
 
-For example, to configure the chart to deploy [HA OpenBao with Integrated Storage (raft)](examples/ha-with-raft.mdx), the values overrides can be set on the command-line, in a values yaml file, or with a OpenTofu configuration:
+For example, to configure the chart to deploy [HA Redacto KMS with Integrated Storage (raft)](examples/ha-with-raft.mdx), the values overrides can be set on the command-line, in a values yaml file, or with a OpenTofu configuration:
 
 <Tabs groupId="iac">
 <TabItem value="CLI">
@@ -67,7 +67,7 @@ The values file can also be used directly in the OpenTofu configuration with the
 
 ## Further examples
 
-### OpenBao config as a multi-line string
+### Redacto KMS config as a multi-line string
 
 <Tabs groupId="iac">
 <TabItem value="Yaml">

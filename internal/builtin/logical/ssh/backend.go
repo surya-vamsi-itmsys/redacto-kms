@@ -135,7 +135,7 @@ is role-specific and chosen at role creation time with the 'key_type'
 parameter.
 
 Please see the backend documentation for a thorough description of both
-types. The OpenBao team strongly recommends the OTP type.
+types. The Redacto KMS team strongly recommends the OTP type.
 
 After mounting this backend, before generating credentials, configure the
 backend's lease behavior using the 'config/lease' endpoint and create roles

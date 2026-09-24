@@ -28,11 +28,11 @@ func (c *OperatorRaftSnapshotRestoreCommand) Synopsis() string {
 
 func (c *OperatorRaftSnapshotRestoreCommand) Help() string {
 	helpText := `
-Usage: bao operator raft snapshot restore <snapshot_file>
+Usage: redacto-kms operator raft snapshot restore <snapshot_file>
 
   Installs the provided snapshot, returning the cluster to the state defined in it.
 
-	  $ bao operator raft snapshot restore raft.snap
+	  $ redacto-kms operator raft snapshot restore raft.snap
 
 ` + c.Flags().Help()
 

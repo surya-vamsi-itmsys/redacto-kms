@@ -1,9 +1,9 @@
 ---
 description: |-
-  Describes how to set up a highly available OpenBao cluster with Integrated Storage (Raft)
+  Describes how to set up a highly available Redacto KMS cluster with Integrated Storage (Raft)
 ---
 
-# Highly Available OpenBao cluster with Integrated Storage (Raft)
+# Highly Available Redacto KMS cluster with Integrated Storage (Raft)
 
 :::warning
 
@@ -22,8 +22,8 @@ helm install openbao openbao/openbao \
 Next, initialize and unseal `openbao-0` pod:
 
 ```shell
-kubectl exec -ti openbao-0 -- bao operator init
-kubectl exec -ti openbao-0 -- bao operator unseal
+kubectl exec -ti openbao-0 -- redacto-kms operator init
+kubectl exec -ti openbao-0 -- redacto-kms operator unseal
 ```
 
 Finally, join the remaining pods to the Raft cluster and unseal them. The pods
@@ -31,11 +31,11 @@ will need to communicate directly so we'll configure the pods to use the interna
 service provided by the Helm chart:
 
 ```shell
-kubectl exec -ti openbao-1 -- bao operator raft join http://openbao-0.openbao-internal:8200
-kubectl exec -ti openbao-1 -- bao operator unseal
+kubectl exec -ti openbao-1 -- redacto-kms operator raft join http://openbao-0.openbao-internal:8200
+kubectl exec -ti openbao-1 -- redacto-kms operator unseal
 
-kubectl exec -ti openbao-2 -- bao operator raft join http://openbao-0.openbao-internal:8200
-kubectl exec -ti openbao-2 -- bao operator unseal
+kubectl exec -ti openbao-2 -- redacto-kms operator raft join http://openbao-0.openbao-internal:8200
+kubectl exec -ti openbao-2 -- redacto-kms operator unseal
 ```
 
 To verify if the Raft cluster has successfully been initialized, run the following.
@@ -43,13 +43,13 @@ To verify if the Raft cluster has successfully been initialized, run the followi
 First, login using the `root` token on the `openbao-0` pod:
 
 ```shell
-kubectl exec -ti openbao-0 -- bao login
+kubectl exec -ti openbao-0 -- redacto-kms login
 ```
 
 Next, list all the raft peers:
 
 ```shell
-$ kubectl exec -ti openbao-0 -- bao operator raft list-peers
+$ kubectl exec -ti openbao-0 -- redacto-kms operator raft list-peers
 
 Node                                    Address                        State       Voter
 ----                                    -------                        -----       -----
@@ -58,4 +58,4 @@ e6876c97-aaaa-a92e-b99a-0aafab105745    openbao-1.openbao-internal:8201    follo
 4b5d7383-ff31-44df-e008-6a606828823b    openbao-2.openbao-internal:8201    follower    true
 ```
 
-OpenBao with Integrated Storage (Raft) is now ready to use!
+Redacto KMS with Integrated Storage (Raft) is now ready to use!

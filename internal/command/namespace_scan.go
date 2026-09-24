@@ -26,17 +26,17 @@ func (c *NamespaceScanCommand) Synopsis() string {
 
 func (c *NamespaceScanCommand) Help() string {
 	helpText := `
-Usage: bao namespace scan [options]
+Usage: redacto-kms namespace scan [options]
 
   List child namespaces recursively.
 
   List all child namespaces recursively:
 
-      $ bao namespace scan
+      $ redacto-kms namespace scan
 
   List child namespaces relative to a given parent namespace:
 
-      $ bao namespace scan -namespace=my-parent
+      $ redacto-kms namespace scan -namespace=my-parent
 
   Note that namespaces nested under any sealed namespaces encountered in the
   scanned tree cannot be enumerated any further and will be omitted.

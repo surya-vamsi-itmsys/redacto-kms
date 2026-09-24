@@ -1,33 +1,33 @@
 ---
 sidebar_label: HA Installation Upgrade Guide
 description: |-
-  Upgrade instructions for OpenBao HA. Be sure to read the Upgrading-OpenBao Guides as well.
+  Upgrade instructions for Redacto KMS HA. Be sure to read the Upgrading-Redacto KMS Guides as well.
 ---
 
-# Upgrading OpenBao HA installation
+# Upgrading Redacto KMS HA installation
 
 You should consider how to apply the steps described in this document to your
 particular setup since HA setups can differ on whether a load balancer is in
-use, what addresses clients are being given to connect to OpenBao (standby +
+use, what addresses clients are being given to connect to Redacto KMS (standby +
 leader, leader-only, or discovered via service discovery), etc.
 
 ## HA installations
 
-Regardless of the method you use, do not fail over from a newer version of OpenBao
+Regardless of the method you use, do not fail over from a newer version of Redacto KMS
 to an older version. Our suggested procedure is designed to prevent this.
 
-Please note that OpenBao does not support true zero-downtime upgrades, but with
+Please note that Redacto KMS does not support true zero-downtime upgrades, but with
 proper upgrade procedure the downtime should be very short (a few hundred
 milliseconds to a second depending on how the speed of access to the storage
 backend).
 
 Perform these steps on each standby:
 
-1. Properly shut down OpenBao on the standby node via `SIGINT` or `SIGTERM`
-2. Replace the OpenBao binary with the new version
+1. Properly shut down Redacto KMS on the standby node via `SIGINT` or `SIGTERM`
+2. Replace the Redacto KMS binary with the new version
 3. Start the standby node
 4. Unseal the standby node
-5. Verify `bao status` shows correct Version and HA Mode is `standby`
+5. Verify `redacto-kms status` shows correct Version and HA Mode is `standby`
 6. Review the node's logs to ensure successful startup and unseal
 
 At this point all standby nodes are upgraded and ready to take over. The
@@ -42,16 +42,16 @@ To complete the cluster upgrade:
 
    It is important that you shut the node down properly. This will perform a
    step-down and release the HA lock, allowing a standby node to take over with
-   a very short delay. If you kill OpenBao without letting it release the lock,
+   a very short delay. If you kill Redacto KMS without letting it release the lock,
    a standby node will not be able to take over until the lock's timeout period
    has expired. This is backend-specific but could be ten seconds or more.
 
    :::
 
-2. Replace the OpenBao binary with the new version
+2. Replace the Redacto KMS binary with the new version
 3. Start the node
 4. Unseal the node
-5. Verify `bao status` shows correct Version and HA Mode is `standby`
+5. Verify `redacto-kms status` shows correct Version and HA Mode is `standby`
 6. Review the node's logs to ensure successful startup and unseal
 
 Internal upgrade tasks will happen after one of the upgraded standby nodes

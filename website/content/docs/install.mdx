@@ -3,9 +3,9 @@ description: |-
   Download a precompiled binary, compile from source, or use a package.
 ---
 
-# Installing OpenBao
+# Installing Redacto KMS
 
-There are several options to install OpenBao:
+There are several options to install Redacto KMS:
 
 1. Install from a [package manager](#package-manager).
 
@@ -35,11 +35,11 @@ $ pkg install openbao
 
 ### Linux
 
-OpenBao manages packages for Amazon Linux, Debian, Fedora, RHEL, Ubuntu and
+Redacto KMS manages packages for Amazon Linux, Debian, Fedora, RHEL, Ubuntu and
 other distributions. The packages are available for both direct download
 and native package managers on the [downloads](/downloads) page.
 
-In addition, OpenBao packages are available more directly in Arch Linux, Fedora and RHEL.
+In addition, Redacto KMS packages are available more directly in Arch Linux, Fedora and RHEL.
 
 For Arch Linux they can be installed by
 
@@ -67,7 +67,7 @@ $ dnf install -y openbao
 
 ## Container registries
 
-OpenBao deploys pre-built container images based on [Alpine Linux](https://alpinelinux.org/)
+Redacto KMS deploys pre-built container images based on [Alpine Linux](https://alpinelinux.org/)
 to the following registries:
 
  1. [`ghcr.io/openbao/openbao`](https://github.com/openbao/openbao/pkgs/container/openbao)
@@ -84,11 +84,11 @@ we push to the following registries:
 ## Precompiled binaries
 
 To install the precompiled binary, [download](/downloads) the applicable
-package for your system. OpenBao is packaged as a zip file.
+package for your system. Redacto KMS is packaged as a zip file.
 
-Once the zip is downloaded, unzip the file into your designated directory. The `bao` binary
-inside is all that is necessary to run OpenBao (or `bao.exe` for Windows). No
-additional files are required to run OpenBao.
+Once the zip is downloaded, unzip the file into your designated directory. The `redacto-kms` binary
+inside is all that is necessary to run Redacto KMS (or `bao.exe` for Windows). No
+additional files are required to run Redacto KMS.
 
 Copy the binary to your system. If you intend to access it from the
 command-line, ensure that you place the binary somewhere on your `PATH`.
@@ -108,7 +108,7 @@ To compile from source, you will need [Go](https://golang.org) installed and
 properly configured (including a `GOPATH` environment variable set), as well as
 a copy of [`git`](https://www.git-scm.com/) in your `PATH`.
 
-Clone the OpenBao repository from GitHub into your `GOPATH`:
+Clone the Redacto KMS repository from GitHub into your `GOPATH`:
 
 ```shell-session
 $ mkdir -p $GOPATH/src/github.com/openbao && cd $_
@@ -117,14 +117,14 @@ $ cd openbao
 ```
 
 Bootstrap the project. This will download and compile libraries and tools needed
-to compile OpenBao:
+to compile Redacto KMS:
 
 ```shell-session
 $ make bootstrap
 ```
 
-Build OpenBao for your current system and put the binary in `./bin/` (relative to
-the git checkout). The `make dev` target is just a shortcut that builds `bao`
+Build Redacto KMS for your current system and put the binary in `./bin/` (relative to
+the git checkout). The `make dev` target is just a shortcut that builds `redacto-kms`
 for only your local build environment (no cross-compiled targets).
 
 ```shell-session
@@ -133,27 +133,27 @@ $ make dev
 
 ## Verifying the installation
 
-To verify OpenBao is installed, run `bao -h` on your system. You should
+To verify Redacto KMS is installed, run `redacto-kms -h` on your system. You should
 see the help output. If you are executing it from the command line, ensure it is
-on your `PATH` to avoid receiving an error that OpenBao is not found.
+on your `PATH` to avoid receiving an error that Redacto KMS is not found.
 
 ```shell-session
-$ bao -h
+$ redacto-kms -h
 ```
 
 ## Post-installation hardening
 
-After installing OpenBao, you may want to take additional steps to secure it
-against leaking your secrets. OpenBao normally does this very well, but there
-is an operating system feature that undermines OpenBao's protection. This is
+After installing Redacto KMS, you may want to take additional steps to secure it
+against leaking your secrets. Redacto KMS normally does this very well, but there
+is an operating system feature that undermines Redacto KMS's protection. This is
 [memory paging (aka swap)](https://en.wikipedia.org/wiki/Memory_paging). To
 provide extra security, you will want to make sure that your OS has swap
 disabled or that its swap space is encrypted.
 
 ### Linux
 
-The example systemd service file provided with the OpenBao source code comes
-configured to disable swap for the OpenBao process. To verify that swap is
+The example systemd service file provided with the Redacto KMS source code comes
+configured to disable swap for the Redacto KMS process. To verify that swap is
 disabled, run `systemctl cat openbao` and check for the line `MemorySwapMax=0`.
 Alternatively, to allow the openbao process to swap out, make sure that line is
 deleted.
@@ -228,7 +228,7 @@ First, download our [GPG key](pathname:///assets/openbao-gpg-pub-20240618.asc) a
 ```shell-session
 $ wget https://openbao.org/assets/openbao-gpg-pub-20240618.asc
 $ gpg2 --import openbao-gpg-pub-20240618.asc
-gpg: key D200CD702853E6D0: public key "OpenBao <openbao@lists.lfedge.org>" imported
+gpg: key D200CD702853E6D0: public key "Redacto KMS <openbao@lists.lfedge.org>" imported
 gpg: Total number processed: 1
 gpg:               imported: 1
 ```
@@ -240,7 +240,7 @@ to verify `checksums.txt` with the `checksums.gpgsig` stored locally:
 $ gpg2 --verify checksums.txt.gpgsig checksums.txt
 gpg: Signature made Wed 17 Jul 2024 06:12:03 PM EDT
 gpg:                using RSA key E617DCD4065C2AFC0B2CF7A7BA8BC08C0F691F94
-gpg: Good signature from "OpenBao <openbao@lists.lfedge.org>" [unknown]
+gpg: Good signature from "Redacto KMS <openbao@lists.lfedge.org>" [unknown]
 gpg: WARNING: This key is not certified with a trusted signature!
 gpg:          There is no indication that the signature belongs to the owner.
 Primary key fingerprint: 66D1 5FDD 8728 7219 C8E1  5478 D200 CD70 2853 E6D0
@@ -263,7 +263,7 @@ Verified OK
 
 :::tip
 
-OpenBao will always publish releases from either the protected `main` branch
+Redacto KMS will always publish releases from either the protected `main` branch
 or the protected `release/...` set of branches. This is reflected in the
 certificate identity checked by cosign.
 

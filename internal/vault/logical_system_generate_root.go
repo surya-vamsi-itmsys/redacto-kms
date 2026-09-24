@@ -163,7 +163,7 @@ func (b *SystemBackend) generateRootPaths() []*framework.Path {
 			Operations: map[logical.Operation]framework.OperationHandler{
 				logical.UpdateOperation: &framework.PathOperation{
 					Summary:                   "Provide an unseal key share for root token generation.",
-					Description:               "If the threshold number of unseal key shares is reached, OpenBao will complete the root generation and issue the new token. Otherwise, this API must be called multiple times until that threshold is met. The attempt nonce must be provided with each call.",
+					Description:               "If the threshold number of unseal key shares is reached, Redacto KMS will complete the root generation and issue the new token. Otherwise, this API must be called multiple times until that threshold is met. The attempt nonce must be provided with each call.",
 					Callback:                  b.handleGenerateRootUpdate(),
 					ForwardPerformanceStandby: true,
 					Responses: map[int][]framework.Response{

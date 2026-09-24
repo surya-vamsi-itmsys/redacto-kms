@@ -19,13 +19,13 @@ below. All non-builtin plugins will show a `Deprecation Status` of "n/a".
 List all available plugins in the catalog.
 
 ```shell-session
-$ bao plugin list
+$ redacto-kms plugin list
 Name                                 Type        Version
 ----                                 ----        -------
 approle                              auth        v1.14.8+builtin.bao
 # ...
 
-$ bao plugin list database
+$ redacto-kms plugin list database
 Name                                 Version
 ----                                 -------
 cassandra-database-plugin            v1.13.0+builtin.bao
@@ -35,7 +35,7 @@ cassandra-database-plugin            v1.13.0+builtin.bao
 List detailed plugin information:
 
 ```shell-session
-$ bao plugin list -detailed
+$ redacto-kms plugin list -detailed
 Name                             Type        Version                                          Deprecation Status
 ----                             ----        -------                                          ------------------
 approle                          auth        v1.14.8+builtin.bao                              supported
@@ -51,7 +51,7 @@ flags](../index.mdx) included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### Command options
 

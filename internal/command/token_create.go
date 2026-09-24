@@ -43,7 +43,7 @@ func (c *TokenCreateCommand) Synopsis() string {
 
 func (c *TokenCreateCommand) Help() string {
 	helpText := `
-Usage: bao token create [options]
+Usage: redacto-kms token create [options]
 
   Creates a new token that can be used for authentication. This token will be
   created as a child of the currently authenticated token. The generated token
@@ -153,7 +153,7 @@ func (c *TokenCreateCommand) Flags() *FlagSets {
 		Target:  &c.flagRole,
 		Default: "",
 		Usage: "Name of the role to create the token against. Specifying -role " +
-			"may override other arguments. The locally authenticated OpenBao token " +
+			"may override other arguments. The locally authenticated Redacto KMS token " +
 			"must have permission for \"auth/token/create/<role>\".",
 	})
 

@@ -11,5 +11,10 @@
   ...attributes
   aria-label={{this.ariaLabel}}
 >
-  <Icon @name={{@icon}} @color={{@color}} @stretched={{true}} />
+  {{#if @compactIcon}}
+    <Icon @name={{@compactIcon}} @color={{@color}} @stretched={{true}} class="home-link-icon-compact" />
+    <Icon @name={{@icon}} @color={{@color}} @stretched={{true}} class="home-link-icon-full" />
+  {{else}}
+    <Icon @name={{@icon}} @color={{@color}} @stretched={{true}} />
+  {{/if}}
 </Hds::Interactive>

@@ -29,7 +29,7 @@ func (c *PluginInfoCommand) Synopsis() string {
 
 func (c *PluginInfoCommand) Help() string {
 	helpText := `
-Usage: bao plugin info [options] TYPE NAME
+Usage: redacto-kms plugin info [options] TYPE NAME
 
   Displays information about a plugin in the catalog with the given name. If
   the plugin does not exist, an error is returned. The argument of type
@@ -37,11 +37,11 @@ Usage: bao plugin info [options] TYPE NAME
 
   Get info about a plugin:
 
-      $ bao plugin info database mysql-database-plugin
+      $ redacto-kms plugin info database mysql-database-plugin
 
   Get info about a specific version of a plugin:
 
-      $ bao plugin info -version=v1.0.0 database mysql-database-plugin
+      $ redacto-kms plugin info -version=v1.0.0 database mysql-database-plugin
 
 ` + c.Flags().Help()
 

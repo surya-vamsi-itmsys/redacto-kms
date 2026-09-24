@@ -54,7 +54,7 @@ func (c *OperatorGenerateRootCommand) Synopsis() string {
 
 func (c *OperatorGenerateRootCommand) Help() string {
 	helpText := `
-Usage: bao operator generate-root [options] [KEY]
+Usage: redacto-kms operator generate-root [options] [KEY]
 
   Generates a new root token by combining a quorum of share holders. One of
   the following must be provided to start the root token generation:
@@ -73,16 +73,16 @@ Usage: bao operator generate-root [options] [KEY]
 
   Generate an OTP code for the final token:
 
-      $ bao operator generate-root -generate-otp
+      $ redacto-kms operator generate-root -generate-otp
 
   Start a root token generation:
 
-      $ bao operator generate-root -init -otp="..."
-      $ bao operator generate-root -init -pgp-key="..."
+      $ redacto-kms operator generate-root -init -otp="..."
+      $ redacto-kms operator generate-root -init -pgp-key="..."
 
   Enter an unseal key to progress root token generation:
 
-      $ bao operator generate-root -otp="..."
+      $ redacto-kms operator generate-root -otp="..."
 
 ` + c.Flags().Help()
 	return strings.TrimSpace(helpText)
@@ -395,7 +395,7 @@ func (c *OperatorGenerateRootCommand) provide(client *api.Client, key string, ki
 	if !status.Started {
 		c.UI.Error(wrapAtLength(
 			"No root generation is in progress. Start a root generation by " +
-				"running \"bao operator generate-root -init\".",
+				"running \"redacto-kms operator generate-root -init\".",
 		))
 		c.UI.Warn(wrapAtLength(fmt.Sprintf(
 			"If starting root generation using the OTP method and generating "+

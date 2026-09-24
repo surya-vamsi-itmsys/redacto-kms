@@ -42,32 +42,32 @@ func (c *LoginCommand) Synopsis() string {
 
 func (c *LoginCommand) Help() string {
 	helpText := `
-Usage: bao login [options] [AUTH K=V...]
+Usage: redacto-kms login [options] [AUTH K=V...]
 
-  Authenticates users or machines to OpenBao using the provided arguments. A
-  successful authentication results in a OpenBao token - conceptually similar to
+  Authenticates users or machines to Redacto KMS using the provided arguments. A
+  successful authentication results in a Redacto KMS token - conceptually similar to
   a session token on a website. By default, this token is cached on the local
   machine for future requests.
 
   The default auth method is "token". If not supplied via the CLI,
-  OpenBao will prompt for input. If the argument is "-", the values are read
+  Redacto KMS will prompt for input. If the argument is "-", the values are read
   from stdin.
 
   The -method flag allows using other auth methods, such as userpass, github, or
   cert. For these, additional "K=V" pairs may be required. For example, to
   authenticate to the userpass auth method:
 
-      $ bao login -method=userpass username=my-username
+      $ redacto-kms login -method=userpass username=my-username
 
   For more information about the list of configuration parameters available for
-  a given auth method, use the "bao auth help TYPE" command. You can also use
-  "bao auth list" to see the list of enabled auth methods.
+  a given auth method, use the "redacto-kms auth help TYPE" command. You can also use
+  "redacto-kms auth list" to see the list of enabled auth methods.
 
   If an auth method is enabled at a non-standard path, the -method flag still
   refers to the canonical type, but the -path flag refers to the enabled path.
   If a github auth method was enabled at "github-prod", authenticate like this:
 
-      $ bao login -method=github -path=github-prod
+      $ redacto-kms login -method=github -path=github-prod
 
   If the authentication is requested with response wrapping (via -wrap-ttl),
   the returned token is automatically unwrapped unless:
@@ -103,7 +103,7 @@ func (c *LoginCommand) Flags() *FlagSets {
 		Target:     &c.flagPath,
 		Default:    "",
 		Completion: c.PredictVaultAuths(),
-		Usage: "Remote path in OpenBao where the auth method is enabled. " +
+		Usage: "Remote path in Redacto KMS where the auth method is enabled. " +
 			"This defaults to the TYPE of method (e.g. userpass -> userpass/).",
 	})
 
@@ -185,7 +185,7 @@ func (c *LoginCommand) Run(args []string) int {
 	authHandler, ok := c.Handlers[authMethod]
 	if !ok {
 		c.UI.Error(wrapAtLength(fmt.Sprintf(
-			"Unknown auth method: %s. Use \"bao auth list\" to see the "+
+			"Unknown auth method: %s. Use \"redacto-kms auth list\" to see the "+
 				"complete list of auth methods. Additionally, some "+
 				"auth methods are only available via the HTTP API.",
 			authMethod,
@@ -274,7 +274,7 @@ func (c *LoginCommand) Run(args []string) int {
 		return 2
 	}
 	if secret == nil {
-		c.UI.Error("Vault returned an empty secret")
+		c.UI.Error("Redacto KMS returned an empty secret")
 		return 2
 	}
 
@@ -291,7 +291,7 @@ func (c *LoginCommand) Run(args []string) int {
 	// If we got this far, verify we have authentication data before continuing
 	if secret.Auth == nil {
 		c.UI.Error(wrapAtLength(
-			"Vault returned a secret, but the secret has no authentication " +
+			"Redacto KMS returned a secret, but the secret has no authentication " +
 				"information attached. This should never happen and is likely a " +
 				"bug.",
 		))
@@ -329,9 +329,9 @@ func (c *LoginCommand) Run(args []string) int {
 	} else if !c.flagTokenOnly {
 		// If token-only the user knows it won't be stored, so don't warn
 		c.UI.Warn(wrapAtLength(
-			"The token was not stored in token helper. Set the BAO_TOKEN "+
+			"The token was not stored in token helper. Set the REDACTO_KMS_TOKEN "+
 				"environment variable or pass the token below with each request to "+
-				"Vault.",
+				"Redacto KMS.",
 		) + "\n")
 	}
 
@@ -350,7 +350,7 @@ func (c *LoginCommand) Run(args []string) int {
 		c.UI.Output(wrapAtLength(
 			"Success! You are now authenticated. The token information displayed "+
 				"below is already stored in the token helper. You do NOT need to run "+
-				"\"bao login\" again. Future OpenBao requests will automatically use "+
+				"\"redacto-kms login\" again. Future Redacto KMS requests will automatically use "+
 				"this token.",
 		) + "\n")
 	}
@@ -390,13 +390,13 @@ func (c *LoginCommand) extractToken(client *api.Client, secret *api.Secret, unwr
 	}
 }
 
-// Warn if the BAO_TOKEN environment variable is set, as that will take
+// Warn if the REDACTO_KMS_TOKEN environment variable is set, as that will take
 // precedence. We output as a warning, so piping should still work since it
 // will be on a different stream.
 func (c *LoginCommand) checkForAndWarnAboutLoginToken() {
-	if api.ReadBaoVariable("BAO_TOKEN") != "" {
-		c.UI.Warn(wrapAtLength("WARNING! The BAO_TOKEN environment variable "+
+	if api.ReadBaoVariable("REDACTO_KMS_TOKEN") != "" {
+		c.UI.Warn(wrapAtLength("WARNING! The REDACTO_KMS_TOKEN environment variable "+
 			"is set! The value of this variable will take precedence; if this is unwanted "+
-			"please unset BAO_TOKEN or update its value accordingly.") + "\n")
+			"please unset REDACTO_KMS_TOKEN or update its value accordingly.") + "\n")
 	}
 }

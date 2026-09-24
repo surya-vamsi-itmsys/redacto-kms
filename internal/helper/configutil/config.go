@@ -15,7 +15,7 @@ import (
 	"github.com/openbao/openbao/sdk/v2/helper/hclutil"
 )
 
-const mlockMsg = "OpenBao has dropped support for mlock. Please remove\n" +
+const mlockMsg = "Redacto KMS has dropped support for mlock. Please remove\n" +
 	"the line \"disable_mlock\" = false from your config and disable\n" +
 	"or encrypt swap instead. For more information, see:\n" +
 	"https://openbao.org/docs/install/#post-installation-hardening"

@@ -29,13 +29,13 @@ func (c *KVListCommand) Synopsis() string {
 func (c *KVListCommand) Help() string {
 	helpText := `
 
-Usage: bao kv list [options] PATH
+Usage: redacto-kms kv list [options] PATH
 
-  Lists data from OpenBao's key-value store at the given path.
+  Lists data from Redacto KMS's key-value store at the given path.
 
   List values under the "my-app" folder of the key-value store:
 
-      $ bao kv list secret/my-app/
+      $ redacto-kms kv list secret/my-app/
 
   Additional flags and more advanced use cases are detailed below.
 

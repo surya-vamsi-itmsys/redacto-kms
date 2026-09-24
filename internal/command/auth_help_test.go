@@ -93,7 +93,7 @@ func TestAuthHelpCommand_Run(t *testing.T) {
 			t.Errorf("expected %d to be %d", code, exp)
 		}
 
-		expected := "Usage: bao login -method=userpass"
+		expected := "Usage: redacto-kms login -method=userpass"
 		combined := ui.OutputWriter.String() + ui.ErrorWriter.String()
 		if !strings.Contains(combined, expected) {
 			t.Errorf("expected %q to contain %q", combined, expected)
@@ -118,7 +118,7 @@ func TestAuthHelpCommand_Run(t *testing.T) {
 			t.Errorf("expected %d to be %d", code, exp)
 		}
 
-		expected := "Usage: bao login -method=userpass"
+		expected := "Usage: redacto-kms login -method=userpass"
 		combined := ui.OutputWriter.String() + ui.ErrorWriter.String()
 		if !strings.Contains(combined, expected) {
 			t.Errorf("expected %q to contain %q", combined, expected)

@@ -829,7 +829,7 @@ func (b *backend) pathTidyWrite(ctx context.Context, req *logical.Request, d *fr
 	if !config.IsAnyTidyEnabled() {
 		resp.AddWarning("Manual tidy requested but no tidy operations were set. Enable at least one tidy operation to be run (" + config.AnyTidyConfig() + ").")
 	} else {
-		resp.AddWarning("Tidy operation successfully started. Any information from the operation will be printed to OpenBao's server logs.")
+		resp.AddWarning("Tidy operation successfully started. Any information from the operation will be printed to Redacto KMS's server logs.")
 	}
 
 	return logical.RespondWithStatusCode(resp, req, http.StatusAccepted)

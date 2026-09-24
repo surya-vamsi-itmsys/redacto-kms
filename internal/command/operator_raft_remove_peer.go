@@ -26,11 +26,11 @@ func (c *OperatorRaftRemovePeerCommand) Synopsis() string {
 
 func (c *OperatorRaftRemovePeerCommand) Help() string {
 	helpText := `
-Usage: bao operator raft remove-peer <server_id>
+Usage: redacto-kms operator raft remove-peer <server_id>
 
   Removes a node from the Raft cluster.
 
-	  $ bao operator raft remove-peer node1
+	  $ redacto-kms operator raft remove-peer node1
 
 ` + c.Flags().Help()
 

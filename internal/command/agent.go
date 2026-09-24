@@ -92,19 +92,19 @@ type AgentCommand struct {
 }
 
 func (c *AgentCommand) Synopsis() string {
-	return "Start an OpenBao agent"
+	return "Start a Redacto KMS agent"
 }
 
 func (c *AgentCommand) Help() string {
 	helpText := `
-Usage: bao agent [options]
+Usage: redacto-kms agent [options]
 
-  This command starts an OpenBao Agent that can perform automatic authentication
+  This command starts a Redacto KMS Agent that can perform automatic authentication
   in certain environments.
 
   Start an agent with a configuration file:
 
-      $ bao agent -config=/etc/openbao/config.hcl
+      $ redacto-kms agent -config=/etc/redacto-kms/config.hcl
 
   For a full list of examples, please see the documentation.
 
@@ -122,7 +122,7 @@ func (c *AgentCommand) Flags() *FlagSets {
 
 	f.StringSliceVar(&StringSliceVar{
 		Name:   "config",
-		EnvVar: "BAO_AGENT_CONFIG_PATH",
+		EnvVar: "REDACTO_KMS_AGENT_CONFIG_PATH",
 		Target: &c.flagConfigs,
 		Completion: complete.PredictOr(
 			complete.PredictFiles("*.hcl"),
@@ -237,7 +237,7 @@ func (c *AgentCommand) Run(args []string) int {
 	// Tests might not want to start a vault server and just want to verify
 	// the configuration.
 	if c.flagTestVerifyOnly {
-		if api.ReadBaoVariable("BAO_TEST_VERIFY_ONLY_DUMP_CONFIG") != "" {
+		if api.ReadBaoVariable("REDACTO_KMS_TEST_VERIFY_ONLY_DUMP_CONFIG") != "" {
 			c.UI.Output(fmt.Sprintf(
 				"\nConfiguration:\n%s\n",
 				pretty.Sprint(*c.config),
@@ -264,8 +264,8 @@ func (c *AgentCommand) Run(args []string) int {
 		serverVersion := serverHealth.Version
 		agentVersion := version.GetVersion().VersionNumber()
 		if serverVersion != agentVersion {
-			c.UI.Info("==> Note: OpenBao Agent version does not match OpenBao server version. " +
-				fmt.Sprintf("OpenBao Agent version: %s, OpenBao server version: %s", agentVersion, serverVersion))
+			c.UI.Info("==> Note: Redacto KMS Agent version does not match Redacto KMS server version. " +
+				fmt.Sprintf("Redacto KMS Agent version: %s, Redacto KMS server version: %s", agentVersion, serverVersion))
 		}
 	}
 
@@ -274,9 +274,9 @@ func (c *AgentCommand) Run(args []string) int {
 		// we log on each API proxy call, which would be too noisy.
 		// A customer could have a listener defined but only be using e.g. the cache-clear API,
 		// even though the API proxy is something they have available.
-		c.UI.Warn("==> Note: OpenBao Agent will be deprecating API proxy functionality in a future " +
-			"release and this functionality has moved to a new subcommand, OpenBao proxy. If you rely on this " +
-			"functionality, plan to move to OpenBao Proxy instead.")
+		c.UI.Warn("==> Note: Redacto KMS Agent will be deprecating API proxy functionality in a future " +
+			"release and this functionality has moved to a new subcommand, Redacto KMS proxy. If you rely on this " +
+			"functionality, plan to move to Redacto KMS Proxy instead.")
 	}
 
 	// ctx and cancelFunc are passed to the AuthHandler, SinkServer, ExecServer and
@@ -290,7 +290,7 @@ func (c *AgentCommand) Run(args []string) int {
 		Config:      config.Telemetry,
 		Ui:          c.UI,
 		ServiceName: "bao",
-		DisplayName: "OpenBao",
+		DisplayName: "Redacto KMS",
 		UserAgent:   useragent.AgentString(),
 		ClusterName: config.ClusterName,
 	})
@@ -390,7 +390,7 @@ func (c *AgentCommand) Run(args []string) int {
 
 	// Output the header that the agent has started
 	if !c.logFlags.flagCombineLogs {
-		c.UI.Output("==> OpenBao Agent started!")
+		c.UI.Output("==> Redacto KMS Agent started!")
 	}
 
 	var leaseCache *cache.LeaseCache
@@ -603,7 +603,7 @@ func (c *AgentCommand) Run(args []string) int {
 		for {
 			select {
 			case <-c.SighupCh:
-				c.UI.Output("==> OpenBao Agent config reload triggered")
+				c.UI.Output("==> Redacto KMS Agent config reload triggered")
 				err := c.reloadConfig(c.flagConfigs)
 				if err != nil {
 					c.outputErrors(err)
@@ -626,7 +626,7 @@ func (c *AgentCommand) Run(args []string) int {
 		for {
 			select {
 			case <-c.ShutdownCh:
-				c.UI.Output("==> OpenBao Agent shutdown triggered")
+				c.UI.Output("==> Redacto KMS Agent shutdown triggered")
 				// Notify systemd that the server is shutting down
 				// Let the lease cache know this is a shutdown; no need to evict everything
 				if leaseCache != nil {
@@ -773,7 +773,7 @@ func (c *AgentCommand) Run(args []string) int {
 	padding := 24
 	sort.Strings(infoKeys)
 	caser := cases.Title(language.English, cases.NoLower)
-	c.UI.Output("\n==> OpenBao Agent configuration:\n")
+	c.UI.Output("\n==> Redacto KMS Agent configuration:\n")
 	for _, k := range infoKeys {
 		c.UI.Output(fmt.Sprintf(
 			"%s%s: %s",

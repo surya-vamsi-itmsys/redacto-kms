@@ -36,18 +36,18 @@ func (c *AuditEnableCommand) Synopsis() string {
 
 func (c *AuditEnableCommand) Help() string {
 	helpText := `
-Usage: bao audit enable [options] TYPE [CONFIG K=V...]
+Usage: redacto-kms audit enable [options] TYPE [CONFIG K=V...]
 
   Enables an audit device at a given path.
 
   This command enables an audit device of TYPE. Additional options for
   configuring the audit device can be specified after the type in the same
-  format as the "bao write" command in key/value pairs.
+  format as the "redacto-kms write" command in key/value pairs.
 
   For example, to configure the file audit device to write audit logs at the
   path "/var/log/audit.log":
 
-      $ bao audit enable file file_path=/var/log/audit.log
+      $ redacto-kms audit enable file file_path=/var/log/audit.log
 
 ` + c.Flags().Help()
 

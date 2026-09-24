@@ -1,30 +1,30 @@
 ---
 sidebar_label: Installation
-description: The OpenBao CSI Provider can be installed using OpenBao Helm.
+description: The Redacto KMS CSI Provider can be installed using Redacto KMS Helm.
 ---
 
-# Installing the OpenBao CSI provider
+# Installing the Redacto KMS CSI provider
 
 ## Prerequisites
 
 - Kubernetes 1.16+ for both the master and worker nodes (Linux-only)
 - [Secrets store CSI driver](https://secrets-store-csi-driver.sigs.k8s.io/getting-started/installation.html) installed and running
-- Using OpenBao Helm Chart Version 0.18.0 or newer.
+- Using Redacto KMS Helm Chart Version 0.18.0 or newer.
 - `TokenRequest` endpoint available, which requires setting the flags
   `--service-account-signing-key-file` and `--service-account-issuer` for
   `kube-apiserver`. Set by default from 1.20+ and earlier in most managed services.
 
 ## Installation using helm
 
-The [OpenBao Helm chart](../helm/index.mdx) is the recommended way to
-install and configure the OpenBao CSI Provider in Kubernetes.
+The [Redacto KMS Helm chart](../helm/index.mdx) is the recommended way to
+install and configure the Redacto KMS CSI Provider in Kubernetes.
 
-To install a new instance of OpenBao and the OpenBao CSI Provider, first add the
-OpenBao helm repository and ensure you have access to the chart:
+To install a new instance of Redacto KMS and the Redacto KMS CSI Provider, first add the
+Redacto KMS helm repository and ensure you have access to the chart:
 
 :::warning
 
-**Note:** OpenBao CSI Provider Helm installation requires OpenBao Helm 0.18.0+.
+**Note:** Redacto KMS CSI Provider Helm installation requires Redacto KMS Helm 0.18.0+.
 
 :::
 
@@ -35,7 +35,7 @@ Then install the chart and enable the CSI feature by setting the
 
 :::warning
 
-**Note:** this will also install the OpenBao server and Agent Injector.
+**Note:** this will also install the Redacto KMS server and Agent Injector.
 
 :::
 
@@ -47,15 +47,15 @@ Upgrades may be performed with `helm upgrade` on an existing installation. Pleas
 always run Helm with `--dry-run` before any install or upgrade to verify
 changes.
 
-You can see all the available values settings by running `helm inspect values openbao/openbao` or by reading the [OpenBao Helm Configuration
+You can see all the available values settings by running `helm inspect values openbao/openbao` or by reading the [Redacto KMS Helm Configuration
 Docs](../helm/configuration.mdx). Commonly used values in the Helm
-chart include limiting the namespaces the OpenBao CSI Provider runs in, TLS options and
+chart include limiting the namespaces the Redacto KMS CSI Provider runs in, TLS options and
 more.
 
 <!-- TODO: uncomment once OpenShift is known to work -->
 <!-- ## Installation on OpenShift -->
 
-<!-- We recommend using the [OpenBao agent injector on Openshift](../helm/openshift.mdx) -->
+<!-- We recommend using the [Redacto KMS agent injector on Openshift](../helm/openshift.mdx) -->
 <!-- instead of the Secrets Store CSI driver. OpenShift -->
 <!-- [does not recommend](https://docs.openshift.com/container-platform/4.9/storage/persistent_storage/persistent-storage-hostpath.html) -->
 <!-- using `hostPath` mounting in production or -->
@@ -67,10 +67,10 @@ more.
 <!-- security configurations on a OpenShift development -->
 <!-- or testing cluster. -->
 
-<!-- Deploy the Secrets Store CSI driver and OpenBao Helm chart -->
+<!-- Deploy the Secrets Store CSI driver and Redacto KMS Helm chart -->
 <!-- to your OpenShift cluster. -->
 
-<!-- Then, patch the `DaemonSet` for the OpenBao CSI provider to -->
+<!-- Then, patch the `DaemonSet` for the Redacto KMS CSI provider to -->
 <!-- run with a privileged security context. -->
 
 <!-- ```shell-session -->
@@ -79,7 +79,7 @@ more.
 <!--   --patch='[{"op": "add", "path": "/spec/template/spec/containers/0/securityContext", "value": {"privileged": true} }]' -->
 <!-- ``` -->
 
-<!-- The Secrets Store CSI driver and OpenBao CSI provider need `hostPath` mount access. -->
+<!-- The Secrets Store CSI driver and Redacto KMS CSI provider need `hostPath` mount access. -->
 <!-- Add the service account for the Secrets Store CSI driver to the `privileged` -->
 <!-- [security context constraint](https://cloud.redhat.com/blog/managing-sccs-in-openshift). -->
 
@@ -87,14 +87,14 @@ more.
 <!-- $ oc adm policy add-scc-to-user privileged system:serviceaccount:${KUBERNETES_OPENBAO_NAMESPACE}:secrets-store-csi-driver -->
 <!-- ``` -->
 
-<!-- Add the service account for the OpenBao CSI provider to the `privileged` -->
+<!-- Add the service account for the Redacto KMS CSI provider to the `privileged` -->
 <!-- security context constraint. -->
 
 <!-- ```shell-session -->
 <!-- $ oc adm policy add-scc-to-user privileged system:serviceaccount:${KUBERNETES_OPENBAO_NAMESPACE}:openbao-csi-provider -->
 <!-- ``` -->
 
-<!-- You need to give additional access to the application retrieving secrets with the OpenBao CSI provider. -->
+<!-- You need to give additional access to the application retrieving secrets with the Redacto KMS CSI provider. -->
 <!-- Create a `SecurityContextConstraint` to `allowHostDirVolumePlugin`, `allowHostDirVolumePlugin`, and -->
 <!-- `allowHostPorts` for the application's service account. -->
 <!-- You can adjust the other attributes based on your application's runtime configuration. -->

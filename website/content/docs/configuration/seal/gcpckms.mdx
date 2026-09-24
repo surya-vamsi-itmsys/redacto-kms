@@ -1,7 +1,7 @@
 ---
 sidebar_label: GCP Cloud KMS
 description: >-
-  The GCP Cloud KMS seal configures OpenBao to use GCP Cloud KMS as the seal
+  The GCP Cloud KMS seal configures Redacto KMS to use GCP Cloud KMS as the seal
   wrapping mechanism.
 ---
 
@@ -16,11 +16,11 @@ section](./index.mdx#plugins).
 
 :::
 
-The GCP Cloud KMS seal configures OpenBao to use GCP Cloud KMS as the seal
+The GCP Cloud KMS seal configures Redacto KMS to use GCP Cloud KMS as the seal
 wrapping mechanism. The GCP Cloud KMS seal is activated by one of the following:
 
-- The presence of a `seal "gcpckms"` block in OpenBao's configuration file.
-- The presence of the environment variable `VAULT_SEAL_TYPE` set to `gcpckms`.
+- The presence of a `seal "gcpckms"` block in Redacto KMS's configuration file.
+- The presence of the environment variable `REDACTO_KMS_SEAL_TYPE` set to `gcpckms`.
   If enabling via environment variable, all other required values specific to
   Cloud KMS (i.e. `VAULT_GCPCKMS_SEAL_KEY_RING`, etc.) must be also supplied, as
   well as all other GCP-related environment variables that lends to successful
@@ -28,7 +28,7 @@ wrapping mechanism. The GCP Cloud KMS seal is activated by one of the following:
 
 ## `gcpckms` example
 
-This example shows configuring GCP Cloud KMS seal through the OpenBao
+This example shows configuring GCP Cloud KMS seal through the Redacto KMS
 configuration file by providing all the required values:
 
 ```hcl
@@ -43,7 +43,7 @@ seal "gcpckms" {
 
 ## `gcpckms` parameters
 
-These parameters apply to the `seal` stanza in the OpenBao configuration file:
+These parameters apply to the `seal` stanza in the Redacto KMS configuration file:
 
 - `credentials` `(string: <required>)`: The path to the credentials JSON file
   to use. May be also specified by the `GOOGLE_CREDENTIALS` or
@@ -64,7 +64,7 @@ These parameters apply to the `seal` stanza in the OpenBao configuration file:
   encryption and decryption. May also be specified by the
   `VAULT_GCPCKMS_SEAL_CRYPTO_KEY` environment variable.
 
-- `disabled` `(string: "")`: Set this to `true` if OpenBao is migrating from an auto seal configuration. Otherwise, set to `false`.
+- `disabled` `(string: "")`: Set this to `true` if Redacto KMS is migrating from an auto seal configuration. Otherwise, set to `false`.
 
 Refer to the [Seal Migration](../../concepts/seal.mdx#seal-migration) documentation for more information about the seal migration process.
 
@@ -106,7 +106,7 @@ cloudkms.cryptoKeys.get
 Alternatively, the GCP Cloud KMS seal can be activated by providing the following
 environment variables:
 
-- `VAULT_SEAL_TYPE`
+- `REDACTO_KMS_SEAL_TYPE`
 - `VAULT_GCPCKMS_SEAL_KEY_RING`
 - `VAULT_GCPCKMS_SEAL_CRYPTO_KEY`
 

@@ -21,22 +21,22 @@ type OperatorStepDownCommand struct {
 }
 
 func (c *OperatorStepDownCommand) Synopsis() string {
-	return "Forces Vault to resign active duty"
+	return "Forces Redacto KMS to resign active duty"
 }
 
 func (c *OperatorStepDownCommand) Help() string {
 	helpText := `
-Usage: bao operator step-down [options]
+Usage: redacto-kms operator step-down [options]
 
-  Forces the OpenBao server at the given address to step down from active duty.
+  Forces the Redacto KMS server at the given address to step down from active duty.
   While the affected node will have a delay before attempting to acquire the
-  leader lock again, if no other OpenBao nodes acquire the lock beforehand, it
+  leader lock again, if no other Redacto KMS nodes acquire the lock beforehand, it
   is possible for the same node to re-acquire the lock and become active
   again.
 
-  Force OpenBao to step down as the leader:
+  Force Redacto KMS to step down as the leader:
 
-      $ bao operator step-down
+      $ redacto-kms operator step-down
 
 ` + c.Flags().Help()
 

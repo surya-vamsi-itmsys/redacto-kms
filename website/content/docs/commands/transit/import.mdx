@@ -24,29 +24,29 @@ endpoints (either `transit/keys/:name/import` or
 Imports a 2048-bit RSA key as a new key:
 
 ```
-$ bao transit import transit/keys/test-key @test-key type=rsa-2048
+$ redacto-kms transit import transit/keys/test-key @test-key type=rsa-2048
 Retrieving transit wrapping key.
 Wrapping source key with ephemeral key.
 Encrypting ephemeral key with transit wrapping key.
-Submitting wrapped key to OpenBao transit.
+Submitting wrapped key to Redacto KMS transit.
 Success!
 ```
 
 Imports a new version of an existing key:
 
 ```
-$ bao transit import-version transit/keys/test-key @test-key-updated
+$ redacto-kms transit import-version transit/keys/test-key @test-key-updated
 Retrieving transit wrapping key.
 Wrapping source key with ephemeral key.
 Encrypting ephemeral key with transit wrapping key.
-Submitting wrapped key to OpenBao transit.
+Submitting wrapped key to Redacto KMS transit.
 Success!
 ```
 
 ## Usage
 
-This command does not have any unique flags and respects core OpenBao CLI
-commands. See `bao transit import -help` for more information.
+This command does not have any unique flags and respects core Redacto KMS CLI
+commands. See `redacto-kms transit import -help` for more information.
 
 This command requires two positional arguments:
 

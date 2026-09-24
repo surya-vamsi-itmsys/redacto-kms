@@ -2,13 +2,13 @@
 sidebar_label: Overview
 description: |-
   The "policy" command groups subcommands for interacting with policies. Users
-  can write, read, and list policies in OpenBao.
+  can write, read, and list policies in Redacto KMS.
 ---
 
 # policy
 
 The `policy` command groups subcommands for interacting with policies. Users can
-write, read, and list policies in OpenBao.
+write, read, and list policies in Redacto KMS.
 
 For more information, please see the [policy
 documentation](../../concepts/policies.mdx).
@@ -18,25 +18,25 @@ documentation](../../concepts/policies.mdx).
 List all enabled policies:
 
 ```shell-session
-$ bao policy list
+$ redacto-kms policy list
 ```
 
 Create a policy named "my-policy" from contents on local disk:
 
 ```shell-session
-$ bao policy write my-policy ./my-policy.hcl
+$ redacto-kms policy write my-policy ./my-policy.hcl
 ```
 
 Delete the policy named my-policy:
 
 ```shell-session
-$ bao policy delete my-policy
+$ redacto-kms policy delete my-policy
 ```
 
 ## Usage
 
 ```text
-Usage: bao policy <subcommand> [options] [args]
+Usage: redacto-kms policy <subcommand> [options] [args]
 
   # ...
 

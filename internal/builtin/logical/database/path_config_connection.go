@@ -130,7 +130,7 @@ func pathConfigurePluginConnection(b *databaseBackend) *framework.Path {
 			"plugin_name": {
 				Type: framework.TypeString,
 				Description: `The name of a builtin or previously registered
-				plugin known to OpenBao. This endpoint will create an instance of
+				plugin known to Redacto KMS. This endpoint will create an instance of
 				that plugin type.`,
 			},
 
@@ -506,7 +506,7 @@ func (b *databaseBackend) connectionWriteHandler() framework.OperationFunc {
 		// the `password_policy` will not be used
 		if dbw.isV4() && config.PasswordPolicy != "" {
 			resp.AddWarning(fmt.Sprintf("%s does not support password policies - upgrade to the latest version of "+
-				"OpenBao (or the sdk if using a custom plugin) to gain password policy support", config.PluginName))
+				"Redacto KMS (or the sdk if using a custom plugin) to gain password policy support", config.PluginName))
 		}
 
 		if err := logical.EndTxStorage(ctx, req); err != nil {
@@ -547,7 +547,7 @@ In addition to the database specific connection details, this endpoint also
 accepts:
 
 	* "plugin_name" (required) - The name of a builtin or previously registered
-	   plugin known to OpenBao. This endpoint will create an instance of that
+	   plugin known to Redacto KMS. This endpoint will create an instance of that
 	   plugin type.
 
 	* "verify_connection" (default: true) - A boolean value denoting if the plugin should verify

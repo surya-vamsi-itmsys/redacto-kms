@@ -111,13 +111,13 @@ func (b *backend) pathVerifyWrite(ctx context.Context, req *logical.Request, d *
 }
 
 const pathVerifyHelpSyn = `
-Validate the OTP provided by OpenBao SSH Agent.
+Validate the OTP provided by Redacto KMS SSH Agent.
 `
 
 const pathVerifyHelpDesc = `
-This path will be used by OpenBao SSH Agent running in the remote hosts. The OTP
-provided by the client is sent to OpenBao for validation by the agent. If OpenBao
+This path will be used by Redacto KMS SSH Agent running in the remote hosts. The OTP
+provided by the client is sent to Redacto KMS for validation by the agent. If Redacto KMS
 finds an entry for the OTP, it responds with the username and IP it is associated
-with. Agent uses this information to authenticate the client. OpenBao deletes the
+with. Agent uses this information to authenticate the client. Redacto KMS deletes the
 OTP after validating it once.
 `

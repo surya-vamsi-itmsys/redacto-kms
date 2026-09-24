@@ -18,9 +18,9 @@ var (
 )
 
 var pathHelpVaultSealedMessage = strings.TrimSpace(`
-Error: Vault is sealed.
+Error: Redacto KMS is sealed.
 
-The "path-help" command requires the Vault to be unsealed so that the mount
+The "path-help" command requires the Redacto KMS to be unsealed so that the mount
 points of the secret engines are known.
 `)
 
@@ -34,19 +34,19 @@ func (c *PathHelpCommand) Synopsis() string {
 
 func (c *PathHelpCommand) Help() string {
 	helpText := `
-Usage: bao path-help [options] PATH
+Usage: redacto-kms path-help [options] PATH
 
-  Retrieves API help for paths. All endpoints in OpenBao provide built-in help
+  Retrieves API help for paths. All endpoints in Redacto KMS provide built-in help
   in markdown format. This includes system paths, secret engines, and auth
   methods.
 
   Get help for the thing mounted at database/:
 
-      $ bao path-help database/
+      $ redacto-kms path-help database/
 
   The response object will return additional paths to retrieve help:
 
-      $ bao path-help database/roles/
+      $ redacto-kms path-help database/roles/
 
   Each secret engine produces different help output.
 

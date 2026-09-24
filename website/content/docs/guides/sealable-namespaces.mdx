@@ -1,7 +1,7 @@
 ---
 sidebar_label: Sealable Namespace Guide
 description: >-
-  This page contains a guide to get started with sealable namespaces in OpenBao
+  This page contains a guide to get started with sealable namespaces in Redacto KMS
 ---
 
 # Getting Started with Sealable Namespaces
@@ -19,7 +19,7 @@ If you are working with the API instead of the CLI, you can add `-output-curl-st
 You can create a sealable namespace `my-tenant` under an existing namespace `tenants` with a Shamir seal like this:
 
 ```shell-session
-$ bao namespace create -ns=tenants -key-shares=5 -key-threshold=3 my-tenant
+$ redacto-kms namespace create -ns=tenants -key-shares=5 -key-threshold=3 my-tenant
 Unseal Key 1: 639c362ebf75b0ebfdc0f62b6e40da5a3471d6f9ad9223c968a62ba369b8f453ab
 Unseal Key 2: cee185da54cce9d4cd87154d4a228edfd61473b497a599208c3686b9377c1f13b4
 Unseal Key 3: 6280d458eac88def949b197bcda005d1b639ed18c55ef6699b1db3ba1556c54d96
@@ -48,7 +48,7 @@ sealed state.
 
 :::
 
-Just like `bao operator init`, you can specify a list of PGP or Keybase keys to
+Just like `redacto-kms operator init`, you can specify a list of PGP or Keybase keys to
 encrypt the key shares with. See [`operator
 init`](../../commands/operator/init#examples) docs for more details.
 
@@ -61,10 +61,10 @@ init`](../../commands/operator/init#examples) docs for more details.
 
 ## Unsealing a Namespace
 
-A newly created sealable namespace is sealed. To unseal a Shamir-sealed namespace, use the command `bao namespace unseal`:
+A newly created sealable namespace is sealed. To unseal a Shamir-sealed namespace, use the command `redacto-kms namespace unseal`:
 
 ```shell-session
-$ bao namespace unseal -ns=tenants my-tenant
+$ redacto-kms namespace unseal -ns=tenants my-tenant
 Unseal Key (will be hidden):
 Key                Value
 ---                -----
@@ -80,15 +80,15 @@ HA Enabled         false
 
 Cancelling an in-progress unsealing procedure can be done by passing the `-reset` flag to the `namespace unseal` command.
 
-Unlike the global OpenBao seal, namespaces do not have to be unsealed per node,
+Unlike the global Redacto KMS seal, namespaces do not have to be unsealed per node,
 but just once per cluster.
 
 ## Sealing a Namespace
 
-To seal a sealable namespace, use the command `bao namespace seal`:
+To seal a sealable namespace, use the command `redacto-kms namespace seal`:
 
 ```shell-session
-$ bao namespace seal -ns=tenants my-tenant
+$ redacto-kms namespace seal -ns=tenants my-tenant
 Success! Namespace "my-tenant" is sealed.
 ```
 
@@ -102,10 +102,10 @@ If a parent namespace is sealed, all child namespaces with their own seal config
 
 ## Seal Status
 
-To retrieve the seal status of a namespace, you can use the command `bao namespace seal-status`:
+To retrieve the seal status of a namespace, you can use the command `redacto-kms namespace seal-status`:
 
 ```shell-session
-$ bao namespace seal-status -ns=tenants my-tenant
+$ redacto-kms namespace seal-status -ns=tenants my-tenant
 Key                Value
 ---                -----
 Seal Type          shamir
@@ -122,18 +122,18 @@ Retrieving the seal status of a non-sealable namespace will result in an error.
 
 ## Deleting a Sealable Namespace
 
-If a sealable namespace is unsealed and empty, it can be deleted with the normal `bao namespace delete` command:
+If a sealable namespace is unsealed and empty, it can be deleted with the normal `redacto-kms namespace delete` command:
 
 ```shell-session
-$ bao namespace delete -ns=tenants my-tenant
+$ redacto-kms namespace delete -ns=tenants my-tenant
 Success! Namespace deleted at: tenants/my-tenant/
 ```
 
 If a namespace is sealed and does not contain child namespaces, it can be
-deleted with `bao namespace delete-sealed`:
+deleted with `redacto-kms namespace delete-sealed`:
 
 ```shell-session
-$ bao namespace delete-sealed -ns=tenants my-tenant
+$ redacto-kms namespace delete-sealed -ns=tenants my-tenant
 Success! Namespace deletion scheduled: tenants/my-tenant/
 ```
 
@@ -142,17 +142,17 @@ flag. This will delete any data in that namespace and any child-namespaces that
 might exist.
 
 ```shell-session
-$ bao namespace delete-sealed -ns=tenants -force my-tenant
+$ redacto-kms namespace delete-sealed -ns=tenants -force my-tenant
 Success! Namespace deletion scheduled: tenants/my-tenant/
 ```
 
 :::info
 
-Note that `bao namespace delete-sealed` requires the sudo capability, and will
+Note that `redacto-kms namespace delete-sealed` requires the sudo capability, and will
 not clean up external resources via lease deletion like standard namespace
 deletion does.
 
-Prefer the standard `bao namespace delete` command unless the namespace is
+Prefer the standard `redacto-kms namespace delete` command unless the namespace is
 irrecoverable due to lost seal keys.
 
 :::
@@ -160,10 +160,10 @@ irrecoverable due to lost seal keys.
 ## Rotate Unseal Keys
 
 To start generating a new set of unseal keys for a sealable namespace, use the
-`bao operator rotate-keys` command with the `-ns` flag.
+`redacto-kms operator rotate-keys` command with the `-ns` flag.
 
 ```shell-session
-$ bao operator rotate-keys -ns=tenants/my-tenant -init
+$ redacto-kms operator rotate-keys -ns=tenants/my-tenant -init
 WARNING! If you lose the keys after they are returned, there is no recovery.
 Consider canceling this operation and re-initializing with the -pgp-keys flag
 to protect the returned unseal keys along with -backup to allow recovery of
@@ -182,7 +182,7 @@ Verification Required    false
 
 :::info
 
-**Note**: Unlike the `bao namespace` commands, the `bao operator` commands require
+**Note**: Unlike the `redacto-kms namespace` commands, the `redacto-kms operator` commands require
 specifying the **target namespace** via the `-ns` flag.
 
 :::
@@ -194,7 +194,7 @@ Then you will have to provide a quorum of the old key shares to finish the key
 rotation procedure using the same command without the `-init` flag:
 
 ```shell-session
-$ bao operator rotate-keys -ns=tenants/my-tenant
+$ redacto-kms operator rotate-keys -ns=tenants/my-tenant
 rotation nonce: 393bcb43-93b0-bd74-393e-19fa7a929cee
 Unseal Key (will be hidden):
 
@@ -206,8 +206,8 @@ Key 5: hFZUpb3i6L8m+aYcISaUVkF0FVFfKa4FMIo/oLifU9Ym
 
 Operation nonce: 393bcb43-93b0-bd74-393e-19fa7a929cee
 
-OpenBao unseal keys rotated to 5 key shares and a key threshold of 3. Please
-securely distribute the key shares printed above. When OpenBao is re-sealed,
+Redacto KMS unseal keys rotated to 5 key shares and a key threshold of 3. Please
+securely distribute the key shares printed above. When Redacto KMS is re-sealed,
 restarted, or stopped, you must supply at least 3 of these keys to unseal it
 before it can start servicing requests.
 ```
@@ -219,12 +219,12 @@ rotate-keys`](../../commands/operator/rotate-keys#examples) command.
 
 ## Keyring Rotation
 
-To rotate the data encryption keys of a namespace, you can use the existing `bao
+To rotate the data encryption keys of a namespace, you can use the existing `redacto-kms
 operator rotate` command, while specifying the namespace with the `-ns` flag.
 This requires the namespace to be unsealed.
 
 ```shell-session
-$ bao operator rotate -ns=tenants/my-tenant
+$ redacto-kms operator rotate -ns=tenants/my-tenant
 Success! Rotated key
 
 Key Term            2
@@ -232,10 +232,10 @@ Install Time        10 Jun 26 08:37 UTC
 Encryption Count    0
 ```
 
-You can always check the current status of the namespace keyring by using the `bao operator key-status` command:
+You can always check the current status of the namespace keyring by using the `redacto-kms operator key-status` command:
 
 ```shell-session
-$ bao operator key-status -ns=tenants/my-tenant
+$ redacto-kms operator key-status -ns=tenants/my-tenant
 Key Term            2
 Install Time        10 Jun 26 08:37 UTC
 Encryption Count    0
@@ -243,10 +243,10 @@ Encryption Count    0
 
 ## Generate a Sealable Namespace Root Token
 
-You can use the `bao operator generate-root` command to generate a namespace-scoped root token for a sealable namespace.
+You can use the `redacto-kms operator generate-root` command to generate a namespace-scoped root token for a sealable namespace.
 
 ```shell-session
-$ bao operator generate-root -ns=tenants/my-tenant -init
+$ redacto-kms operator generate-root -ns=tenants/my-tenant -init
 A One-Time-Password has been generated for you and is shown in the OTP field.
 You will need this value to decode the resulting root token, so keep it safe.
 Nonce         ad287b9e-cb19-613b-3720-84b5ac4ac1ef
@@ -260,7 +260,7 @@ OTP Length    33
 You will then have to provide the appropriate number of seal shares to finish the root token generation.
 
 ```shell-session
-$ bao operator generate-root -ns=tenants/my-tenant
+$ redacto-kms operator generate-root -ns=tenants/my-tenant
 Operation nonce: ad287b9e-cb19-613b-3720-84b5ac4ac1ef
 Unseal Key (will be hidden):
 Nonce            ad287b9e-cb19-613b-3720-84b5ac4ac1ef
@@ -272,10 +272,10 @@ Encoded Token    CV1XEQdDCApdBi88eDF9YRYgfhBeESQjFgdeLXEBBywf
 
 See the documentation of [`operator generate-root`](../../commands/operator/generate-root) for more infos on this and how to decode the returned token.
 
-Check out the generated token using `bao token lookup`:
+Check out the generated token using `redacto-kms token lookup`:
 
 ```shell-session
-$ bao token lookup
+$ redacto-kms token lookup
 Key                 Value
 ---                 -----
 accessor            W4gespQDyq6NDI2flWOxiPR7.dEkONN

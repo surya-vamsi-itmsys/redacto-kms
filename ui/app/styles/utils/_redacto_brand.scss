@@ -1,0 +1,22 @@
+/**
+ * Copyright (c) 2026 Redacto KMS
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+// Redacto KMS brand palette: the single source of truth for brand colour.
+// Values are sampled from the supplied logo (branding/redacto-brandlogo.png).
+// Do not reference these from components; consume the semantic tokens defined
+// in styles/redacto-tokens.scss (e.g. var(--color-primary)) instead.
+
+$redacto-primary: #4961f6; // logo mark (circle)
+$redacto-navy: #050038; // logo wordmark
+$redacto-white: #ffffff; // logo asterisk
+$redacto-background: #f7f8fc; // light application background
+
+// Derived interaction shades (mixes of the logo colours only).
+$redacto-primary-hover: mix($redacto-navy, $redacto-primary, 15%);
+$redacto-primary-active: mix($redacto-navy, $redacto-primary, 30%);
+$redacto-primary-subtle: mix($redacto-white, $redacto-primary, 92%);
+$redacto-primary-muted: mix($redacto-white, $redacto-primary, 70%);
+$redacto-navy-hover: mix($redacto-white, $redacto-navy, 12%);
+$redacto-navy-active: mix($redacto-white, $redacto-navy, 20%);

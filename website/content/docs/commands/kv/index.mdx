@@ -1,13 +1,13 @@
 ---
 sidebar_label: Overview
 description: |-
-  The "kv" command groups subcommands for interacting with OpenBao's key/value
+  The "kv" command groups subcommands for interacting with Redacto KMS's key/value
   secret engine.
 ---
 
 # kv
 
-The `kv` command groups subcommands for interacting with OpenBao's key/value
+The `kv` command groups subcommands for interacting with Redacto KMS's key/value
 secrets engine (both [K/V Version 1](../../secrets/kv/kv-v1.mdx) and [K/V
 Version 2](../../secrets/kv/kv-v2.mdx).
 
@@ -15,9 +15,9 @@ Version 2](../../secrets/kv/kv-v2.mdx).
 
 Option flags for a given subcommand are provided after the subcommand, but before the arguments.
 
-The path to where the secrets engine is mounted can be indicated with the `-mount` flag, such as `bao kv get -mount=secret creds`.
+The path to where the secrets engine is mounted can be indicated with the `-mount` flag, such as `redacto-kms kv get -mount=secret creds`.
 
-The deprecated path-like syntax can also be used (e.g. `bao kv get secret/creds`), but this should be avoided
+The deprecated path-like syntax can also be used (e.g. `redacto-kms kv get secret/creds`), but this should be avoided
 for KV v2, because it is not actually the full API path to the secret
 (secret/data/foo) and may cause confusion.
 
@@ -27,7 +27,7 @@ Create or update the key named "creds" in the K/V Version 2 enabled at "secret"
 with the value "passcode=my-long-passcode":
 
 ```shell-session
-$ bao kv put -mount=secret creds passcode=my-long-passcode
+$ redacto-kms kv put -mount=secret creds passcode=my-long-passcode
 == Secret Path ==
 secret/data/creds
 
@@ -44,7 +44,7 @@ version            1
 Read this value back:
 
 ```shell-session
-$ bao kv get -mount=secret creds
+$ redacto-kms kv get -mount=secret creds
 == Secret Path ==
 secret/data/creds
 
@@ -66,7 +66,7 @@ passcode    my-long-passcode
 Get metadata for the key named "creds":
 
 ```shell-session
-$ bao kv metadata get -mount=secret creds
+$ redacto-kms kv metadata get -mount=secret creds
 === Metadata Path ===
 secret/metadata/creds
 
@@ -93,7 +93,7 @@ destroyed        false
 Get a specific version of the key named "creds":
 
 ```shell-session
-$ bao kv get -mount=secret -version=1 creds
+$ redacto-kms kv get -mount=secret -version=1 creds
 == Secret Path ==
 secret/data/creds
 
@@ -115,7 +115,7 @@ passcode    my-long-passcode
 ## Usage
 
 ```text
-Usage: bao kv <subcommand> [options] [args]
+Usage: redacto-kms kv <subcommand> [options] [args]
 
   # ...
 
@@ -125,7 +125,7 @@ Subcommands:
     enable-versioning    Turns on versioning for a KV store
     get                  Retrieves data from the KV store
     list                 List data or secrets
-    metadata             Interact with OpenBao's Key-Value storage
+    metadata             Interact with Redacto KMS's Key-Value storage
     patch                Sets or updates data in the KV store without overwriting
     put                  Sets or updates data in the KV store
     rollback             Rolls back to a previous version of data

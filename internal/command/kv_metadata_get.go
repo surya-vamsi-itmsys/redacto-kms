@@ -30,18 +30,18 @@ func (c *KVMetadataGetCommand) Synopsis() string {
 
 func (c *KVMetadataGetCommand) Help() string {
 	helpText := `
-Usage: bao kv metadata get [options] KEY
+Usage: redacto-kms kv metadata get [options] KEY
 
-  Retrieves the metadata from OpenBao's key-value store at the given key name. If no
+  Retrieves the metadata from Redacto KMS's key-value store at the given key name. If no
   key exists with that name, an error is returned.
 
-      $ bao kv metadata get -mount=secret foo
+      $ redacto-kms kv metadata get -mount=secret foo
 
   The deprecated path-like syntax can also be used, but this should be avoided 
   for KV v2, as the fact that it is not actually the full API path to 
   the secret (secret/metadata/foo) can cause confusion: 
   
-      $ bao kv metadata get secret/foo
+      $ redacto-kms kv metadata get secret/foo
 
   Additional flags and more advanced use cases are detailed below.
 

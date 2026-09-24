@@ -1,16 +1,16 @@
 ---
-description: The `/sys/locked-users` endpoint is used to manage locked users in OpenBao.
+description: The `/sys/locked-users` endpoint is used to manage locked users in Redacto KMS.
 ---
 
 # `/sys/locked-users`
 
-The `/sys/locked-users` endpoint is used to list and unlock locked users in OpenBao.
+The `/sys/locked-users` endpoint is used to list and unlock locked users in Redacto KMS.
 
-Refer to the [user lockout](../../concepts/user-lockout.mdx) overview for more details about how OpenBao handles lockouts.
+Refer to the [user lockout](../../concepts/user-lockout.mdx) overview for more details about how Redacto KMS handles lockouts.
 
 ## List locked users
 
-The list endpoint returns information on the users currently locked by OpenBao.
+The list endpoint returns information on the users currently locked by Redacto KMS.
 
 The response will include all child namespaces of the namespace in which the
 request was made. If some namespace has subsequently been deleted, its path will

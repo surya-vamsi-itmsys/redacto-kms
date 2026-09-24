@@ -53,7 +53,7 @@ func NewFileBackend(conf map[string]string, logger log.Logger) (physical.Backend
 	}
 
 	if logger != nil {
-		logger.Warn("the file physical backend is deprecated; use bao operator migrate to move to a supported storage backend by v2.7.0")
+		logger.Warn("the file physical backend is deprecated; use redacto-kms operator migrate to move to a supported storage backend by v2.7.0")
 	}
 
 	return &FileBackend{

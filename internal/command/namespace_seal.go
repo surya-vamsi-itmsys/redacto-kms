@@ -26,9 +26,9 @@ func (c *NamespaceSealCommand) Synopsis() string {
 
 func (c *NamespaceSealCommand) Help() string {
 	helpText := `
-Usage: bao namespace seal [options] PATH
+Usage: redacto-kms namespace seal [options] PATH
 
-  Seals the OpenBao namespace. Sealing tells the namespace to stop responding
+  Seals the Redacto KMS namespace. Sealing tells the namespace to stop responding
   to any operations until it is unsealed. When sealed, the namespace
   discards its in-memory root key used data encryption, so it is physically
   blocked from responding to operations while sealed.
@@ -40,7 +40,7 @@ Usage: bao namespace seal [options] PATH
 
   Seal the namespace:
 
-      $ bao namespace seal
+      $ redacto-kms namespace seal
 
 ` + c.Flags().Help()
 

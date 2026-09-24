@@ -29,11 +29,11 @@ func (c *PKIIssueCACommand) Synopsis() string {
 
 func (c *PKIIssueCACommand) Help() string {
 	helpText := `
-Usage: bao pki issue PARENT CHILD_MOUNT options
+Usage: redacto-kms pki issue PARENT CHILD_MOUNT options
 
-PARENT is the fully qualified path of the Certificate Authority in OpenBao which will issue the new intermediate certificate.
+PARENT is the fully qualified path of the Certificate Authority in Redacto KMS which will issue the new intermediate certificate.
 
-CHILD_MOUNT is the path of the mount in OpenBao where the new issuer is saved.
+CHILD_MOUNT is the path of the mount in Redacto KMS where the new issuer is saved.
 
 options are the superset of the options passed to generate/intermediate and sign-intermediate commands.  At least one option must be set.
 
@@ -317,7 +317,7 @@ func (state inCaseOfFailure) toContinue() string {
 	message := ""
 	if !state.csrSigned {
 		message += fmt.Sprintf("You can continue to work with this Certificate Signing Request CSR PEM, by saving"+
-			" it as `pki_int.csr`: %v \n Then call `vault write %v/sign-intermediate csr=@pki_int.csr ...` adding the "+
+			" it as `pki_int.csr`: %v \n Then call `redacto-kms write %v/sign-intermediate csr=@pki_int.csr ...` adding the "+
 			"same key-value arguments as to `pki issue` (except key_type and issuer_name) to generate the certificate "+
 			"and ca_chain", state.csr, state.parentIssuer)
 	}
@@ -326,7 +326,7 @@ func (state inCaseOfFailure) toContinue() string {
 			message += fmt.Sprintf("The certificate chain, signed by %v, for this new certificate is: %v", state.parentIssuer, state.caChain)
 		}
 		message += fmt.Sprintf("You can continue to work with this Certificate (and chain) by saving it as "+
-			"chain.pem and importing it as `vault write %v/issuers/import/cert pem_bundle=@chain.pem`",
+			"chain.pem and importing it as `redacto-kms write %v/issuers/import/cert pem_bundle=@chain.pem`",
 			state.intermediateMount)
 	}
 	if !state.certNamed {
@@ -350,16 +350,16 @@ func (state inCaseOfFailure) toAbort() string {
 	if state.csrGenerated && state.createdKeyId != "" {
 		message += fmt.Sprintf(" A key, with key ID %v was created on mount %v as part of this command."+
 			"  If you do not with to use this key and corresponding CSR/cert, you can delete that information by calling"+
-			" `vault delete %v/key/%v`", state.createdKeyId, state.intermediateMount, state.intermediateMount, state.createdKeyId)
+			" `redacto-kms delete %v/key/%v`", state.createdKeyId, state.intermediateMount, state.intermediateMount, state.createdKeyId)
 	}
 	if state.csrSigned {
 		message += fmt.Sprintf("A certificate with serial number %v was signed by mount %v as part of this command."+
-			" If you do not want to use this certificate, consider revoking it by calling `vault write %v/revoke/%v`",
+			" If you do not want to use this certificate, consider revoking it by calling `redacto-kms write %v/revoke/%v`",
 			state.certSerialNumber, state.parentMount, state.parentMount, state.certSerialNumber)
 	}
 	//if state.certImported {
 	//	message += fmt.Sprintf("An issuer with UUID %v was created on mount %v as part of this command.  " +
-	//		"If you do not wish to use this issuer, consider deleting it by calling `vault delete %v/issuer/%v`",
+	//		"If you do not wish to use this issuer, consider deleting it by calling `redacto-kms delete %v/issuer/%v`",
 	//		state.certIssuerId, state.intermediateMount, state.intermediateMount, state.certIssuerId)
 	//}
 

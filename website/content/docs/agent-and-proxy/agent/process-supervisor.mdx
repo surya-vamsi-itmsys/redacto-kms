@@ -1,36 +1,36 @@
 ---
 sidebar_label: Process Supervisor Mode
 description: >-
-  OpenBao Agent's Process Supervisor Mode allows OpenBao secrets to be injected
+  Redacto KMS Agent's Process Supervisor Mode allows Redacto KMS secrets to be injected
   into a process via environment variables using Consul Template markup.
 ---
 
-# OpenBao agent's process supervisor mode
+# Redacto KMS agent's process supervisor mode
 
-OpenBao Agent's Process Supervisor Mode allows OpenBao secrets to be injected into
+Redacto KMS Agent's Process Supervisor Mode allows Redacto KMS secrets to be injected into
 a process via environment variables using
 [Consul Template markup][consul-templating-language].
 
 <!-- :::info -->
 
 <!-- If you are running your applications in a Kubernetes cluster, we recommend -->
-<!--   evaluating the [OpenBao Agent Sidecar Injector](../../platform/k8s/injector/index.mdx). -->
+<!--   evaluating the [Redacto KMS Agent Sidecar Injector](../../platform/k8s/injector/index.mdx). -->
 
 <!-- ::: -->
 
 :::danger
 
-OpenBao Agent's Process Supervisor Mode is in public beta. Please provide your
+Redacto KMS Agent's Process Supervisor Mode is in public beta. Please provide your
    feedback by opening a GitHub issue [here](https://github.com/openbao/openbao/issues).
 
 :::
 
 ## Functionality
 
-OpenBao Agent will inject secrets referenced in the `env_template` configuration
+Redacto KMS Agent will inject secrets referenced in the `env_template` configuration
 blocks as environment variables into the child process specified in the `exec` block.
 
-When you start OpenBao Agent in process supervisor mode, it will wait until each
+When you start Redacto KMS Agent in process supervisor mode, it will wait until each
 environment variable template has rendered at least once before starting the
 process. If `restart_on_secret_changes` is set to `always` (default), Agent
 will restart the process whenever an update to an injected secret is detected.
@@ -38,9 +38,9 @@ This could be either a static secret update (done on
 [`static_secret_render_interval`](template.mdx#static_secret_render_interval))
 or dynamic secret being close to its expiration.
 
-In many ways, OpenBao Agent will mirror the child process. Standard intput and
+In many ways, Redacto KMS Agent will mirror the child process. Standard intput and
 output streams (`stdin` / `stdout` / `stderr`) are all forwarded to the child
-process. Additionally, OpenBao Agent will exit when the child process exits on
+process. Additionally, Redacto KMS Agent will exit when the child process exits on
 its own with the same exit code.
 
 ## Configuration
@@ -81,7 +81,7 @@ as file templates but permits only a subset of
   a struct or map field/key that does notexist. The default behavior will print `<no value>`
   when accessing a field that does not exist. It is highly recommended you set this
   to "true". Also see
-  [`exit_on_retry_failure` in global OpenBao Agent Template Config](template.mdx#interaction-between-exit_on_retry_failure-and-error_on_missing_key).
+  [`exit_on_retry_failure` in global Redacto KMS Agent Template Config](template.mdx#interaction-between-exit_on_retry_failure-and-error_on_missing_key).
 
 - `left_delimiter` `(string: "\{\{")` - Delimiter to use in the template. The
   default is "\{\{" but for some templates, it may be easier to use a different
@@ -115,10 +115,10 @@ The top level `exec` block has the following configuration entries.
 ## Configuration example
 
 The following example was generated using
-[`bao agent generate-config`](generate-config/index.mdx),
-a configuration helper tool. Given this configuration, OpenBao Agent will run
+[`redacto-kms agent generate-config`](generate-config/index.mdx),
+a configuration helper tool. Given this configuration, Redacto KMS Agent will run
 the child process (`./my-app arg1 arg2`) with two additional environment
-variables (`FOO_USER` and `FOO_PASSWORD`) populated with secrets from OpenBao.
+variables (`FOO_USER` and `FOO_PASSWORD`) populated with secrets from Redacto KMS.
 
 ```hcl
 auto_auth {
@@ -127,7 +127,7 @@ auto_auth {
     type = "token_file"
 
     config {
-      token_file_path = "/Users/avean/.vault-token"
+      token_file_path = "/Users/avean/.redacto-kms-token"
     }
   }
 }

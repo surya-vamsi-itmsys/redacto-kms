@@ -1,0 +1,124 @@
+/**
+ * Copyright (c) 2026 Redacto KMS
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+// Redacto KMS design tokens.
+//
+// This file is the single place where brand, surface, text, state and status
+// colours, typography, spacing, radii and shadows are defined as semantic CSS
+// custom properties. Components consume these tokens (var(--color-primary),
+// etc.); the HashiCorp Design System (HDS) tokens used by Hds::* components
+// and the side navigation are mapped onto them below, so re-theming happens
+// here only. Raw brand values come from utils/_redacto_brand.scss.
+
+@import './utils/redacto_brand';
+@import './utils/color_variables';
+@import './utils/size_variables';
+@import './utils/font_variables';
+@import './utils/box-shadow_variables';
+
+:root {
+  /* Brand */
+  --color-primary: #{$redacto-primary};
+  --color-primary-hover: #{$redacto-primary-hover};
+  --color-primary-active: #{$redacto-primary-active};
+  --color-primary-subtle: #{$redacto-primary-subtle};
+  --color-primary-muted: #{$redacto-primary-muted};
+  --color-brand-dark: #{$redacto-navy};
+  --color-on-primary: #{$redacto-white};
+
+  /* Surfaces */
+  --color-background: #{$redacto-background};
+  --color-surface: #{$redacto-white};
+  --color-surface-secondary: #{$redacto-background};
+  --color-surface-inverse: #{$redacto-navy};
+  --color-surface-inverse-hover: #{$redacto-navy-hover};
+  --color-surface-inverse-active: #{$redacto-navy-active};
+
+  /* Text */
+  --color-text: #{$ui-gray-900};
+  --color-text-strong: #{$redacto-navy};
+  --color-text-muted: #{$ui-gray-600};
+  --color-text-inverse: #{$redacto-white};
+  --color-text-inverse-muted: #{mix($redacto-white, $redacto-navy, 70%)};
+
+  /* Borders */
+  --color-border: #{$ui-gray-200};
+  --color-border-strong: #{$ui-gray-300};
+
+  /* Interaction states */
+  --color-focus: #{$redacto-primary};
+  --color-focus-ring: #{rgba($redacto-primary, 0.35)};
+  --color-hover: #{$redacto-primary-hover};
+  --color-active: #{$redacto-primary-active};
+  --color-disabled-surface: #{$ui-gray-050};
+  --color-disabled-text: #{$ui-gray-400};
+  --color-disabled-border: #{$ui-gray-200};
+
+  /* Status (functional colours are intentionally not brand-coloured) */
+  --color-success: #{$green-700};
+  --color-success-strong: #{$green-500};
+  --color-success-surface: #{$green-050};
+  --color-success-surface-subtle: #{$green-010};
+  --color-success-border: #{$green-100};
+  --color-warning: #{$orange-700};
+  --color-warning-surface: #{$orange-050};
+  --color-error: #{$red-500};
+  --color-error-surface: #{$red-050};
+  --color-error-surface-subtle: #{$red-010};
+  --color-info: #{$redacto-primary};
+  --color-info-surface: #{$redacto-primary-subtle};
+
+  /* Typography */
+  --font-family-base: #{$family-sans};
+  --font-family-mono: #{$family-monospace};
+  --font-weight-normal: #{$font-weight-normal};
+  --font-weight-semibold: #{$font-weight-semibold};
+  --font-weight-bold: #{$font-weight-bold};
+
+  /* Spacing */
+  --space-xxs: #{$spacing-xxs};
+  --space-xs: #{$spacing-xs};
+  --space-s: #{$spacing-s};
+  --space-m: #{$spacing-m};
+  --space-l: #{$spacing-l};
+  --space-xl: #{$spacing-xl};
+  --space-xxl: #{$spacing-xxl};
+
+  /* Radii */
+  --radius-s: #{$radius};
+  --radius-m: #{$radius-large};
+  --radius-l: 8px;
+  --radius-round: 9999px;
+
+  /* Shadows */
+  --shadow-outline: #{$box-shadow};
+  --shadow-low: #{$box-shadow-low};
+  --shadow-middle: #{$box-shadow-middle};
+  --shadow-high: #{$box-shadow-high};
+
+  /* --- HDS mapping: action colour, focus and the blue palette HDS uses for
+         primary buttons, links and selection states. --- */
+  --token-color-foreground-action: var(--color-primary);
+  --token-color-foreground-action-hover: var(--color-primary-hover);
+  --token-color-foreground-action-active: var(--color-primary-active);
+  --token-color-surface-action: var(--color-primary-subtle);
+  --token-color-border-action: var(--color-primary);
+  --token-color-focus-action-internal: var(--color-focus);
+  --token-color-focus-action-external: var(--color-focus-ring);
+  --token-color-palette-blue-50: var(--color-primary-subtle);
+  --token-color-palette-blue-100: var(--color-primary-muted);
+  --token-color-palette-blue-200: var(--color-primary);
+  --token-color-palette-blue-300: var(--color-primary-hover);
+  --token-color-palette-blue-400: var(--color-primary-active);
+  --token-color-palette-blue-500: var(--color-brand-dark);
+
+  /* --- HDS side navigation mapping. --- */
+  --token-side-nav-color-foreground-primary: var(--color-text-inverse);
+  --token-side-nav-color-foreground-strong: var(--color-text-inverse);
+  --token-side-nav-color-foreground-faint: var(--color-text-inverse-muted);
+  --token-side-nav-color-surface-primary: var(--color-surface-inverse);
+  --token-side-nav-color-surface-interactive-hover: var(--color-surface-inverse-hover);
+  --token-side-nav-color-surface-interactive-active: var(--color-surface-inverse-active);
+}

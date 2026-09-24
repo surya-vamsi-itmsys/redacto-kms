@@ -1,9 +1,9 @@
 ---
 sidebar_label: Common Expression Language
-description: How is Common Expression Language implemented in OpenBao.
+description: How is Common Expression Language implemented in Redacto KMS.
 ---
 
-# CEL in OpenBao
+# CEL in Redacto KMS
 
 The Common Expression Language (CEL) is used in PKI and JWT to declare validation rules
 and policies:
@@ -12,13 +12,13 @@ and policies:
 
 The main CEL `Expression` in a `Celprogram` is typically one line of code. This can be broken down
 into multiple CEL expressions by using `CelVariable`'s. The following sections cover how to build
-a `CelProgram` in any part of OpenBao.
+a `CelProgram` in any part of Redacto KMS.
 
 :::warning
 
 CEL is an advanced topic for operators. All validation is taken on by the CEL
 program created by the operator; limited to no validation is performed by
-OpenBao above and beyond what the CEL program contains. It is up to the
+Redacto KMS above and beyond what the CEL program contains. It is up to the
 operator to craft CEL programs which adequately perform validation for the
 context.
 

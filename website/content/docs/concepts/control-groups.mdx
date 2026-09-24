@@ -22,7 +22,7 @@ The general flow for using control groups is as follows:
    response will be [`wrapped`](response-wrapping.mdx).
 3. The wrapped response will contain a `token` and an `accessor`. The
    requester needs to forward the accessor to a member of the
-   approving group and request authorization. **Please note: OpenBao does not send
+   approving group and request authorization. **Please note: Redacto KMS does not send
    any notification to the approvers to tell them that they have a pending request.**
 4. The approvers can use the accessor to review the request, view the
    authorization state, and add their authorization.
@@ -35,11 +35,11 @@ Response wrapping is triggered by requesting a path having one or more
 applicable control group factors in the policy. The
 original request is stored for deferred execution upon unwrapping.
 
-1. OpenBao makes a copy of the original API request, and stores it
+1. Redacto KMS makes a copy of the original API request, and stores it
 2. A new single-use token is generated with the TTL supplied by the factor
-3. OpenBao responds to the original request. Instead of performing the
+3. Redacto KMS responds to the original request. Instead of performing the
    request directly and providing a response for the original request,
-   the response from OpenBao is a _wrap information object_ that
+   the response from Redacto KMS is a _wrap information object_ that
    includes:
    a. the token for executing the deferred response once approved
    b. an accessor for reviewing and approving the request

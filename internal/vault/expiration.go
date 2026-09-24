@@ -69,7 +69,7 @@ const (
 	// number of workers to use for general purpose testing
 	numExpirationWorkersTest = 10
 
-	fairshareWorkersOverrideVar = "BAO_LEASE_REVOCATION_WORKERS"
+	fairshareWorkersOverrideVar = "REDACTO_KMS_LEASE_REVOCATION_WORKERS"
 
 	// limit irrevocable error messages to 240 characters to be respectful of
 	// storage/memory
@@ -349,7 +349,7 @@ func NewExpirationManager(c *Core, e ExpireLeaseStrategy, logger log.Logger, det
 		coreStateLock: c.stateLock,
 		quitContext:   c.activeContext.Load(),
 
-		logLeaseExpirations: api.ReadBaoVariable("BAO_SKIP_LOGGING_LEASE_EXPIRATIONS") == "",
+		logLeaseExpirations: api.ReadBaoVariable("REDACTO_KMS_SKIP_LOGGING_LEASE_EXPIRATIONS") == "",
 
 		revokeRetryBase: c.expirationRevokeRetryBase,
 

@@ -28,17 +28,17 @@ func (c *KVMetadataDeleteCommand) Synopsis() string {
 
 func (c *KVMetadataDeleteCommand) Help() string {
 	helpText := `
-Usage: bao kv metadata delete [options] PATH
+Usage: redacto-kms kv metadata delete [options] PATH
 
   Deletes all versions and metadata for the provided key. 
 
-      $ bao kv metadata delete -mount=secret foo
+      $ redacto-kms kv metadata delete -mount=secret foo
 
   The deprecated path-like syntax can also be used, but this should be avoided 
   for KV v2, as the fact that it is not actually the full API path to 
   the secret (secret/metadata/foo) can cause confusion: 
   
-      $ bao kv metadata delete secret/foo
+      $ redacto-kms kv metadata delete secret/foo
 
   Additional flags and more advanced use cases are detailed below.
 

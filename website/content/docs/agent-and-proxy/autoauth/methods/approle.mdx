@@ -1,9 +1,9 @@
 ---
 sidebar_label: AppRole
-description: AppRole Method for OpenBao Auto-Auth
+description: AppRole Method for Redacto KMS Auto-Auth
 ---
 
-# OpenBao Auto-Auth AppRole method
+# Redacto KMS Auto-Auth AppRole method
 
 The `approle` method reads in a role ID and a secret ID from files and sends
 the values to the [AppRole Auth
@@ -23,7 +23,7 @@ cached.
   ID.
   If not set, only the `role-id` will be used.
   In that case, the AppRole should have `bind_secret_id` set to `false` otherwise
-  OpenBao Agent wouldn't be able to login.
+  Redacto KMS Agent wouldn't be able to login.
 
 - `remove_secret_id_file_after_reading` `(bool: optional, defaults to true)` -
   This can be set to `false` to disable the default behavior of removing the

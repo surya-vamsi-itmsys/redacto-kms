@@ -24,7 +24,7 @@ async function processLines(input, eachLine = () => {}) {
 (async function () {
   try {
     const vault = testHelper.run(
-      'bao',
+      'redacto-kms',
       ['server', '-dev', '-dev-ha', '-dev-root-token-id=root', '-dev-listen-address=127.0.0.1:9200'],
       false
     );

@@ -247,7 +247,7 @@ func (b *jwtAuthBackend) pathCelLoginRenew(ctx context.Context, req *logical.Req
 
 const (
 	pathCelLoginHelpSyn = `
-	Authenticates to OpenBao using a JWT (or OIDC) token against a CEL role.
+	Authenticates to Redacto KMS using a JWT (or OIDC) token against a CEL role.
 	`
 	pathCelLoginHelpDesc = `
 Authenticates JWTs against a CEL role.

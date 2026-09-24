@@ -20,17 +20,17 @@ type PrintTokenCommand struct {
 }
 
 func (c *PrintTokenCommand) Synopsis() string {
-	return "Prints the OpenBao token currently in use"
+	return "Prints the Redacto KMS token currently in use"
 }
 
 func (c *PrintTokenCommand) Help() string {
 	helpText := `
-Usage: bao print token
+Usage: redacto-kms print token
 
-  Prints the value of the OpenBao token that will be used for commands, after
+  Prints the value of the Redacto KMS token that will be used for commands, after
   taking into account the configured token-helper and the environment.
 
-      $ bao print token
+      $ redacto-kms print token
 
 `
 	return strings.TrimSpace(helpText)

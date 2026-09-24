@@ -25,9 +25,9 @@ func TestRecovery_Docker(t *testing.T) {
 	ctx := t.Context()
 
 	t.Parallel()
-	binary := api.ReadBaoVariable("BAO_BINARY")
+	binary := api.ReadBaoVariable("REDACTO_KMS_BINARY")
 	if binary == "" {
-		t.Skip("only running docker test when $BAO_BINARY present")
+		t.Skip("only running docker test when $REDACTO_KMS_BINARY present")
 	}
 	opts := &docker.DockerClusterOptions{
 		ImageRepo: "quay.io/openbao/openbao",

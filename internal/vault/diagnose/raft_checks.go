@@ -56,12 +56,12 @@ func RaftFileChecks(ctx context.Context, path string) {
 	ownedByRoot := IsOwnedByRoot(info)
 	requiresRoot := ownedByRoot && hasOnlyOwnerRW
 	if requiresRoot {
-		SpotWarn(ctx, ownershipTestName, "Raft backend files are owned by root and are only accessible as root or with overpermissive file permissions. This prevents Vault from running as a non-privileged user.")
+		SpotWarn(ctx, ownershipTestName, "Raft backend files are owned by root and are only accessible as root or with overpermissive file permissions. This prevents Redacto KMS from running as a non-privileged user.")
 		Advise(ctx, "Please change raft path permissions to allow for non-root access.")
 	}
 
 	if runtime.GOOS == "windows" {
-		SpotWarn(ctx, permissionsTestName, "Diagnose cannot determine if Vault needs to run as root to open boltDB file. Please check these permissions manually.")
+		SpotWarn(ctx, permissionsTestName, "Diagnose cannot determine if Redacto KMS needs to run as root to open boltDB file. Please check these permissions manually.")
 	} else if errs == nil && !requiresRoot {
 		SpotOk(ctx, permissionsTestName, "Raft BoltDB file has correct set of permissions.")
 	}
@@ -85,13 +85,13 @@ func RaftStorageQuorum(ctx context.Context, b RaftConfigurableStorageBackend) st
 		}
 	}
 	if voterCount == 1 {
-		nonHAWarning := "Only one server node found. Vault is not running in high availability mode."
+		nonHAWarning := "Only one server node found. Redacto KMS is not running in high availability mode."
 		SpotWarn(ctx, raftQuorumTestName, nonHAWarning)
 		return nonHAWarning
 	}
 	var warnMsg string
 	if voterCount%2 == 0 {
-		warnMsg = fmt.Sprintf("%d voters found. Please ensure that Vault has access to an odd number of voter nodes.", voterCount)
+		warnMsg = fmt.Sprintf("%d voters found. Please ensure that Redacto KMS has access to an odd number of voter nodes.", voterCount)
 		SpotWarn(ctx, raftQuorumTestName, warnMsg)
 		return warnMsg
 	}

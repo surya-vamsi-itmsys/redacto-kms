@@ -11,7 +11,7 @@ export GOARCH=${GOARCH:-$(go env GOARCH)}
 
 mkdir -p dist && cd dist
 
-archive="openbao_${VERSION#v}_${GOOS}_${GOARCH}"
+archive="redacto-kms_${VERSION#v}_${GOOS}_${GOARCH}"
 
 # Add the ARM suffix if this is an ARM build.
 if [[ -n "${GOARM:-}" ]]; then
@@ -22,11 +22,11 @@ case "$GOOS" in
     windows)
         zip -j -X \
             "${archive}.zip" \
-            ../bin/bao.exe ../LICENSE ../README.md ../CHANGELOG.md
+            ../bin/redacto-kms.exe ../LICENSE ../README.md ../CHANGELOG.md
         ;;
     *)
         tar czf \
             "${archive}.tar.gz" \
-            -C ../bin bao -C .. LICENSE README.md CHANGELOG.md
+            -C ../bin redacto-kms -C .. LICENSE README.md CHANGELOG.md
         ;;
 esac

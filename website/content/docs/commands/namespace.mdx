@@ -12,117 +12,117 @@ The `namespace` command groups subcommands for interacting with namespaces.
 List all namespaces:
 
 ```shell-session
-$ bao namespace list
+$ redacto-kms namespace list
 ```
 
 List all namespaces with additional details such as namespace ID and custom metadata:
 
 ```shell-session
-$ bao namespace list -detailed
+$ redacto-kms namespace list -detailed
 ```
 
 Recursively list (scan) all namespaces:
 
 ```shell-session
-$ bao namespace scan
+$ redacto-kms namespace scan
 ```
 
 Recursively list (scan) all namespaces with additional details such as namespace ID and custom metadata:
 
 ```shell-session
-$ bao namespace scan -detailed
+$ redacto-kms namespace scan -detailed
 ```
 
 Create a namespace at the path `ns1/` with no custom metadata:
 
 ```shell-session
-$ bao namespace create ns1/
+$ redacto-kms namespace create ns1/
 ```
 
 Create a namespace at the path `ns1/` with multiple custom metadata keys:
 
 ```shell-session
-$ bao namespace create -custom-metadata=foo=abc -custom-metadata=bar=123 ns1/
+$ redacto-kms namespace create -custom-metadata=foo=abc -custom-metadata=bar=123 ns1/
 ```
 
 Patch an existing namespace at the path `ns1/` to add custom metadata key `bar` and remove key `foo`
 
 ```shell-session
-$ bao namespace patch -custom-metadata=bar=123 -remove-custom-metadata=foo ns1/
+$ redacto-kms namespace patch -custom-metadata=bar=123 -remove-custom-metadata=foo ns1/
 ```
 
 Delete the namespace at path `ns1/`:
 
 ```shell-session
-$ bao namespace delete ns1/
+$ redacto-kms namespace delete ns1/
 ```
 
 Delete a sealed namespace with no child namespaces (requires sudo):
 
 ```shell-session
-$ bao namespace delete-sealed ns1
+$ redacto-kms namespace delete-sealed ns1
 ```
 
 Delete a sealed namespace and recursively wipe its child namespaces (requires sudo):
 
 ```shell-session
-$ bao namespace delete-sealed -force ns1
+$ redacto-kms namespace delete-sealed -force ns1
 ```
 
 Lookup the namespace information at path `ns1/`:
 
 ```shell-session
-$ bao namespace lookup ns1/
+$ redacto-kms namespace lookup ns1/
 ```
 
 Lock the API for the current namespace:
 
 ```shell-session
-$ bao namespace lock
+$ redacto-kms namespace lock
 ```
 
 Lock the API for a descendant namespace at path `current/namespace/ns1/`:
 
 ```shell-session
-$ bao namespace lock ns1/
+$ redacto-kms namespace lock ns1/
 ```
 
 Unlock the API for the current namespace:
 
 ```shell-session
-$ bao namespace unlock -unlock-key <unlock key>
+$ redacto-kms namespace unlock -unlock-key <unlock key>
 ```
 
 Unlock the API for a descendant namespace at path `current/namespacens1/`:
 
 ```shell-session
-$ bao namespace unlock -unlock-key <unlock key> ns1/
+$ redacto-kms namespace unlock -unlock-key <unlock key> ns1/
 ```
 
 Seal the namespace:  
 
 ```shell-session
-$ bao namespace seal
+$ redacto-kms namespace seal
 ```
 
 Unseal the namespace:
 
 ```shell-session
-$ bao namespace unseal
+$ redacto-kms namespace unseal
 ```
 
 Retrieve the namespace seal status:
 
 ```shell-session
-$ bao namespace seal-status
+$ redacto-kms namespace seal-status
 ```
 
 ## Usage
 
 ```text
-Usage: bao namespace <subcommand> [options] [args]
+Usage: redacto-kms namespace <subcommand> [options] [args]
 
-  This command groups subcommands for interacting with OpenBao namespaces.
+  This command groups subcommands for interacting with Redacto KMS namespaces.
 
 Subcommands:
     create         Create a new namespace

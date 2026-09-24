@@ -15,7 +15,7 @@ const successHTML = `
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OpenBao Authentication Succeeded</title>
+  <title>Redacto KMS Authentication Succeeded</title>
     <style>
       body {
         font-size: 14px;
@@ -153,7 +153,7 @@ const successHTML = `
               Signed in via your OIDC provider
             </div>
             <p class="message-body">
-              You can now close this window and start using OpenBao.
+              You can now close this window and start using Redacto KMS.
             </p>
           </div>
         </div>
@@ -165,7 +165,7 @@ const successHTML = `
     <path d="M13.307 1H11.5a.5.5 0 1 1 0-1h3a.499.499 0 0 1 .5.65V3.5a.5.5 0 1 1-1 0V1.72l-1.793 1.774a.5.5 0 0 1-.713-.701L13.307 1zM12 14V8a.5.5 0 1 1 1 0v6.5a.5.5 0 0 1-.5.5H.563a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 .5-.5H8a.5.5 0 0 1 0 1H1v12h11zM4 6a.5.5 0 0 1 0-1h3a.5.5 0 0 1 0 1H4zm0 2.5a.5.5 0 0 1 0-1h5a.5.5 0 0 1 0 1H4zM4 11a.5.5 0 1 1 0-1h5a.5.5 0 1 1 0 1H4z"/>
   </svg>
           </span>
-          Check out the official OpenBao documentation
+          Check out the official Redacto KMS documentation
         </a>
       </div>
     </div>
@@ -187,7 +187,7 @@ func confirmHTML(requestorIP, roleName string) string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OpenBao Authentication Confirmation</title>
+  <title>Redacto KMS Authentication Confirmation</title>
   <style>
     * {
       --accent: #ffecb4;
@@ -341,7 +341,7 @@ func confirmHTML(requestorIP, roleName string) string {
             Sign in confirmation required
           </div>
           <p class="message-body">
-         	A sign-in request to OpenBao was initiated from the source IP address shown below. This step protects against unauthorized access.
+         	A sign-in request to Redacto KMS was initiated from the source IP address shown below. This step protects against unauthorized access.
           	<br><br>
             <strong>Only confirm if you initiated this request yourself.</strong>
             If you didn't, close this page immediately to prevent unauthorized access to your account.
@@ -361,7 +361,7 @@ func confirmHTML(requestorIP, roleName string) string {
               d="M13.307 1H11.5a.5.5 0 1 1 0-1h3a.499.499 0 0 1 .5.65V3.5a.5.5 0 1 1-1 0V1.72l-1.793 1.774a.5.5 0 0 1-.713-.701L13.307 1zM12 14V8a.5.5 0 1 1 1 0v6.5a.5.5 0 0 1-.5.5H.563a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 .5-.5H8a.5.5 0 0 1 0 1H1v12h11zM4 6a.5.5 0 0 1 0-1h3a.5.5 0 0 1 0 1H4zm0 2.5a.5.5 0 0 1 0-1h5a.5.5 0 0 1 0 1H4zM4 11a.5.5 0 1 1 0-1h5a.5.5 0 1 1 0 1H4z" />
           </svg>
         </span>
-        Check out the official OpenBao documentation
+        Check out the official Redacto KMS documentation
       </a>
     </div>
   </div>
@@ -388,7 +388,7 @@ func errorHTML(summary, detail string) string {
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OpenBao</title>
+<title>Redacto KMS</title>
       <style>
       body {
   font-size: 14px;
@@ -556,7 +556,7 @@ h1 + p {
   <path d="M13.307 1H11.5a.5.5 0 1 1 0-1h3a.499.499 0 0 1 .5.65V3.5a.5.5 0 1 1-1 0V1.72l-1.793 1.774a.5.5 0 0 1-.713-.701L13.307 1zM12 14V8a.5.5 0 1 1 1 0v6.5a.5.5 0 0 1-.5.5H.563a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 .5-.5H8a.5.5 0 0 1 0 1H1v12h11zM4 6a.5.5 0 0 1 0-1h3a.5.5 0 0 1 0 1H4zm0 2.5a.5.5 0 0 1 0-1h5a.5.5 0 0 1 0 1H4zM4 11a.5.5 0 1 1 0-1h5a.5.5 0 1 1 0 1H4z"/>
 </svg>
         </span>
-        Check out the official OpenBao documentation
+        Check out the official Redacto KMS documentation
       </a>
     </div>
   </div>
@@ -721,7 +721,7 @@ func formpostHTML(path, code, state string) string {
     <path d="M13.307 1H11.5a.5.5 0 1 1 0-1h3a.499.499 0 0 1 .5.65V3.5a.5.5 0 1 1-1 0V1.72l-1.793 1.774a.5.5 0 0 1-.713-.701L13.307 1zM12 14V8a.5.5 0 1 1 1 0v6.5a.5.5 0 0 1-.5.5H.563a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 .5-.5H8a.5.5 0 0 1 0 1H1v12h11zM4 6a.5.5 0 0 1 0-1h3a.5.5 0 0 1 0 1H4zm0 2.5a.5.5 0 0 1 0-1h5a.5.5 0 0 1 0 1H4zM4 11a.5.5 0 1 1 0-1h5a.5.5 0 1 1 0 1H4z"/>
   </svg>
           </span>
-          Check out the official OpenBao documentation
+          Check out the official Redacto KMS documentation
         </a>
       </div>
     </div>

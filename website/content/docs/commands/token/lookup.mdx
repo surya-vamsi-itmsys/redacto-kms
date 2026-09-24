@@ -16,20 +16,20 @@ Get information about the locally authenticated token (this uses the
 `/auth/token/lookup-self` endpoint and permission):
 
 ```shell-session
-$ bao token lookup
+$ redacto-kms token lookup
 ```
 
 Get information about a particular token (this uses the `/auth/token/lookup`
 endpoint and permission):
 
 ```shell-session
-$ bao token lookup 96ddf4bc-d217-f3ba-f9bd-017055595017
+$ redacto-kms token lookup 96ddf4bc-d217-f3ba-f9bd-017055595017
 ```
 
 Get information about a token via its accessor:
 
 ```shell-session
-$ bao token lookup -accessor 9793c9b3-e04a-46f3-e7b8-748d7da248da
+$ redacto-kms token lookup -accessor 9793c9b3-e04a-46f3-e7b8-748d7da248da
 ```
 
 ## Usage
@@ -45,7 +45,7 @@ flags](../index.mdx) included on all commands.
 
 - `-format` `(default: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### Command options
 

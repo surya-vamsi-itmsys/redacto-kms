@@ -11,10 +11,10 @@ export CGO_ENABLED=${CGO_ENABLED:-$(go env CGO_ENABLED)}
 
 case "$GOOS" in
     windows)
-        exe=bao.exe
+        exe=redacto-kms.exe
         ;;
     *)
-        exe=bao
+        exe=redacto-kms
         ;;
 esac
 

@@ -44,8 +44,8 @@ type Config struct {
 }
 
 const (
-	DisableIdleConnsEnv  = "BAO_PROXY_DISABLE_IDLE_CONNECTIONS"
-	DisableKeepAlivesEnv = "BAO_PROXY_DISABLE_KEEP_ALIVES"
+	DisableIdleConnsEnv  = "REDACTO_KMS_PROXY_DISABLE_IDLE_CONNECTIONS"
+	DisableKeepAlivesEnv = "REDACTO_KMS_PROXY_DISABLE_KEEP_ALIVES"
 )
 
 func (c *Config) Prune() {

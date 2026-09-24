@@ -114,7 +114,7 @@ func GenerateCA() (*CaCert, error) {
 	// Create the CA cert
 	template := x509.Certificate{
 		SerialNumber:          sn,
-		Subject:               pkix.Name{CommonName: "Vault Dev CA"},
+		Subject:               pkix.Name{CommonName: "Redacto KMS Dev CA"},
 		BasicConstraintsValid: true,
 		KeyUsage:              x509.KeyUsageCertSign,
 		ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth, x509.ExtKeyUsageClientAuth},

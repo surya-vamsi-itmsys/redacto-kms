@@ -4533,12 +4533,11 @@ func TestSystemBackend_OpenAPI(t *testing.T) {
 		exp := map[string]any{
 			"openapi": framework.OASVersion,
 			"info": map[string]any{
-				"title":       "OpenBao API",
-				"description": "HTTP API that gives you full access to OpenBao. All API routes are prefixed with `/v1/`.",
+				"title":       "Redacto KMS API",
+				"description": "HTTP API that gives you full access to Redacto KMS. All API routes are prefixed with `/v1/`.",
 				"version":     version.GetVersion().Version,
 				"license": map[string]any{
-					"name": "Mozilla Public License 2.0",
-					"url":  "https://www.mozilla.org/en-US/MPL/2.0",
+					"name": "*",
 				},
 			},
 			"paths": map[string]any{},

@@ -2,20 +2,20 @@
 sidebar_label: list
 description: |-
   The "policy list" command Lists the names of the policies that are installed
-  on the OpenBao server.
+  on the Redacto KMS server.
 ---
 
 # policy list
 
 The `policy list` command Lists the names of the policies that are installed on
-the OpenBao server.
+the Redacto KMS server.
 
 ## Examples
 
 List the available policies:
 
 ```shell-session
-$ bao policy list
+$ redacto-kms policy list
 default
 root
 ```
@@ -29,4 +29,4 @@ flags](../index.mdx) included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.

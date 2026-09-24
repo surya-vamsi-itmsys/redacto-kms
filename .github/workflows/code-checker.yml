@@ -105,9 +105,9 @@ jobs:
           go mod edit -go=$GO_VERSION
           go mod tidy
       - name: go build bao
-        run: go build -o bin/bao
+        run: go build -o bin/redacto-kms
       - name: Check that the binary runs
-        run: ./bin/bao version
+        run: ./bin/redacto-kms version
 
   protobuf:
     name: Protobuf checks

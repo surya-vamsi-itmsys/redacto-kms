@@ -29,7 +29,7 @@ func (c *TokenLookupCommand) Synopsis() string {
 
 func (c *TokenLookupCommand) Help() string {
 	helpText := `
-Usage: bao token lookup [options] [TOKEN | ACCESSOR]
+Usage: redacto-kms token lookup [options] [TOKEN | ACCESSOR]
 
   Displays information about a token or accessor. If a TOKEN is not provided,
   the locally authenticated token is used.
@@ -37,16 +37,16 @@ Usage: bao token lookup [options] [TOKEN | ACCESSOR]
   Get information about the locally authenticated token (this uses the
   /auth/token/lookup-self endpoint and permission):
 
-      $ bao token lookup
+      $ redacto-kms token lookup
 
   Get information about a particular token (this uses the /auth/token/lookup
   endpoint and permission):
 
-      $ bao token lookup 96ddf4bc-d217-f3ba-f9bd-017055595017
+      $ redacto-kms token lookup 96ddf4bc-d217-f3ba-f9bd-017055595017
 
   Get information about a token via its accessor:
 
-      $ bao token lookup -accessor 9793c9b3-e04a-46f3-e7b8-748d7da248da
+      $ redacto-kms token lookup -accessor 9793c9b3-e04a-46f3-e7b8-748d7da248da
 
   For a full list of examples, please see the documentation.
 

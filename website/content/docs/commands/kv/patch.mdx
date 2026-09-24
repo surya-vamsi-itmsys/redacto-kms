@@ -26,7 +26,7 @@ If you wish to add an additional key-value (`ttl=48h`) to the existing data at
 the key "creds":
 
 ```shell-session
-$ bao kv patch -mount=secret creds ttl=48h
+$ redacto-kms kv patch -mount=secret creds ttl=48h
 == Secret Path ==
 secret/data/creds
 
@@ -43,20 +43,20 @@ version          6
 the data you wish to add in order to accomplish the same result.
 
 ```shell-session
-$ bao kv put -mount=secret creds ttl=48h passcode=my-long-passcode
+$ redacto-kms kv put -mount=secret creds ttl=48h passcode=my-long-passcode
 ```
 
 The data can also be consumed from a file on disk by prefixing with the "@"
 symbol. For example:
 
 ```shell-session
-$ bao kv patch -mount=secret creds @data.json
+$ redacto-kms kv patch -mount=secret creds @data.json
 ```
 
 Or it can be read from stdin using the "-" symbol:
 
 ```shell-session
-$ echo "abcd1234" | bao kv patch -mount=secret foo bar=-
+$ echo "abcd1234" | redacto-kms kv patch -mount=secret foo bar=-
 ```
 
 ## Usage
@@ -70,7 +70,7 @@ $ echo "abcd1234" | bao kv patch -mount=secret foo bar=-
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### Command options
 

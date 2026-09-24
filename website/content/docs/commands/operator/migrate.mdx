@@ -4,7 +4,7 @@ description: >-
   The "operator migrate" command copies data between storage backends to
   facilitate
 
-  migrating OpenBao between configurations. It operates directly at the storage
+  migrating Redacto KMS between configurations. It operates directly at the storage
 
   level, with no decryption involved.
 ---
@@ -12,13 +12,13 @@ description: >-
 # operator migrate
 
 The `operator migrate` command copies data between storage backends to facilitate
-migrating OpenBao between configurations. It operates directly at the storage
+migrating Redacto KMS between configurations. It operates directly at the storage
 level, with no decryption involved. Keys in the destination storage backend will
 be overwritten, and the destination should _not_ be initialized prior to the
 migrate operation. The source data is not modified, with the exception of a small lock
 key added during migration.
 
-This is intended to be an offline operation to ensure data consistency, and OpenBao
+This is intended to be an offline operation to ensure data consistency, and Redacto KMS
 will not allow starting the server if a migration is in progress.
 
 ## Examples
@@ -26,7 +26,7 @@ will not allow starting the server if a migration is in progress.
 Migrate all keys:
 
 ```shell-session
-$ bao operator migrate -config migrate.hcl
+$ redacto-kms operator migrate -config migrate.hcl
 
 2018-09-20T14:23:23.656-0700 [INFO ] copied key: data/core/seal-config
 2018-09-20T14:23:23.657-0700 [INFO ] copied key: data/core/wrapping/jwtkey
@@ -40,23 +40,23 @@ exits before completion (e.g. due to a connection error with a storage backend),
 it may be resumed from an arbitrary key prefix:
 
 ```shell-session
-$ bao operator migrate -config migrate.hcl -start "data/logical/fd"
+$ redacto-kms operator migrate -config migrate.hcl -start "data/logical/fd"
 ```
 
-Alternatively, you can specify the configuration path using the `BAO_MIGRATE_CONFIG_PATH` environment variable. If the `-config` flag is provided, the environment variable is ignored.
+Alternatively, you can specify the configuration path using the `REDACTO_KMS_MIGRATE_CONFIG_PATH` environment variable. If the `-config` flag is provided, the environment variable is ignored.
 
 **Example using environment variable:**
 
 ```shell-session
-$ export BAO_MIGRATE_CONFIG_PATH=/etc/openbao/migrate.hcl
-$ bao operator migrate -start "data/logical/fd"
+$ export REDACTO_KMS_MIGRATE_CONFIG_PATH=/etc/openbao/migrate.hcl
+$ redacto-kms operator migrate -start "data/logical/fd"
 ```
 
 ## Configuration
 
 The `operator migrate` command uses a dedicated configuration file to specify the source
 and destination storage backends. The format of the storage stanzas is identical
-to that used to [configure OpenBao](../../configuration/storage/index.mdx),
+to that used to [configure Redacto KMS](../../configuration/storage/index.mdx),
 with the only difference being that two stanzas are required: `storage_source` and `storage_destination`.
 
 ```hcl
@@ -121,11 +121,11 @@ cluster_addr = "http://127.0.0.1:8201"
 
 ### Run the migration
 
-OpenBao will need to be offline during the migration process. First, stop OpenBao.
-Then, run the migration on the server you wish to become a the new OpenBao node.
+Redacto KMS will need to be offline during the migration process. First, stop Redacto KMS.
+Then, run the migration on the server you wish to become a the new Redacto KMS node.
 
 ```shell-session
-$ bao operator migrate -config migrate.hcl
+$ redacto-kms operator migrate -config migrate.hcl
 
 2018-09-20T14:23:23.656-0700 [INFO ] copied key: data/core/seal-config
 2018-09-20T14:23:23.657-0700 [INFO ] copied key: data/core/wrapping/jwtkey
@@ -135,10 +135,10 @@ $ bao operator migrate -config migrate.hcl
 ```
 
 After migration has completed, the data is stored on the local file system. To
-use the new storage backend with OpenBao, update OpenBao's configuration file as
+use the new storage backend with Redacto KMS, update Redacto KMS's configuration file as
 described in the [raft storage configuration
 documentation](../../configuration/storage/raft.mdx). Then start and unseal the
-OpenBao server.
+Redacto KMS server.
 
 ### Join additional nodes
 
@@ -157,7 +157,7 @@ The following flags are available for the `operator migrate` command.
 - `-start` `(string: "")` - Migration starting key prefix. Only keys at or after this value will be copied.
 
 - `-reset` - Reset the migration lock. A lock file is added during migration to prevent
-  starting the OpenBao server or another migration. The `-reset` option can be used to
+  starting the Redacto KMS server or another migration. The `-reset` option can be used to
   remove a stale lock file if present.
 
 - `-max-parallel` `int: 10` - Allows the operator to specify the maximum number of lightweight threads (goroutines)

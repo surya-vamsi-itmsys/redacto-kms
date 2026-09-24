@@ -1,13 +1,13 @@
 ---
 sidebar_label: Overview
 description: |-
-  The "transit" command groups subcommands for interacting with OpenBao's Transit
+  The "transit" command groups subcommands for interacting with Redacto KMS's Transit
   secrets engine.
 ---
 
 # transit
 
-The `transit` command groups subcommands for interacting with OpenBao's
+The `transit` command groups subcommands for interacting with Redacto KMS's
 [Transit Secrets Engine](../../secrets/transit/index.mdx).
 
 ## Syntax
@@ -18,14 +18,14 @@ Option flags for a given subcommand are provided after the subcommand, but befor
 
 To [import](import.mdx) keys into a mount via the
 [Transit BYOK](../../secrets/transit/index.mdx#bring-your-own-key-byok)
-mechanism, use the `bao transit import <path> <key>` or
-`bao transit import-version <path> <key>` commands:
+mechanism, use the `redacto-kms transit import <path> <key>` or
+`redacto-kms transit import-version <path> <key>` commands:
 
 ```
-$ bao transit import transit/keys/test-key @test-key type=rsa-2048
+$ redacto-kms transit import transit/keys/test-key @test-key type=rsa-2048
 Retrieving transit wrapping key.
 Wrapping source key with ephemeral key.
 Encrypting ephemeral key with transit wrapping key.
-Submitting wrapped key to OpenBao transit.
+Submitting wrapped key to Redacto KMS transit.
 Success!
 ```

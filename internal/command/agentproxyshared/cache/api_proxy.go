@@ -86,7 +86,7 @@ func (ap *APIProxy) Send(ctx context.Context, req *SendRequest) (*SendResponse, 
 	}
 
 	// Make the request to Vault and get the response
-	ap.logger.Info("forwarding request to OpenBao", "method", req.Request.Method, "path", req.Request.URL.Path)
+	ap.logger.Info("forwarding request to Redacto KMS", "method", req.Request.Method, "path", req.Request.URL.Path)
 
 	//nolint:staticcheck // currently there is no other way to perform this specific request
 	resp, err := client.RawRequestWithContext(ctx, fwReq)

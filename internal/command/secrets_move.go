@@ -32,7 +32,7 @@ func (c *SecretsMoveCommand) Synopsis() string {
 
 func (c *SecretsMoveCommand) Help() string {
 	helpText := `
-Usage: bao secrets move [options] SOURCE DESTINATION
+Usage: redacto-kms secrets move [options] SOURCE DESTINATION
 
   Moves an existing secrets engine to a new path. Any leases from the old
   secrets engine are revoked, but all configuration associated with the engine
@@ -47,12 +47,12 @@ Usage: bao secrets move [options] SOURCE DESTINATION
 
   Move the secrets engine at secret/ to generic/:
 
-      $ bao secrets move secret/ generic/
+      $ redacto-kms secrets move secret/ generic/
 
   Move the secrets engine at ns1/secret/ across namespaces to ns2/generic/, 
   where ns1 and ns2 are child namespaces of the current namespace:
 
-      $ bao secrets move ns1/secret/ ns2/generic/
+      $ redacto-kms secrets move ns1/secret/ ns2/generic/
 
 ` + c.Flags().Help()
 

@@ -1,10 +1,10 @@
 ---
 sidebar_label: seal
 description: >-
-  The "operator seal" command seals the OpenBao server. Sealing tells the OpenBao
+  The "operator seal" command seals the Redacto KMS server. Sealing tells the Redacto KMS
   server to
 
-  stop responding to any operations until it is unsealed. When sealed, the OpenBao
+  stop responding to any operations until it is unsealed. When sealed, the Redacto KMS
 
   server discards its in-memory root key to unlock the data, so it is
 
@@ -13,26 +13,26 @@ description: >-
 
 # operator seal
 
-The `operator seal` seals the OpenBao server. Sealing tells the OpenBao server to
-stop responding to any operations until it is unsealed. When sealed, the OpenBao
+The `operator seal` seals the Redacto KMS server. Sealing tells the Redacto KMS server to
+stop responding to any operations until it is unsealed. When sealed, the Redacto KMS
 server discards its in-memory root key to unlock the data, so it is physically
 blocked from responding to operations unsealed.
 
-If an unseal is in progress, sealing the OpenBao will reset the unsealing process.
+If an unseal is in progress, sealing the Redacto KMS will reset the unsealing process.
 Users will have to re-enter their portions of the root key again.
 
-This command does nothing if the OpenBao server is already sealed.
+This command does nothing if the Redacto KMS server is already sealed.
 
 For more information on sealing and unsealing, please the [seal concepts
 page](../../concepts/seal.mdx).
 
 ## Examples
 
-Seal an OpenBao server:
+Seal a Redacto KMS server:
 
 ```shell-session
-$ bao operator seal
-Success! OpenBao is sealed.
+$ redacto-kms operator seal
+Success! Redacto KMS is sealed.
 ```
 
 ## Usage

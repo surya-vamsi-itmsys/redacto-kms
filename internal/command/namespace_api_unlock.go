@@ -27,19 +27,19 @@ func (c *NamespaceAPIUnlockCommand) Synopsis() string {
 
 func (c *NamespaceAPIUnlockCommand) Help() string {
 	helpText := `
-Usage: bao namespace unlock [options] PATH
+Usage: redacto-kms namespace unlock [options] PATH
 
 	Unlock the current namespace, and all descendants, with unlock key:
 
-		$ bao namespace unlock -unlock-key=<key>
+		$ redacto-kms namespace unlock -unlock-key=<key>
 
 	Unlock the current namespace, and all descendants (from a root token):
 
-		$ bao namespace unlock
+		$ redacto-kms namespace unlock
 
 	Unlock a child namespace, and all of its descendants (e.g. ns1/ns2/):
 
-		$ bao namespace unlock -unlock-key=<key> ns1/ns2
+		$ redacto-kms namespace unlock -unlock-key=<key> ns1/ns2
 
 ` + c.Flags().Help()
 

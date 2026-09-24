@@ -210,7 +210,7 @@ func TestOperatorDiagnoseCommand_Run(t *testing.T) {
 				{
 					Name:    "Check Storage",
 					Status:  diagnose.ErrorStatus,
-					Message: "No storage stanza in Vault server configuration.",
+					Message: "No storage stanza in Redacto KMS server configuration.",
 				},
 			},
 		},

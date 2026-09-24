@@ -31,24 +31,24 @@ func (c *ListCommand) Synopsis() string {
 func (c *ListCommand) Help() string {
 	helpText := `
 
-Usage: bao list [options] PATH
+Usage: redacto-kms list [options] PATH
 
-  Lists data from OpenBao at the given path. This can be used to list keys in a
+  Lists data from Redacto KMS at the given path. This can be used to list keys in a
   given secret engine.
 
   List values under the "my-app" folder of the generic secret engine:
 
-      $ bao list secret/my-app/
+      $ redacto-kms list secret/my-app/
 
   Some paths support paginated listing. Use the -after and -limit flags to
   control the return of data:
 
-      $ bao list -after=last-serial -limit=50 pki/certs
+      $ redacto-kms list -after=last-serial -limit=50 pki/certs
 
   Some paths may support returning additional information about items;
   use the -detailed flag to see this info:
 
-      $ bao list -detailed pki/issuers
+      $ redacto-kms list -detailed pki/issuers
 
   For a full list of examples and paths, please see the documentation that
   corresponds to the secret engine in use. Not all engines support listing.

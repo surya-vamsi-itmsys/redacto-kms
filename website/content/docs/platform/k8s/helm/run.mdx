@@ -1,13 +1,13 @@
 ---
 description: >-
-  OpenBao can run directly on Kubernetes in various configurations.  For
-  pure-Kubernetes workloads, this enables OpenBao to also exist purely within
+  Redacto KMS can run directly on Kubernetes in various configurations.  For
+  pure-Kubernetes workloads, this enables Redacto KMS to also exist purely within
   Kubernetes.
 ---
 
-# Run OpenBao on Kubernetes
+# Run Redacto KMS on Kubernetes
 
-OpenBao works with Kubernetes in various modes: `dev`, `standalone`, `ha`,
+Redacto KMS works with Kubernetes in various modes: `dev`, `standalone`, `ha`,
 and `external`.
 
 :::warning
@@ -18,21 +18,21 @@ and `external`.
 
 ## Helm chart
 
-The [OpenBao Helm chart](https://github.com/openbao/openbao-helm)
-is the recommended way to install and configure OpenBao on Kubernetes.
-In addition to running OpenBao itself, the Helm chart is the primary
-method for installing and configuring OpenBao to integrate with other
+The [Redacto KMS Helm chart](https://github.com/openbao/openbao-helm)
+is the recommended way to install and configure Redacto KMS on Kubernetes.
+In addition to running Redacto KMS itself, the Helm chart is the primary
+method for installing and configuring Redacto KMS to integrate with other
 services such as the [Vault Agent Injector](https://github.com/hashicorp/vault-k8s/tree/v1.4.2).
 
 While the Helm chart automatically sets up complex resources and exposes the
 configuration to meet your requirements, it **does not automatically operate
-OpenBao.** You are still responsible for learning how to monitor, backup, upgrade,
-etc. the OpenBao cluster.
+Redacto KMS.** You are still responsible for learning how to monitor, backup, upgrade,
+etc. the Redacto KMS cluster.
 
 :::warning
 
 **Security Warning:** By default, the chart runs in standalone mode. This
-mode uses a single OpenBao server with a file storage backend. This is a less
+mode uses a single Redacto KMS server with a file storage backend. This is a less
 secure and less resilient installation that is **NOT** appropriate for a
 production setup. It is highly recommended to use a [properly secured Kubernetes
 cluster](https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/),
@@ -44,12 +44,12 @@ checklist](run.mdx#architecture).
 
 ## How-To
 
-### Install OpenBao
+### Install Redacto KMS
 
 Helm must be installed and configured on your machine. Please refer to the [Helm
 documentation](https://helm.sh/) for more information.
 
-To use the Helm chart, add the OpenBao helm repository and check that you have
+To use the Helm chart, add the Redacto KMS helm repository and check that you have
 access to the chart:
 
 @include 'helm/repo.mdx'
@@ -62,7 +62,7 @@ changes.
 
 :::
 
-Use `helm install` to install the latest release of the OpenBao Helm chart.
+Use `helm install` to install the latest release of the Redacto KMS Helm chart.
 
 ```shell-session
 $ helm install openbao openbao/openbao
@@ -97,8 +97,8 @@ $ helm install openbao openbao/openbao \
 
 #### Dev mode
 
-The Helm chart may run a OpenBao server in development. This installs a single
-OpenBao server with a memory storage backend.
+The Helm chart may run a Redacto KMS server in development. This installs a single
+Redacto KMS server with a memory storage backend.
 
 :::info
 
@@ -107,7 +107,7 @@ NOT recommended for a production environment.
 
 :::
 
-Install the latest OpenBao Helm chart in development mode.
+Install the latest Redacto KMS Helm chart in development mode.
 
 ```shell-session
 $ helm install openbao openbao/openbao \
@@ -117,9 +117,9 @@ $ helm install openbao openbao/openbao \
 #### Standalone mode
 
 The Helm chart defaults to run in `standalone` mode. This installs a single
-OpenBao server with a file storage backend.
+Redacto KMS server with a file storage backend.
 
-Install the latest OpenBao Helm chart in standalone mode.
+Install the latest Redacto KMS Helm chart in standalone mode.
 
 ```shell-session
 $ helm install openbao openbao/openbao
@@ -128,8 +128,8 @@ $ helm install openbao openbao/openbao
 #### HA mode
 
 The Helm chart may be run in High Availability (HA) mode. This installs three
-OpenBao servers with an existing Integrated Storage backend.
-Install the latest OpenBao Helm chart in HA mode.
+Redacto KMS servers with an existing Integrated Storage backend.
+Install the latest Redacto KMS Helm chart in HA mode.
 
 ```shell-session
 $ helm install openbao openbao/openbao \
@@ -138,23 +138,23 @@ $ helm install openbao openbao/openbao \
 
 #### External mode
 
-The Helm chart may be run in external mode. This installs no OpenBao server and
-relies on a network addressable OpenBao server to exist.
+The Helm chart may be run in external mode. This installs no Redacto KMS server and
+relies on a network addressable Redacto KMS server to exist.
 
-Install the latest OpenBao Helm chart in external mode.
+Install the latest Redacto KMS Helm chart in external mode.
 
 ```shell-session
 $ helm install openbao openbao/openbao \
     --set "injector.externalVaultAddr=http://external-openbao:8200"
 ```
 
-### View the OpenBao UI
+### View the Redacto KMS UI
 
-The OpenBao UI is enabled but NOT exposed as service for security reasons. The
-OpenBao UI can also be exposed via port-forwarding or through a [`ui`
+The Redacto KMS UI is enabled but NOT exposed as service for security reasons. The
+Redacto KMS UI can also be exposed via port-forwarding or through a [`ui`
 configuration value](configuration/index.mdx#ui).
 
-Expose the OpenBao UI with port-forwarding:
+Expose the Redacto KMS UI with port-forwarding:
 
 ```shell-session
 $ kubectl port-forward openbao-0 8200:8200
@@ -163,18 +163,18 @@ Forwarding from [::1]:8200 -> 8200
 ##...
 ```
 
-### Initialize and unseal OpenBao
+### Initialize and unseal Redacto KMS
 
-After the OpenBao Helm chart is installed in `standalone` or `ha` mode one of the
-OpenBao servers need to be
+After the Redacto KMS Helm chart is installed in `standalone` or `ha` mode one of the
+Redacto KMS servers need to be
 [initialized](../../../commands/operator/init.mdx). The
 initialization generates the credentials necessary to
-[unseal](../../../concepts/seal.mdx#why) all the OpenBao
+[unseal](../../../concepts/seal.mdx#why) all the Redacto KMS
 servers.
 
 #### CLI initialize and unseal
 
-View all the OpenBao pods in the current namespace:
+View all the Redacto KMS pods in the current namespace:
 
 ```shell-session
 $ kubectl get pods -l app.kubernetes.io/name=openbao
@@ -184,11 +184,11 @@ openbao-1                                 0/1     Running   0          1m49s
 openbao-2                                 0/1     Running   0          1m49s
 ```
 
-Initialize one OpenBao server with the default number of key shares and default
+Initialize one Redacto KMS server with the default number of key shares and default
 key threshold:
 
 ```shell-session
-$ kubectl exec -ti openbao-0 -- bao operator init
+$ kubectl exec -ti openbao-0 -- redacto-kms operator init
 Unseal Key 1: MBFSDepD9E6whREc6Dj+k3pMaKJ6cCnCUWcySJQymObb
 Unseal Key 2: zQj4v22k9ixegS+94HJwmIaWLBL3nZHe1i+b/wHz25fr
 Unseal Key 3: 7dbPPeeGGW3SmeBFFo04peCKkXFuuyKc8b2DuntA4VU5
@@ -201,16 +201,16 @@ Initial Root Token: s.zJNwZlRrqISjyBHFMiEca6GF
 
 The output displays the key shares and initial root key generated.
 
-Unseal the OpenBao server with the key shares until the key threshold is met:
+Unseal the Redacto KMS server with the key shares until the key threshold is met:
 
 ```sh
 ## Unseal the first openbao server until it reaches the key threshold
-$ kubectl exec -ti openbao-0 -- bao operator unseal # ... Unseal Key 1
-$ kubectl exec -ti openbao-0 -- bao operator unseal # ... Unseal Key 2
-$ kubectl exec -ti openbao-0 -- bao operator unseal # ... Unseal Key 3
+$ kubectl exec -ti openbao-0 -- redacto-kms operator unseal # ... Unseal Key 1
+$ kubectl exec -ti openbao-0 -- redacto-kms operator unseal # ... Unseal Key 2
+$ kubectl exec -ti openbao-0 -- redacto-kms operator unseal # ... Unseal Key 3
 ```
 
-Repeat the unseal process for all OpenBao server pods. When all OpenBao server pods
+Repeat the unseal process for all Redacto KMS server pods. When all Redacto KMS server pods
 are unsealed they report READY `1/1`.
 
 ```shell-session
@@ -224,11 +224,11 @@ openbao-2                                 1/1     Running   0          1m49s
 #### Google KMS auto unseal
 
 The Helm chart may be run with [Google KMS for Auto
-Unseal](../../../configuration/seal/gcpckms.mdx). This enables OpenBao server pods to
+Unseal](../../../configuration/seal/gcpckms.mdx). This enables Redacto KMS server pods to
 auto unseal if they are rescheduled.
 
-OpenBao Helm requires the Google Cloud KMS credentials stored in
-`credentials.json` and mounted as a secret in each OpenBao server pod.
+Redacto KMS Helm requires the Google Cloud KMS credentials stored in
+`credentials.json` and mounted as a secret in each Redacto KMS server pod.
 
 ##### Create the secret
 
@@ -238,11 +238,11 @@ First, create the secret in Kubernetes:
 kubectl create secret generic kms-creds --from-file=credentials.json
 ```
 
-OpenBao Helm mounts this to `/openbao/userconfig/kms-creds/credentials.json`.
+Redacto KMS Helm mounts this to `/openbao/userconfig/kms-creds/credentials.json`.
 
 ##### Config example
 
-This is a OpenBao Helm configuration that uses Google KMS:
+This is a Redacto KMS Helm configuration that uses Google KMS:
 
 ```yaml
 global:
@@ -289,11 +289,11 @@ server:
 #### Amazon KMS auto unseal
 
 The Helm chart may be run with [AWS KMS for Auto
-Unseal](../../../configuration/seal/awskms.mdx). This enables OpenBao server pods to auto
+Unseal](../../../configuration/seal/awskms.mdx). This enables Redacto KMS server pods to auto
 unseal if they are rescheduled.
 
-OpenBao Helm requires the AWS credentials stored as environment variables that
-are defined in each OpenBao server pod.
+Redacto KMS Helm requires the AWS credentials stored as environment variables that
+are defined in each Redacto KMS server pod.
 
 ##### Create the secret
 
@@ -307,7 +307,7 @@ $ kubectl create secret generic kms-creds \
 
 ##### Config example
 
-This is a OpenBao Helm configuration that uses AWS KMS:
+This is a Redacto KMS Helm configuration that uses AWS KMS:
 
 ```yaml
 global:
@@ -345,9 +345,9 @@ Probes are essential for detecting failures, rescheduling and using pods in
 Kubernetes. The helm chart offers configurable readiness and liveliness probes
 which can be customized for a variety of use cases.
 
-OpenBao's [/sys/health`](../../../api/system/health.mdx) endpoint can be customized to
-change the behavior of the health check. For example, we can change the OpenBao
-readiness probe to show the OpenBao pods are ready even if they're still uninitialized
+Redacto KMS's [/sys/health`](../../../api/system/health.mdx) endpoint can be customized to
+change the behavior of the health check. For example, we can change the Redacto KMS
+readiness probe to show the Redacto KMS pods are ready even if they're still uninitialized
 and sealed using the following probe:
 
 ```yaml
@@ -360,31 +360,31 @@ server:
 Using this customized probe, a `postStart` script could automatically run once the
 pod is ready for additional setup.
 
-### Upgrading OpenBao on kubernetes
+### Upgrading Redacto KMS on kubernetes
 
-To upgrade OpenBao on Kubernetes, we follow the same pattern as
-[generally upgrading OpenBao](../../../guides/upgrade/index.mdx), except we can use
-the Helm chart to update the OpenBao server StatefulSet. It is important to understand
-how to [generally upgrade OpenBao](../../../guides/upgrade/index.mdx) before reading this
+To upgrade Redacto KMS on Kubernetes, we follow the same pattern as
+[generally upgrading Redacto KMS](../../../guides/upgrade/index.mdx), except we can use
+the Helm chart to update the Redacto KMS server StatefulSet. It is important to understand
+how to [generally upgrade Redacto KMS](../../../guides/upgrade/index.mdx) before reading this
 section.
 
-The OpenBao StatefulSet uses `OnDelete` update strategy. It is critical to use `OnDelete` instead
+The Redacto KMS StatefulSet uses `OnDelete` update strategy. It is critical to use `OnDelete` instead
 of `RollingUpdate` because standbys must be updated before the active primary. A
-failover to an older version of OpenBao must always be avoided.
+failover to an older version of Redacto KMS must always be avoided.
 
 :::danger
 
-**IMPORTANT NOTE:** Always back up your data before upgrading! OpenBao does not
+**IMPORTANT NOTE:** Always back up your data before upgrading! Redacto KMS does not
 make backward-compatibility guarantees for its data store. Simply replacing the
-newly-installed OpenBao binary with the previous version may not cleanly
-downgrade OpenBao, as upgrades may perform changes to the underlying data
+newly-installed Redacto KMS binary with the previous version may not cleanly
+downgrade Redacto KMS, as upgrades may perform changes to the underlying data
 structure that make the data incompatible with a downgrade. If you need to roll
-back to a previous version of OpenBao, you should roll back your data store as
+back to a previous version of Redacto KMS, you should roll back your data store as
 well.
 
 :::
 
-#### Upgrading OpenBao servers
+#### Upgrading Redacto KMS servers
 
 :::danger
 
@@ -393,7 +393,7 @@ It's recommended to specify the chart version when upgrading.
 
 :::
 
-To initiate the upgrade, set the `server.image` values to the desired OpenBao
+To initiate the upgrade, set the `server.image` values to the desired Redacto KMS
 version, either in a values yaml file or on the command line. For illustrative
 purposes, the example below uses `openbao:123.456`.
 
@@ -409,7 +409,7 @@ Next, list the Helm versions and choose the desired version to install.
 ```bash
 $ helm search repo openbao/openbao                           
 NAME            CHART VERSION   APP VERSION             DESCRIPTION          
-openbao/openbao 0.4.0           v2.0.0-alpha20240329    Official OpenBao Chart
+openbao/openbao 0.4.0           v2.0.0-alpha20240329    Official Redacto KMS Chart
 ```
 
 Next, test the upgrade with `--dry-run` first to verify the changes sent to the
@@ -426,28 +426,28 @@ This should cause no changes (although the resources are updated). If
 everything is stable, `helm upgrade` can be run.
 
 The `helm upgrade` command should have updated the StatefulSet template for
-the OpenBao servers, however, no pods have been deleted. The pods must be manually
+the Redacto KMS servers, however, no pods have been deleted. The pods must be manually
 deleted to upgrade. Deleting the pods does not delete any persisted data.
 
-If OpenBao is not deployed using `ha` mode, the single OpenBao server may be deleted by
+If Redacto KMS is not deployed using `ha` mode, the single Redacto KMS server may be deleted by
 running:
 
 ```shell-session
-$ kubectl delete pod <name of OpenBao pod>
+$ kubectl delete pod <name of Redacto KMS pod>
 ```
 
-If OpenBao is deployed using `ha` mode, the standby pods must be upgraded first.
-OpenBao has K8s service discovery built in (when enabled in the server configuration) and
+If Redacto KMS is deployed using `ha` mode, the standby pods must be upgraded first.
+Redacto KMS has K8s service discovery built in (when enabled in the server configuration) and
 will automatically change the labels of the pod with its current leader status. These labels
 can be used to filter the pods.
 
-For example, select all pods that are OpenBao standbys:
+For example, select all pods that are Redacto KMS standbys:
 
 ```shell-session
 $ kubectl get pods -l openbao-active=false
 ```
 
-Select the active OpenBao pod:
+Select the active Redacto KMS pod:
 
 ```shell-session
 $ kubectl get pods -l openbao-active=true
@@ -456,44 +456,44 @@ $ kubectl get pods -l openbao-active=true
 Next, sequentially delete every pod that is not the active primary, ensuring the quorum is maintained at all times:
 
 ```shell-session
-$ kubectl delete pod <name of OpenBao pod>
+$ kubectl delete pod <name of Redacto KMS pod>
 ```
 
-If auto-unseal is not being used, the newly scheduled OpenBao standby pods needs
+If auto-unseal is not being used, the newly scheduled Redacto KMS standby pods needs
 to be unsealed:
 
 ```shell-session
-$ kubectl exec -ti <name of pod> -- bao operator unseal
+$ kubectl exec -ti <name of pod> -- redacto-kms operator unseal
 ```
 
 Finally, once the standby nodes have been updated and unsealed, delete the active
 primary:
 
 ```shell-session
-$ kubectl delete pod <name of OpenBao primary>
+$ kubectl delete pod <name of Redacto KMS primary>
 ```
 
 Similar to the standby nodes, the former primary also needs to be unsealed:
 
 ```shell-session
-$ kubectl exec -ti <name of pod> -- bao operator unseal
+$ kubectl exec -ti <name of pod> -- redacto-kms operator unseal
 ```
 
-After a few moments the OpenBao cluster should elect a new active primary. The OpenBao
+After a few moments the Redacto KMS cluster should elect a new active primary. The Redacto KMS
 cluster is now upgraded!
 
-### Protecting sensitive OpenBao configurations
+### Protecting sensitive Redacto KMS configurations
 
-OpenBao Helm renders a OpenBao configuration file during installation and stores the
+Redacto KMS Helm renders a Redacto KMS configuration file during installation and stores the
 file in a Kubernetes configmap. Some configurations require sensitive data to be
 included in the configuration file and would not be encrypted at rest once created
 in Kubernetes.
 
-The following example shows how to add extra configuration files to OpenBao Helm
+The following example shows how to add extra configuration files to Redacto KMS Helm
 to protect sensitive configurations from being in plaintext at rest using Kubernetes
 secrets.
 
-First, create a partial OpenBao configuration with the sensitive settings OpenBao
+First, create a partial Redacto KMS configuration with the sensitive settings Redacto KMS
 loads during startup:
 
 ```shell-session
@@ -514,7 +514,7 @@ $ kubectl create secret generic openbao-storage-config \
 ```
 
 Finally, mount this secret as an extra volume and add an additional `-config` flag
-to the OpenBao startup command:
+to the Redacto KMS startup command:
 
 ```shell-session
 $ helm install openbao openbao/openbao \
@@ -529,46 +529,46 @@ $ helm install openbao openbao/openbao \
 
 ## Architecture
 
-We recommend running OpenBao on Kubernetes with the same
+We recommend running Redacto KMS on Kubernetes with the same
 [general architecture](../../../internals/architecture.mdx)
 as running it anywhere else. There are some benefits Kubernetes can provide
-that eases operating a OpenBao cluster and we document those below.
+that eases operating a Redacto KMS cluster and we document those below.
 
 ### Production deployment checklist
 
-_End-to-End TLS._ OpenBao should always be used with TLS in production. If
-intermediate load balancers or reverse proxies are used to front OpenBao,
+_End-to-End TLS._ Redacto KMS should always be used with TLS in production. If
+intermediate load balancers or reverse proxies are used to front Redacto KMS,
 they should not terminate TLS. This way traffic is always encrypted in transit
-to OpenBao and minimizes risks introduced by intermediate layers.
+to Redacto KMS and minimizes risks introduced by intermediate layers.
 
-_Single Tenancy._ OpenBao should be the only main process running on a machine.
+_Single Tenancy._ Redacto KMS should be the only main process running on a machine.
 This reduces the risk that another process running on the same machine is
-compromised and can interact with OpenBao. This can be accomplished by using OpenBao
+compromised and can interact with Redacto KMS. This can be accomplished by using Redacto KMS
 Helm's `affinity` configurable.
 
-_Enable Auditing._ OpenBao supports several auditing backends. Enabling auditing
-provides a history of all operations performed by OpenBao and provides a forensics
+_Enable Auditing._ Redacto KMS supports several auditing backends. Enabling auditing
+provides a history of all operations performed by Redacto KMS and provides a forensics
 trail in the case of misuse or compromise. Audit logs securely hash any sensitive
 data, but access should still be restricted to prevent any unintended disclosures.
-OpenBao Helm includes a configurable `auditStorage` option that provisions a persistent
+Redacto KMS Helm includes a configurable `auditStorage` option that provisions a persistent
 volume to store audit logs.
 
-_Immutable Upgrades._ OpenBao relies on an external storage backend for persistence,
-and this decoupling allows the servers running OpenBao to be managed immutably.
-When upgrading to new versions, new servers with the upgraded version of OpenBao
+_Immutable Upgrades._ Redacto KMS relies on an external storage backend for persistence,
+and this decoupling allows the servers running Redacto KMS to be managed immutably.
+When upgrading to new versions, new servers with the upgraded version of Redacto KMS
 are brought online. They are attached to the same shared storage backend and
 unsealed. Then the old servers are destroyed. This reduces the need for remote
 access and upgrade orchestration which may introduce security gaps. See the
 [upgrade section](#how-to) for instructions
-on upgrading OpenBao on Kubernetes.
+on upgrading Redacto KMS on Kubernetes.
 
-_Upgrade Frequently._ OpenBao is actively developed, and updating frequently is
+_Upgrade Frequently._ Redacto KMS is actively developed, and updating frequently is
 important to incorporate security fixes and any changes in default settings such
-as key lengths or cipher suites. Subscribe to the OpenBao mailing list and
+as key lengths or cipher suites. Subscribe to the Redacto KMS mailing list and
 GitHub CHANGELOG for updates.
 
-_Restrict Storage Access._ OpenBao encrypts all data at rest, regardless of which
+_Restrict Storage Access._ Redacto KMS encrypts all data at rest, regardless of which
 storage backend is used. Although the data is encrypted, an attacker with arbitrary
 control can cause data corruption or loss by modifying or deleting keys. Access
-to the storage backend should be restricted to only OpenBao to avoid unauthorized
+to the storage backend should be restricted to only Redacto KMS to avoid unauthorized
 access or operations.

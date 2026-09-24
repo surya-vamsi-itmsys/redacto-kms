@@ -1,22 +1,22 @@
 ---
 draft: true
 sidebar_label: Installation
-description: The OpenBao Agent Sidecar Injector can be installed using OpenBao Helm.
+description: The Redacto KMS Agent Sidecar Injector can be installed using Redacto KMS Helm.
 ---
 
 # Installing the agent injector
 
-The [OpenBao Helm chart](../helm/index.mdx) is the recommended way to
+The [Redacto KMS Helm chart](../helm/index.mdx) is the recommended way to
 install and configure the Agent Injector in Kubernetes.
 
 :::warning
 
-The OpenBao Agent Injector requires OpenBao 2.0.0 or greater.
+The Redacto KMS Agent Injector requires Redacto KMS 2.0.0 or greater.
 
 :::
 
-To install a new instance of OpenBao and the OpenBao Agent Injector, first add the
-OpenBao helm repository and ensure you have access to the chart:
+To install a new instance of Redacto KMS and the Redacto KMS Agent Injector, first add the
+Redacto KMS helm repository and ensure you have access to the chart:
 
 @include 'helm/repo.mdx'
 
@@ -31,7 +31,7 @@ Upgrades may be performed with `helm upgrade` on an existing install. Please
 always run Helm with `--dry-run` before any install or upgrade to verify
 changes.
 
-You can see all the available values settings by running `helm inspect values openbao/openbao` or by reading the [OpenBao Helm Configuration
+You can see all the available values settings by running `helm inspect values openbao/openbao` or by reading the [Redacto KMS Helm Configuration
 Docs](../helm/configuration.mdx). Commonly used values in the Helm
 chart include limiting the namespaces the injector runs in, TLS options and
 more.
@@ -64,16 +64,16 @@ helm install openbao openbao/openbao \
   --set="injector.extraEnvironmentVars.AGENT_INJECT_TLS_CIPHER_SUITES=..."
 ```
 
-The OpenBao Agent Injector also supports two TLS management options:
+The Redacto KMS Agent Injector also supports two TLS management options:
 
 - Auto TLS generation (default)
 - Manual TLS
 
 ### Auto TLS
 
-By default, the OpenBao Agent Injector will bootstrap TLS by generating a certificate
+By default, the Redacto KMS Agent Injector will bootstrap TLS by generating a certificate
 authority and creating a certificate/key to be used by the controller. If using
-OpenBao Helm, the chart will automatically create the necessary DNS entries for the
+Redacto KMS Helm, the chart will automatically create the necessary DNS entries for the
 controller's service used to verify the certificate.
 
 ### Manual TLS
@@ -84,15 +84,15 @@ The following is required to configure TLS manually:
 - Server certificate/key
 - Base64 PEM encoded Certificate Authority bundle
 
-For more information on configuring manual TLS, see the [OpenBao Helm cert values](../helm/configuration.mdx#certs).
+For more information on configuring manual TLS, see the [Redacto KMS Helm cert values](../helm/configuration.mdx#certs).
 
 This option may also be used in conjunction with [cert-manager for certificate management](../helm/examples/injector-tls-cert-manager.mdx).
 
 ## Multiple replicas and TLS
 
-The OpenBao Agent Injector can be run with multiple replicas if using [Manual
+The Redacto KMS Agent Injector can be run with multiple replicas if using [Manual
 TLS](#manual-tls) or [cert-manager](../helm/examples/injector-tls-cert-manager.mdx), and as of v0.7.0 multiple replicas are also supported with
-[Auto TLS](#auto-tls). The number of replicas is controlled in the OpenBao Helm
+[Auto TLS](#auto-tls). The number of replicas is controlled in the Redacto KMS Helm
 chart by the [injector.replicas
 value](../helm/configuration.mdx#replicas).
 
@@ -111,11 +111,11 @@ can be set to `false` since leader determination is not necessary in this case.
 
 ## Namespace selector
 
-By default, the OpenBao Agent Injector will process all namespaces in Kubernetes except
+By default, the Redacto KMS Agent Injector will process all namespaces in Kubernetes except
 the system namespaces `kube-system` and `kube-public`. To limit what namespaces
 the injector can work in a namespace selector can be defined to match labels attached
 to namespaces.
 
-For more information on configuring namespace selection, see the [OpenBao Helm namespaceSelector value](../helm/configuration.mdx#namespaceselector).
+For more information on configuring namespace selection, see the [Redacto KMS Helm namespaceSelector value](../helm/configuration.mdx#namespaceselector).
 
 [tls-suites]: https://golang.org/src/crypto/tls/cipher_suites.go

@@ -1,12 +1,12 @@
 ---
 sidebar_label: Overview
-description: An overview of KMS plugins that work with OpenBao's `/sys/external-keys` APIs.
+description: An overview of KMS plugins that work with Redacto KMS's `/sys/external-keys` APIs.
 ---
 
 # Overview
 
-External Keys in OpenBao are provider-agnostic and work with KMS plugins to
-provide support for arbitrary KMS or HSM backends. To read more about OpenBao's
+External Keys in Redacto KMS are provider-agnostic and work with KMS plugins to
+provide support for arbitrary KMS or HSM backends. To read more about Redacto KMS's
 plugin system, see the [plugin system overview](../../../../plugins/index.mdx)
 and the [plugin configuration section](../../../../configuration/plugins.mdx).
 
@@ -21,20 +21,20 @@ External Keys.
 :::
 
 Once installed, a KMS plugin can be used with External Keys by providing
-its name (as declared within OpenBao's server configuration) to the `plugin`
+its name (as declared within Redacto KMS's server configuration) to the `plugin`
 parameter under `/sys/external-keys/configs/:name`.
 
 For example, using the command line:
 
 ```shell-session
-$ bao write sys/external-keys/configs/my-hsm \
+$ redacto-kms write sys/external-keys/configs/my-hsm \
   plugin=pkcs11 lib=softhsm \
   token_label=openbao pin=1234
 ```
 
 ## Available plugins
 
-The following plugins are built into OpenBao and support External Keys, not
+The following plugins are built into Redacto KMS and support External Keys, not
 requiring external plugin installation:
 
 - [Transit](transit.mdx)

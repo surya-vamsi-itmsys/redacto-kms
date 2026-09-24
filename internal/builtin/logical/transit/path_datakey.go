@@ -51,7 +51,7 @@ and 512 bits are supported. Defaults to 256.`,
 
 			"key_version": {
 				Type: framework.TypeInt,
-				Description: `The version of the OpenBao key to use for
+				Description: `The version of the Redacto KMS key to use for
 encryption of the data key. Must be 0 (for latest)
 or a value greater than or equal to the
 min_encryption_version configured on the key.`,

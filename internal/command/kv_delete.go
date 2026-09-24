@@ -31,7 +31,7 @@ func (c *KVDeleteCommand) Synopsis() string {
 
 func (c *KVDeleteCommand) Help() string {
 	helpText := `
-Usage: bao kv delete [options] PATH
+Usage: redacto-kms kv delete [options] PATH
 
   Deletes the data for the provided version and path in the key-value store. The
   versioned data will not be fully removed, but marked as deleted and will no
@@ -39,19 +39,19 @@ Usage: bao kv delete [options] PATH
 
   To delete the latest version of the key "foo": 
 
-      $ bao kv delete -mount=secret foo
+      $ redacto-kms kv delete -mount=secret foo
 
   The deprecated path-like syntax can also be used, but this should be avoided 
   for KV v2, as the fact that it is not actually the full API path to 
   the secret (secret/data/foo) can cause confusion: 
   
-      $ bao kv delete secret/foo
+      $ redacto-kms kv delete secret/foo
 
   To delete version 3 of key foo:
 
-      $ bao kv delete -mount=secret -versions=3 foo
+      $ redacto-kms kv delete -mount=secret -versions=3 foo
 
-  To delete all versions and metadata, see the "bao kv metadata" subcommand.
+  To delete all versions and metadata, see the "redacto-kms kv metadata" subcommand.
 
   Additional flags and more advanced use cases are detailed below.
 

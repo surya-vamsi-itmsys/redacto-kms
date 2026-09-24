@@ -1,11 +1,11 @@
 ---
-description: The `/sys/init` endpoint is used to initialize a new OpenBao.
+description: The `/sys/init` endpoint is used to initialize a new Redacto KMS.
 ---
 
 # `/sys/init`
 
-The `/sys/init` endpoint is used to initialize a new OpenBao instance. When using
-an auto-unseal mechanism, it is possible to initialize OpenBao (since `v2.4.0`)
+The `/sys/init` endpoint is used to initialize a new Redacto KMS instance. When using
+an auto-unseal mechanism, it is possible to initialize Redacto KMS (since `v2.4.0`)
 with `recovery_shares` config parameter set as `0`, resulting in the recovery keys
 not being generated at initialization time, and thus will not be returned back to
 the operator. The system will function as if it has no recovery keys. To create
@@ -19,7 +19,7 @@ instance to unseal again. The root key is rotatable through the `sudo`-protected
 
 ## Read initialization status
 
-This endpoint returns the initialization status of OpenBao.
+This endpoint returns the initialization status of Redacto KMS.
 
 | Method | Path        |
 | :----- | :---------- |
@@ -42,7 +42,7 @@ $ curl \
 
 ## Start initialization
 
-This endpoint initializes a new OpenBao. The OpenBao must not have been previously
+This endpoint initializes a new Redacto KMS. The Redacto KMS must not have been previously
 initialized. The recovery options are only available when using [Auto Unseal](../../concepts/seal.mdx#auto-unseal).
 
 | Method | Path        |
@@ -116,7 +116,7 @@ provided) root keys, base 64 encoded root keys and initial root token:
 
 Please be reminded that recovery keys are used as an authentication flow for
 rotation and regeneration of root credentials and cannot be used to unseal
-OpenBao in the case of the unavailability of the seal mechanism. Refer to
+Redacto KMS in the case of the unavailability of the seal mechanism. Refer to
 the full warning in the documentation for [Auto Unseal](../../concepts/seal.mdx#auto-unseal).
 
 :::

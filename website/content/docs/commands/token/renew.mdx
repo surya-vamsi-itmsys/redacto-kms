@@ -19,20 +19,20 @@ revoked, or if the token has already reached its maximum TTL.
 Renew a token (this uses the `/auth/token/renew` endpoint and permission):
 
 ```shell-session
-$ bao token renew 96ddf4bc-d217-f3ba-f9bd-017055595017
+$ redacto-kms token renew 96ddf4bc-d217-f3ba-f9bd-017055595017
 ```
 
 Renew the currently authenticated token (this uses the `/auth/token/renew-self`
 endpoint and permission):
 
 ```shell-session
-$ bao token renew
+$ redacto-kms token renew
 ```
 
 Renew a token requesting a specific increment value:
 
 ```shell-session
-$ bao token renew -increment=30m 96ddf4bc-d217-f3ba-f9bd-017055595017
+$ redacto-kms token renew -increment=30m 96ddf4bc-d217-f3ba-f9bd-017055595017
 ```
 
 ## Usage
@@ -44,11 +44,11 @@ flags](../index.mdx) included on all commands.
 
 - `-format` `(default: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### Command options
 
 - `-increment` `(duration: "")` - Request a specific increment for renewal.
-  OpenBao will not honor this request for periodic tokens. If not supplied, OpenBao will use
+  Redacto KMS will not honor this request for periodic tokens. If not supplied, Redacto KMS will use
   the default TTL. This is specified as a numeric string with suffix like "30s"
   or "5m". This is aliased as "-i".

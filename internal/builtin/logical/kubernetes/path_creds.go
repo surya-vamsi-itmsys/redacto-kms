@@ -25,10 +25,10 @@ const (
 	pathCreds     = "creds/"
 	kubeTokenType = "kube_token"
 
-	pathCredsHelpSyn  = `Request Kubernetes service account credentials for a given OpenBao role.`
+	pathCredsHelpSyn  = `Request Kubernetes service account credentials for a given Redacto KMS role.`
 	pathCredsHelpDesc = `
 This path creates dynamic Kubernetes service account credentials.
-The associated OpenBao role can be configured to generate tokens for an
+The associated Redacto KMS role can be configured to generate tokens for an
 existing service account, create a new service account bound to an
 existing Role/ClusterRole, or create a new service account and role
 bindings. The service account token and any other objects created in
@@ -66,7 +66,7 @@ func (b *backend) pathCredentials() *framework.Path {
 		Fields: map[string]*framework.FieldSchema{
 			"name": {
 				Type:        framework.TypeLowerCaseString,
-				Description: "Name of the OpenBao role",
+				Description: "Name of the Redacto KMS role",
 				Required:    true,
 			},
 			"kubernetes_namespace": {
@@ -76,7 +76,7 @@ func (b *backend) pathCredentials() *framework.Path {
 			},
 			"cluster_role_binding": {
 				Type:        framework.TypeBool,
-				Description: "If true, generate a ClusterRoleBinding to grant permissions across the whole cluster instead of within a namespace. Requires the OpenBao role to have kubernetes_role_type set to ClusterRole.",
+				Description: "If true, generate a ClusterRoleBinding to grant permissions across the whole cluster instead of within a namespace. Requires the Redacto KMS role to have kubernetes_role_type set to ClusterRole.",
 			},
 			"ttl": {
 				Type:        framework.TypeDurationSecond,
@@ -152,7 +152,7 @@ func (b *backend) isValidKubernetesNamespace(ctx context.Context, req *logical.R
 			return true, nil
 		}
 
-		return false, errors.New("'kubernetes_namespace' is required unless the OpenBao role has a single namespace specified")
+		return false, errors.New("'kubernetes_namespace' is required unless the Redacto KMS role has a single namespace specified")
 	}
 
 	if slices.Contains(role.K8sNamespaces, "*") || slices.Contains(role.K8sNamespaces, request.Namespace) {
@@ -229,7 +229,7 @@ func (b *backend) createCreds(ctx context.Context, req *logical.Request, role *r
 	// Similarly, if the calculated TTL is greater than the system's max lease
 	// ttl, cap accordingly here.
 	if theTTL > b.System().MaxLeaseTTL() {
-		respWarning = append(respWarning, fmt.Sprintf("ttl of %s is greater than OpenBao's max lease ttl %s; capping accordingly", theTTL.String(), b.System().MaxLeaseTTL().String()))
+		respWarning = append(respWarning, fmt.Sprintf("ttl of %s is greater than Redacto KMS's max lease ttl %s; capping accordingly", theTTL.String(), b.System().MaxLeaseTTL().String()))
 		theTTL = b.System().MaxLeaseTTL()
 	}
 
@@ -339,9 +339,9 @@ func (b *backend) createCreds(ctx context.Context, req *logical.Request, role *r
 	case err != nil:
 		return nil, fmt.Errorf("failed to read TTL of created Kubernetes token for %s/%s: %s", reqPayload.Namespace, genName, err)
 	case createdTokenTTL > theTTL:
-		respWarning = append(respWarning, fmt.Sprintf("the created Kubernetes service accout token TTL %v is greater than the OpenBao lease TTL %v", createdTokenTTL, theTTL))
+		respWarning = append(respWarning, fmt.Sprintf("the created Kubernetes service accout token TTL %v is greater than the Redacto KMS lease TTL %v", createdTokenTTL, theTTL))
 	case createdTokenTTL < theTTL:
-		respWarning = append(respWarning, fmt.Sprintf("the created Kubernetes service accout token TTL %v is less than the OpenBao lease TTL %v; capping the lease TTL accordingly", createdTokenTTL, theTTL))
+		respWarning = append(respWarning, fmt.Sprintf("the created Kubernetes service accout token TTL %v is less than the Redacto KMS lease TTL %v; capping the lease TTL accordingly", createdTokenTTL, theTTL))
 		resp.Secret.TTL = createdTokenTTL
 	}
 

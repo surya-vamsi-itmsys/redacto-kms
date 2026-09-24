@@ -1,7 +1,7 @@
 ---
 sidebar_label: PGP, GnuPG and Keybase
 description: |-
-  OpenBao has the ability to integrate with OpenPGP-compatible programs like
+  Redacto KMS has the ability to integrate with OpenPGP-compatible programs like
   GnuPG and services like Keybase.io to provide an additional layer of security
   when performing certain operations.  This page details the various PGP
   integrations, their use, and operation.
@@ -9,32 +9,32 @@ description: |-
 
 # Using PGP, GnuPG, and keybase
 
-OpenBao has the ability to integrate with OpenPGP-compatible programs like GnuPG
+Redacto KMS has the ability to integrate with OpenPGP-compatible programs like GnuPG
 and services like Keybase.io to provide an additional layer of security when
 performing certain operations. This page details the various PGP integrations,
 their use, and operation.
 
 Keybase.io support is available only in the command-line tool and not via the
-OpenBao HTTP API, tools that help with initialization should use the Keybase.io
+Redacto KMS HTTP API, tools that help with initialization should use the Keybase.io
 API in order to obtain the PGP keys needed for a secure initialization if you
 want them to use Keybase for keys.
 
-Once the OpenBao has been initialized, it is possible to use Keybase to decrypt
+Once the Redacto KMS has been initialized, it is possible to use Keybase to decrypt
 the shards and unseal normally.
 
 ## Initializing with PGP
 
-One of the early fundamental problems when bootstrapping and initializing OpenBao
+One of the early fundamental problems when bootstrapping and initializing Redacto KMS
 was that the first user (the initializer) received a plain-text copy of all of
-the unseal keys. This defeats the promises of OpenBao's security model, and it
+the unseal keys. This defeats the promises of Redacto KMS's security model, and it
 also makes the distribution of those keys more difficult.
-OpenBao can optionally be initialized using PGP keys. In this mode, OpenBao will
+Redacto KMS can optionally be initialized using PGP keys. In this mode, Redacto KMS will
 generate the unseal keys and then immediately encrypt them using the given
 users' public PGP keys. Only the owner of the corresponding private key is then
 able to decrypt the value, revealing the plain-text unseal key.
 
 First, you must create, acquire, or import the appropriate key(s) onto the
-local machine from which you are initializing OpenBao. This guide will not
+local machine from which you are initializing Redacto KMS. This guide will not
 attempt to cover all aspects of PGP keys but give examples using two popular
 programs: Keybase and GnuPG.
 
@@ -42,16 +42,16 @@ For beginners, we suggest using [Keybase.io](https://keybase.io/) ("Keybase")
 as it can be both simpler and has a number of useful behaviors and properties
 around key management, such as verification of users' identities using a number
 of public online sources. It also exposes the ability for users to have PGP
-keys generated, stored, and managed securely on their servers. Using OpenBao with
+keys generated, stored, and managed securely on their servers. Using Redacto KMS with
 Keybase will be discussed first as it is simpler.
 
 ## Initializing with keybase
 
-To generate unseal keys for Keybase users, OpenBao accepts the `keybase:` prefix
+To generate unseal keys for Keybase users, Redacto KMS accepts the `keybase:` prefix
 to the `-pgp-keys` argument:
 
 ```shell-session
-$ bao operator init -key-shares=3 -key-threshold=2 \
+$ redacto-kms operator init -key-shares=3 -key-threshold=2 \
     -pgp-keys="keybase:jefferai,keybase:vishalnayak,keybase:sethvargo"
 ```
 
@@ -100,7 +100,7 @@ This is your unseal key in plain-text and should be guarded the same way you
 guard a password. Now you can enter your key to the `unseal` command:
 
 ```shell-session
-$ bao operator unseal
+$ redacto-kms operator unseal
 Key (will be hidden): ...
 ```
 
@@ -136,7 +136,7 @@ without ASCII armoring) or binary. Once saved to disk, the path to these files
 can be specified as an argument to the `-pgp-keys` flag.
 
 ```shell-session
-$ bao operator init -key-shares=3 -key-threshold=2 \
+$ redacto-kms operator init -key-shares=3 -key-threshold=2 \
     -pgp-keys="jeff.asc,vishal.asc,seth.asc"
 ```
 
@@ -182,6 +182,6 @@ This is your unseal key in plain-text and should be guarded the same way you
 guard a password. Now you can enter your key to the `unseal` command:
 
 ```shell-session
-$ bao operator unseal
+$ redacto-kms operator unseal
 Key (will be hidden): ...
 ```

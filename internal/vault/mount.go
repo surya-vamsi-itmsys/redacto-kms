@@ -1677,7 +1677,7 @@ func (c *Core) defaultMountTable(ctx context.Context) *routing.MountTable {
 	}
 	table.Entries = append(table.Entries, requiredMounts.Entries...)
 
-	if api.ReadBaoVariable("BAO_INTERACTIVE_DEMO_SERVER") != "" {
+	if api.ReadBaoVariable("REDACTO_KMS_INTERACTIVE_DEMO_SERVER") != "" {
 		mountUUID, err := uuid.GenerateUUID()
 		if err != nil {
 			panic(fmt.Sprintf("could not create default secret mount UUID: %v", err))

@@ -28,7 +28,7 @@ import (
 	"github.com/openbao/openbao/v2/internal/version"
 )
 
-const vaultTestingMockPluginEnv = "BAO_TESTING_MOCK_PLUGIN"
+const vaultTestingMockPluginEnv = "REDACTO_KMS_TESTING_MOCK_PLUGIN"
 
 // version is used to override the plugin's self-reported version
 func testCoreWithPlugins(t *testing.T, typ consts.PluginType, versions ...string) (*Core, []pluginhelpers.TestPlugin) {

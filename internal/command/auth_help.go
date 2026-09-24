@@ -28,7 +28,7 @@ func (c *AuthHelpCommand) Synopsis() string {
 
 func (c *AuthHelpCommand) Help() string {
 	helpText := `
-Usage: bao auth help [options] TYPE | PATH
+Usage: redacto-kms auth help [options] TYPE | PATH
 
   Prints usage and help for an auth method.
 
@@ -41,11 +41,11 @@ Usage: bao auth help [options] TYPE | PATH
 
   Get usage instructions for the userpass auth method:
 
-      $ bao auth help userpass
+      $ redacto-kms auth help userpass
 
   Print usage for the auth method enabled at my-method/:
 
-      $ bao auth help my-method/
+      $ redacto-kms auth help my-method/
 
   Each auth method produces its own help output.
 

@@ -1,6 +1,6 @@
 ---
 description: |-
-  Describes how to set up a standalone OpenBao with audit storage
+  Describes how to set up a standalone Redacto KMS with audit storage
 ---
 
 # Standalone server with audit storage
@@ -12,7 +12,7 @@ description: |-
 :::
 
 
-The below `values.yaml` can be used to set up a single server OpenBao cluster with
+The below `values.yaml` can be used to set up a single server Redacto KMS cluster with
 auditing enabled.
 
 ```yaml
@@ -46,9 +46,9 @@ server:
     accessMode: ReadWriteOnce
 ```
 
-After OpenBao has been deployed, initialized and unsealed, auditing can be enabled
-by running the following command against the OpenBao pod:
+After Redacto KMS has been deployed, initialized and unsealed, auditing can be enabled
+by running the following command against the Redacto KMS pod:
 
 ```shell-session
-$ kubectl exec -ti <POD NAME> --  bao audit enable file file_path=/openbao/audit/openbao_audit.log
+$ kubectl exec -ti <POD NAME> --  redacto-kms audit enable file file_path=/openbao/audit/openbao_audit.log
 ```

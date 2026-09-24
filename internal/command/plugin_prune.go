@@ -33,7 +33,7 @@ func (c *PluginPruneCommand) Synopsis() string {
 
 func (c *PluginPruneCommand) Help() string {
 	helpText := `
-Usage: bao plugin prune [options]
+Usage: redacto-kms plugin prune [options]
 
   This command reads plugin configuration from the given server configuration
   files and removes unused OCI-based plugins found in the given plugin directory
@@ -45,15 +45,15 @@ Usage: bao plugin prune [options]
 
   Prune plugins using a configuration file:
 
-      $ bao plugin prune -config=/path/to/openbao.hcl
+      $ redacto-kms plugin prune -config=/path/to/redacto-kms.hcl
 
   Prune within a specific directory:
 
-      $ bao plugin prune -config=/path/to/config.hcl -directory=/opt/openbao/plugins
+      $ redacto-kms plugin prune -config=/path/to/config.hcl -directory=/opt/redacto-kms/plugins
 
   Load multiple configuration files:
 
-      $ bao plugin prune -config=/etc/openbao -config=/opt/openbao/extra.hcl
+      $ redacto-kms plugin prune -config=/etc/redacto-kms -config=/opt/redacto-kms/extra.hcl
 
 ` + c.Flags().Help()
 
@@ -67,7 +67,7 @@ func (c *PluginPruneCommand) Flags() *FlagSets {
 
 	f.StringSliceVar(&StringSliceVar{
 		Name:   "config",
-		EnvVar: "BAO_CONFIG_PATH",
+		EnvVar: "REDACTO_KMS_CONFIG_PATH",
 		Target: &c.flagConfigs,
 		Completion: complete.PredictOr(
 			complete.PredictFiles("*.hcl"),

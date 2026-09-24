@@ -25,7 +25,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-const TestPluginServerEnv = "BAO_TEST_PLUGIN_SERVER"
+const TestPluginServerEnv = "REDACTO_KMS_TEST_PLUGIN_SERVER"
 
 // TestTransitPluginServer runs a plugin that serves the Transit KMS.
 func TestTransitPluginServer(t *testing.T) {
@@ -51,7 +51,7 @@ func TransitPluginConfig(t *testing.T) *server.PluginConfig {
 		Name:      "external-transit",
 		Type:      "kms",
 		Command:   filepath.Base(os.Args[0]),
-		Env:       []string{"BAO_TEST_PLUGIN_SERVER=true"},
+		Env:       []string{"REDACTO_KMS_TEST_PLUGIN_SERVER=true"},
 		Args:      []string{"-test.run=TestTransitPluginServer"},
 		SHA256Sum: hex.EncodeToString(checksum[:]),
 	}

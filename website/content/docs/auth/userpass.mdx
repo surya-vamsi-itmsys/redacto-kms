@@ -1,13 +1,13 @@
 ---
 sidebar_label: Username and Password
 description: >-
-  The "userpass" auth method allows users to authenticate with OpenBao using a
+  The "userpass" auth method allows users to authenticate with Redacto KMS using a
   username and password.
 ---
 
 # Userpass auth method
 
-The `userpass` auth method allows users to authenticate with OpenBao using
+The `userpass` auth method allows users to authenticate with Redacto KMS using
 a username and password combination.
 
 The username/password combinations are configured directly to the auth
@@ -22,7 +22,7 @@ same entry.
 ### Via the CLI
 
 ```shell-session
-$ bao login -method=userpass \
+$ redacto-kms login -method=userpass \
     username=mitchellh \
     password=foo
 ```
@@ -65,19 +65,19 @@ management tool.
 1. Enable the userpass auth method:
 
    ```shell-session
-   $ bao auth enable userpass
+   $ redacto-kms auth enable userpass
    ```
 
    This enables the userpass auth method at `auth/userpass`. To enable it at a different path, use the `-path` flag:
 
    ```shell-session
-   $ bao auth enable -path=<path> userpass
+   $ redacto-kms auth enable -path=<path> userpass
    ```
 
 1. Configure it with users that are allowed to authenticate:
 
    ```shell-session
-   $ bao write auth/<userpass:path>/users/mitchellh \
+   $ redacto-kms write auth/<userpass:path>/users/mitchellh \
        password=foo \
        policies=admins
    ```
@@ -89,7 +89,7 @@ management tool.
 ## User lockout
 
 If a user provides bad credentials several times in quick succession,
-OpenBao will stop trying to validate their credentials for a while, instead returning immediately
+Redacto KMS will stop trying to validate their credentials for a while, instead returning immediately
 with a permission denied error. We call this behavior "user lockout". The time for which
 a user will be locked out is called “lockout duration”. The user will be able to login after the lockout
 duration has passed. The number of failed login attempts after which the user is locked out is called
@@ -102,7 +102,7 @@ The user lockout feature is enabled by default. The default values for "lockout 
 "lockout duration" is 15 minutes, "lockout counter reset" is 15 minutes.
 
 The user lockout feature can be disabled as follows:
-- It can be disabled globally using environment variable `BAO_DISABLE_USER_LOCKOUT`.
+- It can be disabled globally using environment variable `REDACTO_KMS_DISABLE_USER_LOCKOUT`.
 - It can be disabled for all supported auth methods (ldap, userpass and approle) or a specific supported auth method using the `disable_lockout`
   parameter within `user_lockout` stanza in configuration file.
   Please see [user lockout configuration](../configuration/user-lockout.mdx#user_lockout-stanza) for more details.

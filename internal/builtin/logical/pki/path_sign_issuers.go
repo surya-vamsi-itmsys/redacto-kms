@@ -134,7 +134,7 @@ which use SKID/AKID matches in chain building to restrict possible
 valid chains.
 
 Specified as a string in hex format. Default is empty, allowing
-OpenBao to automatically calculate the SKID according to method one
+Redacto KMS to automatically calculate the SKID according to method one
 in the above RFC section.`,
 		DisplayAttrs: &framework.DisplayAttributes{
 			Value: "",
@@ -159,7 +159,7 @@ constraint for IsCA=True. This allows the issued certificate to issue its own
 leaf certificates.
 
 Note that the resulting certificate is not imported as an issuer in this PKI
-mount. This means that you can use the resulting certificate in another OpenBao
+mount. This means that you can use the resulting certificate in another Redacto KMS
 PKI mount point or to issue an external intermediate (e.g., for use with
 another X.509 CA).
 

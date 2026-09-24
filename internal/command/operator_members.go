@@ -27,11 +27,11 @@ func (c *OperatorMembersCommand) Synopsis() string {
 
 func (c *OperatorMembersCommand) Help() string {
 	helpText := `
-Usage: bao operator members
+Usage: redacto-kms operator members
 
   Provides the details of all the nodes in the cluster.
 
-	  $ bao operator members
+	  $ redacto-kms operator members
 
 ` + c.Flags().Help()
 

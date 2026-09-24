@@ -1,6 +1,6 @@
 ---
 description: |-
-  Describes how to set up and configure the OpenBao Snapshot CronJob.
+  Describes how to set up and configure the Redacto KMS Snapshot CronJob.
 ---
 
 # Snapshot Cronjob Example
@@ -8,12 +8,12 @@ description: |-
 :::warning
 
 **Important Note:** This chart is not compatible with Helm 2. Please use Helm 3.6+ with this chart.
-**This feature is available starting with OpenBao Helm Chart Version 0.22.0.**
+**This feature is available starting with Redacto KMS Helm Chart Version 0.22.0.**
 
 :::
 
 
-The below `values.yaml` can be used to set up the [Snapshot CronJob with OpenBao](https://github.com/openbao/openbao-snapshot-agent).
+The below `values.yaml` can be used to set up the [Snapshot CronJob with Redacto KMS](https://github.com/openbao/openbao-snapshot-agent).
 
 By default the CronJob will run every 15 minutes. You can modify the schedule by changing the `schedule` field.
 
@@ -42,10 +42,10 @@ snapshotAgent:
     s3Uri: "s3://openbao-snapshots"
     # after how many days snapshots should expire and be deleted
     s3ExpireDays: "14"
-    # Path to use to authenticate to OpenBao
+    # Path to use to authenticate to Redacto KMS
     # preferably use the kubernetes auth method
     baoAuthPath: "kubernetes"
-    # Role to use to authenticate to OpenBao
+    # Role to use to authenticate to Redacto KMS
     baoRole: "snapshot"
 ```
 
@@ -61,14 +61,14 @@ path "sys/storage/raft/snapshot" {
 Make sure the policy is attached to the role being used by the snapshot agent.
 
 ```shell-session
-$ bao write auth/kubernetes/role/snapshot \
+$ redacto-kms write auth/kubernetes/role/snapshot \
     bound_service_account_names=<SERVICE_ACCOUNT_NAME> \
     bound_service_account_namespaces=<NAMESPACE> \
     policies=snapshot \
     ttl=1h
 ```
 
-After OpenBao has been deployed, initialized and unsealed, the snapshot will run as jobs according to the defined schedule.
+After Redacto KMS has been deployed, initialized and unsealed, the snapshot will run as jobs according to the defined schedule.
 You can verify it's working correctly by checking the logs of the CronJob pods.
 
 ```shell-session

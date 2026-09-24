@@ -14,7 +14,7 @@ import (
 )
 
 func getRequestTimeout(t *testing.T) time.Duration {
-	rawDur := api.ReadBaoVariable("BAO_TEST_DATABASE_REQUEST_TIMEOUT")
+	rawDur := api.ReadBaoVariable("REDACTO_KMS_TEST_DATABASE_REQUEST_TIMEOUT")
 	if rawDur == "" {
 		// Note: we incremented the default timeout from 5 to 10 seconds in a bid
 		// to fix sporadic failures of mssql_test.go tests TestInitialize() and

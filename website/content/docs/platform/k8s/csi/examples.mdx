@@ -1,21 +1,21 @@
 ---
 sidebar_label: Examples
-description: This section documents examples of using the OpenBao CSI Provider.
+description: This section documents examples of using the Redacto KMS CSI Provider.
 ---
 
-# OpenBao CSI provider examples
+# Redacto KMS CSI provider examples
 
-The following examples demonstrate how the OpenBao CSI Provider can be used.
+The following examples demonstrate how the Redacto KMS CSI Provider can be used.
 
 :::warning
 
-A common mistake is to not install the CSI Secret Store Driver before using the OpenBao CSI Provider.
+A common mistake is to not install the CSI Secret Store Driver before using the Redacto KMS CSI Provider.
 
 :::
 
 ## File based dynamic database credentials
 
-The following Secret Provider Class retrieves dynamic database credentials from OpenBao and
+The following Secret Provider Class retrieves dynamic database credentials from Redacto KMS and
 extracts the generated username and password. The secrets are then mounted as files in the
 configured mount location.
 
@@ -84,7 +84,7 @@ created the containers will find two files containing secrets:
 
 ## Environment variable dynamic database credentials
 
-The following Secret Provider Class retrieves dynamic database credentials from OpenBao and
+The following Secret Provider Class retrieves dynamic database credentials from Redacto KMS and
 extracts the generated username and password. The secrets are then synced to Kubernetes secrets
 so that they can be mounted as environment variables in the containers.
 

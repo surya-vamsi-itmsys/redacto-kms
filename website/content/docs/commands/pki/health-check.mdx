@@ -11,7 +11,7 @@ The `pki health-check` command verifies the health of the given PKI secrets
 engine mount against an optional configuration.
 
 This runs with the permissions of the given token, reading various APIs from
-the mount and `/sys` against the given OpenBao server
+the mount and `/sys` against the given Redacto KMS server
 
 Mounts need to be specified with any namespaces prefixed in the path, e.g.,
 `ns1/pki`.
@@ -21,13 +21,13 @@ Mounts need to be specified with any namespaces prefixed in the path, e.g.,
 Performs a basic health check against the `pki-root` mount:
 
 ```shell-session
-$ bao pki health-check pki-root/
+$ redacto-kms pki health-check pki-root/
 ```
 
 Configuration can be specified using the `-health-config` flag:
 
 ```shell-session
-$ bao pki health-check -health-config=mycorp-root.json pki-root/
+$ redacto-kms pki health-check -health-config=mycorp-root.json pki-root/
 ```
 
 Using the `-list` flag will show the list of health checks and any
@@ -35,7 +35,7 @@ known configuration values (with their defaults) that will be run
 against this mount:
 
 ```shell-session
-$ bao pki health-check -list pki-root/
+$ redacto-kms pki health-check -list pki-root/
 ```
 
 ## Usage
@@ -81,9 +81,9 @@ This command returns the following exit codes:
  - `2` - Informational message from a health check.
  - `3` - Warning message from a health check.
  - `4` - Critical message from a health check.
- - `5` - A version mismatch between health check and OpenBao Server occurred,
+ - `5` - A version mismatch between health check and Redacto KMS Server occurred,
 	     preventing one or more health checks from being fully run.
- - `6` - A permission denied message was returned from OpenBao Server for
+ - `6` - A permission denied message was returned from Redacto KMS Server for
 	     one or more health checks.
 
 Note that an exit code of `5` (due to a version mismatch) is not necessarily
@@ -138,8 +138,8 @@ This health check will check each issuer in the mount for validity status, retur
    to check for CAs that are about to expire.
 1. Migrate from expiring CAs to new CAs.
 1. Delete any expired CAs with one of the following options:
-  - Run [tidy](../../api/secret/pki.mdx#tidy) manually with `bao write <mount>/tidy tidy_expired_issuers=true`.
-  - Use the OpenBao API to call [delete issuer](../../api/secret/pki.mdx#delete-issuer).
+  - Run [tidy](../../api/secret/pki.mdx#tidy) manually with `redacto-kms write <mount>/tidy tidy_expired_issuers=true`.
+  - Use the Redacto KMS API to call [delete issuer](../../api/secret/pki.mdx#delete-issuer).
 
 ### CRL validity period
 
@@ -163,10 +163,10 @@ For informational purposes, it reads the CRL config and suggests enabling auto-r
 
 **Remediation steps**:
 
-Use `bao write` to enable CRL auto-rebuild:
+Use `redacto-kms write` to enable CRL auto-rebuild:
 
 ```shell-session
-$ bao write <mount>/config/crl auto_rebuild=true
+$ redacto-kms write <mount>/config/crl auto_rebuild=true
 ```
 
 ### Root certificate issued Non-CA leaves
@@ -240,7 +240,7 @@ other (potentially dangerous) quirks.
     - Roles with `allow_glob_domains` **and** `allow_wildcard_certificates` are
       the only roles required for **all** SANs on the certificate.
 1. Add the roles that allow glob domains and wildcards to `allowed_roles` so
-   OpenBao ignores them in future checks.
+   Redacto KMS ignores them in future checks.
 
 ### Role sets `no_store=false` and performance
 
@@ -261,7 +261,7 @@ Checks each role to see whether `no_store` is set to `false`.
 
 :::warning
 
-OpenBao will provide warnings and performance will suffer if you have a large
+Redacto KMS will provide warnings and performance will suffer if you have a large
 number of certificates without temporal CRL auto-rebuilding and set `no_store`
 to `true`.
 
@@ -291,10 +291,10 @@ This health check checks whether audit information is accessible to log consumer
 
 **Remediation steps**:
 
-Use `bao secrets tune` to set the desired audit parameters:
+Use `redacto-kms secrets tune` to set the desired audit parameters:
 
 ```shell-session
-$ bao secrets tune \
+$ redacto-kms secrets tune \
   -audit-non-hmac-response-keys=certificate \
   -audit-non-hmac-response-keys=issuing_ca \
   -audit-non-hmac-response-keys=serial_number \
@@ -356,19 +356,19 @@ This health check verifies if the `If-Modified-Since` header has been added to `
 **Remediation steps**:
 
 1. Update `allowed_response_headers` and `passthrough_request_headers` for all
-   policies with `bao secrets tune`:
+   policies with `redacto-kms secrets tune`:
 
   ```shell-session
-  $ bao secrets tune \
+  $ redacto-kms secrets tune \
       -passthrough-request-headers="If-Modified-Since" \
       -allowed-response-headers="Last-Modified" \
       <mount>
   ```
 
-1. Update ACME-specific headers with `bao secrets tune` (if you are using ACME):
+1. Update ACME-specific headers with `redacto-kms secrets tune` (if you are using ACME):
 
   ```shell-session
-  $ bao secrets tune \
+  $ redacto-kms secrets tune \
       -passthrough-request-headers="If-Modified-Since" \
       -allowed-response-headers="Last-Modified" \
       -allowed-response-headers="Replay-Nonce" \
@@ -396,10 +396,10 @@ This health check verifies that auto-tidy is enabled, with sane defaults for int
 
 **Remediation steps**
 
-Use `bao write` to enable auto-tidy with the recommended defaults:
+Use `redacto-kms write` to enable auto-tidy with the recommended defaults:
 
 ```shell-session
-$ bao write <mount>/config/auto-tidy \
+$ redacto-kms write <mount>/config/auto-tidy \
     enabled=true \
     tidy_cert_store=true \
     tidy_revoked_certs=true \
@@ -422,14 +422,14 @@ $ bao write <mount>/config/auto-tidy \
  - `last_run_critical` `(duration: 7d)` - the critical delay threshold between when tidy should have last run.
  - `last_run_warning` `(duration: 2d)` - the warning delay threshold between when tidy should have last run.
 
-This health check verifies that tidy has run within the last run window. This can be critical/warning alerts as this can start to seriously impact OpenBao's performance.
+This health check verifies that tidy has run within the last run window. This can be critical/warning alerts as this can start to seriously impact Redacto KMS's performance.
 
 **Remediation steps**:
 
-1. Schedule a manual run of tidy with `bao write`:
+1. Schedule a manual run of tidy with `redacto-kms write`:
 
   ```shell-session
-  $ bao write <mount>/tidy \
+  $ redacto-kms write <mount>/tidy \
       tidy_cert_store=true \
       tidy_revoked_certs=true \
       tidy_acme=true \
@@ -438,7 +438,7 @@ This health check verifies that tidy has run within the last run window. This ca
       tidy_revoked_cert_issuer_associations=true
   ```
 
-1. Review the tidy status endpoint, `bao read <mount>/tidy-status` for
+1. Review the tidy status endpoint, `redacto-kms read <mount>/tidy-status` for
    additional information.
 1. Re-configure auto-tidy based on the log information and results of your
    manual run.
@@ -462,13 +462,13 @@ This health check verifies that this cluster has a reasonable number of certific
 
 **Remediation steps**:
 
-1. Verify that tidy ran recently with `bao read`:
+1. Verify that tidy ran recently with `redacto-kms read`:
     ```shell-session
-    $ bao read <mount>/tidy-status
+    $ redacto-kms read <mount>/tidy-status
     ````
-1. Schedule a manual run of tidy with `bao write`:
+1. Schedule a manual run of tidy with `redacto-kms write`:
     ```shell-session
-    $ bao write <mount>/tidy \
+    $ redacto-kms write <mount>/tidy \
       tidy_cert_store=true \
       tidy_revoked_certs=true \
       tidy_acme=true \
@@ -499,7 +499,7 @@ This health check verifies that this cluster has a reasonable number of certific
 This health check verifies that ACME is enabled within a mount that contains an intermediary issuer, as this is considered a best-practice to support a self-rotating PKI infrastructure.
 
 Review the [ACME Certificate Issuance](../../api/secret/pki.mdx#acme-certificate-issuance)
-API documentation to learn about enabling ACME support in OpenBao.
+API documentation to learn about enabling ACME support in Redacto KMS.
 
 ### ACME response headers
 
@@ -515,9 +515,9 @@ This health check verifies if the `"Replay-Nonce`, `Link`, and `Location` header
 
 **Remediation steps**:
 
-Use `bao secrets tune` to add the missing headers to `allowed_response_headers`:
+Use `redacto-kms secrets tune` to add the missing headers to `allowed_response_headers`:
 ```shell-session
-$ bao secrets tune \
+$ redacto-kms secrets tune \
   -allowed-response-headers="Last-Modified" \
   -allowed-response-headers="Replay-Nonce" \
   -allowed-response-headers="Link" \

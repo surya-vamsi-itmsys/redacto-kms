@@ -17,9 +17,9 @@ import (
 // other than that it was fast and simple.
 func TestSysPprof_Exec(t *testing.T) {
 	t.Parallel()
-	binary := api.ReadBaoVariable("BAO_BINARY")
+	binary := api.ReadBaoVariable("REDACTO_KMS_BINARY")
 	if binary == "" {
-		t.Skip("only running exec test when $BAO_BINARY present")
+		t.Skip("only running exec test when $REDACTO_KMS_BINARY present")
 	}
 	cluster := testcluster.NewTestExecDevCluster(t, &testcluster.ExecDevClusterOptions{
 		ClusterOptions: testcluster.ClusterOptions{
@@ -39,9 +39,9 @@ func TestSysPprof_Exec(t *testing.T) {
 // other than that it was fast and simple.
 func TestSysPprof_Standby_Exec(t *testing.T) {
 	t.Parallel()
-	binary := api.ReadBaoVariable("BAO_BINARY")
+	binary := api.ReadBaoVariable("REDACTO_KMS_BINARY")
 	if binary == "" {
-		t.Skip("only running exec test when $BAO_BINARY present")
+		t.Skip("only running exec test when $REDACTO_KMS_BINARY present")
 	}
 	cluster := testcluster.NewTestExecDevCluster(t, &testcluster.ExecDevClusterOptions{
 		ClusterOptions: testcluster.ClusterOptions{

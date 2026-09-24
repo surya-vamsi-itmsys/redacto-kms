@@ -24,18 +24,18 @@ type VersionHistoryCommand struct {
 }
 
 func (c *VersionHistoryCommand) Synopsis() string {
-	return "Prints the version history of the target Vault server"
+	return "Prints the version history of the target Redacto KMS server"
 }
 
 func (c *VersionHistoryCommand) Help() string {
 	helpText := `
-Usage: bao version-history
+Usage: redacto-kms version-history
 
-  Prints the version history of the target Vault server.
+  Prints the version history of the target Redacto KMS server.
 
   Print the version history:
 
-      $ bao version-history
+      $ redacto-kms version-history
 ` + c.Flags().Help()
 	return strings.TrimSpace(helpText)
 }
@@ -78,7 +78,7 @@ func (c *VersionHistoryCommand) Run(args []string) int {
 	}
 
 	if resp == nil || resp.Data == nil {
-		c.UI.Error("Invalid response returned from Vault")
+		c.UI.Error("Invalid response returned from Redacto KMS")
 		return 2
 	}
 

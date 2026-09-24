@@ -849,7 +849,7 @@ func (c *Core) waitForLeadership(manualStepDown *bool, manualStepDownCh, stopCh 
 		c.logger.Error("root seal migration error", "error", err)
 		// nothing we can do about it here
 		_ = c.sealManager.sealAll()
-		c.logger.Warn("OpenBao is sealed")
+		c.logger.Warn("Redacto KMS is sealed")
 		c.heldHALock = nil
 		lock.Unlock()
 		c.stateLock.Unlock()

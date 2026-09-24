@@ -1,16 +1,16 @@
 ---
-description: The `/sys/health` endpoint is used to check the health status of OpenBao.
+description: The `/sys/health` endpoint is used to check the health status of Redacto KMS.
 ---
 
 # `/sys/health`
 
-The `/sys/health` endpoint is used to check the health status of OpenBao.
+The `/sys/health` endpoint is used to check the health status of Redacto KMS.
 
 ## Read health information
 
-This endpoint returns the health status of OpenBao. This matches the semantics of
+This endpoint returns the health status of Redacto KMS. This matches the semantics of
 a Consul HTTP health check and provides a simple way to monitor the health of a
-OpenBao instance.
+Redacto KMS instance.
 
 | Method | Path          |
 | :----- | :------------ |
@@ -28,7 +28,7 @@ The default status codes are:
 
 - `standbyok` `(bool: false)` - Specifies if being a standby should still return
   the active status code instead of the standby status code. This is useful when
-  OpenBao is behind a non-configurable load balancer that just wants a 200-level
+  Redacto KMS is behind a non-configurable load balancer that just wants a 200-level
   response.
 
 - `activecode` `(int: 200)` - Specifies the status code that should be returned

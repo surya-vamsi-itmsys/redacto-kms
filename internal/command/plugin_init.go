@@ -36,7 +36,7 @@ func (c *PluginInitCommand) Synopsis() string {
 
 func (c *PluginInitCommand) Help() string {
 	helpText := `
-Usage: bao plugin init [options]
+Usage: redacto-kms plugin init [options]
 
   This command reads plugin configuration from the given server configuration
   files, downloads the specified OCI images, and extracts the contained plugin
@@ -48,15 +48,15 @@ Usage: bao plugin init [options]
 
   Download plugins using a configuration file:
 
-      $ bao plugin init -config=/path/to/openbao.hcl
+      $ redacto-kms plugin init -config=/path/to/redacto-kms.hcl
 
   Download to a specific directory:
 
-      $ bao plugin init -config=/path/to/config.hcl -directory=/opt/openbao/plugins
+      $ redacto-kms plugin init -config=/path/to/config.hcl -directory=/opt/redacto-kms/plugins
 
   Load multiple configuration files:
 
-      $ bao plugin init -config=/etc/openbao -config=/opt/openbao/extra.hcl
+      $ redacto-kms plugin init -config=/etc/redacto-kms -config=/opt/redacto-kms/extra.hcl
 
 ` + c.Flags().Help()
 
@@ -70,7 +70,7 @@ func (c *PluginInitCommand) Flags() *FlagSets {
 
 	f.StringSliceVar(&StringSliceVar{
 		Name:   "config",
-		EnvVar: "BAO_CONFIG_PATH",
+		EnvVar: "REDACTO_KMS_CONFIG_PATH",
 		Target: &c.flagConfigs,
 		Completion: complete.PredictOr(
 			complete.PredictFiles("*.hcl"),

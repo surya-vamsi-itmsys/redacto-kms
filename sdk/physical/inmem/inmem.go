@@ -140,7 +140,7 @@ func NewDirectInmem(conf map[string]string, logger log.Logger) (physical.Backend
 		root:         radix.New(),
 		permitPool:   physical.NewPermitPool(physical.DefaultParallelOperations),
 		logger:       logger,
-		logOps:       api.ReadBaoVariable("BAO_INMEM_LOG_ALL_OPS") != "",
+		logOps:       api.ReadBaoVariable("REDACTO_KMS_INMEM_LOG_ALL_OPS") != "",
 		maxValueSize: maxValueSize,
 	}, nil
 }

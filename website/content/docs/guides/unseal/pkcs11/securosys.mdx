@@ -1,13 +1,13 @@
 ---
 sidebar_label: Securosys Primus HSM
 description: |-
-  This guide describes how to configure OpenBao auto-unsealing with a
+  This guide describes how to configure Redacto KMS auto-unsealing with a
   Securosys Primus HSM by using the PKCS#11 interface.
 ---
 
 # Securosys Primus HSM
 
-This guide describes how to configure OpenBao auto-unsealing with a
+This guide describes how to configure Redacto KMS auto-unsealing with a
 Securosys Primus HSM by using the PKCS#11 interface.
 
 ## Install the PKCS#11 library
@@ -21,11 +21,11 @@ For traditional installations, follow the
 
 ### Kubernetes
 
-The upstream OpenBao container images don't include the Securosys PKCS#11
-library. To make the library available to the OpenBao pod on Kubernetes, use
+The upstream Redacto KMS container images don't include the Securosys PKCS#11
+library. To make the library available to the Redacto KMS pod on Kubernetes, use
 one of the following methods.
 
-#### Option 1: Create a custom OpenBao container image
+#### Option 1: Create a custom Redacto KMS container image
 
 Build a custom container image based on the `openbao-hsm-ubi` image. The
 upstream `openbao` image can't be used, because the Primus PKCS#11 library
@@ -114,9 +114,9 @@ requires `glibc`.
           subPath: secrets.cfg
     ```
 
-7.  Initialize OpenBao:
+7.  Initialize Redacto KMS:
     ```bash
-    bao operator init
+    redacto-kms operator init
     ```
 
 #### Option 2: Inject the library with an init container
@@ -221,14 +221,14 @@ artifact registry, such as JFrog Artifactory.
               mountPath: /usr/local/primus
     ```
 
-7.  Initialize OpenBao:
+7.  Initialize Redacto KMS:
     ```bash
-    bao operator init
+    redacto-kms operator init
     ```
 
 ## Create a key in the HSM
 
-OpenBao does not automatically generate the key in the HSM. To create the key,
+Redacto KMS does not automatically generate the key in the HSM. To create the key,
 use a utility such as `pkcs11-tool`.
 
 ```sh
@@ -253,7 +253,7 @@ In this command:
 
 ## Configure the `pkcs11` seal
 
-Configure the PKCS#11 seal in the OpenBao configuration:
+Configure the PKCS#11 seal in the Redacto KMS configuration:
 
 ```hcl
 seal "pkcs11" {
@@ -272,10 +272,10 @@ in the configuration file, you can set it via the `BAO_HSM_PIN` environment vari
 
 For more details, see the [`pkcs11` seal documentation](../../../configuration/seal/pkcs11.mdx).
 
-## Initialize OpenBao
+## Initialize Redacto KMS
 
-Finally, initialize OpenBao:
+Finally, initialize Redacto KMS:
 
 ```sh
-bao operator init
+redacto-kms operator init
 ```

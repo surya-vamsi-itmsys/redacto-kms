@@ -39,7 +39,7 @@ func (b *SystemBackend) rotatePaths() []*framework.Path {
 		},
 		"backup": {
 			Type:        framework.TypeBool,
-			Description: "Specifies if using PGP-encrypted keys, whether OpenBao should also store a plaintext backup of the said keys.",
+			Description: "Specifies if using PGP-encrypted keys, whether Redacto KMS should also store a plaintext backup of the said keys.",
 		},
 		"require_verification": {
 			Type:        framework.TypeBool,
@@ -274,7 +274,7 @@ func (b *SystemBackend) rotatePaths() []*framework.Path {
 							Fields:      rotateStatusSchema,
 						}},
 					},
-					Summary: "Enter a single unseal key share to progress the rotation of the root key of OpenBao.",
+					Summary: "Enter a single unseal key share to progress the rotation of the root key of Redacto KMS.",
 				},
 			},
 

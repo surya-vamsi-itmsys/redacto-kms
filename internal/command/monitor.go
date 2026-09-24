@@ -29,14 +29,14 @@ type MonitorCommand struct {
 }
 
 func (c *MonitorCommand) Synopsis() string {
-	return "Stream log messages from an OpenBao server"
+	return "Stream log messages from a Redacto KMS server"
 }
 
 func (c *MonitorCommand) Help() string {
 	helpText := `
-Usage: bao monitor [options]
+Usage: redacto-kms monitor [options]
 
-	Stream log messages of a OpenBao server. The monitor command lets you listen
+	Stream log messages of a Redacto KMS server. The monitor command lets you listen
 	for log levels that may be filtered out of the server logs. For example,
 	the server may be logging at the INFO level, but with the monitor command
 	you can set -log-level=DEBUG.

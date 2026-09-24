@@ -14,7 +14,7 @@ import (
 )
 
 // TestEnvVar must be set to a non-empty value for acceptance tests to run.
-const TestEnvVar = "BAO_ACC"
+const TestEnvVar = "REDACTO_KMS_ACC"
 
 // Operation defines operations each step could perform. These are
 // intentionally redefined from the logical package in the SDK, so users
@@ -145,7 +145,7 @@ type Case struct {
 
 // Run performs an acceptance test on a backend with the given test case.
 //
-// Tests are not run unless an environmental variable "VAULT_ACC" is
+// Tests are not run unless an environmental variable "REDACTO_KMS_ACC" is
 // set to some non-empty value. This is to avoid test cases surprising
 // a user by creating real resources.
 //

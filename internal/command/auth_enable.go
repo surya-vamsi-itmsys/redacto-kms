@@ -48,27 +48,27 @@ func (c *AuthEnableCommand) Synopsis() string {
 
 func (c *AuthEnableCommand) Help() string {
 	helpText := `
-Usage: bao auth enable [options] TYPE
+Usage: redacto-kms auth enable [options] TYPE
 
   Enables a new auth method. An auth method is responsible for authenticating
   users or machines and assigning them policies with which they can access
-  OpenBao.
+  Redacto KMS.
 
   Enable the userpass auth method at userpass/:
 
-      $ bao auth enable userpass
+      $ redacto-kms auth enable userpass
 
   Enable the LDAP auth method at auth-prod/:
 
-      $ bao auth enable -path=auth-prod ldap
+      $ redacto-kms auth enable -path=auth-prod ldap
 
   Enable a custom auth plugin (after it's registered in the plugin registry):
 
-      $ bao auth enable -path=my-auth -plugin-name=my-auth-plugin plugin
+      $ redacto-kms auth enable -path=my-auth -plugin-name=my-auth-plugin plugin
 
       OR (preferred way):
 
-      $ bao auth enable -path=my-auth my-auth-plugin
+      $ redacto-kms auth enable -path=my-auth my-auth-plugin
 
 ` + c.Flags().Help()
 
@@ -104,7 +104,7 @@ func (c *AuthEnableCommand) Flags() *FlagSets {
 		Target:     &c.flagDefaultLeaseTTL,
 		Completion: complete.PredictAnything,
 		Usage: "The default lease TTL for this auth method. If unspecified, " +
-			"this defaults to the OpenBao server's globally configured default lease " +
+			"this defaults to the Redacto KMS server's globally configured default lease " +
 			"TTL.",
 	})
 
@@ -113,7 +113,7 @@ func (c *AuthEnableCommand) Flags() *FlagSets {
 		Target:     &c.flagMaxLeaseTTL,
 		Completion: complete.PredictAnything,
 		Usage: "The maximum lease TTL for this auth method. If unspecified, " +
-			"this defaults to the OpenBao server's globally configured maximum lease " +
+			"this defaults to the Redacto KMS server's globally configured maximum lease " +
 			"TTL.",
 	})
 
@@ -156,7 +156,7 @@ func (c *AuthEnableCommand) Flags() *FlagSets {
 		Target:     &c.flagPluginName,
 		Completion: c.PredictVaultPlugins(api.PluginTypeCredential),
 		Usage: "Name of the auth method plugin. This plugin name must already " +
-			"exist in the OpenBao server's plugin catalog.",
+			"exist in the Redacto KMS server's plugin catalog.",
 	})
 
 	f.StringMapVar(&StringMapVar{
@@ -186,7 +186,7 @@ func (c *AuthEnableCommand) Flags() *FlagSets {
 		Name:    "external-entropy-access",
 		Target:  &c.flagExternalEntropyAccess,
 		Default: false,
-		Usage:   "Enable auth method to access OpenBao's external entropy source.",
+		Usage:   "Enable auth method to access Redacto KMS's external entropy source.",
 	})
 
 	f.StringVar(&StringVar{

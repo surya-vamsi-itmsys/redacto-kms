@@ -1,18 +1,18 @@
 ---
-description: The `/sys/monitor` endpoint is used to receive streaming logs from the OpenBao server.
+description: The `/sys/monitor` endpoint is used to receive streaming logs from the Redacto KMS server.
 ---
 
 # `/sys/monitor`
 
-The `/sys/monitor` endpoint is used to receive streaming logs from the OpenBao server.
+The `/sys/monitor` endpoint is used to receive streaming logs from the Redacto KMS server.
 
-If OpenBao is emitting log messages faster than a receiver can process them, then
+If Redacto KMS is emitting log messages faster than a receiver can process them, then
 some log lines will be dropped.
 
 ## Monitor system logs
 
-This endpoint streams logs back to the client from OpenBao. Note that unlike most API endpoints in OpenBao, this one
-does not return JSON by default. This will send back data in whatever log format OpenBao has been configured with. By
+This endpoint streams logs back to the client from Redacto KMS. Note that unlike most API endpoints in Redacto KMS, this one
+does not return JSON by default. This will send back data in whatever log format Redacto KMS has been configured with. By
 default, this is text.
 
 | Method | Path           |

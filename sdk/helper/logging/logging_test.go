@@ -41,10 +41,10 @@ func Test_ParseLogFormat(t *testing.T) {
 }
 
 func Test_ParseEnv_BAO_LOG_FORMAT(t *testing.T) {
-	oldVLF := api.ReadBaoVariable("BAO_LOG_FORMAT")
-	defer os.Setenv("BAO_LOG_FORMAT", oldVLF)
+	oldVLF := api.ReadBaoVariable("REDACTO_KMS_LOG_FORMAT")
+	defer os.Setenv("REDACTO_KMS_LOG_FORMAT", oldVLF)
 
-	testParseEnvLogFormat(t, "BAO_LOG_FORMAT")
+	testParseEnvLogFormat(t, "REDACTO_KMS_LOG_FORMAT")
 }
 
 func testParseEnvLogFormat(t *testing.T, name string) {

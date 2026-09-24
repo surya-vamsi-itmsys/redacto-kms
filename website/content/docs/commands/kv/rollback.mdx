@@ -25,7 +25,7 @@ overwritten data.
 Restores the version 2 of the data at key "creds":
 
 ```shell-session
-$ bao kv rollback -mount=secret -version=2 creds
+$ redacto-kms kv rollback -mount=secret -version=2 creds
 Key              Value
 ---              -----
 created_time     2019-06-06T17:07:19.299831Z
@@ -43,7 +43,7 @@ included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### Command options
 

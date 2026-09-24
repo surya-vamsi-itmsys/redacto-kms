@@ -38,7 +38,7 @@ func FilePermissionsMatch(info fs.FileInfo, path string, permissions int) error 
 		return fmt.Errorf("path %q does not have permissions %o", path, permissions)
 	}
 	if permissions == 0 && (IsWriteOther(info.Mode()) || IsWriteGroup(info.Mode())) {
-		return fmt.Errorf("path %q has insecure permissions %o. Vault expects no write permissions for group or others", path, info.Mode().Perm())
+		return fmt.Errorf("path %q has insecure permissions %o. Redacto KMS expects no write permissions for group or others", path, info.Mode().Perm())
 	}
 
 	return nil

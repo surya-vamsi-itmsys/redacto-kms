@@ -169,7 +169,7 @@ func (d *Delegate) KnownServers() map[raft.ServerID]*autopilot.Server {
 		d.dl.Lock()
 		if followerVersion == "" {
 			if _, ok := d.emptyVersionLogs[currentServerID]; !ok {
-				d.logger.Trace("received empty Vault version in heartbeat state. faking it with the leader version for now", "id", id, "leader version", leaderVersion)
+				d.logger.Trace("received empty Redacto KMS version in heartbeat state. faking it with the leader version for now", "id", id, "leader version", leaderVersion)
 				d.emptyVersionLogs[currentServerID] = struct{}{}
 			}
 			followerVersion = leaderVersion

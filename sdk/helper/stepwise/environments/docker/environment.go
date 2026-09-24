@@ -590,12 +590,12 @@ func (n *dockerClusterNode) start(cli *docker.Client, caDir, netName string, net
 			Image: "quay.io/openbao/openbao:latest",
 			Entrypoint: []string{
 				"/bin/sh", "-c",
-				"exec /usr/local/bin/docker-entrypoint.sh bao server -log-level=trace -dev-plugin-dir=/openbao/config -config /openbao/config/local.json",
+				"exec /usr/local/bin/docker-entrypoint.sh redacto-kms server -log-level=trace -dev-plugin-dir=/openbao/config -config /openbao/config/local.json",
 			},
 			Env: []string{
-				"BAO_CLUSTER_INTERFACE=eth0",
-				"BAO_API_ADDR=https://127.0.0.1:8200",
-				fmt.Sprintf("BAO_REDIRECT_ADDR=https://%s:8200", n.Name()),
+				"REDACTO_KMS_CLUSTER_INTERFACE=eth0",
+				"REDACTO_KMS_API_ADDR=https://127.0.0.1:8200",
+				fmt.Sprintf("REDACTO_KMS_REDIRECT_ADDR=https://%s:8200", n.Name()),
 			},
 			Labels:       nil,
 			ExposedPorts: make(network.PortSet),

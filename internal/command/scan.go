@@ -31,24 +31,24 @@ func (c *ScanCommand) Synopsis() string {
 func (c *ScanCommand) Help() string {
 	helpText := `
 
-Usage: bao scan [options] PATH
+Usage: redacto-kms scan [options] PATH
 
-  Scans data from OpenBao at the given path. This can be used to scan keys in a
+  Scans data from Redacto KMS at the given path. This can be used to scan keys in a
   given secret engine. Scanning amounts to a recursive listing on all entries.
 
   Scan values under the "my-app" folder of the generic secret engine:
 
-      $ bao scan secret/my-app/
+      $ redacto-kms scan secret/my-app/
 
   Some paths support paginated scanning. Use the -after and -limit flags to
   control the return of data:
 
-      $ bao scan -after=last-serial -limit=50 pki/certs
+      $ redacto-kms scan -after=last-serial -limit=50 pki/certs
 
   Some paths may support returning additional information about items;
   use the -detailed flag to see this info:
 
-      $ bao scan -detailed secret/detailed-metadata/foo
+      $ redacto-kms scan -detailed secret/detailed-metadata/foo
 
   For a full list of examples and paths, please see the documentation that
   corresponds to the secret engine in use. Not all engines support scanning.

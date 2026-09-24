@@ -27,7 +27,7 @@ func (c *NamespaceSealStatusCommand) Synopsis() string {
 
 func (c *NamespaceSealStatusCommand) Help() string {
 	helpText := `
-Usage: bao namespace seal-status [options] PATH
+Usage: redacto-kms namespace seal-status [options] PATH
 
   This command reports whether the namespace is sealed and provides related
   seal information. A sealed namespace does not respond to operations until it
@@ -35,11 +35,11 @@ Usage: bao namespace seal-status [options] PATH
 
   Retrieve the namespace seal status:
 
-      $ bao namespace seal-status ns1
+      $ redacto-kms namespace seal-status ns1
 
   Retrieve the seal status of a nested namespace:
 
-      $ bao namespace seal-status -ns ns1 ns2
+      $ redacto-kms namespace seal-status -ns ns1 ns2
 
 ` + c.Flags().Help()
 

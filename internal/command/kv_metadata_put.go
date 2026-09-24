@@ -36,36 +36,36 @@ func (c *KVMetadataPutCommand) Synopsis() string {
 
 func (c *KVMetadataPutCommand) Help() string {
 	helpText := `
-Usage: bao kv metadata put [options] KEY
+Usage: redacto-kms kv metadata put [options] KEY
 
   This command can be used to create a blank key in the key-value store or to
   update key configuration for a specified key.
 
   Create a key in the key-value store with no data:
 
-      $ bao kv metadata put -mount=secret foo
+      $ redacto-kms kv metadata put -mount=secret foo
 
   The deprecated path-like syntax can also be used, but this should be avoided 
   for KV v2, as the fact that it is not actually the full API path to 
   the secret (secret/metadata/foo) can cause confusion: 
   
-      $ bao kv metadata put secret/foo
+      $ redacto-kms kv metadata put secret/foo
 
   Set a max versions setting on the key:
 
-      $ bao kv metadata put -mount=secret -max-versions=5 foo
+      $ redacto-kms kv metadata put -mount=secret -max-versions=5 foo
 
   Set delete-version-after on the key:
 
-      $ bao kv metadata put -mount=secret -delete-version-after=3h25m19s foo
+      $ redacto-kms kv metadata put -mount=secret -delete-version-after=3h25m19s foo
 
   Require Check-and-Set for this key:
 
-      $ bao kv metadata put -mount=secret -cas-required foo
+      $ redacto-kms kv metadata put -mount=secret -cas-required foo
 
   Set custom metadata on the key:
 
-      $ bao kv metadata put -mount=secret -custom-metadata=foo=abc -custom-metadata=bar=123 foo
+      $ redacto-kms kv metadata put -mount=secret -custom-metadata=foo=abc -custom-metadata=bar=123 foo
 
   Additional flags and more advanced use cases are detailed below.
 

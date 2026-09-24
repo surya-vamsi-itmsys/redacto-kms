@@ -21,27 +21,27 @@ func (c *AuthCommand) Synopsis() string {
 
 func (c *AuthCommand) Help() string {
 	return strings.TrimSpace(`
-Usage: bao auth <subcommand> [options] [args]
+Usage: redacto-kms auth <subcommand> [options] [args]
 
-  This command groups subcommands for interacting with OpenBao's auth methods.
+  This command groups subcommands for interacting with Redacto KMS's auth methods.
   Users can list, enable, disable, and get help for different auth methods.
 
-  To authenticate to OpenBao as a user or machine, use the "bao login" command
+  To authenticate to Redacto KMS as a user or machine, use the "redacto-kms login" command
   instead. This command is for interacting with the auth methods themselves, not
-  authenticating to OpenBao.
+  authenticating to Redacto KMS.
 
   List all enabled auth methods:
 
-      $ bao auth list
+      $ redacto-kms auth list
 
   Enable a new auth method "userpass";
 
-      $ bao auth enable userpass
+      $ redacto-kms auth enable userpass
 
   Get detailed help information about how to authenticate to a particular auth
   method:
 
-      $ bao auth help github
+      $ redacto-kms auth help github
 
   Please see the individual subcommand help for detailed usage information.
 `)

@@ -2,7 +2,7 @@
 sidebar_label: verify-sign
 description: |-
   The "pki verify-sign" command verifies the relationship between two issuer
-  certificates in OpenBao
+  certificates in Redacto KMS
 ---
 
 # pki verify-sign
@@ -28,7 +28,7 @@ This command returns five fields of information:
 
 ## Usage
 
-Usage: `bao pki verify-sign <parent> <child>`
+Usage: `redacto-kms pki verify-sign <parent> <child>`
 
 - `<parent>` is the fully name-spaced path to the issuer certificate which will be
 used to verify the `<child>` certificate
@@ -41,7 +41,7 @@ A fully namespaced path looks like, for instance, 'ns1/mount1/issuer/issuerName/
 ## Example
 
 ```shell-session
-$ bao pki verify-sign pki_root/issuer/root pki_int/issuer/FirstDepartment
+$ redacto-kms pki verify-sign pki_root/issuer/root pki_int/issuer/FirstDepartment
 issuer:pki_root/issuer/root
 issued:pki_int/issuer/FirstDepartment
 

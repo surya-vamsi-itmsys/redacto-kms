@@ -9,7 +9,7 @@ The `http` audit device writes audit logs to a remote server over HTTP(S).
 This is a very simple audit device: it does not attempt retry and is fully
 synchronous with the request by default.
 
-Sending a `SIGHUP` to the OpenBao process will cause `http` audit devices to
+Sending a `SIGHUP` to the Redacto KMS process will cause `http` audit devices to
 close any idle connections and re-open their connection to the HTTP server.
 
 :::warning
@@ -35,20 +35,20 @@ As audit logs are sensitive, take care to ensure you use a secure transport
 Enable at the default path:
 
 ```shell-session
-$ bao audit enable http uri=https://my-log-server.local/ingress
+$ redacto-kms audit enable http uri=https://my-log-server.local/ingress
 ```
 
 Enable at a different path. It is possible to enable multiple copies of an audit
 device:
 
 ```shell-session
-$ bao audit enable -path="openbao_audit_1" http uri=https://my-second-log-server.local/ingress
+$ redacto-kms audit enable -path="openbao_audit_1" http uri=https://my-second-log-server.local/ingress
 ```
 
 ## Configuration
 
 Note the difference between `audit enable` command options and the `http` backend
-configuration options. Use `bao audit enable -help` to see the command options.
+configuration options. Use `redacto-kms audit enable -help` to see the command options.
 
 The `http` audit device supports the common configuration options documented on
 the [main Audit Devices page](index.mdx#common-configuration-options), and

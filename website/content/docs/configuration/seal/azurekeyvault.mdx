@@ -1,7 +1,7 @@
 ---
 sidebar_label: Azure Key Vault
 description: >-
-  The Azure Key Vault seal configures OpenBao to use Azure Key Vault as the seal
+  The Azure Key Vault seal configures Redacto KMS to use Azure Key Vault as the seal
   wrapping
 
   mechanism.
@@ -18,11 +18,11 @@ section](./index.mdx#plugins).
 
 :::
 
-The Azure Key Vault seal configures OpenBao to use Azure Key Vault as the seal
+The Azure Key Vault seal configures Redacto KMS to use Azure Key Vault as the seal
 wrapping mechanism. The Azure Key Vault seal is activated by one of the following:
 
-- The presence of a `seal "azurekeyvault"` block in OpenBao's configuration file.
-- The presence of the environment variable `VAULT_SEAL_TYPE` set to `azurekeyvault`.
+- The presence of a `seal "azurekeyvault"` block in Redacto KMS's configuration file.
+- The presence of the environment variable `REDACTO_KMS_SEAL_TYPE` set to `azurekeyvault`.
   If enabling via environment variable, all other required values specific to
   Key Vault (i.e. `VAULT_AZUREKEYVAULT_VAULT_NAME`, etc.) must be also supplied, as
   well as all other Azure-related environment variables that lends to successful
@@ -30,7 +30,7 @@ wrapping mechanism. The Azure Key Vault seal is activated by one of the followin
 
 ## `azurekeyvault` example
 
-This example shows configuring Azure Key Vault seal through the OpenBao
+This example shows configuring Azure Key Vault seal through the Redacto KMS
 configuration file by providing all the required values:
 
 ```hcl
@@ -45,7 +45,7 @@ seal "azurekeyvault" {
 
 ## `azurekeyvault` parameters
 
-These parameters apply to the `seal` stanza in the OpenBao configuration file:
+These parameters apply to the `seal` stanza in the Redacto KMS configuration file:
 
 - `tenant_id` `(string: <required>)`: The tenant id for the Azure Active Directory organization. May
   also be specified by the `AZURE_TENANT_ID` environment variable.
@@ -69,7 +69,7 @@ These parameters apply to the `seal` stanza in the OpenBao configuration file:
   May also be specified in the `AZURE_AD_RESOURCE` environment variable.
   Needs to be changed to connect to Azure's Managed HSM KeyVault instance type.
 
-- `disabled` `(string: "")`: Set this to `true` if OpenBao is migrating from an auto seal configuration. Otherwise, set to `false`.
+- `disabled` `(string: "")`: Set this to `true` if Redacto KMS is migrating from an auto seal configuration. Otherwise, set to `false`.
 
 Refer to the [Seal Migration](../../concepts/seal.mdx#seal-migration) documentation for more information about the seal migration process.
 
@@ -89,11 +89,11 @@ Azure authentication values:
 
 :::warning
 
-**Note:** If OpenBao is hosted on Azure, OpenBao can use Managed Service
+**Note:** If Redacto KMS is hosted on Azure, Redacto KMS can use Managed Service
 Identities (MSI) to access Azure instead of an environment and shared client id
 and secret. MSI must be
 [enabled](https://docs.microsoft.com/en-us/azure/active-directory/managed-service-identity/qs-configure-portal-windows-vm)
-on the VMs hosting OpenBao, and it is the preferred configuration since MSI
+on the VMs hosting Redacto KMS, and it is the preferred configuration since MSI
 prevents your Azure credentials from being stored as clear text.
 
 :::
@@ -120,4 +120,4 @@ This seal supports rotating keys defined in Azure Key Vault. Key metadata is
 stored with the encrypted data to ensure the correct key is used during
 decryption operations. Simply [set up Azure Key Vault with key
 rotation](https://docs.microsoft.com/en-us/azure/key-vault/key-vault-key-rotation-log-monitoring)
-using Azure Automation Account and OpenBao will recognize newly rotated keys.
+using Azure Automation Account and Redacto KMS will recognize newly rotated keys.

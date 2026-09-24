@@ -24,8 +24,8 @@ const (
 	// We generally recommend preferring environmental settings over configured
 	// ones, allowing settings from the Downward API to override hard-coded
 	// ones.
-	EnvVarKubernetesNamespace = "BAO_K8S_NAMESPACE"
-	EnvVarKubernetesPodName   = "BAO_K8S_POD_NAME"
+	EnvVarKubernetesNamespace = "REDACTO_KMS_K8S_NAMESPACE"
+	EnvVarKubernetesPodName   = "REDACTO_KMS_K8S_POD_NAME"
 
 	// The service host and port environment variables are
 	// set by default inside a Kubernetes environment.

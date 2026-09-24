@@ -21,19 +21,19 @@ func (c *SecretsCommand) Synopsis() string {
 
 func (c *SecretsCommand) Help() string {
 	helpText := `
-Usage: bao secrets <subcommand> [options] [args]
+Usage: redacto-kms secrets <subcommand> [options] [args]
 
-  This command groups subcommands for interacting with OpenBao's secrets engines.
+  This command groups subcommands for interacting with Redacto KMS's secrets engines.
   Each secret engine behaves differently. Please see the documentation for
   more information.
 
   List all enabled secrets engines:
 
-      $ bao secrets list
+      $ redacto-kms secrets list
 
   Enable a new secrets engine:
 
-      $ bao secrets enable database
+      $ redacto-kms secrets enable database
 
   Please see the individual subcommand help for detailed usage information.
 `

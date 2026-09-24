@@ -370,14 +370,14 @@ this value in certificates issued by this role.`,
 		"generate_lease": {
 			Type: framework.TypeBool,
 			Description: `
-If set, certificates issued/signed against this role will have OpenBao leases
+If set, certificates issued/signed against this role will have Redacto KMS leases
 attached to them. Defaults to "false". Certificates can be added to the CRL by
-"bao revoke <lease_id>" when certificates are associated with leases.  It can
+"redacto-kms revoke <lease_id>" when certificates are associated with leases.  It can
 also be done using the "pki/revoke" endpoint. However, when lease generation is
 disabled, invoking "pki/revoke" would be the only way to add the certificates
 to the CRL.  When large number of certificates are generated with long
 lifetimes, it is recommended that lease generation be disabled, as large amount of
-leases adversely affect the startup time of OpenBao.`,
+leases adversely affect the startup time of Redacto KMS.`,
 		},
 
 		"no_store": {
@@ -810,14 +810,14 @@ this value in certificates issued by this role.`,
 			"generate_lease": {
 				Type: framework.TypeBool,
 				Description: `
-If set, certificates issued/signed against this role will have OpenBao leases
+If set, certificates issued/signed against this role will have Redacto KMS leases
 attached to them. Defaults to "false". Certificates can be added to the CRL by
-"bao revoke <lease_id>" when certificates are associated with leases.  It can
+"redacto-kms revoke <lease_id>" when certificates are associated with leases.  It can
 also be done using the "pki/revoke" endpoint. However, when lease generation is
 disabled, invoking "pki/revoke" would be the only way to add the certificates
 to the CRL.  When large number of certificates are generated with long
 lifetimes, it is recommended that lease generation be disabled, as large amount of
-leases adversely affect the startup time of OpenBao.`,
+leases adversely affect the startup time of Redacto KMS.`,
 			},
 
 			"no_store": {

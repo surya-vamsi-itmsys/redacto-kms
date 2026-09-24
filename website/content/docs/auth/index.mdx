@@ -1,18 +1,18 @@
 ---
 sidebar_label: Overview
-description: Auth methods are mountable methods that perform authentication for OpenBao.
+description: Auth methods are mountable methods that perform authentication for Redacto KMS.
 ---
 
 # Auth methods
 
-Auth methods are the components in OpenBao that perform authentication and are
+Auth methods are the components in Redacto KMS that perform authentication and are
 responsible for assigning identity and a set of policies to a user. In all cases,
-OpenBao will enforce authentication as part of the request processing. In most cases,
-OpenBao will delegate the authentication administration and decision to the relevant configured
+Redacto KMS will enforce authentication as part of the request processing. In most cases,
+Redacto KMS will delegate the authentication administration and decision to the relevant configured
 external auth method (e.g., Kubernetes).
 
 Having multiple auth methods enables you to use an auth method that makes the
-most sense for your use case of OpenBao and your organization.
+most sense for your use case of Redacto KMS and your organization.
 
 For example, on developer machines, the [Userpass](userpass.mdx)
 is easiest to use. But for servers the [AppRole](approle.mdx)
@@ -26,11 +26,11 @@ To learn more about authentication, see the
 Auth methods can be enabled/disabled using the CLI or the API.
 
 ```shell-session
-$ bao auth enable userpass
+$ redacto-kms auth enable userpass
 ```
 
 When enabled, auth methods are similar to [secrets engines](../secrets/index.mdx):
-they are mounted within the OpenBao mount table and can be accessed
+they are mounted within the Redacto KMS mount table and can be accessed
 and configured using the standard read/write API. All auth methods are mounted underneath the `auth/` prefix.
 
 By default, auth methods are mounted to `auth/<type>`. For example, if you
@@ -39,7 +39,7 @@ path is customizable, allowing users with advanced use cases to mount a single
 auth method multiple times.
 
 ```shell-session
-$ bao auth enable -path=my-login userpass
+$ redacto-kms auth enable -path=my-login userpass
 ```
 
 When an auth method is disabled, all users authenticated via that method are
@@ -47,18 +47,18 @@ automatically logged out.
 
 ## External auth method considerations
 
-When using an external auth method (e.g., Kubernetes), OpenBao will call the external service
+When using an external auth method (e.g., Kubernetes), Redacto KMS will call the external service
 at the time of authentication and for subsequent token renewals. If the status
 of an entity changes in the external system (e.g., an account expires or is
-disabled), OpenBao denies requests to **renew** tokens associated with the entity.
+disabled), Redacto KMS denies requests to **renew** tokens associated with the entity.
 However, any existing token remain valid for the original grant period unless
-they are explicitly revoked within OpenBao. Operators should set appropriate
+they are explicitly revoked within Redacto KMS. Operators should set appropriate
 [token TTLs](../concepts/tokens.mdx#the-general-case) when using external
 authN methods.
 
 ## Authentication Flows
 
-There are two primary flows client applications use to talk to OpenBao.
+There are two primary flows client applications use to talk to Redacto KMS.
 
 ### Standard Authentication
 
@@ -108,4 +108,4 @@ writes as a result of successful authentication and thus must happen on the
 active node. Additionally, these persisted entries are refreshed on leadership
 changes, which may cause churn and excessive disk and CPU usage. Depending on
 the workload patterns, a client application using inline authentication may
-result in a more performant OpenBao instance than standard authentication.
+result in a more performant Redacto KMS instance than standard authentication.

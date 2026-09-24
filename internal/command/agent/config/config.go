@@ -56,8 +56,8 @@ type Config struct {
 }
 
 const (
-	DisableIdleConnsEnv  = "BAO_AGENT_DISABLE_IDLE_CONNECTIONS"
-	DisableKeepAlivesEnv = "BAO_AGENT_DISABLE_KEEP_ALIVES"
+	DisableIdleConnsEnv  = "REDACTO_KMS_AGENT_DISABLE_IDLE_CONNECTIONS"
+	DisableKeepAlivesEnv = "REDACTO_KMS_AGENT_DISABLE_KEEP_ALIVES"
 )
 
 func (c *Config) Prune() {

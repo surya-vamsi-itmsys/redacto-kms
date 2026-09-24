@@ -89,19 +89,19 @@ type ProxyCommand struct {
 }
 
 func (c *ProxyCommand) Synopsis() string {
-	return "Start an OpenBao Proxy"
+	return "Start a Redacto KMS Proxy"
 }
 
 func (c *ProxyCommand) Help() string {
 	helpText := `
-Usage: bao proxy [options]
+Usage: redacto-kms proxy [options]
 
-  This command starts an OpenBao Proxy that can perform automatic authentication
+  This command starts a Redacto KMS Proxy that can perform automatic authentication
   in certain environments.
 
   Start a proxy with a configuration file:
 
-      $ bao proxy -config=/etc/vault/config.hcl
+      $ redacto-kms proxy -config=/etc/vault/config.hcl
 
   For a full list of examples, please see the documentation.
 
@@ -119,7 +119,7 @@ func (c *ProxyCommand) Flags() *FlagSets {
 
 	f.StringSliceVar(&StringSliceVar{
 		Name:   "config",
-		EnvVar: "BAO_PROXY_CONFIG_PATH",
+		EnvVar: "REDACTO_KMS_PROXY_CONFIG_PATH",
 		Target: &c.flagConfigs,
 		Completion: complete.PredictOr(
 			complete.PredictFiles("*.hcl"),
@@ -225,7 +225,7 @@ func (c *ProxyCommand) Run(args []string) int {
 	// Tests might not want to start a vault server and just want to verify
 	// the configuration.
 	if c.flagTestVerifyOnly {
-		if api.ReadBaoVariable("BAO_TEST_VERIFY_ONLY_DUMP_CONFIG") != "" {
+		if api.ReadBaoVariable("REDACTO_KMS_TEST_VERIFY_ONLY_DUMP_CONFIG") != "" {
 			c.UI.Output(fmt.Sprintf(
 				"\nConfiguration:\n%s\n",
 				pretty.Sprint(*c.config),
@@ -255,8 +255,8 @@ func (c *ProxyCommand) Run(args []string) int {
 		serverVersion := serverHealth.Version
 		proxyVersion := version.GetVersion().VersionNumber()
 		if serverVersion != proxyVersion {
-			c.UI.Info("==> Note: Vault Proxy version does not match Vault server version. " +
-				fmt.Sprintf("Vault Proxy version: %s, Vault server version: %s", proxyVersion, serverVersion))
+			c.UI.Info("==> Note: Redacto KMS Proxy version does not match Redacto KMS server version. " +
+				fmt.Sprintf("Redacto KMS Proxy version: %s, Redacto KMS server version: %s", proxyVersion, serverVersion))
 		}
 	}
 
@@ -265,7 +265,7 @@ func (c *ProxyCommand) Run(args []string) int {
 		Config:      config.Telemetry,
 		Ui:          c.UI,
 		ServiceName: "vault",
-		DisplayName: "Vault",
+		DisplayName: "Redacto KMS",
 		UserAgent:   useragent.ProxyString(),
 		ClusterName: config.ClusterName,
 	})
@@ -364,7 +364,7 @@ func (c *ProxyCommand) Run(args []string) int {
 
 	// Output the header that the proxy has started
 	if !c.logFlags.flagCombineLogs {
-		c.UI.Output("==> OpenBao Proxy started!")
+		c.UI.Output("==> Redacto KMS Proxy started!")
 	}
 
 	var leaseCache *cache.LeaseCache
@@ -578,7 +578,7 @@ func (c *ProxyCommand) Run(args []string) int {
 		for {
 			select {
 			case <-c.SighupCh:
-				c.UI.Output("==> OpenBao Proxy config reload triggered")
+				c.UI.Output("==> Redacto KMS Proxy config reload triggered")
 				err := c.reloadConfig(c.flagConfigs)
 				if err != nil {
 					c.outputErrors(err)
@@ -601,7 +601,7 @@ func (c *ProxyCommand) Run(args []string) int {
 		for {
 			select {
 			case <-c.ShutdownCh:
-				c.UI.Output("==> OpenBao Proxy shutdown triggered")
+				c.UI.Output("==> Redacto KMS Proxy shutdown triggered")
 				// Notify systemd that the server is shutting down
 				// Let the lease cache know this is a shutdown; no need to evict everything
 				if leaseCache != nil {
@@ -695,7 +695,7 @@ func (c *ProxyCommand) Run(args []string) int {
 	padding := 24
 	sort.Strings(infoKeys)
 	caser := cases.Title(language.English, cases.NoLower)
-	c.UI.Output("\n==> OpenBao Proxy configuration:\n")
+	c.UI.Output("\n==> Redacto KMS Proxy configuration:\n")
 	for _, k := range infoKeys {
 		c.UI.Output(fmt.Sprintf(
 			"%s%s: %s",

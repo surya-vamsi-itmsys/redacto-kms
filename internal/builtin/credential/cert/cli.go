@@ -44,16 +44,16 @@ func (h *CLIHandler) Auth(c *api.Client, m map[string]string, nonInteractive boo
 
 func (h *CLIHandler) Help() string {
 	help := `
-Usage: bao login -method=cert [CONFIG K=V...]
+Usage: redacto-kms login -method=cert [CONFIG K=V...]
 
   The certificate auth method allows users to authenticate with a
   client certificate passed with the request. The -client-cert and -client-key
-  flags are included with the "bao login" command, NOT as configuration to the
+  flags are included with the "redacto-kms login" command, NOT as configuration to the
   auth method.
 
   Authenticate using a local client certificate:
 
-      $ bao login -method=cert -client-cert=cert.pem -client-key=key.pem
+      $ redacto-kms login -method=cert -client-cert=cert.pem -client-key=key.pem
 
 Configuration:
 

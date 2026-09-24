@@ -514,7 +514,7 @@ func (b *kubeAuthBackend) pathLoginRenew() framework.OperationFunc {
 }
 
 const (
-	pathLoginHelpSyn  = `Authenticates Kubernetes service accounts with OpenBao.`
+	pathLoginHelpSyn  = `Authenticates Kubernetes service accounts with Redacto KMS.`
 	pathLoginHelpDesc = `
 Authenticate Kubernetes service accounts.
 `

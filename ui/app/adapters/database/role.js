@@ -160,7 +160,7 @@ export default ApplicationAdapter.extend({
       });
     } catch {
       throw new Error(
-        'Could not update allowed roles for selected database. Check the OpenBao logs for details'
+        'Could not update allowed roles for selected database. Check the Redacto KMS logs for details'
       );
     }
 

@@ -1,18 +1,18 @@
 ---
 sidebar_label: JWT/OIDC
 description: |-
-  This is the API documentation for the OpenBao JWT/OIDC authentication
+  This is the API documentation for the Redacto KMS JWT/OIDC authentication
   method plugin.
 ---
 
 # JWT/OIDC auth method (API)
 
-This is the API documentation for the OpenBao JWT/OIDC auth method
+This is the API documentation for the Redacto KMS JWT/OIDC auth method
 plugin. To learn more about the usage and operation, see the
-[OpenBao JWT/OIDC method documentation](../../auth/jwt/index.mdx).
+[Redacto KMS JWT/OIDC method documentation](../../auth/jwt/index.mdx).
 
 This documentation assumes the plugin method is mounted at the
-`/auth/jwt` path in OpenBao. Since it is possible to enable auth methods
+`/auth/jwt` path in Redacto KMS. Since it is possible to enable auth methods
 at any location, please update your API calls accordingly.
 
 ## Configure
@@ -42,7 +42,7 @@ set.
 - `default_role` `(string: <optional>)` - The default role to use if none is provided during login.
 - `provider_config` `(map: <optional>)` - Configuration options for provider-specific handling. Providers with specific handling include: Azure, Google, SecureAuth, IBM ISAM. The options are described in each provider's section in [OIDC Provider Setup](../../auth/jwt/oidc-providers/index.mdx).
 - `override_allowed_server_names` `(comma-separated string, or array of strings: <optional>)` - A list of hostnames to accept when performing TLS validation, which applies both to OIDC and JWKS. This overrides default checks that expect the TLS subject to match the hostname specified in the connection URL.
-- `namespace_in_state` `(bool: true)` - Pass namespace in the OIDC state parameter instead of as a separate query parameter. With this setting, the allowed redirect URL(s) in OpenBao and on the provider side should not contain a namespace query parameter. This means only one redirect URL entry needs to be maintained on the provider side for all vault namespaces that will be authenticating against it. Defaults to true for new configs.
+- `namespace_in_state` `(bool: true)` - Pass namespace in the OIDC state parameter instead of as a separate query parameter. With this setting, the allowed redirect URL(s) in Redacto KMS and on the provider side should not contain a namespace query parameter. This means only one redirect URL entry needs to be maintained on the provider side for all vault namespaces that will be authenticating against it. Defaults to true for new configs.
 - `skip_jwks_validation` `(bool: false)` - When `true` and `oidc_discovery_url` or `jwks_url` are specified, if the connection fails to load, a warning will be issued and status can be checked later by reading the config endpoint. When `false`, configuration save will fail if issuer validation cannot complete successfully.
 
 ### Sample payload
@@ -164,7 +164,7 @@ entities attempting to login. At least one of the bound values must be set.
   during OIDC logins.
 - `callback_mode` `(string: <optional>)` - The callback mode from the OIDC provider, either "client" (the default)
   to call back to the client,
-  "direct" to call back to the OpenBao server,
+  "direct" to call back to the Redacto KMS server,
   or "device" for device flow which has no callback.
 - `poll_interval` `(int: <optional>)` - Poll interval in seconds for device
   and direct callback modes, default value from Authorization Server for
@@ -357,7 +357,7 @@ $ curl \
 
 ## OIDC authorization URL request
 
-Obtain an authorization URL from OpenBao to start an OIDC login flow.
+Obtain an authorization URL from Redacto KMS to start an OIDC login flow.
 
 The response will include a `auth_url` that the user will need to go
 to in a web browser to complete the login flow.
@@ -374,8 +374,8 @@ which should be shown to the user to enter at the `auth_url`.
 - `role` `(string: <optional>)` - Name of the role against which the login is being
   attempted. Defaults to configured `default_role` if not provided.
 - `redirect_uri` `(string: <required except in device callback mode>)` - Path to the callback to complete the login. This will be
-  of the form, "https&#x3A;//.../oidc/callback" where the leading portion is dependent on your OpenBao
-  server location, port, and the mount of the JWT plugin. This must be configured with OpenBao and the
+  of the form, "https&#x3A;//.../oidc/callback" where the leading portion is dependent on your Redacto KMS
+  server location, port, and the mount of the JWT plugin. This must be configured with Redacto KMS and the
   provider. See [Redirect URIs](../../auth/jwt/index.mdx#redirect-uris) for more information.
 - `client_nonce` `(string: <optional>)` - Optional client-provided nonce that
   must match the `client_nonce` value provided during a subsequent request to the
@@ -442,7 +442,7 @@ For device callback mode:
 ## OIDC callback
 
 Exchange an authorization code for an OIDC ID Token. The ID token will be further validated
-against any bound claims, and if valid an OpenBao token will be returned.
+against any bound claims, and if valid a Redacto KMS token will be returned.
 
 This is normally invoked by the Authorization Server in client
 or direct callback modes, and is not used in device callback mode.
@@ -455,7 +455,7 @@ or direct callback modes, and is not used in device callback mode.
 
 - `state` `(string: <required>)` - Opaque state ID that is part of the Authorization URL and will
   be included in the the redirect following successful authentication on the provider.
-- `code` `(string: <optional>)` - Provider-generated authorization code that OpenBao will exchange for
+- `code` `(string: <optional>)` - Provider-generated authorization code that Redacto KMS will exchange for
   an ID token.  Required if no `id_token` given.
 - `id_token` `(string: <optional>)` - If present instead of an authorization code, will be used directly
   instead of exchanging the code to get it.  Required if no `code` given.
@@ -722,14 +722,14 @@ This endpoint creates or updates the CEL role definition.
 
 CEL is an advanced topic for operators. All validation is taken on by the CEL
 program created by the operator; **limited to no validation is performed by
-OpenBao above and beyond what the CEL program contains**. It is up to the
+Redacto KMS above and beyond what the CEL program contains**. It is up to the
 operator to craft a CEL role which adequately perform validation for the
 provided JWT and all of its claims. Some CEL programs may cause high CPU
-usage; OpenBao will validate the requesting JWT is signed by a valid issuer
+usage; Redacto KMS will validate the requesting JWT is signed by a valid issuer
 but the CEL program author must take care not to design expensive programs.
 
 All claims on the JWT (including `aud`, `sub`, and any custom claims) should
-be validated and constrained before issuing an OpenBao token based on them.
+be validated and constrained before issuing a Redacto KMS token based on them.
 
 :::
 

@@ -1,7 +1,7 @@
 ---
 sidebar_label: Overview
 description: >-
-  The OpenBao Helm chart is the recommended way to install and configure OpenBao on
+  The Redacto KMS Helm chart is the recommended way to install and configure Redacto KMS on
   Kubernetes.
 ---
 
@@ -13,14 +13,14 @@ description: >-
 
 :::
 
-The [OpenBao Helm chart](https://github.com/openbao/openbao-helm)
-is the recommended way to install and configure OpenBao on Kubernetes.
-In addition to running OpenBao itself, the Helm chart is the primary
-method for installing and configuring OpenBao to integrate with other
+The [Redacto KMS Helm chart](https://github.com/openbao/openbao-helm)
+is the recommended way to install and configure Redacto KMS on Kubernetes.
+In addition to running Redacto KMS itself, the Helm chart is the primary
+method for installing and configuring Redacto KMS to integrate with other
 services such as the [Vault Agent Injector](https://github.com/hashicorp/vault-k8s/tree/v1.4.2).
 
 This page assumes general knowledge of [Helm](https://helm.sh/) and
-how to use it. Using Helm to install OpenBao requires that Helm is
+how to use it. Using Helm to install Redacto KMS requires that Helm is
 properly installed and configured with your Kubernetes cluster.
 
 @include 'kubernetes-supported-versions.mdx'
@@ -30,7 +30,7 @@ properly installed and configured with your Kubernetes cluster.
 Helm must be installed and configured on your machine. Please refer to the [Helm
 documentation](https://helm.sh/) for more information.
 
-To use the Helm chart, add the OpenBao helm repository and check that you have
+To use the Helm chart, add the Redacto KMS helm repository and check that you have
 access to the chart:
 
 @include 'helm/repo.mdx'
@@ -45,7 +45,7 @@ changes.
 
 Example chart usage:
 
-Installing the latest release of the OpenBao Helm chart with pods prefixed with
+Installing the latest release of the Redacto KMS Helm chart with pods prefixed with
 the name `openbao`.
 
 ```shell-session
@@ -59,7 +59,7 @@ Installing a specific version of the chart.
 :::warning
 
 **Security Warning:** By default, the chart runs in standalone mode. This
-mode uses a single OpenBao server with a file storage backend. This is a less
+mode uses a single Redacto KMS server with a file storage backend. This is a less
 secure and less resilient installation that is **NOT** appropriate for a
 production setup. It is highly recommended to use a [properly secured Kubernetes
 cluster](https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/),

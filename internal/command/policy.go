@@ -22,22 +22,22 @@ func (c *PolicyCommand) Synopsis() string {
 
 func (c *PolicyCommand) Help() string {
 	helpText := `
-Usage: bao policy <subcommand> [options] [args]
+Usage: redacto-kms policy <subcommand> [options] [args]
 
   This command groups subcommands for interacting with policies.
-  Users can write, read, and list policies in Vault.
+  Users can write, read, and list policies in Redacto KMS.
 
   List all enabled policies:
 
-      $ bao policy list
+      $ redacto-kms policy list
 
   Create a policy named "my-policy" from contents on local disk:
 
-      $ bao policy write my-policy ./my-policy.hcl
+      $ redacto-kms policy write my-policy ./my-policy.hcl
 
   Delete the policy named my-policy:
 
-      $ bao policy delete my-policy
+      $ redacto-kms policy delete my-policy
 
   Please see the individual subcommand help for detailed usage information.
 `

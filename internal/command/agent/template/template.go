@@ -222,7 +222,7 @@ func (ts *Server) Run(ctx context.Context, incoming chan string, templates []*ct
 				var runnerErr error
 				ts.runner, runnerErr = manager.NewRunner(runnerConfig, false)
 				if runnerErr != nil {
-					ts.logger.Error("template server failed with new Vault token", "error", runnerErr)
+					ts.logger.Error("template server failed with new Redacto KMS token", "error", runnerErr)
 					continue
 				}
 				ts.runnerStarted.CompareAndSwap(false, true)

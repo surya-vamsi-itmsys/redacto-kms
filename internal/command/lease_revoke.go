@@ -31,12 +31,12 @@ func (c *LeaseRevokeCommand) Synopsis() string {
 
 func (c *LeaseRevokeCommand) Help() string {
 	helpText := `
-Usage: bao lease revoke [options] ID
+Usage: redacto-kms lease revoke [options] ID
 
   Revokes secrets by their lease ID. This command can revoke a single secret
   or multiple secrets based on a path-matched prefix.
 
-  The default behavior when not using -force is to revoke asynchronously; Vault
+  The default behavior when not using -force is to revoke asynchronously; Redacto KMS
   will queue the revocation and keep trying if it fails (including across
   restarts). The -sync flag can be used to force a synchronous operation, but
   it is then up to the caller to retry on failure. Force mode always operates
@@ -44,15 +44,15 @@ Usage: bao lease revoke [options] ID
 
   Revoke a single lease:
 
-      $ bao lease revoke database/creds/readonly/2f6a614c...
+      $ redacto-kms lease revoke database/creds/readonly/2f6a614c...
 
   Revoke all leases for a role:
 
-      $ bao lease revoke -prefix aws/creds/deploy
+      $ redacto-kms lease revoke -prefix aws/creds/deploy
 
-  Force delete leases from OpenBao even if secret engine revocation fails:
+  Force delete leases from Redacto KMS even if secret engine revocation fails:
 
-      $ bao lease revoke -force -prefix consul/creds
+      $ redacto-kms lease revoke -force -prefix consul/creds
 
   For a full list of examples and paths, please see the documentation that
   corresponds to the secret engine in use.
@@ -71,7 +71,7 @@ func (c *LeaseRevokeCommand) Flags() *FlagSets {
 		Aliases: []string{"f"},
 		Target:  &c.flagForce,
 		Default: false,
-		Usage: "Delete the lease from OpenBao even if the secret engine revocation " +
+		Usage: "Delete the lease from Redacto KMS even if the secret engine revocation " +
 			"fails. This is meant for recovery situations where the secret " +
 			"in the target secret engine was manually removed. If this flag is " +
 			"specified, -prefix is also required.",
@@ -143,7 +143,7 @@ func (c *LeaseRevokeCommand) Run(args []string) int {
 	}
 
 	if c.flagForce {
-		c.UI.Warn(wrapAtLength("Warning! Force-removing leases can cause OpenBao " +
+		c.UI.Warn(wrapAtLength("Warning! Force-removing leases can cause Redacto KMS " +
 			"to become out of sync with secret engines!"))
 	}
 

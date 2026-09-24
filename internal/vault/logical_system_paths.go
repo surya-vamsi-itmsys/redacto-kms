@@ -113,7 +113,7 @@ func (b *SystemBackend) configPaths() []*framework.Path {
 						OperationVerb:   "read",
 						OperationSuffix: "sanitized-configuration-state",
 					},
-					Summary:     "Return a sanitized version of the OpenBao server configuration.",
+					Summary:     "Return a sanitized version of the Redacto KMS server configuration.",
 					Description: "The sanitized output strips configuration values in the storage, HA storage, and seals stanzas, which may contain sensitive values such as API tokens. It also removes any token or secret fields in other stanzas, such as the circonus_api_token from telemetry.",
 					Responses: map[int][]framework.Response{
 						http.StatusOK: {{
@@ -421,7 +421,7 @@ func (b *SystemBackend) configPaths() []*framework.Path {
 						OperationVerb:   "update",
 					},
 					Summary:     "Enter a single unseal key share to progress the root generation attempt.",
-					Description: "If the threshold number of unseal key shares is reached, OpenBao will complete the root generation and issue the new token. Otherwise, this API must be called multiple times until that threshold is met. The attempt nonce must be provided with each call.",
+					Description: "If the threshold number of unseal key shares is reached, Redacto KMS will complete the root generation and issue the new token. Otherwise, this API must be called multiple times until that threshold is met. The attempt nonce must be provided with each call.",
 					Responses: map[int][]framework.Response{
 						http.StatusOK: {{
 							Description: "OK",
@@ -506,7 +506,7 @@ func (b *SystemBackend) configPaths() []*framework.Path {
 						OperationVerb:   "read",
 						OperationSuffix: "health-status",
 					},
-					Summary: "Returns the health status of OpenBao.",
+					Summary: "Returns the health status of Redacto KMS.",
 					Responses: map[int][]framework.Response{
 						200: {{Description: "initialized, unsealed, and active"}},
 						429: {{Description: "unsealed and standby"}},
@@ -538,7 +538,7 @@ func (b *SystemBackend) configPaths() []*framework.Path {
 				},
 				"secret_threshold": {
 					Type:        framework.TypeInt,
-					Description: "Specifies the number of shares required to reconstruct the unseal key. This must be less than or equal secret_shares. If using OpenBao HSM with auto-unsealing, this value must be the same as `secret_shares`.",
+					Description: "Specifies the number of shares required to reconstruct the unseal key. This must be less than or equal secret_shares. If using Redacto KMS HSM with auto-unsealing, this value must be the same as `secret_shares`.",
 				},
 				"recovery_shares": {
 					Type:        framework.TypeInt,
@@ -559,15 +559,15 @@ func (b *SystemBackend) configPaths() []*framework.Path {
 						OperationVerb:   "read",
 						OperationSuffix: "initialization-status",
 					},
-					Summary: "Returns the initialization status of OpenBao.",
+					Summary: "Returns the initialization status of Redacto KMS.",
 				},
 				logical.UpdateOperation: &framework.PathOperation{
 					DisplayAttrs: &framework.DisplayAttributes{
 						OperationVerb:   "initialize",
 						OperationSuffix: "system",
 					},
-					Summary:     "Initialize a new OpenBao instance.",
-					Description: "The OpenBao instance must not have been previously initialized. The recovery options are only available when using Auto Unseal.",
+					Summary:     "Initialize a new Redacto KMS instance.",
+					Description: "The Redacto KMS instance must not have been previously initialized. The recovery options are only available when using Auto Unseal.",
 				},
 			},
 
@@ -763,7 +763,7 @@ func (b *SystemBackend) rekeyPaths() []*framework.Path {
 				},
 				"secret_threshold": {
 					Type:        framework.TypeInt,
-					Description: "Specifies the number of shares required to reconstruct the unseal key. This must be less than or equal secret_shares. If using OpenBao HSM with auto-unsealing, this value must be the same as secret_shares.",
+					Description: "Specifies the number of shares required to reconstruct the unseal key. This must be less than or equal secret_shares. If using Redacto KMS HSM with auto-unsealing, this value must be the same as secret_shares.",
 				},
 				"pgp_keys": {
 					Type:        framework.TypeCommaStringSlice,
@@ -771,7 +771,7 @@ func (b *SystemBackend) rekeyPaths() []*framework.Path {
 				},
 				"backup": {
 					Type:        framework.TypeBool,
-					Description: "Specifies if using PGP-encrypted keys, whether OpenBao should also store a plaintext backup of the PGP-encrypted keys.",
+					Description: "Specifies if using PGP-encrypted keys, whether Redacto KMS should also store a plaintext backup of the PGP-encrypted keys.",
 				},
 				"require_verification": {
 					Type:        framework.TypeBool,
@@ -998,7 +998,7 @@ func (b *SystemBackend) rekeyPaths() []*framework.Path {
 							},
 						}},
 					},
-					Summary: "Enter a single unseal key share to progress the rekey of the OpenBao.",
+					Summary: "Enter a single unseal key share to progress the rekey of the Redacto KMS.",
 				},
 			},
 		},
@@ -1121,7 +1121,7 @@ func (b *SystemBackend) rekeyPaths() []*framework.Path {
 
 			Operations: map[logical.Operation]framework.OperationHandler{
 				logical.UpdateOperation: &framework.PathOperation{
-					Summary: "Seal the OpenBao instance.",
+					Summary: "Seal the Redacto KMS instance.",
 					Responses: map[int][]framework.Response{
 						http.StatusNoContent: {{
 							Description: "OK",
@@ -1153,7 +1153,7 @@ func (b *SystemBackend) rekeyPaths() []*framework.Path {
 
 			Operations: map[logical.Operation]framework.OperationHandler{
 				logical.UpdateOperation: &framework.PathOperation{
-					Summary: "Unseal the OpenBao instance.",
+					Summary: "Unseal the Redacto KMS instance.",
 					Responses: map[int][]framework.Response{
 						http.StatusOK: {{
 							// unseal returns `vault.SealStatusResponse` struct
@@ -1239,7 +1239,7 @@ func (b *SystemBackend) statusPaths() []*framework.Path {
 			Operations: map[logical.Operation]framework.OperationHandler{
 				logical.ReadOperation: &framework.PathOperation{
 					Callback: b.handleLeaderStatus,
-					Summary:  "Returns the high availability status and current leader instance of OpenBao.",
+					Summary:  "Returns the high availability status and current leader instance of Redacto KMS.",
 					Responses: map[int][]framework.Response{
 						http.StatusOK: {{
 							Description: "OK",
@@ -1273,7 +1273,7 @@ func (b *SystemBackend) statusPaths() []*framework.Path {
 				},
 			},
 
-			HelpSynopsis: "Check the high availability status and current leader of OpenBao",
+			HelpSynopsis: "Check the high availability status and current leader of Redacto KMS",
 		},
 		{
 			Pattern: "seal-status$",
@@ -1286,7 +1286,7 @@ func (b *SystemBackend) statusPaths() []*framework.Path {
 			Operations: map[logical.Operation]framework.OperationHandler{
 				logical.ReadOperation: &framework.PathOperation{
 					Callback: b.handleSealStatus,
-					Summary:  "Check the seal status of an OpenBao instance.",
+					Summary:  "Check the seal status of a Redacto KMS instance.",
 					Responses: map[int][]framework.Response{
 						http.StatusOK: {{
 							// unseal returns `vault.SealStatusResponse` struct
@@ -1362,7 +1362,7 @@ func (b *SystemBackend) statusPaths() []*framework.Path {
 			Operations: map[logical.Operation]framework.OperationHandler{
 				logical.ReadOperation: &framework.PathOperation{
 					Callback: b.handleHAStatus,
-					Summary:  "Check the HA status of an OpenBao cluster",
+					Summary:  "Check the HA status of a Redacto KMS cluster",
 					Responses: map[int][]framework.Response{
 						http.StatusOK: {{
 							Description: "OK",
@@ -2790,7 +2790,7 @@ func (b *SystemBackend) leasePaths() []*framework.Path {
 						}},
 					},
 					Summary:                     "Revokes all secrets or tokens generated under a given prefix immediately",
-					Description:                 "Unlike `/sys/leases/revoke-prefix`, this path ignores backend errors encountered during revocation. This is potentially very dangerous and should only be used in specific emergency situations where errors in the backend or the connected backend service prevent normal revocation.\n\nBy ignoring these errors, OpenBao abdicates responsibility for ensuring that the issued credentials or secrets are properly revoked and/or cleaned up. Access to this endpoint should be tightly controlled.",
+					Description:                 "Unlike `/sys/leases/revoke-prefix`, this path ignores backend errors encountered during revocation. This is potentially very dangerous and should only be used in specific emergency situations where errors in the backend or the connected backend service prevent normal revocation.\n\nBy ignoring these errors, Redacto KMS abdicates responsibility for ensuring that the issued credentials or secrets are properly revoked and/or cleaned up. Access to this endpoint should be tightly controlled.",
 					ForwardPerformanceSecondary: true,
 					ForwardPerformanceStandby:   true,
 				},

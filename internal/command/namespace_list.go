@@ -26,13 +26,13 @@ func (c *NamespaceListCommand) Synopsis() string {
 
 func (c *NamespaceListCommand) Help() string {
 	helpText := `
-Usage: bao namespace list [options]
+Usage: redacto-kms namespace list [options]
 
   List child namespaces.
 
   List all direct child namespaces:
 
-      $ bao namespace list
+      $ redacto-kms namespace list
 
   See 'namespace scan' to recursively list namespaces.
 

@@ -169,9 +169,9 @@ jobs:
           fi
 
           # shellcheck disable=SC2034
-          if [ -f bin/bao ]; then
-            BAO_BINARY="$(pwd)/bin/bao"
-            export BAO_BINARY
+          if [ -f bin/redacto-kms ]; then
+            REDACTO_KMS_BINARY="$(pwd)/bin/redacto-kms"
+            export REDACTO_KMS_BINARY
           fi
 
           # On a release branch, add a flag to rerun failed tests

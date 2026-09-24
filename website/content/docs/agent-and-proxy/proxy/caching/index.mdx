@@ -1,14 +1,14 @@
 ---
 sidebar_label: Overview
 description: |-
-  OpenBao Proxy Caching allows client-side caching of responses containing newly
+  Redacto KMS Proxy Caching allows client-side caching of responses containing newly
   created tokens and responses containing leased secrets generated off of these
   newly created tokens.
 ---
 
-# OpenBao proxy caching
+# Redacto KMS proxy caching
 
-OpenBao Proxy Caching allows client-side caching of responses containing newly
+Redacto KMS Proxy Caching allows client-side caching of responses containing newly
 created tokens and responses containing leased secrets generated off of these
 newly created tokens. The renewals of the cached tokens and leases are also
 managed by the proxy.
@@ -32,10 +32,10 @@ specific scenarios.
 
 ## Persistent cache
 
-OpenBao Proxy can restore tokens and leases from a persistent cache file created
-by a previous OpenBao Proxy process.
+Redacto KMS Proxy can restore tokens and leases from a persistent cache file created
+by a previous Redacto KMS Proxy process.
 
-Refer to the [OpenBao Proxy Persistent
+Refer to the [Redacto KMS Proxy Persistent
 Caching](persistent-caches/index.mdx) page for more information on
 this functionality.
 
@@ -45,9 +45,9 @@ The eviction of cache entries pertaining to secrets will occur when the proxy
 can no longer renew them. This can happen when the secrets hit their maximum
 TTL or if the renewals result in errors.
 
-OpenBao Proxy does some best-effort cache evictions by observing specific request types
+Redacto KMS Proxy does some best-effort cache evictions by observing specific request types
 and response codes. For example, if a token revocation request is made via the
-proxy and if the forwarded request to the OpenBao server succeeds, then proxy
+proxy and if the forwarded request to the Redacto KMS server succeeds, then proxy
 evicts all the cache entries associated with the revoked token. Similarly, any
 lease revocation operation will also be intercepted by the proxy and the
 respective cache entries will be evicted.
@@ -55,7 +55,7 @@ respective cache entries will be evicted.
 Note that while proxy evicts the cache entries upon secret expirations and upon
 intercepting revocation requests, it is still possible for the proxy to be
 completely unaware of the revocations that happen through direct client
-interactions with the OpenBao server. This could potentially lead to stale cache
+interactions with the Redacto KMS server. This could potentially lead to stale cache
 entries. For managing the stale entries in the cache, an endpoint
 `/proxy/v1/cache-clear`(see below) is made available to manually evict cache
 entries based on some of the query criteria used for indexing the cache entries.
@@ -80,14 +80,14 @@ the caching functionality is built upon.
 ## Renewal management
 
 The tokens and leases are renewed by the proxy using the secret renewer that is
-made available via the OpenBao server's [Go
+made available via the Redacto KMS server's [Go
 API](https://godoc.org/github.com/openbao/openbao/api#Renewer). Proxy performs
 all operations in memory and does not persist anything to storage. This means
 that when the proxy is shut down, all the renewal operations are immediately
 terminated and there is no way for the proxy to resume renewals after the fact.
 Note that shutting down the proxy does not indicate revocations of the secrets,
 instead it only means that renewal responsibility for all the valid unrevoked
-secrets are no longer performed by the OpenBao proxy.
+secrets are no longer performed by the Redacto KMS proxy.
 
 ## API
 
@@ -173,7 +173,7 @@ These are common configuration values that live within the `persist` block:
   is not deleted. Defaults to `false`.
 
 - `exit_on_err` `(bool: optional)` - When set to true, if any errors occur during
-  a persistent cache restore, OpenBao Proxy will exit with an error. Defaults to `true`.
+  a persistent cache restore, Redacto KMS Proxy will exit with an error. Defaults to `true`.
 
 - `service_account_token_file` `(string: optional)` - When `type` is set to `kubernetes`,
 this configures the path on disk where the Kubernetes service account token can be found.
@@ -215,7 +215,7 @@ Here is an example of a cache configuration with the optional `persist` block,
 alongside a regular listener, and a listener that only serves metrics.
 
 ```hcl
-# Other OpenBao proxy configuration blocks
+# Other Redacto KMS proxy configuration blocks
 # ...
 
 cache {

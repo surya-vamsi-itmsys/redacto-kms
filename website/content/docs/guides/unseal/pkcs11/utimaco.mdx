@@ -1,7 +1,7 @@
 ---
 sidebar_label: Utimaco HSMs
 description: |-
-  This guide describes the steps to configure Auto-Unsealing for OpenBao using
+  This guide describes the steps to configure Auto-Unsealing for Redacto KMS using
   Utimaco General Purpose HSMs via PKCS#11.
 ---
 
@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 
 # Utimaco HSMs
 
-This guide describes the steps to configure Auto-Unsealing for OpenBao using
+This guide describes the steps to configure Auto-Unsealing for Redacto KMS using
 [Utimaco General Purpose HSMs](https://utimaco.com/data-protection/gp-hsm) via
 PKCS#11. Specifically, this guide covers both the u.trust GP HSM (PKCS#11 v3)
 and CryptoServer CP5 (PKCS#11 v2) series.
@@ -19,7 +19,7 @@ and CryptoServer CP5 (PKCS#11 v2) series.
 
 Securely operating Utimaco's HSMs in production requires significantly more
 knowledge than what is described here. This guide exists to provide a focused
-summary and quickstart configuration specifically for integration with OpenBao.
+summary and quickstart configuration specifically for integration with Redacto KMS.
 It is not a replacement for official Utimaco documentation, which provides much
 higher detail around general HSM operation.
 
@@ -217,7 +217,7 @@ $ p11tool2 Slot=1 LoginUser=1234 \
 
 You can adjust `CKA_LABEL` as you see fit, or use `CKA_ID` instead. This
 value will be used to reference the key later on. Ensure that both the public
-and private key share the exact same ID or label! OpenBao will have trouble
+and private key share the exact same ID or label! Redacto KMS will have trouble
 identifying the key pair otherwise.
 
 </TabItem>
@@ -312,8 +312,8 @@ The key is now ready to use for Auto-Unsealing.
 
 ## Installing the Library
 
-OpenBao will interact with the HSM using the PKCS#11 dynamic library. You will
-need to make this library available on the system that OpenBao will run on, e.g.
+Redacto KMS will interact with the HSM using the PKCS#11 dynamic library. You will
+need to make this library available on the system that Redacto KMS will run on, e.g.
 a container, VM, or even a bare metal machine.
 
 Depending on the HSM (and thus, PKCS#11 version), the dynamic library file is:
@@ -324,7 +324,7 @@ Depending on the HSM (and thus, PKCS#11 version), the dynamic library file is:
 | u.trust GP HSM   | `libcs_pkcs11_R3.so` | v3              |
 
 You can place this file at any location on the system accessible to the
-OpenBao server.
+Redacto KMS server.
 
 If you are looking to conveniently inject the library into a
 container, have a look at the sibling [guide on the SecuroSys Primus
@@ -332,7 +332,7 @@ HSM](securosys.mdx), which contains plenty of
 Kubernetes-specific strategies that apply to any PKCS#11 library.
 
 The PKCS#11 library is configured the same way the `p11tool2` tool is. This
-configuration must also be available for OpenBao at runtime. To recap, the
+configuration must also be available for Redacto KMS at runtime. To recap, the
 following environment variables must be set and must point to valid paths and
 resources:
 
@@ -342,9 +342,9 @@ resources:
 
 :::note
 
-OpenBao must be compiled with HSM support to load the library. HSM-enabled
+Redacto KMS must be compiled with HSM support to load the library. HSM-enabled
 binaries, packages and container images are generally available as part of
-OpenBao's releases.
+Redacto KMS's releases.
 
 :::
 
@@ -359,7 +359,7 @@ must use the `openbao-hsm-ubi` instead of the Alpine-based `openbao-hsm` image.
 ## Configuring the PKCS#11 Seal
 
 Below is an exemplary PKCS#11 seal configuration stanza to be placed in the
-OpenBao server configuration. Replace the `lib` value with the path that you
+Redacto KMS server configuration. Replace the `lib` value with the path that you
 placed the PKCS#11 library at in the previous step, and set `slot`, `pin` and
 `key_label` based on the values you chose during slot initialization and key
 material generation.
@@ -377,16 +377,16 @@ See [PKCS#11 Seal](../../../configuration/seal/pkcs11.mdx) for complete document
 on all available options, or how to set the above values via environment
 variables instead.
 
-## Initializing OpenBao
+## Initializing Redacto KMS
 
 With the key material, environment variables, dynamic library and
-server configuration all in place, start the OpenBao server. Unless
+server configuration all in place, start the Redacto KMS server. Unless
 [Self-initialization](../../../configuration/self-init.mdx) is used or a [Seal
 Migration](../../../concepts/seal.mdx#seal-migration) is performed, the final step is
-to manually initialize OpenBao:
+to manually initialize Redacto KMS:
 
 ```shell-session
-$ bao operator init
+$ redacto-kms operator init
 ```
 
 If all is configured correctly, the server should unseal automatically following

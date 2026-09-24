@@ -4,7 +4,7 @@ description: |-
   The "operator rekey" command generates a new set of unseal keys. This can
   optionally change the total number of key shares or the required threshold of
   those key shares to reconstruct the root key. This operation is zero
-  downtime, but it requires the OpenBao is unsealed and a quorum of existing
+  downtime, but it requires the Redacto KMS is unsealed and a quorum of existing
   unseal keys are provided.
 ---
 
@@ -19,7 +19,7 @@ Note: `operator rekey` command is deprecated, please use [rotate-keys](rotate-ke
 The `operator rekey` command generates a new set of unseal keys. This can
 optionally change the total number of key shares or the required threshold of
 those key shares to reconstruct the root key. This operation is zero downtime,
-but it requires the OpenBao is unsealed and a quorum of existing unseal keys are
+but it requires the Redacto KMS is unsealed and a quorum of existing unseal keys are
 provided.
 
 An unseal key may be provided directly on the command line as an argument to the
@@ -31,16 +31,16 @@ is available, the command will prompt for text.
 Initialize a rekey:
 
 ```shell-session
-$ bao operator rekey \
+$ redacto-kms operator rekey \
     -init \
     -key-shares=15 \
     -key-threshold=9
 ```
 
-Initialize a rekey when Auto Unseal is used for the OpenBao cluster:
+Initialize a rekey when Auto Unseal is used for the Redacto KMS cluster:
 
 ```shell-session
-$ bao operator rekey \
+$ redacto-kms operator rekey \
     -target=recovery \
     -init \
     -key-shares=15 \
@@ -50,7 +50,7 @@ $ bao operator rekey \
 Initialize a rekey and activate the verification process:
 
 ```shell-session
-$ bao operator rekey \
+$ redacto-kms operator rekey \
     -init \
     -key-shares=15 \
     -key-threshold=9 \
@@ -60,17 +60,17 @@ $ bao operator rekey \
 Rekey and encrypt the resulting unseal keys with PGP:
 
 ```shell-session
-$ bao operator rekey \
+$ redacto-kms operator rekey \
     -init \
     -key-shares=3 \
     -key-threshold=2 \
     -pgp-keys="keybase:openbao,keybase:jefferai,keybase:sethvargo"
 ```
 
-Rekey an Auto Unseal OpenBao and encrypt the resulting recovery keys with PGP:
+Rekey an Auto Unseal Redacto KMS and encrypt the resulting recovery keys with PGP:
 
 ```shell-session
-$ bao operator rekey \
+$ redacto-kms operator rekey \
     -target=recovery \
     -init \
     -key-shares=1 \
@@ -78,10 +78,10 @@ $ bao operator rekey \
     -pgp-keys=keybase:grahamopenbao
 ```
 
-Store encrypted PGP keys in OpenBao's core:
+Store encrypted PGP keys in Redacto KMS's core:
 
 ```shell-session
-$ bao operator rekey \
+$ redacto-kms operator rekey \
     -init \
     -pgp-keys="..." \
     -backup
@@ -90,19 +90,19 @@ $ bao operator rekey \
 Retrieve backed-up unseal keys:
 
 ```shell-session
-$ bao operator rekey -backup-retrieve
+$ redacto-kms operator rekey -backup-retrieve
 ```
 
 Delete backed-up unseal keys:
 
 ```shell-session
-$ bao operator rekey -backup-delete
+$ redacto-kms operator rekey -backup-delete
 ```
 
 Perform the verification of the rekey using the verification nonce:
 
 ```shell-session
-$ bao operator rekey -verify -nonce="..."
+$ redacto-kms operator rekey -verify -nonce="..."
 ```
 
 ## Usage
@@ -114,7 +114,7 @@ flags](../index.mdx) included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### Command options
 
@@ -154,7 +154,7 @@ flags](../index.mdx) included on all commands.
 ### Backup options
 
 - `-backup` `(bool: false)` - Store a backup of the current PGP encrypted unseal
-  keys in OpenBao's core. The encrypted values can be recovered in the event of
+  keys in Redacto KMS's core. The encrypted values can be recovered in the event of
   failure or discarded after success. See the -backup-delete and
   \-backup-retrieve options for more information. This option only applies when
   the existing unseal keys were PGP encrypted.

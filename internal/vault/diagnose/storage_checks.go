@@ -18,7 +18,7 @@ const (
 	secretVal string = "diagnoseSecret"
 
 	LatencyWarning    string        = "Latency above 100 ms: "
-	DirAccessErr      string        = "Vault storage is directly connected to a Consul server."
+	DirAccessErr      string        = "Redacto KMS storage is directly connected to a Consul server."
 	DirAccessAdvice   string        = "We recommend connecting to a local agent."
 	AddrDNExistErr    string        = "Storage config address does not exist: 127.0.0.1:8500 will be used."
 	wrongRWValsPrefix string        = "Storage get and put gave wrong values: "

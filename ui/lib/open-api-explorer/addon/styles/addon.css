@@ -73,7 +73,7 @@
 }
 
 .swagger-ember .swagger-ui .opblock-tag-section .opblock-tag {
-  color: #0a0a0a;
+  color: var(--color-text);
   font-weight: 600 !important;
   font-size: 1rem !important;
   transition: box-shadow 150ms, margin 150ms, padding 150ms;
@@ -92,7 +92,7 @@
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   position: relative;
-  box-shadow: 0 2px 0 -1px #BAC1CC, 0 -2px 0 -1px #BAC1CC, 0 0 0 1px #BAC1CC, 0 8px 4px -4px rgba(10, 10, 10, 0.1), 0 6px 8px -2px rgba(10, 10, 10, 0.05);
+  box-shadow: 0 2px 0 -1px var(--color-border-strong), 0 -2px 0 -1px var(--color-border-strong), 0 0 0 1px var(--color-border-strong), 0 8px 4px -4px rgba(10, 10, 10, 0.1), 0 6px 8px -2px rgba(10, 10, 10, 0.05);
 }
 
 /*shrink the size of the arrows*/
@@ -105,45 +105,45 @@
 
 /*operation box - GET (blue) */
 .swagger-ember .swagger-ui .opblock.opblock-get {
-	background: #f5f8ff;
-	border: 1px solid #bfd4ff;
+	background: var(--color-primary-subtle);
+	border: 1px solid var(--color-primary-muted);
 }
 
 /*operation label*/
 .swagger-ember .swagger-ui .opblock.opblock-get .opblock-summary-method {
-	color: #1563ff;
+	color: var(--color-primary);
 	background: none;
 }
  /*and expanded tab highlight */
 .swagger-ember .swagger-ui .opblock.opblock-get .tab-header .tab-item.active h4 span::after {
-	background: #1563ff;
+	background: var(--color-primary);
 }
 
 
 /*operation box - POST (green) */
 .swagger-ember .swagger-ui .opblock.opblock-post {
-	background: #fafdfa;
-	border: 1px solid #c6e9c9;
+	background: var(--color-success-surface-subtle);
+	border: 1px solid var(--color-success-border);
 }
 .swagger-ember .swagger-ui .opblock.opblock-post .opblock-summary-method {
-	color: #2eb039;
+	color: var(--color-success-strong);
   background: none;
 }
 .swagger-ember .swagger-ui .opblock.opblock-post .tab-header .tab-item.active h4 span::after {
-	background: #2eb039;
+	background: var(--color-success-strong);
 }
 
 /*operation box - POST (red) */
 .swagger-ember .swagger-ui .opblock.opblock-delete {
-	background: #fdfafb;
-	border: 1px solid #f9ecee;
+	background: var(--color-error-surface-subtle);
+	border: 1px solid var(--color-error-surface);
 }
 .swagger-ember .swagger-ui .opblock.opblock-delete .opblock-summary-method {
-  color: #c73445;
+  color: var(--color-error);
 	background: none;
 }
 .swagger-ember .swagger-ui .opblock.opblock-delete .tab-header .tab-item.active h4 span::after {
-	background: #c73445;
+	background: var(--color-error);
 }
 
 /*remove "LOADING" from initial loading spinner*/
@@ -153,5 +153,5 @@
 
 /*add text about requests to a live vault server*/
 .swagger-ember .swagger-ui .btn.execute::after {
-	content: " - send a request with your token to Vault."
+	content: " - send a request with your token to Redacto KMS."
 }

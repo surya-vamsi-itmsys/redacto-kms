@@ -1,14 +1,14 @@
 ---
 description: >-
-  The Transit plugin for OpenBao's External Keys proxies cryptographic
-  operations to an OpenBao Transit engine on the network.
+  The Transit plugin for Redacto KMS's External Keys proxies cryptographic
+  operations to a Redacto KMS Transit engine on the network.
 ---
 
 # Transit
 
-The Transit plugin proxies cryptographic operations to an OpenBao Transit engine
-on the network. This allows offloading cryptographic operations in an OpenBao
-instance to a Transit engine present within another OpenBao instance.
+The Transit plugin proxies cryptographic operations to a Redacto KMS Transit engine
+on the network. This allows offloading cryptographic operations in a Redacto KMS
+instance to a Transit engine present within another Redacto KMS instance.
 
 :::warning
 
@@ -22,16 +22,16 @@ Transit engines. Avoid doing so.
 
 The following parameters are set per-config:
 
-- `address` `(string: "https://127.0.0.1:8200")` - The address of the OpenBao
+- `address` `(string: "https://127.0.0.1:8200")` - The address of the Redacto KMS
   server to proxy operations to.
 
-- `token` `(string: <required>)` - The OpenBao token to use to authenticate.
+- `token` `(string: <required>)` - The Redacto KMS token to use to authenticate.
 
   :::info
 
   This plugin does not yet support dynamically retrieving a token via an
   auth method and is primarily intended to dogfood External Keys via an
-  OpenBao-native KMS backend. As such, it may be of limited use for the time
+  Redacto KMS-native KMS backend. As such, it may be of limited use for the time
   being.
 
   :::
@@ -43,20 +43,20 @@ The following parameters are set per-config:
   proxy operations to.
 
 - `tls_server_name` `(string: <optional>)` - Name to use as the SNI host when
-  connecting to the OpenBao server via TLS.
+  connecting to the Redacto KMS server via TLS.
 
 - `tls_skip_verify` `(bool: false)` - Disable verification of TLS certificates.
   Using this option is highly discouraged and decreases the security of data
-  transmissions to and from the OpenBao server.
+  transmissions to and from the Redacto KMS server.
 
 - `tls_ca_cert_bytes` `(string: <optional>)` - PEM-encoded CA cert chain to use
-  when communicating with the OpenBao server over TLS.
+  when communicating with the Redacto KMS server over TLS.
 
 - `tls_client_cert_bytes` `(string: <optional>)` - PEM-encoded client
-  certificate to use when communicating with the OpenBao server over TLS.
+  certificate to use when communicating with the Redacto KMS server over TLS.
 
 - `tls_client_key_bytes` `(string: <optional>)` - PEM-encoded client key to use
-  when communicating with the OpenBao server over TLS.
+  when communicating with the Redacto KMS server over TLS.
 
 The following parameters are set per-key:
 
@@ -71,7 +71,7 @@ The following parameters are set per-key:
   When set to `false`, make a best effort to pre-hash signature inputs before
   transferring them over the network, constrained by the available hash
   functions and key type used. A setting of `true` may be desirable to ensure
-  plaintext signature inputs are auditable on the remote OpenBao server.
+  plaintext signature inputs are auditable on the remote Redacto KMS server.
 
 ## Supported algorithms
 
@@ -82,22 +82,22 @@ derivation enabled.
 
 ## Example
 
-Within OpenBao instance A, create a Transit mount:
+Within Redacto KMS instance A, create a Transit mount:
 
 ```shell-session
-$ bao secrets enable transit
+$ redacto-kms secrets enable transit
 ```
 
 ... and create a key of some type:
 
 ```shell-session
-$ bao write transit/keys/example type=mldsa-44
+$ redacto-kms write transit/keys/example type=mldsa-44
 ```
 
-Within OpenBao instance B, create a config:
+Within Redacto KMS instance B, create a config:
 
 ```shell-session
-$ bao write sys/external-keys/configs/transit-on-openbao-a \
+$ redacto-kms write sys/external-keys/configs/transit-on-openbao-a \
   plugin=transit \
   address=https://openbao-a.example.com \
   token=<...>
@@ -106,11 +106,11 @@ $ bao write sys/external-keys/configs/transit-on-openbao-a \
 then create a mapping to the key in instance A:
 
 ```shell-session
-$ bao write sys/external-keys/configs/transit-on-openbao-a/keys/example \
+$ redacto-kms write sys/external-keys/configs/transit-on-openbao-a/keys/example \
   name=example \
   version=1
 ```
 
-The configured key can then be used from OpenBao instance B by adding a
+The configured key can then be used from Redacto KMS instance B by adding a
 [grant](../index.mdx#manage-grants) on the desired mount path and following any
 engine-specific steps such as setting up an issuer in PKI.

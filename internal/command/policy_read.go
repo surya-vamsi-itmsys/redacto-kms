@@ -26,14 +26,14 @@ func (c *PolicyReadCommand) Synopsis() string {
 
 func (c *PolicyReadCommand) Help() string {
 	helpText := `
-Usage: bao policy read [options] [NAME]
+Usage: redacto-kms policy read [options] [NAME]
 
-  Prints the contents and metadata of the OpenBao policy named NAME. If the policy
+  Prints the contents and metadata of the Redacto KMS policy named NAME. If the policy
   does not exist, an error is returned.
 
   Read the policy named "my-policy":
 
-      $ bao policy read my-policy
+      $ redacto-kms policy read my-policy
 
 ` + c.Flags().Help()
 

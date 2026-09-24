@@ -1,26 +1,26 @@
 ---
 sidebar_label: PostgreSQL Storage
 description: |-
-  The PostgreSQL storage backend is used to persist OpenBao's data in a PostgreSQL
+  The PostgreSQL storage backend is used to persist Redacto KMS's data in a PostgreSQL
   server or cluster.
 ---
 
 # PostgreSQL storage backend
 
-The PostgreSQL storage backend is used to persist OpenBao's data in a
+The PostgreSQL storage backend is used to persist Redacto KMS's data in a
 [PostgreSQL][postgresql] server or cluster.
 
 :::info
 
 The minimum supported PostgreSQL is version 9.5. Support for the legacy upsert
-functionality was dropped in OpenBao v2.4.0.
+functionality was dropped in Redacto KMS v2.4.0.
 
 :::
 
 :::tip
 
 **High Availability** – the PostgreSQL storage backend supports High
-Availability and Horizontal Scalability (as of OpenBao v2.7.0).
+Availability and Horizontal Scalability (as of Redacto KMS v2.7.0).
 
 :::
 
@@ -50,22 +50,22 @@ to disable SSL.
 
 - `connection_url` `(string: "")` – Specifies the connection string to
   use to authenticate and connect to PostgreSQL. The connection URL can also be
-  set using the `BAO_PG_CONNECTION_URL` environment variable. A full list of supported
+  set using the `REDACTO_KMS_PG_CONNECTION_URL` environment variable. A full list of supported
   parameters can be found in the [pgx library][pgxlib] and [PostgreSQL connection string][pg_conn_docs]
   documentation. For example connection string URLs, see the examples section below.
-  OpenBao supports standard PostgreSQL component environment variables as well,
+  Redacto KMS supports standard PostgreSQL component environment variables as well,
   [including `PGHOST`](https://www.postgresql.org/docs/current/libpq-envars.html);
   see [`pgconn.ParseConfig(...)`](https://pkg.go.dev/github.com/jackc/pgconn)
   for more information. This configuration option may be blank.
 
 - `table` `(string: "openbao_kv_store")` – Specifies the name of the table in
-  which to write OpenBao data. OpenBao will attempt to create it if missing and
+  which to write Redacto KMS data. Redacto KMS will attempt to create it if missing and
   `skip_create_table=false` (the default).
 
 - `max_idle_connections` `(int)` - Default not set. Sets the maximum number of
   connections in the idle connection pool. See
   [golang docs on SetMaxIdleConns][golang_setmaxidleconns] for more information.
-  Requires OpenBao 1.2 or later.
+  Requires Redacto KMS 1.2 or later.
 
 - `max_parallel` `(string: "128")` – Specifies the maximum number of concurrent
   requests to PostgreSQL.
@@ -74,18 +74,18 @@ to disable SSL.
   PostgreSQL 9.5 or later.
 
 - `ha_table` `(string: "openbao_ha_locks")` – Specifies the name of the table to use
-  for storing High Availability information. OpenBao will attempt to create it
+  for storing High Availability information. Redacto KMS will attempt to create it
   if missing and `skip_create_table=false` (the default).
 
 - `skip_create_table` `(string: "true|false", default "false")` - When enabled,
   will not attempt to automatically create database tables if missing. Requires
   PostgreSQL 9.5 or later. Set to `true` if the database user does not have
-  the required permissions; otherwise, OpenBao will fail to start.
+  the required permissions; otherwise, Redacto KMS will fail to start.
 
 - `max_connect_retries` `(int: 1)` - Maximum number of retries to perform
   when waiting for the database to be active. This uses exponential backoff,
   starting with 15ms and increasing to 5s between retries. To ensure the
-  connection is active, OpenBao calls [`db.Ping()`](https://pkg.go.dev/database/sql#DB.Ping).
+  connection is active, Redacto KMS calls [`db.Ping()`](https://pkg.go.dev/database/sql#DB.Ping).
   Can be set to zero to ensure unlimited retries.
 
 ## `postgresql` examples
@@ -112,7 +112,7 @@ storage "postgresql" {
 
 ## Manually creating tables
 
-OpenBao will attempt to automatically create tables compatible with PostgreSQL
+Redacto KMS will attempt to automatically create tables compatible with PostgreSQL
 9.5 or later. However, to manually create tables, use the following schemas:
 
 ```sql
@@ -141,7 +141,7 @@ CREATE TABLE openbao_ha_locks (
 
 ## Horizontal scalability
 
-Since OpenBao v2.7.0, the PostgreSQL storage backend supports horizontal
+Since Redacto KMS v2.7.0, the PostgreSQL storage backend supports horizontal
 scalability. This requires an active cluster GRPC connection; ensure
 `cluster_address` is provided in at least one `listener` block and
 `cluster_addr` is set in the configuration file. When successfully enabled,
@@ -156,7 +156,7 @@ will be visible on standby nodes.
 
 Use of horizontal (read) scalability requires physical replication. If using
 logical replication, you **must** set `disable_standby_reads` in the storage
-configuration as LSN Index values differ across PostgreSQL nodes and OpenBao
+configuration as LSN Index values differ across PostgreSQL nodes and Redacto KMS
 will not be able to use them for tracking invalidations.
 
 :::

@@ -30,25 +30,25 @@ type OperatorUnsealCommand struct {
 }
 
 func (c *OperatorUnsealCommand) Synopsis() string {
-	return "Unseals the OpenBao server"
+	return "Unseals the Redacto KMS server"
 }
 
 func (c *OperatorUnsealCommand) Help() string {
 	helpText := `
-Usage: bao operator unseal [options] [KEY]
+Usage: redacto-kms operator unseal [options] [KEY]
 
-  Provide a portion of the root key to unseal an OpenBao server. OpenBao starts
+  Provide a portion of the root key to unseal a Redacto KMS server. Redacto KMS starts
   in a sealed state. It cannot perform operations until it is unsealed. This
   command accepts a portion of the root key (an "unseal key").
 
   The unseal key can be supplied as an argument to the command, but this is
   not recommended as the unseal key will be available in your history:
 
-      $ bao operator unseal IXyR0OJnSFobekZMMCKCoVEpT7wI6l+USMzE3IcyDyo=
+      $ redacto-kms operator unseal IXyR0OJnSFobekZMMCKCoVEpT7wI6l+USMzE3IcyDyo=
 
   Instead, run the command with no arguments and it will prompt for the key:
 
-      $ bao operator unseal
+      $ redacto-kms operator unseal
       Key (will be hidden): IXyR0OJnSFobekZMMCKCoVEpT7wI6l+USMzE3IcyDyo=
 
 ` + c.Flags().Help()

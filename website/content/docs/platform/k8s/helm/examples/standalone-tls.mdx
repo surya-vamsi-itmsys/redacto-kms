@@ -1,6 +1,6 @@
 ---
 description: |-
-  Describes how to set up a standalone OpenBao with TLS certificate
+  Describes how to set up a standalone Redacto KMS with TLS certificate
 ---
 
 # Standalone server with TLS
@@ -12,7 +12,7 @@ description: |-
 :::
 
 
-This example can be used to set up a single server OpenBao cluster using TLS.
+This example can be used to set up a single server Redacto KMS cluster using TLS.
 
 1. Create key & certificate using Kubernetes CA
 2. Store key & cert into [Kubernetes secrets store](https://kubernetes.io/docs/concepts/configuration/secret/)
@@ -23,11 +23,11 @@ This example can be used to set up a single server OpenBao cluster using TLS.
 There are four variables that will be used in this example.
 
 ```bash
-# SERVICE is the name of the OpenBao service in kubernetes.
+# SERVICE is the name of the Redacto KMS service in kubernetes.
 # It does not have to match the actual running service, though it may help for consistency.
 export SERVICE=openbao-server-tls
 
-# NAMESPACE where the OpenBao service is running.
+# NAMESPACE where the Redacto KMS service is running.
 export NAMESPACE=openbao-namespace
 
 # SECRET_NAME to create in the kubernetes secrets store.
@@ -205,7 +205,7 @@ If this process is automated, you may need to wait to ensure the certificate has
 
 ## 3. helm configuration
 
-The below `custom-values.yaml` can be used to set up a single server OpenBao cluster using TLS.
+The below `custom-values.yaml` can be used to set up a single server Redacto KMS cluster using TLS.
 This assumes that a Kubernetes `secret` exists with the server certificate, key and
 certificate authority:
 

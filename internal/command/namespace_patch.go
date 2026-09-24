@@ -32,19 +32,19 @@ func (c *NamespacePatchCommand) Synopsis() string {
 
 func (c *NamespacePatchCommand) Help() string {
 	helpText := `
-Usage: bao namespace patch [options] PATH
+Usage: redacto-kms namespace patch [options] PATH
 
   Patch an existing namespace. The namespace patched will be relative to the
-  namespace provided in either the BAO_NAMESPACE environment variable or
+  namespace provided in either the REDACTO_KMS_NAMESPACE environment variable or
   -namespace CLI flag.
 
   Patch an existing child namespace by adding and removing custom-metadata (e.g. ns1/):
 
-      $ bao namespace patch -custom-metadata=foo=abc -remove-custom-metadata=bar ns1
+      $ redacto-kms namespace patch -custom-metadata=foo=abc -remove-custom-metadata=bar ns1
 
   Patch an existing child namespace from a parent namespace (e.g. ns1/ns2/):
 
-      $ bao namespace patch -namespace=ns1 -custom-metadata=foo=abc ns2
+      $ redacto-kms namespace patch -namespace=ns1 -custom-metadata=foo=abc ns2
 
 ` + c.Flags().Help()
 

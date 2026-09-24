@@ -975,13 +975,13 @@ func TestAgent_Template_VaultClientFromEnv(t *testing.T) {
 	testCases := map[string]struct {
 		env map[string]string
 	}{
-		"BAO_ADDR and BAO_CACERT": {
+		"REDACTO_KMS_ADDR and REDACTO_KMS_CACERT": {
 			env: map[string]string{
 				api.EnvVaultAddress: vaultAddr,
 				api.EnvVaultCACert:  cluster.CACertPEMFile,
 			},
 		},
-		"BAO_ADDR and BAO_CACERT_BYTES": {
+		"REDACTO_KMS_ADDR and REDACTO_KMS_CACERT_BYTES": {
 			env: map[string]string{
 				api.EnvVaultAddress:     vaultAddr,
 				api.EnvVaultCACertBytes: string(cluster.CACertPEM),

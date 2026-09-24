@@ -2,12 +2,12 @@
 sidebar_label: Overview
 description: |-
   The "plugin" command groups subcommands for interacting with
-  OpenBao's plugins and the plugin catalog.
+  Redacto KMS's plugins and the plugin catalog.
 ---
 
 # plugin
 
-The `plugin` command groups subcommands for interacting with OpenBao's plugins and
+The `plugin` command groups subcommands for interacting with Redacto KMS's plugins and
 the plugin catalog
 
 ## Examples
@@ -15,7 +15,7 @@ the plugin catalog
 Download OCI-based plugins configured in server configuration:
 
 ```shell-session
-$ bao plugin init -config=/etc/openbao/openbao.hcl
+$ redacto-kms plugin init -config=/etc/openbao/openbao.hcl
 2025-09-17T21:41:35.311+0200 [INFO]  Plugin directory: /opt/openbao/plugins
 2025-09-17T21:41:35.311+0200 [INFO]  Found 2 OCI plugin(s) in configuration
 2025-09-17T21:41:35.311+0200 [INFO]  downloading plugin from OCI registry: plugin=secrets-aws url=ghcr.io/openbao/openbao-plugin-secrets-aws:v0.0.1
@@ -29,7 +29,7 @@ $ bao plugin init -config=/etc/openbao/openbao.hcl
 List all available secret plugins in the catalog:
 
 ```shell-session
-$ bao plugin list secret
+$ redacto-kms plugin list secret
 
 Name            Version
 ----            -------
@@ -41,7 +41,7 @@ kv              v0.15.0+builtin
 Register a new secret plugin to the catalog:
 
 ```shell-session
-$ bao plugin register \
+$ redacto-kms plugin register \
   -sha256=d3f0a8be02f6c074cf38c9c99d4d04c9c6466249 \
   secret my-custom-plugin
 Success! Registered plugin: my-custom-plugin
@@ -50,7 +50,7 @@ Success! Registered plugin: my-custom-plugin
 Get information about a plugin in the catalog:
 
 ```shell-session
-$ bao plugin info secret my-custom-plugin
+$ redacto-kms plugin info secret my-custom-plugin
 Key                   Value
 ---                   -----
 args                  []
@@ -65,7 +65,7 @@ version               n/a
 ## Usage
 
 ```text
-Usage: bao plugin <subcommand> [options] [args]
+Usage: redacto-kms plugin <subcommand> [options] [args]
 
   # ...
 

@@ -10,22 +10,22 @@ const testHelper = require('./test-helper');
 
 (async function () {
   try {
-    let unsealKeys = process.env.VAULT_UNSEAL_KEYS;
+    let unsealKeys = process.env.REDACTO_KMS_UNSEAL_KEYS;
     if (!unsealKeys) {
       console.error(
         'Cannot run ember tests without unseal keys, please make sure to export the keys, in an env ' +
-          'var named: VAULT_UNSEAL_KEYS'
+          'var named: REDACTO_KMS_UNSEAL_KEYS'
       );
       process.exit(1);
     } else {
       unsealKeys = JSON.parse(unsealKeys);
     }
 
-    const rootToken = process.env.VAULT_TOKEN;
+    const rootToken = process.env.REDACTO_KMS_TOKEN;
     if (!rootToken) {
       console.error(
         'Cannot run ember tests without root token, please make sure to export the root token, in an env ' +
-          'var named: VAULT_TOKEN'
+          'var named: REDACTO_KMS_TOKEN'
       );
       process.exit(1);
     }
@@ -36,16 +36,16 @@ const testHelper = require('./test-helper');
     process.exit(1);
   }
 
-  const vaultAddr = process.env.VAULT_ADDR;
+  const vaultAddr = process.env.REDACTO_KMS_ADDR;
   if (!vaultAddr) {
     console.error(
-      'Cannot run ember tests without the OpenBao Address, please make sure to export the OpenBao address, in an env ' +
-        'var named: VAULT_ADDR'
+      'Cannot run ember tests without the Redacto KMS Address, please make sure to export the Redacto KMS address, in an env ' +
+        'var named: REDACTO_KMS_ADDR'
     );
     process.exit(1);
   }
 
-  console.log('VAULT_ADDR=' + vaultAddr);
+  console.log('REDACTO_KMS_ADDR=' + vaultAddr);
 
   try {
     const testArgs = ['test', '-c', 'testem.enos.js'];

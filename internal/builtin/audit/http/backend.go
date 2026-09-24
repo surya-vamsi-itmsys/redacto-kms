@@ -217,7 +217,7 @@ func (b *Backend) log(ctx context.Context, buf *bytes.Buffer) error {
 	req.Header = b.headers.Clone()
 
 	if value := b.headers.Get("User-Agent"); value != "" {
-		req.Header.Add("User-Agent", fmt.Sprintf("OpenBaoAuditor/%s", version.GetVersion().VersionNumber()))
+		req.Header.Add("User-Agent", fmt.Sprintf("Redacto KMSAuditor/%s", version.GetVersion().VersionNumber()))
 	}
 
 	resp, err := client.Do(req)

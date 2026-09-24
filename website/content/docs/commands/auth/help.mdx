@@ -20,10 +20,10 @@ Each auth method produces its own help output.
 Get usage instructions for the userpass auth method:
 
 ```shell-session
-$ bao auth help userpass
-Usage: bao login -method=userpass [CONFIG K=V...]
+$ redacto-kms auth help userpass
+Usage: redacto-kms login -method=userpass [CONFIG K=V...]
 
-  The userpass auth method allows users to authenticate using OpenBao's
+  The userpass auth method allows users to authenticate using Redacto KMS's
   internal user database.
 
 # ...
@@ -32,7 +32,7 @@ Usage: bao login -method=userpass [CONFIG K=V...]
 Print usage for the auth method enabled at my-method/
 
 ```shell-session
-$ bao auth help my-method/
+$ redacto-kms auth help my-method/
 # ...
 ```
 

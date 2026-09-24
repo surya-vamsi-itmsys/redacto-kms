@@ -24,7 +24,7 @@ returned on get requests.
 Undelete version 3 of the key "creds":
 
 ```shell-session
-$ bao kv undelete -mount=secret -versions=3 creds
+$ redacto-kms kv undelete -mount=secret -versions=3 creds
 Success! Data written to: secret/undelete/creds
 ```
 
@@ -37,7 +37,7 @@ included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### Command options
 

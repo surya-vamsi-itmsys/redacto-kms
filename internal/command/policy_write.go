@@ -31,7 +31,7 @@ func (c *PolicyWriteCommand) Synopsis() string {
 
 func (c *PolicyWriteCommand) Help() string {
 	helpText := `
-Usage: bao policy write [options] NAME PATH
+Usage: redacto-kms policy write [options] NAME PATH
 
   Uploads a policy with name NAME from the contents of a local file PATH or
   stdin. If PATH is "-", the policy is read from stdin. Otherwise, it is
@@ -39,11 +39,11 @@ Usage: bao policy write [options] NAME PATH
 
   Upload a policy named "my-policy" from "/tmp/policy.hcl" on the local disk:
 
-      $ bao policy write my-policy /tmp/policy.hcl
+      $ redacto-kms policy write my-policy /tmp/policy.hcl
 
   Upload a policy from stdin:
 
-      $ cat my-policy.hcl | bao policy write my-policy -
+      $ cat my-policy.hcl | redacto-kms policy write my-policy -
 
 ` + c.Flags().Help()
 

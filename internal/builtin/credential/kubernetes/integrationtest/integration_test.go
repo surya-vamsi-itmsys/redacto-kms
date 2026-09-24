@@ -50,8 +50,8 @@ func run(m *testing.M) int {
 	}
 	defer close()
 
-	os.Setenv("BAO_ADDR", fmt.Sprintf("http://127.0.0.1:%d", localPort))
-	os.Setenv("BAO_TOKEN", "root")
+	os.Setenv("REDACTO_KMS_ADDR", fmt.Sprintf("http://127.0.0.1:%d", localPort))
+	os.Setenv("REDACTO_KMS_TOKEN", "root")
 
 	return m.Run()
 }
@@ -78,7 +78,7 @@ func createToken(t *testing.T, sa string, audiences []string) string {
 
 func setupKubernetesAuth(t *testing.T, boundServiceAccountName string, mountConfigOverride map[string]any, roleConfigOverride map[string]any) (*api.Client, func()) {
 	t.Helper()
-	// Pick up VAULT_ADDR and VAULT_TOKEN from env vars
+	// Pick up REDACTO_KMS_ADDR and REDACTO_KMS_TOKEN from env vars
 	client, err := api.NewClient(nil)
 	if err != nil {
 		t.Fatal(err)

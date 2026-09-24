@@ -1,83 +1,83 @@
 ---
 description: >-
-  Policies are how authorization is done in OpenBao, allowing you to restrict
-  which parts of OpenBao a user can access.
+  Policies are how authorization is done in Redacto KMS, allowing you to restrict
+  which parts of Redacto KMS a user can access.
 ---
 
 # Policies
 
-Everything in OpenBao is path-based, and policies are no exception. Policies
+Everything in Redacto KMS is path-based, and policies are no exception. Policies
 provide a declarative way to grant or forbid access to certain paths and
-operations in OpenBao. This section discusses policy workflows and syntaxes.
+operations in Redacto KMS. This section discusses policy workflows and syntaxes.
 
 Policies are **deny by default**, so an empty policy grants no permission in the
 system.
 
 ## Policy-authorization workflow
 
-Before a human or machine can gain access, an administrator must configure OpenBao
+Before a human or machine can gain access, an administrator must configure Redacto KMS
 with an [auth method](auth.mdx). Authentication is
 the process by which human or machine-supplied information is verified against
 an internal or external system.
 
 Consider the following diagram, which illustrates the steps a security team
-would take to configure OpenBao to authenticate using a corporate LDAP or
+would take to configure Redacto KMS to authenticate using a corporate LDAP or
 ActiveDirectory installation. Even though this example uses LDAP, the concept
 applies to all auth methods.
 
-![OpenBao Auth Workflow](/img/openbao-policy-workflow.png)
+![Redacto KMS Auth Workflow](/img/openbao-policy-workflow.png)
 
-1. The security team configures OpenBao to connect to an auth method.
-   This configuration varies by auth method. In the case of LDAP, OpenBao
+1. The security team configures Redacto KMS to connect to an auth method.
+   This configuration varies by auth method. In the case of LDAP, Redacto KMS
    needs to know the address of the LDAP server and whether to connect using TLS.
-   It is important to note that OpenBao does not store a copy of the LDAP database -
-   OpenBao will delegate the authentication to the auth method.
+   It is important to note that Redacto KMS does not store a copy of the LDAP database -
+   Redacto KMS will delegate the authentication to the auth method.
 
 1. The security team authors a policy (or uses an existing policy) which grants
-   access to paths in OpenBao. Policies are written in HCL in your editor of
+   access to paths in Redacto KMS. Policies are written in HCL in your editor of
    preference and saved to disk.
 
-1. The policy's contents are uploaded and stored in OpenBao and referenced by name.
+1. The policy's contents are uploaded and stored in Redacto KMS and referenced by name.
    You can think of the policy's name as a pointer or symlink to its set of rules.
 
 1. Most importantly, the security team maps data in the auth method to a policy.
    For example, the security team might create mappings like:
 
-   > Members of the OU group "dev" map to the OpenBao policy named "readonly-dev".
+   > Members of the OU group "dev" map to the Redacto KMS policy named "readonly-dev".
 
    or
 
-   > Members of the OU group "ops" map to the OpenBao policies "admin" and "auditor".
+   > Members of the OU group "ops" map to the Redacto KMS policies "admin" and "auditor".
 
-Now OpenBao has an internal mapping between a backend authentication system and
-internal policy. When a user authenticates to OpenBao, the actual authentication
+Now Redacto KMS has an internal mapping between a backend authentication system and
+internal policy. When a user authenticates to Redacto KMS, the actual authentication
 is delegated to the auth method. As a user, the flow looks like:
 
-![OpenBao Auth Workflow](/img/openbao-auth-workflow.png)
+![Redacto KMS Auth Workflow](/img/openbao-auth-workflow.png)
 
-1. A user attempts to authenticate to OpenBao using their LDAP credentials,
-   providing OpenBao with their LDAP username and password.
+1. A user attempts to authenticate to Redacto KMS using their LDAP credentials,
+   providing Redacto KMS with their LDAP username and password.
 
-2. OpenBao establishes a connection to LDAP and asks the LDAP server to verify the
+2. Redacto KMS establishes a connection to LDAP and asks the LDAP server to verify the
    given credentials. Assuming this is successful, the LDAP server returns the
    information about the user, including the OU groups.
 
-3. OpenBao maps the result from the LDAP server to policies inside OpenBao using the
-   mapping configured by the security team in the previous section. OpenBao then
+3. Redacto KMS maps the result from the LDAP server to policies inside Redacto KMS using the
+   mapping configured by the security team in the previous section. Redacto KMS then
    generates a token and attaches the matching policies.
 
-4. OpenBao returns the token to the user. This token has the correct policies
+4. Redacto KMS returns the token to the user. This token has the correct policies
    assigned, as dictated by the mapping configuration that was setup by the
    security team in advance.
 
-The user then uses this OpenBao token for future operations. If the user performs
+The user then uses this Redacto KMS token for future operations. If the user performs
 the authentication steps again, they will get a _new_ token. The token will have
 the same permissions, but the actual token will be different. Authenticating a
 second time does not invalidate the original token.
 
 ## Policy syntax
 
-Policies are written in [HCL][hcl] or JSON and describe which paths in OpenBao a
+Policies are written in [HCL][hcl] or JSON and describe which paths in Redacto KMS a
 user or machine is allowed to access.
 
 [hcl]: https://github.com/hashicorp/hcl
@@ -106,7 +106,7 @@ Equivalently in JSON, this would be:
 When this policy is assigned to a token, the token can read from `"secret/foo"`.
 However, the token cannot update or delete `"secret/foo"`, since the
 capabilities do not allow it. Because policies are **deny by default**, the
-token would have no other access in OpenBao.
+token would have no other access in Redacto KMS.
 
 Here is a more detailed policy, and it is documented inline:
 
@@ -140,7 +140,7 @@ path "secret/restricted" {
 
 Policies use path-based matching to test the set of capabilities against a
 request. A policy `path` may specify an exact path to match, or it could specify
-a glob pattern which instructs OpenBao to use a prefix match:
+a glob pattern which instructs Redacto KMS to use a prefix match:
 
 ```ruby
 # Permit reading only "secret/foo". an attached token cannot read "secret/food"
@@ -192,14 +192,14 @@ path "secret/+/+/teamb" {
 }
 ```
 
-OpenBao's architecture is similar to a filesystem. Every action in OpenBao has a
-corresponding path and capability - even OpenBao's internal core configuration
+Redacto KMS's architecture is similar to a filesystem. Every action in Redacto KMS has a
+corresponding path and capability - even Redacto KMS's internal core configuration
 endpoints live under the `"sys/"` path. Policies define access to these paths and
-capabilities, which controls a token's access to credentials in OpenBao.
+capabilities, which controls a token's access to credentials in Redacto KMS.
 
 :::warning
 
-**Note:** The policy rules that OpenBao applies are determined by the most-specific match
+**Note:** The policy rules that Redacto KMS applies are determined by the most-specific match
 available, using the priority rules described below. This may be an exact match
 or the longest-prefix match of a glob. If the same pattern appears in multiple
 policies, we take the union of the capabilities. If different patterns appear in
@@ -233,7 +233,7 @@ last character of the path**!
 
 When providing `list` or `scan` capabilities, it is important to note that
 since listing always operates on a prefix, policies must operate on a prefix
-because OpenBao will sanitize request paths to be prefixes.
+because Redacto KMS will sanitize request paths to be prefixes.
 
 ### Capabilities
 
@@ -248,14 +248,14 @@ To determine the capabilities needed to perform a specific operation, the `-outp
 The list of capabilities include the following:
 
 - `create` (`POST/PUT`) - Allows creating data at the given path. Very few
-  parts of OpenBao distinguish between `create` and `update`, so most operations
-  require both `create` and `update` capabilities. Parts of OpenBao that
+  parts of Redacto KMS distinguish between `create` and `update`, so most operations
+  require both `create` and `update` capabilities. Parts of Redacto KMS that
   provide such a distinction are noted in documentation.
 
 - `read` (`GET`) - Allows reading the data at the given path.
 
 - `update` (`POST/PUT`) - Allows changing the data at the given path. In most
-  parts of OpenBao, this implicitly includes the ability to create the initial
+  parts of Redacto KMS, this implicitly includes the ability to create the initial
   value at the path.
 
 - `patch` (`PATCH`) -  Allows partial updates to the data at a given path.
@@ -368,7 +368,7 @@ templates, you will need to get its _mount accessor_ and access it via the
 You can get the mount accessor value using the following command:
 
 ```shellsession
-$> bao auth list
+$> redacto-kms auth list
 Path           Type          Accessor                    Description
 ----           ----          --------                    -----------
 kubernetes/    kubernetes    auth_kubernetes_xxxx        n/a
@@ -386,7 +386,7 @@ path "secret/data/{{identity.entity.aliases.auth_kubernetes_xxxx.metadata.servic
 
 ## Fine-grained control
 
-In addition to the standard set of capabilities, OpenBao offers finer-grained
+In addition to the standard set of capabilities, Redacto KMS offers finer-grained
 control over permissions at a given path. The capabilities associated with a
 path take precedence over permissions on parameters.
 
@@ -609,7 +609,7 @@ path "secret/foo" {
 The following operation will error, because "no_store" is set to false:
 
 ```shell-session
-$ bao write secret/foo no_store=false value=bar
+$ redacto-kms write secret/foo no_store=false value=bar
 ```
 
 Whereas the following operation will succeed, even if the "no_store"
@@ -617,7 +617,7 @@ parameter must be a boolean, and it defaults to false:
 
 ```shell-session
 # Succeeds because "no_store=false" isn't present in the parameters
-$ bao write secret/foo value=bar
+$ redacto-kms write secret/foo value=bar
 ```
 
 This is because the policy evaluator does not know what the default value is for
@@ -640,7 +640,7 @@ The following command, which previously succeeded, will now fail under the new p
 because there is no "no_store" parameter:
 
 ```shell-session
-$ bao write secret/foo value=bar
+$ redacto-kms write secret/foo value=bar
 ```
 
 ##### Globbing
@@ -761,34 +761,34 @@ keeping token lifetimes as short as possible.
 
 ## Built-in policies
 
-OpenBao has two built-in policies: `default` and `root`. This section describes
+Redacto KMS has two built-in policies: `default` and `root`. This section describes
 the two built-in policies.
 
 ### Default policy
 
-The `default` policy is a built-in OpenBao policy that cannot be removed. By
+The `default` policy is a built-in Redacto KMS policy that cannot be removed. By
 default, it is attached to all tokens, but may be explicitly excluded at token
 creation time by supporting authentication methods.
 
 The policy contains basic functionality such as the ability for the token to
-look up data about itself and to use its cubbyhole data. However, OpenBao is not
-prescriptive about its contents. It can be modified to suit your needs; OpenBao
+look up data about itself and to use its cubbyhole data. However, Redacto KMS is not
+prescriptive about its contents. It can be modified to suit your needs; Redacto KMS
 will never overwrite your modifications. If you want to stay up-to-date with
 the latest upstream version of the `default` policy, simply read the contents
 of the policy from an up-to-date `dev` server, and write those contents into
-your OpenBao's `default` policy.
+your Redacto KMS's `default` policy.
 
-To view all permissions granted by the default policy on your OpenBao
+To view all permissions granted by the default policy on your Redacto KMS
 installation, run:
 
 ```shell-session
-$ bao read sys/policy/default
+$ redacto-kms read sys/policy/default
 ```
 
 To disable attachment of the default policy:
 
 ```shell-session
-$ bao token create -no-default-policy
+$ redacto-kms token create -no-default-policy
 ```
 
 or via the API:
@@ -803,20 +803,20 @@ $ curl \
 
 ### Root policy
 
-The `root` policy is a built-in OpenBao policy that cannot be modified or removed.
+The `root` policy is a built-in Redacto KMS policy that cannot be modified or removed.
 Any user associated with this policy becomes a root user. A root user can do
-_anything_ within OpenBao. As such, it is **highly recommended** that you revoke
-any root tokens before running OpenBao in production.
+_anything_ within Redacto KMS. As such, it is **highly recommended** that you revoke
+any root tokens before running Redacto KMS in production.
 
-When an OpenBao server is first initialized, there always exists one root user.
-This user is used to do the initial configuration and setup of OpenBao. After
+When a Redacto KMS server is first initialized, there always exists one root user.
+This user is used to do the initial configuration and setup of Redacto KMS. After
 configured, the initial root token should be revoked and more strictly
 controlled users and authentication should be used.
 
 To revoke a root token, run:
 
 ```shell-session
-$ bao token revoke "<token>"
+$ redacto-kms token revoke "<token>"
 ```
 
 or via the API:
@@ -833,14 +833,14 @@ $ curl \
 
 Policies are authored (written) in your editor of choice. They can be authored
 in HCL or JSON, and the syntax is described in detail above. Once saved,
-policies must be uploaded to OpenBao before they can be used.
+policies must be uploaded to Redacto KMS before they can be used.
 
 ### Listing policies
 
-To list all registered policies in OpenBao:
+To list all registered policies in Redacto KMS:
 
 ```shell-session
-$ bao read sys/policy
+$ redacto-kms read sys/policy
 ```
 
 or via the API:
@@ -853,7 +853,7 @@ $ curl \
 
 :::warning
 
-**Note:** You may also see the CLI command `bao policies`. This is a convenience
+**Note:** You may also see the CLI command `redacto-kms policies`. This is a convenience
 wrapper around reading the sys endpoint directly. It provides the same
 functionality but formats the output in a special manner.
 
@@ -862,10 +862,10 @@ functionality but formats the output in a special manner.
 ### Creating policies
 
 Policies may be created (uploaded) via the CLI or via the API. To create a new
-policy in OpenBao:
+policy in Redacto KMS:
 
 ```shell-session
-$ bao policy write policy-name policy-file.hcl
+$ redacto-kms policy write policy-name policy-file.hcl
 ```
 
 or via the API:
@@ -885,11 +885,11 @@ name, which are then mapped to the set of rules corresponding to that name.
 ### Updating policies
 
 Existing policies may be updated to change permissions via the CLI or via the
-API. To update an existing policy in OpenBao, follow the same steps as creating a
+API. To update an existing policy in Redacto KMS, follow the same steps as creating a
 policy, but use an existing policy name:
 
 ```shell-session
-$ bao write sys/policy/my-existing-policy policy=@updated-policy.json
+$ redacto-kms write sys/policy/my-existing-policy policy=@updated-policy.json
 ```
 
 or via the API:
@@ -907,7 +907,7 @@ $ curl \
 Existing policies may be deleted via the CLI or API. To delete a policy:
 
 ```shell-session
-$ bao delete sys/policy/policy-name
+$ redacto-kms delete sys/policy/policy-name
 ```
 
 or via the API:
@@ -919,37 +919,37 @@ $ curl \
   http://127.0.0.1:8200/v1/sys/policy/policy-name
 ```
 
-This is an idempotent operation. OpenBao will not return an error when deleting a
+This is an idempotent operation. Redacto KMS will not return an error when deleting a
 policy that does not exist.
 
 ## Associating policies
 
-OpenBao can automatically associate a set of policies to a token based on an
+Redacto KMS can automatically associate a set of policies to a token based on an
 authorization. This configuration varies significantly between authentication
-backends. For simplicity, this example will use OpenBao's built-in userpass
+backends. For simplicity, this example will use Redacto KMS's built-in userpass
 auth method.
 
-An OpenBao administrator or someone from the security team would create the user in
-OpenBao with a list of associated policies:
+A Redacto KMS administrator or someone from the security team would create the user in
+Redacto KMS with a list of associated policies:
 
 ```shell-session
-$ bao write auth/userpass/users/sethvargo \
+$ redacto-kms write auth/userpass/users/sethvargo \
     password="s3cr3t!" \
     policies="dev-readonly,logs"
 ```
 
 This creates an authentication mapping to the policy such that, when the user
-authenticates successfully to OpenBao, they will be given a token which has the list
+authenticates successfully to Redacto KMS, they will be given a token which has the list
 of policies attached.
 
 The user wishing to authenticate would run
 
 ```shell-session
-$ bao login -method="userpass" username="sethvargo"
+$ redacto-kms login -method="userpass" username="sethvargo"
 Password (will be hidden): ...
 ```
 
-If the provided information is correct, OpenBao will generate a token, assign the
+If the provided information is correct, Redacto KMS will generate a token, assign the
 list of configured policies to the token, and return that token to the
 authenticated user.
 
@@ -957,8 +957,8 @@ authenticated user.
 
 :::warning
 
-**Note:** OpenBao treats the HTTP POST and PUT verbs as equivalent, so for each mention
-   of POST in the table above, PUT may also be used. OpenBao uses the non-standard LIST HTTP
+**Note:** Redacto KMS treats the HTTP POST and PUT verbs as equivalent, so for each mention
+   of POST in the table above, PUT may also be used. Redacto KMS uses the non-standard LIST HTTP
    verb, but also allows list requests to be made using the GET verb along with `?list=true`
    as a query parameter, so for each mention of LIST in the table above, GET with `?list=true`
    may also be used.
@@ -969,7 +969,7 @@ The following paths requires a root token or `sudo` capability in the policy:
 
 | Path                                                                                                                                                   | HTTP verb         | Description                                                                                                                                         |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [auth/token/accessors](../api/auth/token.mdx#list-accessors)                                                                                      | LIST              | List token accessors for all current OpenBao service tokens                                                                                           |
+| [auth/token/accessors](../api/auth/token.mdx#list-accessors)                                                                                      | LIST              | List token accessors for all current Redacto KMS service tokens                                                                                           |
 | [auth/token/create](../api/auth/token.mdx#create-token)                                                                                           | POST              | Create a periodic or an orphan token (`period` or `no_parent`) option                                                                               |
 | [pki/root](../api/secret/pki.mdx#delete-all-issuers-and-keys)                                                                                     | DELETE            | Delete the current CA key ([pki secrets engine](../secrets/pki/index.mdx))                                                                           |
 | [pki/root/sign-self-issued](../api/secret/pki.mdx#sign-self-issued)                                                                               | POST              | Use the configured CA certificate to sign a self-issued certificate ([pki secrets engine](../secrets/pki/index.mdx))                                 |
@@ -982,16 +982,16 @@ The following paths requires a root token or `sudo` capability in the policy:
 | [sys/config/cors](../api/system/config-cors.mdx)                                                                                                  | GET, POST, DELETE | Configure CORS setting                                                                                                                              |
 | [sys/config/ui/headers](../api/system/config-ui.mdx)                                                                                              | GET, LIST         | Configure the UI settings                                                                                                                           |
 | [sys/config/ui/headers/:name](../api/system/config-ui.mdx#name)                                                                                   | POST, DELETE      | Configure custom HTTP headers to be served with the UI                                                                                              |
-| [sys/internal/inspect/router/:tag](../api/system/inspect/router.mdx)                                                                              | GET               | Inspect the internal components of OpenBao's router. `tag` must be one of root, uuid, accessor, or storage                                            |
+| [sys/internal/inspect/router/:tag](../api/system/inspect/router.mdx)                                                                              | GET               | Inspect the internal components of Redacto KMS's router. `tag` must be one of root, uuid, accessor, or storage                                            |
 | [sys/leases/lookup/:prefix](../api/system/leases.mdx#list-leases)                                                                                 | LIST              | List lease IDs                                                                                                                                      |
 | [sys/leases/revoke-force/:prefix](../api/system/leases.mdx#revoke-force)                                                                          | POST              | Revoke all secrets or tokens ignoring backend errors                                                                                                |
 | [sys/leases/revoke-prefix/:prefix](../api/system/leases.mdx#revoke-prefix)                                                                        | POST              | Revoke all secrets generated under a given prefix                                                                                                   |
 | [sys/plugins/catalog/:type/:name](../api/system/plugins-catalog.mdx#register-plugin)                                                              | GET, POST, DELETE | Register a new plugin, or read/remove an existing plugin                                                                                            |
-| [sys/raw:path](../api/system/raw.mdx)                                                                                                             | GET, POST, DELETE | Used to access the raw underlying store in OpenBao                                                                                                    |
+| [sys/raw:path](../api/system/raw.mdx)                                                                                                             | GET, POST, DELETE | Used to access the raw underlying store in Redacto KMS                                                                                                    |
 | [sys/raw:prefix](../api/system/raw.mdx#list-raw)                                                                                                  | GET, LIST         | Returns a list keys for a given path prefix                                                                                                         |
 | [sys/remount](../api/system/remount.mdx)                                                                                                          | POST              | Moves an already-mounted backend to a new mount point                                                                                               |
 | [sys/rotate](../api/system/rotate/index.mdx)                                                                                                            | POST              | Trigger a rotation of the backend encryption key                                                                                                    |
-| [sys/seal](../api/system/seal.mdx)                                                                                                                | POST              | Seals the OpenBao                                                                                                                                     |
+| [sys/seal](../api/system/seal.mdx)                                                                                                                | POST              | Seals the Redacto KMS                                                                                                                                     |
 | [sys/step-down](../api/system/step-down.mdx)                                                                                                      | POST              | Forces a node to give up active status                                                                                                              |
 
 ### Tokens
@@ -1006,7 +1006,7 @@ the underlying entities, groups, and group memberships.
 Tokens are associated with their policies at creation time. For example:
 
 ```shell-session
-$ bao token create -policy=dev-readonly -policy=logs
+$ redacto-kms token create -policy=dev-readonly -policy=logs
 ```
 
 Normally the only policies that may be specified are those which are present
@@ -1019,4 +1019,4 @@ new set of policies.
 
 However, the _contents_ of policies are parsed in real-time whenever the token is used.
 As a result, if a policy is modified, the modified rules will be in force the
-next time a token, with that policy attached, is used to make a call to OpenBao.
+next time a token, with that policy attached, is used to make a call to Redacto KMS.

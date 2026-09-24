@@ -1,7 +1,7 @@
 ---
 sidebar_label: PKCS#11 Unseal
 description: |-
-  The PKCS#11 seal configures OpenBao to use an HSM with PKCS#11 as the
+  The PKCS#11 seal configures Redacto KMS to use an HSM with PKCS#11 as the
   auto-unseal mechanism.
 ---
 
@@ -16,19 +16,19 @@ section](./index.mdx#plugins).
 
 :::
 
-The PKCS#11 seal configures OpenBao to use an HSM with PKCS#11 as the auto-unseal
-mechanism. OpenBao's PKCS#11 support is activated by one of the following:
+The PKCS#11 seal configures Redacto KMS to use an HSM with PKCS#11 as the auto-unseal
+mechanism. Redacto KMS's PKCS#11 support is activated by one of the following:
 
-- The presence of a `seal "pkcs11"` block in OpenBao's configuration file
+- The presence of a `seal "pkcs11"` block in Redacto KMS's configuration file
 - The presence of the environment variable `BAO_HSM_LIB` set to the library's
-  path as well as `BAO_SEAL_TYPE` set to `pkcs11`. If enabling via environment
+  path as well as `REDACTO_KMS_SEAL_TYPE` set to `pkcs11`. If enabling via environment
   variable, all other required values (i.e. `BAO_HSM_SLOT`) must be also
   supplied.
 
 :::info
 
-Unlike Vault Enterprise, OpenBao requires key material to be created externally
-before initializing the instance. OpenBao will not attempt to create its own
+Unlike Vault Enterprise, Redacto KMS requires key material to be created externally
+before initializing the instance. Redacto KMS will not attempt to create its own
 key material.
 
 :::
@@ -43,24 +43,24 @@ migration of data between nodes may be required.
 
 ## Requirements
 
-The following software packages are required for OpenBao:
+The following software packages are required for Redacto KMS:
 
 - PKCS#11 compatible HSM integration library including any additional system
   libraries it requires.
-- A version of libc (likely `glibc` or `musl` with `gcompat`; OpenBao as
+- A version of libc (likely `glibc` or `musl` with `gcompat`; Redacto KMS as
   released upstream is linked against Glibc but works on Musl with `gcompat`).
-- When *not* using the PKCS#11 KMS plugin, a HSM-enabled build of OpenBao with
+- When *not* using the PKCS#11 KMS plugin, a HSM-enabled build of Redacto KMS with
   PKCS#11 support compiled in via cgo.
 
 ## `pkcs11` example
 
-This example shows configuring a PKCS#11 seal through the OpenBao configuration
+This example shows configuring a PKCS#11 seal through the Redacto KMS configuration
 file by providing all the required values:
 
 ```hcl
 seal "pkcs11" {
   lib = "/usr/lib64/softhsm/libsofthsm.so"
-  token_label = "OpenBao"
+  token_label = "Redacto KMS"
   pin = "4321"
   key_label = "bao-root-key-rsa"
 }
@@ -70,15 +70,15 @@ To create the key in the HSM, use a utility like `pkcs11-tool`:
 
 ```bash
 # Example RSA key with 4096 bits
-$ pkcs11-tool --module "/usr/lib64/softhsm/libsofthsm.so" --token-label "OpenBao" --so-pin 1234 --pin 4321 --keypairgen --key-type rsa:4096 --label "bao-root-key-rsa"
+$ pkcs11-tool --module "/usr/lib64/softhsm/libsofthsm.so" --token-label "Redacto KMS" --so-pin 1234 --pin 4321 --keypairgen --key-type rsa:4096 --label "bao-root-key-rsa"
 
 # Example AES key with 256 bits (32 bytes)
-$ pkcs11-tool --module "/usr/lib64/softhsm/libsofthsm.so" --token-label "OpenBao" --so-pin 1234 --pin 4321 --keygen --key-type aes:32 --label "bao-root-key-aes"
+$ pkcs11-tool --module "/usr/lib64/softhsm/libsofthsm.so" --token-label "Redacto KMS" --so-pin 1234 --pin 4321 --keygen --key-type aes:32 --label "bao-root-key-aes"
 ```
 
 ## `pkcs11` parameters
 
-These parameters apply to the `seal` stanza in the OpenBao configuration file:
+These parameters apply to the `seal` stanza in the Redacto KMS configuration file:
 
 - `lib` `(string: <required>)`: The path to the PKCS#11 library shared object
   file. May also be specified by the `BAO_HSM_LIB` environment variable.
@@ -87,7 +87,7 @@ These parameters apply to the `seal` stanza in the OpenBao configuration file:
 
   Depending on your HSM, the value of the `lib` parameter may be either a binary
   or a dynamic library, and its use may require other libraries depending on
-  which system the OpenBao binary is currently running on (e.g.: a Linux system
+  which system the Redacto KMS binary is currently running on (e.g.: a Linux system
   may require other libraries to interpret Windows .dll files).
 
   :::
@@ -111,7 +111,7 @@ These parameters apply to the `seal` stanza in the OpenBao configuration file:
 
 - `pin` `(string: <optional>)`: The PIN for `CKU_USER` login. May also
   be specified by the `BAO_HSM_PIN` environment variable. _If set via the
-  environment variable, it will need to be re-set if OpenBao is restarted._
+  environment variable, it will need to be re-set if Redacto KMS is restarted._
 
 - `key_label` `(string: <required>)`: The label (`CKA_LABEL`) of the key or
   key pair to use. May also be specified by the `BAO_HSM_KEY_LABEL` environment
@@ -131,7 +131,7 @@ These parameters apply to the `seal` stanza in the OpenBao configuration file:
 
   :::warning
 
-  Unlike Vault Enterprise, OpenBao only supports AEAD-enabled algorithms and
+  Unlike Vault Enterprise, Redacto KMS only supports AEAD-enabled algorithms and
   will not support Encrypt-Then-MAC constructs (like `CKM_AES_CBC_PAD` with
   explicit HMACing).
 
@@ -142,7 +142,7 @@ These parameters apply to the `seal` stanza in the OpenBao configuration file:
   the public key and encrypting in software. This defaults to `false` because
   some HSMs implement RSA-based decryption but not encryption.
 
-- `disabled` `(string: "")`: Set this to `true` if OpenBao is migrating from an auto seal configuration. Otherwise, set to `false`.
+- `disabled` `(string: "")`: Set this to `true` if Redacto KMS is migrating from an auto seal configuration. Otherwise, set to `false`.
 
 Refer to the [Seal Migration](../../concepts/seal.mdx#seal-migration) documentation for more information about the seal migration process.
 
@@ -159,7 +159,7 @@ Alternatively, the HSM seal can be activated by providing the following
 environment variables:
 
 ```text
-BAO_SEAL_TYPE
+REDACTO_KMS_SEAL_TYPE
 BAO_HSM_LIB
 BAO_HSM_SLOT
 BAO_HSM_SERIAL
@@ -174,8 +174,8 @@ BAO_HSM_RSA_OAEP_HASH
 ## Key rotation
 
 This seal supports rotating keys by using different key labels to track key versions. To rotate
-the key value, generate a new key in a different key label in the HSM and update OpenBao's
-configuration with the new key label value. Restart your OpenBao instance to pick up the new key
+the key value, generate a new key in a different key label in the HSM and update Redacto KMS's
+configuration with the new key label value. Restart your Redacto KMS instance to pick up the new key
 label and all new encryption operations will use the updated key label. Old keys must not be disabled
 or deleted and are used to decrypt older data.
 

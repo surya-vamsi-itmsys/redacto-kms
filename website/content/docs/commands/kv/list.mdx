@@ -1,7 +1,7 @@
 ---
 sidebar_label: list
 description: |-
-  The "kv list" command lists data from OpenBao's K/V secrets engine at the given
+  The "kv list" command lists data from Redacto KMS's K/V secrets engine at the given
   path.
 ---
 
@@ -20,7 +20,7 @@ Use this command to list all existing key names at a specific path.
 List values under the key "my-app":
 
 ```shell-session
-$ bao kv list -mount=secret my-app/
+$ redacto-kms kv list -mount=secret my-app/
 Keys
 ----
 admin_creds
@@ -45,4 +45,4 @@ included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.

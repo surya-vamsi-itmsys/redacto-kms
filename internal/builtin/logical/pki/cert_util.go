@@ -1100,7 +1100,7 @@ func signCert(b *backend,
 
 		if actualKeyBits < 2048 {
 			return nil, nil, errutil.UserError{Err: fmt.Sprintf(
-				"OpenBao requires a minimum of a 2048-bit key, but CSR's key is %d bits",
+				"Redacto KMS requires a minimum of a 2048-bit key, but CSR's key is %d bits",
 				actualKeyBits,
 			)}
 		}

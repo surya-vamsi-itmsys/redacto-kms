@@ -2,13 +2,13 @@
 sidebar_label: init
 description: |-
   The "plugin init" command downloads OCI-based plugins configured in
-  OpenBao server configuration files.
+  Redacto KMS server configuration files.
 ---
 
 # plugin init
 
 The `plugin init` command downloads OCI-based plugins configured
-in OpenBao server configuration files. It reads [plugin
+in Redacto KMS server configuration files. It reads [plugin
 definitions](../../configuration/plugins.mdx) from the configuration and
 downloads the specified OCI images containing plugin binaries.
 
@@ -24,19 +24,19 @@ that are no longer needed.
 Download plugins using a configuration file:
 
 ```shell-session
-$ bao plugin init -config=/path/to/openbao.hcl
+$ redacto-kms plugin init -config=/path/to/redacto-kms.hcl
 ```
 
 Download to a specific directory:
 
 ```shell-session
-$ bao plugin init -config=/path/to/config.hcl -directory=/opt/openbao/plugins
+$ redacto-kms plugin init -config=/path/to/config.hcl -directory=/opt/openbao/plugins
 ```
 
 Load multiple configuration files:
 
 ```shell-session
-$ bao plugin init -config=/etc/openbao -config=/opt/openbao/extra.hcl
+$ redacto-kms plugin init -config=/etc/redacto-kms -config=/opt/openbao/extra.hcl
 ```
 
 ## Usage
@@ -47,7 +47,7 @@ flags](../index.mdx) included on all commands.
 ### Command options
 
 - `-config` `(string: required)` - Path to configuration file or directory. Can
-  be specified multiple times. The environment variable `BAO_CONFIG_PATH` may
+  be specified multiple times. The environment variable `REDACTO_KMS_CONFIG_PATH` may
   also be used to specify multiple configuration paths using a comma (,) as a
   separator.
 
@@ -70,11 +70,11 @@ Typical workflow using `plugin init`:
 
 ```shell-session
 # 1. Download plugins:
-$ bao plugin init -config=openbao.hcl
+$ redacto-kms plugin init -config=redacto-kms.hcl
 
-# 2. Start OpenBao server:
-$ bao server -config=openbao.hcl
+# 2. Start Redacto KMS server:
+$ redacto-kms server -config=redacto-kms.hcl
 
 # 3. Enable plugins:
-$ bao secrets enable -path=aws secrets-aws
+$ redacto-kms secrets enable -path=aws secrets-aws
 ```

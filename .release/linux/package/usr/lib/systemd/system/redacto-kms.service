@@ -1,17 +1,16 @@
 [Unit]
-Description="OpenBao - A tool for managing secrets"
-Documentation=https://github.com/openbao/openbao/tree/main/website/content/docs
+Description="Redacto KMS - Key and secrets management"
 Requires=network-online.target
 After=network-online.target
-ConditionFileNotEmpty=/etc/openbao/openbao.hcl
+ConditionFileNotEmpty=/etc/redacto-kms/redacto-kms.hcl
 StartLimitIntervalSec=60
 StartLimitBurst=3
 
 [Service]
 Type=notify
-EnvironmentFile=/etc/openbao/openbao.env
-User=openbao
-Group=openbao
+EnvironmentFile=/etc/redacto-kms/redacto-kms.env
+User=redacto-kms
+Group=redacto-kms
 ProtectSystem=full
 ProtectHome=read-only
 PrivateTmp=yes
@@ -19,7 +18,7 @@ PrivateDevices=yes
 SecureBits=keep-caps
 CapabilityBoundingSet=CAP_SYSLOG
 NoNewPrivileges=yes
-ExecStart=/usr/bin/bao server -config=/etc/openbao/openbao.hcl
+ExecStart=/usr/bin/redacto-kms server -config=/etc/redacto-kms/redacto-kms.hcl
 ExecReload=/bin/kill --signal HUP $MAINPID
 KillMode=process
 KillSignal=SIGINT

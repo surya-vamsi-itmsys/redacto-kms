@@ -1,36 +1,36 @@
 ---
 sidebar_label: Overview
 description: |-
-  The "auth" command groups subcommands for interacting with OpenBao's auth
+  The "auth" command groups subcommands for interacting with Redacto KMS's auth
   methods. Users can list, enable, disable, and get help for different auth
   methods.
 ---
 
 # auth
 
-The `auth` command groups subcommands for interacting with OpenBao's auth methods.
+The `auth` command groups subcommands for interacting with Redacto KMS's auth methods.
 Users can list, enable, disable, and get help for different auth methods.
 
 For more information, please see the [auth method
 documentation](../../auth/index.mdx) or the [authentication
 concepts](../../concepts/auth.mdx) page.
 
-To authenticate to OpenBao as a user or machine, use the [`bao login`](../login.mdx) command instead. This command is for
-interacting with the auth methods themselves, not authenticating to OpenBao.
+To authenticate to Redacto KMS as a user or machine, use the [`redacto-kms login`](../login.mdx) command instead. This command is for
+interacting with the auth methods themselves, not authenticating to Redacto KMS.
 
 ## Examples
 
 Enable an auth method:
 
 ```shell-session
-$ bao auth enable userpass
+$ redacto-kms auth enable userpass
 Success! Enabled userpass auth method at: userpass/
 ```
 
 List all auth methods:
 
 ```shell-session
-$ bao auth list
+$ redacto-kms auth list
 Path         Type        Description
 ----         ----        -----------
 token/       token       token based credentials
@@ -40,29 +40,29 @@ userpass/    userpass    n/a
 Get help about how to authenticate to a particular auth method:
 
 ```shell-session
-$ bao auth help userpass/
-Usage: bao login -method=userpass [CONFIG K=V...]
+$ redacto-kms auth help userpass/
+Usage: redacto-kms login -method=userpass [CONFIG K=V...]
 # ...
 ```
 
 Disable an auth method:
 
 ```shell-session
-$ bao auth disable userpass/
+$ redacto-kms auth disable userpass/
 Success! Disabled the auth method (if it existed) at: userpass/
 ```
 
 Tune an auth method:
 
 ```shell-session
-$ bao auth tune -max-lease-ttl=30m userpass/
+$ redacto-kms auth tune -max-lease-ttl=30m userpass/
 Success! Tuned the auth method at: userpass/
 ```
 
 ## Usage
 
 ```text
-Usage: bao auth <subcommand> [options] [args]
+Usage: redacto-kms auth <subcommand> [options] [args]
 
   # ...
 

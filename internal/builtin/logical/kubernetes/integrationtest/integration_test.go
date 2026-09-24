@@ -30,8 +30,8 @@ import (
 func TestMain(m *testing.M) {
 	if os.Getenv("INTEGRATION_TESTS") != "" {
 		checkKubectlVersion()
-		os.Setenv("BAO_ADDR", "http://127.0.0.1:38300")
-		os.Setenv("BAO_TOKEN", "root")
+		os.Setenv("REDACTO_KMS_ADDR", "http://127.0.0.1:38300")
+		os.Setenv("REDACTO_KMS_TOKEN", "root")
 		os.Setenv("KUBERNETES_CA", getK8sCA())
 		os.Setenv("KUBE_HOST", getKubeHost(os.Getenv("KIND_CLUSTER_NAME")))
 		os.Setenv("SUPER_JWT", getSuperJWT())
@@ -62,7 +62,7 @@ func checkKubectlVersion() {
 }
 
 func TestMount(t *testing.T) {
-	// Pick up VAULT_ADDR and VAULT_TOKEN from env vars
+	// Pick up REDACTO_KMS_ADDR and REDACTO_KMS_TOKEN from env vars
 	client, err := api.NewClient(nil)
 	if err != nil {
 		t.Fatal(err)
@@ -90,7 +90,7 @@ func TestCheckViability(t *testing.T) {
 }
 
 func TestConfig(t *testing.T) {
-	// Pick up VAULT_ADDR and VAULT_TOKEN from env vars
+	// Pick up REDACTO_KMS_ADDR and REDACTO_KMS_TOKEN from env vars
 	client, err := api.NewClient(nil)
 	if err != nil {
 		t.Fatal(err)
@@ -142,7 +142,7 @@ func TestConfig(t *testing.T) {
 }
 
 func TestRole(t *testing.T) {
-	// Pick up VAULT_ADDR and VAULT_TOKEN from env vars
+	// Pick up REDACTO_KMS_ADDR and REDACTO_KMS_TOKEN from env vars
 	client, err := api.NewClient(nil)
 	if err != nil {
 		t.Fatal(err)

@@ -1,9 +1,9 @@
 ---
 sidebar_label: Cert
-description: Cert Method for OpenBao Auto-Auth
+description: Cert Method for Redacto KMS Auto-Auth
 ---
 
-# OpenBao Auto-Auth cert method
+# Redacto KMS Auto-Auth cert method
 
 The `cert` method uses the configured TLS certificates from the `vault` stanza of
 the agent configuration and takes an optional `name` parameter. There is no option
@@ -22,7 +22,7 @@ config stanza, Agent and Proxy will fall back to using TLS settings from their r
   try to authenticate against [all trusted certificates](../../../auth/cert.mdx#authentication).
 
 - `ca_cert` `(string: optional)` - Path on the local disk to a single
-  PEM-encoded CA certificate to verify the OpenBao server's SSL certificate.
+  PEM-encoded CA certificate to verify the Redacto KMS server's SSL certificate.
 
 - `client_cert` `(string: optional)` - Path on the local disk to a single
   PEM-encoded client certificate to use for cert auth method authentication.

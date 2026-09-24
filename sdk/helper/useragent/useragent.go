@@ -12,23 +12,20 @@ import (
 )
 
 var (
-	// projectURL is the project URL.
-	projectURL = "https://www.vaultproject.io/"
-
 	// rt is the runtime - variable for tests.
 	rt = runtime.Version()
 )
 
-// String returns the consistent user-agent string for Vault.
+// String returns the consistent user-agent string for Redacto KMS.
 // Deprecated: use PluginString instead.
 //
 // Example output:
 //
-//	Vault (+https://www.vaultproject.io/; go1.19.5)
+//	Redacto KMS (go1.19.5)
 //
 // Given comments will be appended to the semicolon-delimited comment section:
 //
-//	Vault (+https://www.vaultproject.io/; go1.19.5; comment-0; comment-1)
+//	Redacto KMS (go1.19.5; comment-0; comment-1)
 //
 // At one point the user-agent string returned contained the Vault
 // version hardcoded into the vault/sdk/version/ package.  This worked for builtin
@@ -38,18 +35,18 @@ var (
 // contents of the external plugin's go.mod.  We've kept the String method around
 // to avoid breaking builds, but you should be using PluginString.
 func String(comments ...string) string {
-	c := append([]string{"+" + projectURL, rt}, comments...)
-	return fmt.Sprintf("Vault (%s)", strings.Join(c, "; "))
+	c := append([]string{rt}, comments...)
+	return fmt.Sprintf("Redacto KMS (%s)", strings.Join(c, "; "))
 }
 
 // PluginString is usable by plugins to return a user-agent string reflecting
 // the running Vault version and an optional plugin name.
 //
-// e.g. Vault/0.10.4 (+https://www.vaultproject.io/; azure-auth; go1.10.1)
+// e.g. Redacto KMS/0.10.4 (azure-auth; go1.10.1)
 //
 // Given comments will be appended to the semicolon-delimited comment section.
 //
-// e.g. Vault/0.10.4 (+https://www.vaultproject.io/; azure-auth; go1.10.1; comment-0; comment-1)
+// e.g. Redacto KMS/0.10.4 (azure-auth; go1.10.1; comment-0; comment-1)
 //
 // Returns an empty string if the given env is nil.
 func PluginString(env *logical.PluginEnvironment, pluginName string, comments ...string) string {
@@ -58,7 +55,7 @@ func PluginString(env *logical.PluginEnvironment, pluginName string, comments ..
 	}
 
 	// Construct comments
-	c := []string{"+" + projectURL}
+	c := []string{}
 	if pluginName != "" {
 		c = append(c, pluginName)
 	}
@@ -74,5 +71,5 @@ func PluginString(env *logical.PluginEnvironment, pluginName string, comments ..
 		v = fmt.Sprintf("%s+%s", v, env.VaultVersionMetadata)
 	}
 
-	return fmt.Sprintf("Vault/%s (%s)", v, strings.Join(c, "; "))
+	return fmt.Sprintf("Redacto KMS/%s (%s)", v, strings.Join(c, "; "))
 }

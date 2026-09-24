@@ -23,7 +23,7 @@ import (
 
 const (
 	RollbackDefaultNumWorkers = 256
-	RollbackWorkersEnvVar     = "BAO_ROLLBACK_WORKERS"
+	RollbackWorkersEnvVar     = "REDACTO_KMS_ROLLBACK_WORKERS"
 )
 
 // RollbackManager is responsible for performing rollbacks of partial

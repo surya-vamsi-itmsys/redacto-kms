@@ -47,35 +47,35 @@ func (c *OperatorInitCommand) Synopsis() string {
 
 func (c *OperatorInitCommand) Help() string {
 	helpText := `
-Usage: bao operator init [options]
+Usage: redacto-kms operator init [options]
 
-  Initializes an OpenBao server. Initialization is the process by which
-  OpenBao's storage backend is prepared to receive data. Since OpenBao servers
+  Initializes a Redacto KMS server. Initialization is the process by which
+  Redacto KMS's storage backend is prepared to receive data. Since Redacto KMS servers
   share the same storage backend in HA mode, you only need to initialize one
-  OpenBao instance to initialize the storage backend.
+  Redacto KMS instance to initialize the storage backend.
 
-  During initialization, OpenBao generates an in-memory root key and applies
+  During initialization, Redacto KMS generates an in-memory root key and applies
   Shamir's secret sharing algorithm to disassemble that root key into a
   configuration number of key shares such that a configurable subset of those
   key shares must come together to regenerate the root key. These keys are
-  often called "unseal keys" in OpenBao's documentation.
+  often called "unseal keys" in Redacto KMS's documentation.
 
-  This command cannot be run against an already-initialized OpenBao cluster.
+  This command cannot be run against an already-initialized Redacto KMS cluster.
 
   Start initialization with the default options:
 
-      $ bao operator init
+      $ redacto-kms operator init
 
   Initialize, but encrypt the unseal keys with pgp keys:
 
-      $ bao operator init \
+      $ redacto-kms operator init \
           -key-shares=3 \
           -key-threshold=2 \
           -pgp-keys="keybase:hashicorp,keybase:jefferai,keybase:sethvargo"
 
   Encrypt the initial root token using a pgp key:
 
-      $ bao operator init -root-token-pgp-key="keybase:hashicorp"
+      $ redacto-kms operator init -root-token-pgp-key="keybase:hashicorp"
 
 ` + c.Flags().Help()
 	return strings.TrimSpace(helpText)
@@ -92,8 +92,8 @@ func (c *OperatorInitCommand) Flags() *FlagSets {
 		Target:  &c.flagStatus,
 		Default: false,
 		Usage: "Print the current initialization status. An exit code of 0 means " +
-			"the OpenBao is already initialized. An exit code of 1 means an error " +
-			"occurred. An exit code of 2 means the OpenBao is not initialized.",
+			"the Redacto KMS is already initialized. An exit code of 1 means an error " +
+			"occurred. An exit code of 2 means the Redacto KMS is not initialized.",
 	})
 
 	f.IntVar(&IntVar{
@@ -284,8 +284,8 @@ func (c *OperatorInitCommand) init(client *api.Client, req *api.InitRequest) int
 	if len(resp.Keys) > 0 {
 		c.UI.Output("")
 		c.UI.Output(wrapAtLength(fmt.Sprintf(
-			"Vault initialized with %d key shares and a key threshold of %d. Please "+
-				"securely distribute the key shares printed above. When the Vault is "+
+			"Redacto KMS initialized with %d key shares and a key threshold of %d. Please "+
+				"securely distribute the key shares printed above. When the Redacto KMS is "+
 				"re-sealed, restarted, or stopped, you must supply at least %d of "+
 				"these keys to unseal it before it can start servicing requests.",
 			req.SecretShares,
@@ -295,8 +295,8 @@ func (c *OperatorInitCommand) init(client *api.Client, req *api.InitRequest) int
 
 		c.UI.Output("")
 		c.UI.Output(wrapAtLength(fmt.Sprintf(
-			"Vault does not store the generated root key. Without at least %d "+
-				"keys to reconstruct the root key, Vault will remain permanently "+
+			"Redacto KMS does not store the generated root key. Without at least %d "+
+				"keys to reconstruct the root key, Redacto KMS will remain permanently "+
 				"sealed!",
 			req.SecretThreshold,
 		)))
@@ -304,12 +304,12 @@ func (c *OperatorInitCommand) init(client *api.Client, req *api.InitRequest) int
 		c.UI.Output("")
 		c.UI.Output(wrapAtLength(
 			"It is possible to generate new unseal keys, provided you have a quorum " +
-				"of existing unseal keys shares. See \"bao operator rotate-keys\" for " +
+				"of existing unseal keys shares. See \"redacto-kms operator rotate-keys\" for " +
 				"more information.",
 		))
 	} else {
 		c.UI.Output("")
-		c.UI.Output("Success! Vault is initialized")
+		c.UI.Output("Success! Redacto KMS is initialized")
 	}
 
 	if len(resp.RecoveryKeys) > 0 {
@@ -343,9 +343,9 @@ func (c *OperatorInitCommand) status(client *api.Client) int {
 	switch Format(c.UI) {
 	case "table":
 		if inited {
-			c.UI.Output("Vault is initialized")
+			c.UI.Output("Redacto KMS is initialized")
 		} else {
-			c.UI.Output("Vault is not initialized")
+			c.UI.Output("Redacto KMS is not initialized")
 		}
 	default:
 		data := api.InitStatusResponse{Initialized: inited}

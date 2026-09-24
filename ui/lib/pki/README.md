@@ -1,12 +1,12 @@
-# OpenBao PKI
+# Redacto KMS PKI
 
-Welcome to the OpenBao PKI (Ember) Engine! Below is an overview of PKI and resources for how to get started working within this engine.
+Welcome to the Redacto KMS PKI (Ember) Engine! Below is an overview of PKI and resources for how to get started working within this engine.
 
 ## About PKI
 
 > Public Key Infrastructure (PKI) is a system of processes, technologies, and policies that allows you to encrypt and sign data. (source: [digicert.com](https://www.digicert.com/what-is-pki))
 
-The [OpenBao PKI Secrets Engine](https://openbao.org/api-docs/secret/pki) allows security engineers to create a chain of PKI certificates much easier than they would with traditional workflows.
+The [Redacto KMS PKI Secrets Engine](https://openbao.org/api-docs/secret/pki) allows security engineers to create a chain of PKI certificates much easier than they would with traditional workflows.
 
 ## About the UI engine
 

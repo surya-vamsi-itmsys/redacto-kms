@@ -1,7 +1,7 @@
 ---
 sidebar_label: AWS KMS
 description: |-
-  The AWS KMS seal configures OpenBao to use AWS KMS as the seal wrapping
+  The AWS KMS seal configures Redacto KMS to use AWS KMS as the seal wrapping
   mechanism.
 ---
 
@@ -16,11 +16,11 @@ section](./index.mdx#plugins).
 
 :::
 
-The AWS KMS seal configures OpenBao to use AWS KMS as the seal wrapping mechanism.
+The AWS KMS seal configures Redacto KMS to use AWS KMS as the seal wrapping mechanism.
 The AWS KMS seal is activated by one of the following:
 
-- The presence of a `seal "awskms"` block in OpenBao's configuration file
-- The presence of the environment variable `VAULT_SEAL_TYPE` set to `awskms`. If
+- The presence of a `seal "awskms"` block in Redacto KMS's configuration file
+- The presence of the environment variable `REDACTO_KMS_SEAL_TYPE` set to `awskms`. If
   enabling via environment variable, all other required values specific to AWS
   KMS (i.e. `VAULT_AWSKMS_SEAL_KEY_ID`) must be also supplied, as well as all
   other AWS-related environment variables that lends to successful
@@ -28,7 +28,7 @@ The AWS KMS seal is activated by one of the following:
 
 ## `awskms` example
 
-This example shows configuring AWS KMS seal through the OpenBao configuration file
+This example shows configuring AWS KMS seal through the Redacto KMS configuration file
 by providing all the required values:
 
 ```hcl
@@ -43,7 +43,7 @@ seal "awskms" {
 
 ## `awskms` parameters
 
-These parameters apply to the `seal` stanza in the OpenBao configuration file:
+These parameters apply to the `seal` stanza in the Redacto KMS configuration file:
 
 - `region` `(string: "us-east-1")`: The AWS region where the encryption key
   lives. If not provided, may be populated from the `AWS_REGION` or
@@ -65,13 +65,13 @@ These parameters apply to the `seal` stanza in the OpenBao configuration file:
   and decryption. May also be specified by the `VAULT_AWSKMS_SEAL_KEY_ID`
   environment variable.  An alias in the format `alias/key-alias-name` may also be used here.
 
-- `disabled` `(string: "")`: Set this to `true` if OpenBao is migrating from an auto seal configuration. Otherwise, set to `false`.
+- `disabled` `(string: "")`: Set this to `true` if Redacto KMS is migrating from an auto seal configuration. Otherwise, set to `false`.
 
 - `endpoint` `(string: "")`: The KMS API endpoint to be used to make AWS KMS
   requests. May also be specified by the `AWS_KMS_ENDPOINT` environment
   variable. This is useful, for example, when connecting to KMS over a [VPC
   Endpoint](https://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html).
-  If not set, OpenBao will use the default API endpoint for your region.
+  If not set, Redacto KMS will use the default API endpoint for your region.
 
 Refer to the [Seal Migration](../../concepts/seal.mdx#seal-migration) documentation for more information about the seal migration process.
 
@@ -99,13 +99,13 @@ credentials, environment credentials, shared file credentials, or IAM role/ECS
 task credentials in that order, if the above AWS specific values are not
 provided.
 
-OpenBao needs the following permissions on the KMS key:
+Redacto KMS needs the following permissions on the KMS key:
 
 - `kms:Encrypt`
 - `kms:Decrypt`
 - `kms:DescribeKey`
 
-These can be granted via IAM permissions on the principal that OpenBao uses, on
+These can be granted via IAM permissions on the principal that Redacto KMS uses, on
 the KMS key policy for the KMS key, or via KMS Grants on the key.
 
 ## `awskms` environment variables
@@ -113,9 +113,9 @@ the KMS key policy for the KMS key, or via KMS Grants on the key.
 Alternatively, the AWS KMS seal can be activated by providing the following
 environment variables.
 
-OpenBao Seal specific values:
+Redacto KMS Seal specific values:
 
-- `VAULT_SEAL_TYPE`
+- `REDACTO_KMS_SEAL_TYPE`
 - `VAULT_AWSKMS_SEAL_KEY_ID`
 
 ## Key rotation

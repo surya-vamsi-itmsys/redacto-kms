@@ -25,7 +25,7 @@ func TestCreds_wal_rollback(t *testing.T) {
 		t.Skip("Skipping WAL rollback test because K8S_WAL_TEST isn't defined")
 	}
 
-	// Pick up VAULT_ADDR and VAULT_TOKEN from env vars
+	// Pick up REDACTO_KMS_ADDR and REDACTO_KMS_TOKEN from env vars
 	baseClient, err := api.NewClient(nil)
 	if err != nil {
 		t.Fatal(err)

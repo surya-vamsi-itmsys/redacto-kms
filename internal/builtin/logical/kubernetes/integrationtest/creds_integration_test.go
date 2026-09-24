@@ -14,7 +14,7 @@ import (
 
 // Test token ttl handling and defaults
 func TestCreds_ttl(t *testing.T) {
-	// Pick up VAULT_ADDR and VAULT_TOKEN from env vars
+	// Pick up REDACTO_KMS_ADDR and REDACTO_KMS_TOKEN from env vars
 	client, err := api.NewClient(nil)
 	if err != nil {
 		t.Fatal(err)
@@ -127,7 +127,7 @@ func TestCreds_ttl(t *testing.T) {
 
 // Test token audiences handling and defaults
 func TestCreds_audiences(t *testing.T) {
-	// Pick up VAULT_ADDR and VAULT_TOKEN from env vars
+	// Pick up REDACTO_KMS_ADDR and REDACTO_KMS_TOKEN from env vars
 	client, err := api.NewClient(nil)
 	if err != nil {
 		t.Fatal(err)
@@ -201,7 +201,7 @@ func TestCreds_audiences(t *testing.T) {
 }
 
 func TestCreds_service_account_name(t *testing.T) {
-	// Pick up VAULT_ADDR and VAULT_TOKEN from env vars
+	// Pick up REDACTO_KMS_ADDR and REDACTO_KMS_TOKEN from env vars
 	client, err := api.NewClient(nil)
 	if err != nil {
 		t.Fatal(err)
@@ -272,7 +272,7 @@ func TestCreds_service_account_name(t *testing.T) {
 }
 
 func TestCreds_kubernetes_role_name(t *testing.T) {
-	// Pick up VAULT_ADDR and VAULT_TOKEN from env vars
+	// Pick up REDACTO_KMS_ADDR and REDACTO_KMS_TOKEN from env vars
 	client, err := api.NewClient(nil)
 	if err != nil {
 		t.Fatal(err)
@@ -359,7 +359,7 @@ func TestCreds_kubernetes_role_name(t *testing.T) {
 }
 
 func TestCreds_generated_role_rules(t *testing.T) {
-	// Pick up VAULT_ADDR and VAULT_TOKEN from env vars
+	// Pick up REDACTO_KMS_ADDR and REDACTO_KMS_TOKEN from env vars
 	client, err := api.NewClient(nil)
 	if err != nil {
 		t.Fatal(err)
@@ -466,7 +466,7 @@ func TestCreds_generated_role_rules(t *testing.T) {
 
 // Test kubernetes_namespace handling
 func TestCreds_kubernetes_namespace(t *testing.T) {
-	// Pick up VAULT_ADDR and VAULT_TOKEN from env vars
+	// Pick up REDACTO_KMS_ADDR and REDACTO_KMS_TOKEN from env vars
 	client, err := api.NewClient(nil)
 	if err != nil {
 		t.Fatal(err)

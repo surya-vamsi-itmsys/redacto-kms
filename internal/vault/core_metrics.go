@@ -226,7 +226,7 @@ func (c *Core) emitMetricsActiveNode(stopCh chan struct{}) {
 			[]string{"secret", "kv", "count"},
 			[]metrics.Label{{Name: "gauge", Value: "kv_secrets_by_mountpoint"}},
 			c.kvSecretGaugeCollector,
-			"BAO_DISABLE_KV_GAUGE",
+			"REDACTO_KMS_DISABLE_KV_GAUGE",
 		},
 		{
 			[]string{"identity", "entity", "count"},

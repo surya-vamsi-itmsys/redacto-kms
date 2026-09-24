@@ -1,24 +1,24 @@
 ---
 sidebar_label: Kerberos
-description: This is the API documentation for the OpenBao Kerberos auth method plugin.
+description: This is the API documentation for the Redacto KMS Kerberos auth method plugin.
 ---
 
 # Kerberos auth method (API)
 
-This is the API documentation for the OpenBao Kerberos auth method plugin. To
+This is the API documentation for the Redacto KMS Kerberos auth method plugin. To
 learn more about the usage and operation, see the
-[OpenBao Kerberos auth method](../../auth/kerberos.mdx).
+[Redacto KMS Kerberos auth method](../../auth/kerberos.mdx).
 
 This documentation assumes the Kerberos auth method is mounted at the
-`auth/kerberos` path in OpenBao. Since it is possible to enable auth methods at
+`auth/kerberos` path in Redacto KMS. Since it is possible to enable auth methods at
 any location, please update your API calls accordingly.
 
 The Kerberos auth method validates both Kerberos and LDAP authorization,
 so both configurations are required.
 
-## Configure OpenBao Kerberos
+## Configure Redacto KMS Kerberos
 
-This endpoint configures the keytab and service account to be used by OpenBao
+This endpoint configures the keytab and service account to be used by Redacto KMS
 for verifying inbound SPNEGO tokens.
 
 | Method | Path                    |
@@ -30,13 +30,13 @@ for verifying inbound SPNEGO tokens.
   It should contain an entry matching the service account given. This can be
   created through the following command: `$ base64 openbao.keytab > openbao.keytab.base64`.
 - `service_account` `(string: <required>)` – The service account associated
-  with both the keytab entry and an LDAP service account created for OpenBao. Ex.:
+  with both the keytab entry and an LDAP service account created for Redacto KMS. Ex.:
   `"openbao_svc"`.
 - `remove_instance_name` - Removes any instance names from a Kerberos service
   principal name when parsing the keytab file. For example when this is set to true,
-  if a keytab has the service principal name `foo/localhost@example.com`, OpenBao
+  if a keytab has the service principal name `foo/localhost@example.com`, Redacto KMS
   will strip the service principal name to just be `foo@example.com`.
-- `add_group_aliases` - When set to true, OpenBao will add any LDAP groups found for
+- `add_group_aliases` - When set to true, Redacto KMS will add any LDAP groups found for
   the user as group aliases.
 
 ### Sample request
@@ -60,7 +60,7 @@ $ curl \
 }
 ```
 
-## Read OpenBao Kerberos
+## Read Redacto KMS Kerberos
 
 This endpoint retrieves the service account for the Kerberos auth method.
 The keytab is not returned because it is sensitive information.

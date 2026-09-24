@@ -2,13 +2,13 @@
 sidebar_label: unseal
 description: |-
   The "operator unseal" allows the user to provide a portion of the root key
-  to unseal an OpenBao server.
+  to unseal a Redacto KMS server.
 ---
 
 # operator unseal
 
 The `operator unseal` allows the user to provide a portion of the root key to
-unseal an OpenBao server. OpenBao starts in a sealed state. It cannot perform
+unseal a Redacto KMS server. Redacto KMS starts in a sealed state. It cannot perform
 operations until it is unsealed. This command accepts a portion of the master
 key (an "unseal key").
 
@@ -16,13 +16,13 @@ The unseal key can be supplied as an argument to the command, but this is
 not recommended as the unseal key will be available in your history:
 
 ```shell-session
-$ bao operator unseal IXyR0OJnSFobekZMMCKCoVEpT7wI6l+USMzE3IcyDyo=
+$ redacto-kms operator unseal IXyR0OJnSFobekZMMCKCoVEpT7wI6l+USMzE3IcyDyo=
 ```
 
 Instead, run the command with no arguments and it will prompt for the key:
 
 ```shell-session
-$ bao operator unseal
+$ redacto-kms operator unseal
 Key (will be hidden): IXyR0OJnSFobekZMMCKCoVEpT7wI6l+USMzE3IcyDyo=
 ```
 
@@ -41,7 +41,7 @@ instead](../../configuration/seal/index.mdx).
 Provide an unseal key:
 
 ```shell-session
-$ bao operator unseal
+$ redacto-kms operator unseal
 Key (will be hidden):
 Sealed: false
 Key Shares: 1
@@ -58,7 +58,7 @@ flags](../index.mdx) included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### Command options
 

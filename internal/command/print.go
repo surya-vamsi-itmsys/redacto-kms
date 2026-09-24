@@ -25,9 +25,9 @@ func (c *PrintCommand) Synopsis() string {
 
 func (c *PrintCommand) Help() string {
 	helpText := `
-Usage: bao print <subcommand>
+Usage: redacto-kms print <subcommand>
 
-	This command groups subcommands for interacting with OpenBao's runtime values.
+	This command groups subcommands for interacting with Redacto KMS's runtime values.
 
 Subcommands:
 	token    Token currently in use

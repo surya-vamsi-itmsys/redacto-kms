@@ -1,13 +1,13 @@
 ---
 displayed_sidebar: api
-description: OpenBao has an HTTP API that can be used to control every aspect of OpenBao.
+description: Redacto KMS has an HTTP API that can be used to control every aspect of Redacto KMS.
 ---
 
 # HTTP API
 
-The OpenBao HTTP API gives you full access to OpenBao using [REST like HTTP verbs](https://en.wikipedia.org/wiki/Representational_state_transfer).
-Every aspect of OpenBao can be controlled using the APIs. The OpenBao CLI uses the
-HTTP API to access OpenBao similar to all other consumers.
+The Redacto KMS HTTP API gives you full access to Redacto KMS using [REST like HTTP verbs](https://en.wikipedia.org/wiki/Representational_state_transfer).
+Every aspect of Redacto KMS can be controlled using the APIs. The Redacto KMS CLI uses the
+HTTP API to access Redacto KMS similar to all other consumers.
 
 All API routes are prefixed with `/v1/`.
 
@@ -15,7 +15,7 @@ This documentation is only for the v1 API, which is currently the only version.
 
 :::warning
 
-**Backwards compatibility:** At the current version, OpenBao does not yet
+**Backwards compatibility:** At the current version, Redacto KMS does not yet
 promise backwards compatibility even with the v1 prefix. We'll remove this
 warning when this policy changes. At this point in time the core API (that
 is, `sys/` routes) change very infrequently, but various secrets engines/auth
@@ -33,7 +33,7 @@ to have to do both depending on user settings.
 
 ## Authentication
 
-Once OpenBao is unsealed, almost every other operation requires a _client token_.
+Once Redacto KMS is unsealed, almost every other operation requires a _client token_.
 A user may have a client token sent to them. The client token must be sent as
 either the `X-Vault-Token` HTTP Header or as `Authorization` HTTP Header using
 the `Bearer <token>` scheme.
@@ -43,7 +43,7 @@ engine](../auth/index.mdx).
 
 Each auth method has one or more unauthenticated login endpoints. These
 endpoints can be reached without any authentication, and are used for
-authentication to OpenBao itself. These endpoints are specific to each auth
+authentication to Redacto KMS itself. These endpoints are specific to each auth
 method.
 
 Responses from auth login methods that generate an authentication token are
@@ -52,18 +52,18 @@ client or passed via the `X-Vault-Token` or `Authorization` header for future re
 
 ## Parameter restrictions
 
-Several OpenBao APIs require specifying path parameters. The path parameter cannot end
-in periods. Otherwise, OpenBao will return a 404 unsupported path error.
+Several Redacto KMS APIs require specifying path parameters. The path parameter cannot end
+in periods. Otherwise, Redacto KMS will return a 404 unsupported path error.
 
 ## Namespaces
 
 When using [Namespaces](../concepts/namespaces/index.mdx) the final path of the API
 request is relative to the `X-Vault-Namespace` header. For instance, if a
 request URI is `secret/foo` with the `X-Vault-Namespace` header set as `ns1/ns2/`,
-then the resulting request path to OpenBao will be `ns1/ns2/secret/foo`.
+then the resulting request path to Redacto KMS will be `ns1/ns2/secret/foo`.
 
 Note that it is semantically equivalent to use the full path rather than the
-`X-Vault-Namespace` header, OpenBao will match the corresponding namespace
+`X-Vault-Namespace` header, Redacto KMS will match the corresponding namespace
 based on correlating user input. Similar path results may be achieved if
 `X-Vault-Namespace` is set to `ns1/` with the request path of `ns2/secret/foo`
 as well, or otherwise if `X-Vault-Namespace` is omitted entirely and instead a
@@ -88,8 +88,8 @@ $ curl \
 
 ## API operations
 
-Typically the request data, body and response data to and from OpenBao is in JSON.
-OpenBao sets the `Content-Type` header appropriately with its response and does
+Typically the request data, body and response data to and from Redacto KMS is in JSON.
+Redacto KMS sets the `Content-Type` header appropriately with its response and does
 not require it from the clients request.
 
 The demonstration below uses the [`KVv1` secrets engine](secret/kv/kv-v1.mdx), which is a
@@ -104,7 +104,7 @@ For `KVv1`, reading a secret using the HTTP API is done by issuing a GET:
 ```
 
 This maps to `secret/foo` where `foo` is the key in the `secret/` mount, which
-is mounted by default on a fresh OpenBao install and is of type `kv`.
+is mounted by default on a fresh Redacto KMS install and is of type `kv`.
 
 Here is an example of reading a secret using cURL:
 
@@ -160,10 +160,10 @@ $ curl \
     http://127.0.0.1:8200/v1/secret/baz
 ```
 
-OpenBao currently considers `PUT` and `POST` to be synonyms. Rather than trust a
-client's stated intentions, OpenBao engines can implement an existence check to
+Redacto KMS currently considers `PUT` and `POST` to be synonyms. Rather than trust a
+client's stated intentions, Redacto KMS engines can implement an existence check to
 discover whether an operation is actually a create or update operation based on
-the data already stored within OpenBao. This makes permission management via ACLs
+the data already stored within Redacto KMS. This makes permission management via ACLs
 more flexible.
 
 A [KVv2 example](secret/kv/kv-v2.mdx#sample-request-3) for the engine path of `secret` requires that URI is
@@ -178,11 +178,11 @@ $ curl \
     http://127.0.0.1:8200/v1/secret/data/baz
 ```
 
-For more examples, please look at the OpenBao API client.
+For more examples, please look at the Redacto KMS API client.
 
 ## The `X-Vault-Request` header
 
-Requests that are sent to a [OpenBao Proxy][proxy] that is configured to use the
+Requests that are sent to a [Redacto KMS Proxy][proxy] that is configured to use the
 `require_request_header` option must include the `X-Vault-Request` header
 entry, e.g.:
 
@@ -196,18 +196,18 @@ $ curl \
     http://127.0.0.1:8200/v1/secret/baz
 ```
 
-The OpenBao CLI always adds this header to every request, regardless of whether
-the request is being sent to an OpenBao Agent or directly to an OpenBao Server. In
-addition, the OpenBao SDK always adds this header to every request.
+The Redacto KMS CLI always adds this header to every request, regardless of whether
+the request is being sent to a Redacto KMS Agent or directly to a Redacto KMS Server. In
+addition, the Redacto KMS SDK always adds this header to every request.
 
 ## Help
 
-To retrieve the help for any API within OpenBao, including mounted engines, auth
+To retrieve the help for any API within Redacto KMS, including mounted engines, auth
 methods, etc. then append `?help=1` to any URL. If you have valid permission to
 access the path, then the help text will be returned as a markdown-formatted block
 in the `help` attribute of the response.
 
-Additionally, with the [OpenAPI generation](system/internal-specs-openapi.mdx) in OpenBao, you will get back a small
+Additionally, with the [OpenAPI generation](system/internal-specs-openapi.mdx) in Redacto KMS, you will get back a small
 OpenAPI document in the `openapi` attribute. This document is relevant for the
 path you're looking up and any paths under it - also note paths in the OpenAPI
 document are relative to the initial path queried.
@@ -225,12 +225,12 @@ Example response:
 
 ```javascript
 {
-  "help": "## DESCRIPTION\n\nThis backend provides a versioned key-value store. The kv backend reads and\nwrites arbitrary secrets to the storage backend. The secrets are\nencrypted/decrypted by OpenBao: they are never stored unencrypted in the backend\nand the backend never has an opportunity to see the unencrypted value. Each key\ncan have a configured number of versions, and versions can be retrieved based on\ntheir version numbers.\n\n## PATHS\n\nThe following paths are supported by this backend. To view help for\nany of the paths below, use the help command with any route matching\nthe path pattern. Note that depending on the policy of your auth token,\nyou may or may not be able to access certain paths.\n\n    ^.*$\n\n\n    ^config$\n        Configures settings for the KV store\n\n    ^data/(?P<path>.*)$\n        Write, Read, and Delete data in the Key-Value Store.\n\n    ^delete/(?P<path>.*)$\n        Marks one or more versions as deleted in the KV store.\n\n    ^destroy/(?P<path>.*)$\n        Permanently removes one or more versions in the KV store\n\n    ^metadata/(?P<path>.*)$\n        Configures settings for the KV store\n\n    ^undelete/(?P<path>.*)$\n        Undeletes one or more versions from the KV store.",
+  "help": "## DESCRIPTION\n\nThis backend provides a versioned key-value store. The kv backend reads and\nwrites arbitrary secrets to the storage backend. The secrets are\nencrypted/decrypted by Redacto KMS: they are never stored unencrypted in the backend\nand the backend never has an opportunity to see the unencrypted value. Each key\ncan have a configured number of versions, and versions can be retrieved based on\ntheir version numbers.\n\n## PATHS\n\nThe following paths are supported by this backend. To view help for\nany of the paths below, use the help command with any route matching\nthe path pattern. Note that depending on the policy of your auth token,\nyou may or may not be able to access certain paths.\n\n    ^.*$\n\n\n    ^config$\n        Configures settings for the KV store\n\n    ^data/(?P<path>.*)$\n        Write, Read, and Delete data in the Key-Value Store.\n\n    ^delete/(?P<path>.*)$\n        Marks one or more versions as deleted in the KV store.\n\n    ^destroy/(?P<path>.*)$\n        Permanently removes one or more versions in the KV store\n\n    ^metadata/(?P<path>.*)$\n        Configures settings for the KV store\n\n    ^undelete/(?P<path>.*)$\n        Undeletes one or more versions from the KV store.",
   "openapi": {
     "openapi": "3.0.2",
     "info": {
-      "title": "OpenBao API",
-      "description": "HTTP API that gives you full access to OpenBao. All API routes are prefixed with `/v1/`.",
+      "title": "Redacto KMS API",
+      "description": "HTTP API that gives you full access to Redacto KMS. All API routes are prefixed with `/v1/`.",
       "version": "1.0.0",
       "license": {
         "name": "Mozilla Public License 2.0",
@@ -276,7 +276,7 @@ This structure will be returned for any HTTP status greater than or equal to 400
 
 ## HTTP status codes
 
-The following HTTP status codes are used throughout the API. OpenBao tries to
+The following HTTP status codes are used throughout the API. Redacto KMS tries to
 adhere to these whenever possible, but in case it doesn't -- then feel free to
 [raise a bug](https://github.com/openbao/openbao/issues) for our attention!
 
@@ -312,15 +312,15 @@ warnings are generated during the operation.
   likely change in the future.
 - `500` - Internal server error. An internal error has occurred, try again
   later. If the error persists, report a bug.
-- `502` - A request to OpenBao required OpenBao making a request to a third party;
+- `502` - A request to Redacto KMS required Redacto KMS making a request to a third party;
   the third party responded with an error of some kind.
-- `503` - OpenBao is down for maintenance or is currently sealed. Try again
+- `503` - Redacto KMS is down for maintenance or is currently sealed. Try again
   later.
 
 ## Limits
 
 A maximum request size of 32MB is imposed to prevent a denial of service attack
 with arbitrarily large requests; this can be tuned per `listener` block in
-OpenBao's server configuration file.
+Redacto KMS's server configuration file.
 
 [proxy]: ../agent-and-proxy/proxy/index.mdx#listener-stanza

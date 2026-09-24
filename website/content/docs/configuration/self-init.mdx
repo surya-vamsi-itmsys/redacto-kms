@@ -1,7 +1,7 @@
 ---
 sidebar_label: initialize
 description: |-
-  The initialize stanza allows request-based one-time initialization of OpenBao
+  The initialize stanza allows request-based one-time initialization of Redacto KMS
   from the configuration file.
 ---
 import Tabs from '@theme/Tabs';
@@ -28,10 +28,10 @@ unauthenticated rotation and audit device creation) still apply.
 
 # `initialize` stanza
 
-The `initialize` stanza specifies various configurations for OpenBao to
+The `initialize` stanza specifies various configurations for Redacto KMS to
 initialize itself once, on initial startup. To repeat the operation, remove
 all storage and re-initialize from scratch. Debugging can be performed by
-starting OpenBao with the `TRACE` log level, which shows all request/response
+starting Redacto KMS with the `TRACE` log level, which shows all request/response
 pairs and thus **contains sensitive information**.
 
 When self-initialization fails, it logs an error to the server; this allows
@@ -116,7 +116,7 @@ The `initialize` stanza can only contain one or more `request` stanzas. Each
   [ACL Capabilities](../concepts/policies.mdx#capabilities) for a list.
 - `path` `(value[string]: <required>)` - path to perform the given operation
   on.
-- `token` `(value[string]: <optional>)` - the OpenBao API token to use for
+- `token` `(value[string]: <optional>)` - the Redacto KMS API token to use for
   authentication. When not specified, defaults to the root token.
 - `data` `(value[map]: <optional>)` - the request data for this call.
 - `allow_failure` `(value[bool]: false)` - when true, allows this call to fail

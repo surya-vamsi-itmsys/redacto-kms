@@ -78,7 +78,7 @@ func (h *CLIHandler) Auth(c *api.Client, m map[string]string, nonInteractive boo
 	if !ok || callbackMode == "" {
 		callbackMode = defaultCallbackMode
 	} else if callbackMode == "direct" {
-		serverAddr := api.ReadBaoVariable("BAO_ADDR")
+		serverAddr := api.ReadBaoVariable("REDACTO_KMS_ADDR")
 		if serverAddr != "" {
 			serverURL, _ = url.Parse(serverAddr)
 		}
@@ -332,7 +332,7 @@ func fetchAuthURL(c *api.Client, role, mount, callbackPort string, callbackMetho
 	}
 
 	if authURL == "" {
-		return "", "", nil, fmt.Errorf("Unable to authorize role %q with redirect_uri %q. Check OpenBao logs for more information.", role, redirectURI) //nolint:staticcheck // user-facing error
+		return "", "", nil, fmt.Errorf("Unable to authorize role %q with redirect_uri %q. Check Redacto KMS logs for more information.", role, redirectURI) //nolint:staticcheck // user-facing error
 	}
 
 	return authURL, clientNonce, secret, nil
@@ -378,14 +378,14 @@ func parseError(err error) (string, string) {
 func (h *CLIHandler) Help() string {
 	help := fmt.Sprintf(
 		`
-Usage: bao login -method=oidc [CONFIG K=V...]
+Usage: redacto-kms login -method=oidc [CONFIG K=V...]
 
   The OIDC auth method allows users to authenticate using an OIDC provider.
   The provider must be configured as part of a role by the operator.
 
   Authenticate using role "engineering":
 
-      $ bao login -method=oidc role=engineering
+      $ redacto-kms login -method=oidc role=engineering
       Complete the login via your OIDC provider. Launching browser to:
 
           https://accounts.google.com/o/oauth2/v2/...
@@ -396,7 +396,7 @@ Usage: bao login -method=oidc [CONFIG K=V...]
 Configuration:
 
   role=<string>
-    OpenBao role of type "OIDC" to use for authentication.
+    Redacto KMS role of type "OIDC" to use for authentication.
 
   %s=<string>
     Mode of callback: "client" for connection to the command line client,
@@ -413,16 +413,16 @@ Configuration:
 
   %s=<string>
     Optional method to use in OIDC redirect_uri (default: the method from
-    $BAO_ADDR or $VAULT_ADDR in direct callback mode, else http)
+    $REDACTO_KMS_ADDR in direct callback mode, else http)
 
   %s=<string>
     Optional callback host address to use in OIDC redirect_uri (default:
-    the host from $BAO_ADDR or $VAULT_ADDR in direct callback mode, else
+    the host from $REDACTO_KMS_ADDR in direct callback mode, else
     localhost).
 
   %s=<string>
     Optional port to use in OIDC redirect_uri (default: the value set for
-    port in client callback mode, else the port from $BAO_ADDR or $VAULT_ADDR
+    port in client callback mode, else the port from $REDACTO_KMS_ADDR
     with an added /v1/auth/<path> where <path> is from the login -path option).
 
   %s=<bool>

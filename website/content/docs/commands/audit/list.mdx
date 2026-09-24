@@ -15,7 +15,7 @@ enabled audit devices and options for those devices.
 List all audit devices:
 
 ```shell-session
-$ bao audit list
+$ redacto-kms audit list
 Path     Type    Description
 ----     ----    -----------
 file/    file    n/a
@@ -24,7 +24,7 @@ file/    file    n/a
 List detailed audit device information:
 
 ```shell-session
-$ bao audit list -detailed
+$ redacto-kms audit list -detailed
 Path     Type    Description    Replication    Options
 ----     ----    -----------    -----------    -------
 file/    file    n/a            replicated     file_path=/var/log/audit.log
@@ -39,7 +39,7 @@ flags](../index.mdx) included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
 
 ### Command options
 

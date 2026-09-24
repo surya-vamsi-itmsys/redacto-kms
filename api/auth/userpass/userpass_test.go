@@ -35,8 +35,8 @@ func testHTTPServer(
 }
 
 func init() {
-	os.Setenv("BAO_TOKEN", "")
-	os.Setenv("VAULT_TOKEN", "")
+	os.Setenv("REDACTO_KMS_TOKEN", "")
+	os.Setenv("REDACTO_KMS_TOKEN", "")
 }
 
 func TestLogin(t *testing.T) {

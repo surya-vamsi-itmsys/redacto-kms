@@ -1,22 +1,22 @@
 ---
 sidebar_label: Windows service
 description: >-
-  OpenBao Agent can be run as a Windows service.
+  Redacto KMS Agent can be run as a Windows service.
 ---
 
-# OpenBao agent windows service
+# Redacto KMS agent windows service
 
-OpenBao Agent can be run as a Windows service. In order to do this, you need to register OpenBao Agent with the Windows
-Service Control Manager. After OpenBao Agent is registered, it can be started like any other Windows
+Redacto KMS Agent can be run as a Windows service. In order to do this, you need to register Redacto KMS Agent with the Windows
+Service Control Manager. After Redacto KMS Agent is registered, it can be started like any other Windows
 service.
 
 **Note:** These commands should be run in a PowerShell session with Administrator capabilities.
 
-## Register OpenBao agent as a windows service
+## Register Redacto KMS agent as a windows service
 
-There are multiple ways to register OpenBao Agent as a Windows service. One way is to use
+There are multiple ways to register Redacto KMS Agent as a Windows service. One way is to use
 [`sc.exe`](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/sc-create). `sc.exe` works
-best if the path to your OpenBao binary and its associated agent config file do not contain spaces. `sc.exe` can be
+best if the path to your Redacto KMS binary and its associated agent config file do not contain spaces. `sc.exe` can be
 pretty tricky to get working correctly if your path contains spaces, as paths containing spaces must be quoted,
 and escaping quotes correctly in a way that makes `sc.exe` happy is non-trivial. If your path contains spaces, or you prefer not to use `sc.exe`, another
 alternative is to use the
@@ -34,11 +34,11 @@ potential privilege escalation risks.
 :::
 
 If you use `sc.exe`, make sure you specify `sc.exe` explicitly, and not just `sc`. The command below shows the creation
-of OpenBao Agent as a service, using "OpenBao Agent" as the display name, and starting automatically when Windows starts.
-The `binPath` argument should include the fully qualified path to the OpenBao executable, as well as any arguments required.
+of Redacto KMS Agent as a service, using "Redacto KMS Agent" as the display name, and starting automatically when Windows starts.
+The `binPath` argument should include the fully qualified path to the Redacto KMS executable, as well as any arguments required.
 
 ```shell-session
-PS C:\Windows\system32> sc.exe create OpenBaoAgent binPath="C:\openbao\bao.exe agent -config=C:\openbao\agent-config.hcl" displayName="OpenBao Agent" start=auto
+PS C:\Windows\system32> sc.exe create Redacto KMSAgent binPath="C:\openbao\bao.exe agent -config=C:\openbao\agent-config.hcl" displayName="Redacto KMS Agent" start=auto
 [SC] CreateService SUCCESS
 ```
 
@@ -55,46 +55,46 @@ The syntax is slightly different for `New-Service`, but the gist is the same. Th
 `sc.exe` one above.
 
 ```shell-session
-PS C:\Windows\system32> New-Service -Name "OpenBaoAgent" -BinaryPathName "C:\openbao\bao.exe agent -config=C:\openbao\agent-config.hcl" -DisplayName "OpenBao Agent" -StartupType "Automatic"
+PS C:\Windows\system32> New-Service -Name "Redacto KMSAgent" -BinaryPathName "C:\openbao\bao.exe agent -config=C:\openbao\agent-config.hcl" -DisplayName "Redacto KMS Agent" -StartupType "Automatic"
 
 Status   Name               DisplayName
 ------   ----               -----------
-Stopped  OpenBaoAgent         OpenBao Agent
+Stopped  Redacto KMSAgent         Redacto KMS Agent
 ```
 
-As mentioned previously, `New-Service` is easier to use if the path to your OpenBao executable and/or agent config contains spaces.
-Below is an example of how to configure OpenBao Agent as a service using a path with spaces.
+As mentioned previously, `New-Service` is easier to use if the path to your Redacto KMS executable and/or agent config contains spaces.
+Below is an example of how to configure Redacto KMS Agent as a service using a path with spaces.
 
 ```shell-session
-PS C:\Windows\system32> New-Service -Name "OpenBaoAgent" -BinaryPathName '"C:\my dir\bao.exe" agent -config="C:\my dir\agent-config.hcl"' -DisplayName "OpenBao Agent" -StartupType "Automatic"
+PS C:\Windows\system32> New-Service -Name "Redacto KMSAgent" -BinaryPathName '"C:\my dir\bao.exe" agent -config="C:\my dir\agent-config.hcl"' -DisplayName "Redacto KMS Agent" -StartupType "Automatic"
 
 Status   Name               DisplayName
 ------   ----               -----------
-Stopped  OpenBaoAgent         OpenBao Agent
+Stopped  Redacto KMSAgent         Redacto KMS Agent
 ```
 
 Note that only the paths themselves are double quoted, and the entire `BinaryPathName` is wrapped in single quotes, in order
 to escape the double quotes used for the paths.
 
 If anything goes wrong during this process, and you need to manually edit the path later, use the Registry Editor to find
-the following key: `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\OpenBaoAgent`. You can edit the `ImagePath` value
+the following key: `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Redacto KMSAgent`. You can edit the `ImagePath` value
 at that key to the correct path.
 
-## Start the OpenBao agent service
+## Start the Redacto KMS agent service
 
 There are multiple ways to start the service.
 
 - Using the `sc.exe` command.
 - Using the `Start-Service` cmdlet.
-- Go to the Windows Service Manager, and look for **OpenBaoAgent** in the service name column. Click the
+- Go to the Windows Service Manager, and look for **Redacto KMSAgent** in the service name column. Click the
   `Start` button to start the service.
 
-### Example starting OpenBao agent using `sc.exe`
+### Example starting Redacto KMS agent using `sc.exe`
 
 ```shell-session
-PS C:\Windows\system32> sc.exe start OpenBaoAgent
+PS C:\Windows\system32> sc.exe start Redacto KMSAgent
 
-SERVICE_NAME: OpenBaoAgent
+SERVICE_NAME: Redacto KMSAgent
      TYPE               : 10  WIN32_OWN_PROCESS
      STATE              : 4  RUNNING
                              (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
@@ -106,10 +106,10 @@ SERVICE_NAME: OpenBaoAgent
      FLAGS              :
 ```
 
-### Example starting OpenBao agent using `Start-Service`
+### Example starting Redacto KMS agent using `Start-Service`
 
 ```shell-session
-PS C:\Windows\system32> Start-Service -Name "OpenBaoAgent"
+PS C:\Windows\system32> Start-Service -Name "Redacto KMSAgent"
 ```
 
 Note that in the case where the service was started successfully, `New-Service` does not return any output.

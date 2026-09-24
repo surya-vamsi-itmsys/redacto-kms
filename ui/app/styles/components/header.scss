@@ -11,6 +11,12 @@
   align-items: center;
 }
 
+// Compact viewports show the square Redacto KMS mark; wide viewports show the
+// full (white) wordmark, which keeps its 507:143 aspect ratio.
+.hds-side-nav-header__logo-container .home-link-icon-full {
+  display: none;
+}
+
 // Ensure the logo is responsive
 // --hds-app-desktop-breakpoint: 1088px;
 @media (min-width: 1088px) {
@@ -20,5 +26,14 @@
 
   .hds-side-nav-header__logo-container .hs-icon {
     width: 88px;
+  }
+
+  .hds-side-nav-header__logo-container .home-link-icon-compact {
+    display: none;
+  }
+
+  .hds-side-nav-header__logo-container .home-link-icon-full {
+    display: flex;
+    height: 25px; // 88px wide at the logo's 507:143 aspect ratio
   }
 }

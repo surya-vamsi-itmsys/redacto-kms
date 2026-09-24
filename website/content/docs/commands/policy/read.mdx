@@ -1,13 +1,13 @@
 ---
 sidebar_label: read
 description: |-
-  The "policy read" command prints the contents and metadata of the OpenBao policy
+  The "policy read" command prints the contents and metadata of the Redacto KMS policy
   named NAME. If the policy does not exist, an error is returned.
 ---
 
 # policy read
 
-The `policy read` command prints the contents and metadata of the OpenBao policy
+The `policy read` command prints the contents and metadata of the Redacto KMS policy
 named NAME. If the policy does not exist, an error is returned.
 
 ## Examples
@@ -15,7 +15,7 @@ named NAME. If the policy does not exist, an error is returned.
 Read the policy named "my-policy":
 
 ```shell-session
-$ bao policy read my-policy
+$ redacto-kms policy read my-policy
 ```
 
 ## Usage
@@ -27,4 +27,4 @@ flags](../index.mdx) included on all commands.
 
 - `-format` `(string: "table")` - Print the output in the given format. Valid
   formats are "table", "json", or "yaml". This can also be specified via the
-  `BAO_FORMAT` environment variable.
+  `REDACTO_KMS_FORMAT` environment variable.
